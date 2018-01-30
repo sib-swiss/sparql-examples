@@ -1,0 +1,14 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+ex:1
+    sh:prefixes up: ;
+    rdf:HTML """Select all taxa from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>""" ;
+    sh:select """ 
+SELECT ?taxon
+FROM <http://sparql.uniprot.org/taxonomy>
+WHERE
+{
+        ?taxon a up:Taxon .
+}""" .

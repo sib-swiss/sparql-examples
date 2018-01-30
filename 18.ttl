@@ -1,0 +1,17 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:18
+    sh:prefixes up: , rdfs: , rdf: ;
+    rdf:HTML """Select the number of UniProt entries for each of the EC (Enzyme Commission) second level categories""";
+    sh:select """SELECT ?enzyme (COUNT(?protein) as ?size)
+WHERE
+{
+	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) }
+	?protein up:enzyme ?enzyme. 
+	?enzyme rdfs:subClassOf ?ecClass 
+}
+GROUP BY ?enzyme ORDER BY ?enzyme
+""" .

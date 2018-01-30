@@ -1,0 +1,14 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:13
+    sh:prefixes up: ;
+    rdf:HTML """Was any UniProt entry integrated on the 9th of January 2013""" ;
+    sh:ask """ASK
+WHERE
+{
+	?protein a up:Protein .
+	?protein up:created '2013-01-09'^^xsd:date
+}""" .

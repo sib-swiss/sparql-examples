@@ -1,0 +1,25 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>  
+ex:10
+    sh:prefixes up: , rdfs: , rdf: , faldo: ;
+    rdf:HTML """Select all human UniProt entries with a sequence variant that leads to a tyrosine to phenylalanine substitution""" ;
+    sh:select """SELECT ?protein ?annotation ?begin ?text
+WHERE
+{
+        ?protein a up:Protein ;
+            up:organism taxon:9606 ; 
+            up:annotation ?annotation .
+        ?annotation a up:Natural_Variant_Annotation ;
+            rdfs:comment ?text ;
+            up:substitution ?substitution ;
+            up:range/faldo:begin
+                [ faldo:position ?begin ;
+                  faldo:reference ?sequence ] .
+        ?sequence rdf:value ?value .
+        BIND (substr(?value, ?begin, 1) as ?original) .
+        FILTER(?original = 'Y' && ?substitution = 'F') .
+} """ .

@@ -1,0 +1,19 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix faldo:<http://biohackathon.org/resource/faldo#> 
+ex:11
+    sh:prefixes up: , faldo: ;
+    rdf:HTML """Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence""" ;
+    sh:select """SELECT ?protein ?begin ?end
+WHERE 
+{
+	?protein a up:Protein .
+	?protein up:annotation ?annotation .
+	?annotation a up:Transmembrane_Annotation .
+	?annotation up:range ?range .
+	?range faldo:begin/faldo:position ?begin .
+	?range faldo:end/faldo:position ?end
+}""" .

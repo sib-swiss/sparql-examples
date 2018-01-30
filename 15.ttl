@@ -1,0 +1,9 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:15
+    rdf:HTML """Select all triples that relate to the EMBL CDS entry AA089367.1: """;
+    sh:describe """DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>
+""" .

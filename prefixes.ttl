@@ -1,0 +1,59 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+ex: sh:declare [
+        sh:prefix "up" ;
+        sh:namespace "http://purl.uniprot.org/core"^^xsd:anyURI ;
+  ] ;
+    sh:declare [
+	sh:prefix "keywords" ;
+	sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI ;
+  ] ; 
+    sh:declare [
+	sh:prefix "uniprotkb" ;
+	sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI ;
+  ] ; 
+  sh:declare [
+	sh:prefix "taxon" ;
+	sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "ec" ;
+	sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "rdf" ;
+	sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "rdfs" ;
+	sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "skos" ;
+	sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "owl" ;
+	sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "bibo" ;
+	sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "dc" ;
+	sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "xsd" ;
+	sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "faldo" ;
+	sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI ;
+  ] ; 
+sh:declare [
+	sh:prefix "up" ;
+	sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
+  ] .  
