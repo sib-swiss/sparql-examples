@@ -1,0 +1,26 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:19
+    sh:prefixes up: , taxon: , rdfs: , rdf: ;
+    rdf:HTML """Find all Natural Variant Annotations if associated via an evidence tag to an article with a pubmed identifier""";
+    sh:select """SELECT 
+    ?accession
+    ?annotation_acc 
+    ?pubmed
+WHERE
+{
+        ?protein a up:Protein ;
+            up:annotation ?annotation .
+        ?annotation a up:Natural_Variant_Annotation .
+        ?linkToEvidence rdf:object ?annotation ;
+                        up:attribution ?attribution .
+        ?attribution up:source ?source .
+        ?source a up:Journal_Citation .
+  BIND(SUBSTR(STR(?protein),33) AS ?accession)
+  BIND(IF(CONTAINS(STR(?annotation), "#SIP"), SUBSTR(STR(?annotation),33), SUBSTR(STR(?annotation),36))AS?annotation_acc)
+  BIND(SUBSTR(STR(?source),35) AS ?pubmed)
+}
+""" .
