@@ -1,0 +1,40 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix skos:<http://www.w3.org/2004/02/skos/core#> 
+ex:22
+    sh:prefixes up: , rdfs: ;
+    rdf:HTML """For two accessions find the GO term labels and group them into GO process,function and component""" ;
+    sh:select """
+SELECT 
+    (CONCAT(SUBSTR(STR(?protein), 33)) AS ?uniprot)
+    (GROUP_CONCAT(?celtype; separator=";") AS ?celtypes)
+    (GROUP_CONCAT(?biotype; separator=";") AS ?biotypes)
+    (GROUP_CONCAT(?moltype; separator=";") AS ?moltypes)
+WHERE
+{
+    VALUES (?ac) {("Q6GZX4") ("Q96375")}
+    BIND (IRI(CONCAT("http://purl.uniprot.org/uniprot/",?ac)) AS ?protein)
+    ?protein a up:Protein .
+    ?protein up:classifiedWith ?goTerm .
+    #Determine if the type is biological_process
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0008150>.
+        ?goTerm rdfs:label ?biotype .
+    }
+    #Determine if the type is cellular_component
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0005575>.
+        ?goTerm rdfs:label ?celtype .
+    }
+    #Determine if the type is molecular_function
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0003674> .
+        ?goTerm rdfs:label ?moltype .
+    }
+    #Filter out the uniprot keywords
+    FILTER(bound(?biotype) || bound(?celtype) || bound(?moltype))
+} GROUP BY ?protein
+""" .

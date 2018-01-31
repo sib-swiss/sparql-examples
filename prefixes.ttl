@@ -54,6 +54,10 @@ sh:declare [
 	sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI ;
   ] ; 
 sh:declare [
+	sh:prefix "GO" ;
+	sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI ;
+  ] ;  
+sh:declare [
 	sh:prefix "up" ;
 	sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
   ] .  
