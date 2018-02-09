@@ -5,19 +5,14 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:3
     sh:prefixes up: , rdfs: , rdf: ;
-    rdf:HTML """Select all <a href="http://purl.uniprot.org/taxonomy/83333">E-Coli K12 (including strains)</a> UniProt entries and their amino acid sequence""" ;
+    rdf:HTML """Select all UniProt entries, and their organism and amino acid sequences (including isoforms), for <a href="http://purl.uniprot.org/taxonomy/83333">_E. coli K12_ and all its strains</a>""" ;
     sh:select """
-SELECT ?protein ?aa 
+SELECT ?protein ?organism ?isoform ?aa_sequence
 WHERE
 {
     ?protein a up:Protein .
-    ?protein up:organism ?organism . 
-    {
-        ?protein up:organism taxon:83333 .
-    } UNION {
-        ?protein up:organism ?organism .
-        ?organism rdfs:subClassOf taxon:83333 .
-    } 
-    ?protein up:sequence ?s .
-    ?s rdf:value ?aa
-}</a>""" .
+    ?protein up:organism ?organism .
+    ?organism rdfs:subClassOf* taxon:83333 .
+    ?protein up:sequence ?isoform .
+    ?isoform rdf:value ?aa_sequence .
+}""" .
