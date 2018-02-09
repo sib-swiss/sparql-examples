@@ -1,0 +1,15 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+ex:26
+    sh:prefixes up: ;
+    rdf:HTML """Find any uniprot entry, or an uniprot entries domain or component which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'""" ;
+    sh:select """SELECT ?protein ?anyKindOfName
+WHERE
+{
+		?protein a up:Protein .
+		?protein (up:recommendedName|up:alternativeName)|((up:domain|up:component)/(up:recommendedName|up:alternativeName)) ?structuredName .
+		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B-73 alpha chain" .
+		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}""" .
