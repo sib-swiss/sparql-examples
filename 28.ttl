@@ -1,0 +1,18 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:28
+    sh:prefixes up: ;
+    rdf:HTML """Get the list of uniprot entries for the chromosome of proteome <a href="https://www.uniprot.org/proteomes/UP000000625">UP000000625</a>""" ;
+    sh:select """SELECT 
+  ?proteome 
+  ?protein
+WHERE
+{
+  ?protein a up:Protein ;
+           up:reviewed true ;
+           up:proteome ?proteome .
+  VALUES (?proteome) {(<http://purl.uniprot.org/proteomes/UP000000625#Chromosome>)}
+}""" .
