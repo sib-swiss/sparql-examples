@@ -10,5 +10,6 @@ SELECT ?taxon
 FROM <http://sparql.uniprot.org/taxonomy>
 WHERE
 {
-        ?taxon a up:Taxon .
+    ?taxon a up:Taxon .
 }""" .
+
