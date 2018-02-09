@@ -60,4 +60,8 @@ sh:declare [
 sh:declare [
 	sh:prefix "up" ;
 	sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
-  ] .  
+  ] ; 
+sh:declare [
+    sh:prefix "allie" ;
+    sh:namespace "http://allie.dbcls.jp/"^^ xsd:anyURI ;
+  ].  

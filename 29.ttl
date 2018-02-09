@@ -1,0 +1,32 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix allie: <http://allie.dbcls.jp/>
+ex:29
+    sh:prefixes up: , rdfs:, allie ;
+    rdf:HTML """Use <a href="http://allie.dbcls.jp/">ALLIE</a> a service for Abbreviation / Long Form in Japanese and English to search in UniProt using Japanese.""" ;
+    sh:select """SELECT
+    ?englishLabelStr ?protein
+WHERE {
+    SERVICE<http://data.allie.dbcls.jp/sparql>{
+            ?x rdfs:label "アミロイド前駆体タンパク質"@ja ;
+                rdfs:label ?englishLabel .
+            FILTER(lang(?englishLabel) = "en")
+    }
+    BIND (STR(?englishLabel) AS ?englishLabelStr)
+    ?protein a up:Protein .
+    {
+        ?protein (up:recommendedName|up:alternativeName) ?structuredName .
+    }
+    UNION
+    {
+          VALUES(?partType){(up:domain) (up:component)}
+                  ?protein ?partType ?part .
+          ?part (up:recommendedName|up:alternativeName) ?structuredName .
+    }
+    ?structuredName ?anyKindOfName  ?englishLabelStr .
+    ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}
+""" .
