@@ -1,0 +1,22 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:30
+    sh:prefixes up: , taxon: ;
+    rdf:HTML """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>""" ;
+    sh:select """SELECT
+  ?protein 
+  (GROUP_CONCAT(?locusName; separator=',') AS ?locusNames)
+WHERE 
+{ 
+  ?protein a up:Protein ;
+    up:organism taxon:360910 ;
+    up:encodedBy ?gene .
+  ?gene up:locusName ?locusName .
+} 
+GROUP BY ?protein 
+HAVING (COUNT(?locusName) > 1)
+""" .
