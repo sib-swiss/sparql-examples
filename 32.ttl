@@ -1,0 +1,22 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:32
+    sh:prefixes up: , rdfs:, rdf: ;
+    rdf:HTML """Find UniProtKB entries with more than 1 <a href="https://www.uniprot.org/help/topo_dom">Topological domain annotation</a>""" ;
+    sh:select """SELECT 
+    ?protein 
+    (GROUP_CONCAT(?comment; separator=", ") AS ?comments)
+WHERE
+{
+    ?protein a up:Protein ;
+            up:annotation ?annotation . 
+    ?annotation rdf:type up:Topological_Domain_Annotation ;
+            rdfs:comment ?comment .
+} 
+GROUP BY ?protein 
+HAVING (COUNT(?annotation) > 1)
+""" .
