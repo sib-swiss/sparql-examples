@@ -1,0 +1,23 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:31
+    sh:prefixes up: ;
+    rdf:HTML """Find UniParc records whose sequence point to the most database entries""" ;
+    sh:select """SELECT ?sequence ?entries
+WHERE
+{
+    SELECT 
+        ?sequence 
+        (COUNT(?entry) AS ?entries)
+    WHERE
+    {
+        GRAPH <http://sparql.uniprot.org/uniparc> {
+            ?sequence up:sequenceFor ?entry .
+        }
+    } GROUP BY ?sequence
+} ORDER BY DESC(?entries)   
+""" .
