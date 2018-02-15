@@ -1,0 +1,33 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:34
+    sh:prefixes up: , rdfs:, rdf: ;
+    rdf:HTML """Find the co-occurence count of Topological Domain comment text in UniProtKB entries""" ;
+    sh:select """SELECT 
+    ?comment1 
+    ?comment2 
+    (COUNT(?comment1) AS ?count1)
+WHERE
+{
+    ?protein a up:Protein ;
+               up:annotation ?annotation1 , 
+                             ?annotation2 . 
+    ?annotation1 rdf:type up:Topological_Domain_Annotation ;
+        rdfs:comment ?rawComment1 .
+    ?annotation2 rdf:type up:Topological_Domain_Annotation ;
+        rdfs:comment ?rawComment2 . 
+    BIND(IF(contains(?rawComment1, ';'), 
+            STRBEFORE(?rawComment1,';'), 
+            ?rawComment1) AS ?comment1)
+    BIND(IF(contains(?rawComment2, ';'), 
+            STRBEFORE(?rawComment2,';'), 
+            ?rawComment2) AS ?comment2)
+    FILTER(?annotation1 != ?annotation2)
+} 
+GROUP BY ?comment1 ?comment2 
+ORDER BY DESC(COUNT(?comment1))
+""" .
