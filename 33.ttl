@@ -1,0 +1,17 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:33
+    sh:prefixes up: , rdfs:, rdf: ;
+    rdf:HTML """Find longest comment text associated with a UniProtKB Natural Variant Annotation""" ;
+    sh:select """SELECT 
+    ?annotation ?comment
+WHERE {
+    ?annotation a up:Natural_Variant_Annotation ;
+        rdfs:comment ?comment . 
+} 
+ORDER BY DESC(STRLEN(?comment))
+""" .
