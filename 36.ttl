@@ -1,0 +1,35 @@
+prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+ex:36
+    sh:prefixes up: , rdfs:, rdf: , uniprotkb: , orthodb:, orthodbGroup: ;
+    rdf:HTML """Find the orthologous proteins for UniProtKB entry P05067 using the <a href="http://www.orthod.org">OrthoDB database</a>""" ;
+    sh:select """SELECT 
+  ?protein 
+  ?orthoGroup
+  ?scientificName 
+  ?functionComment 
+  ?prefferedGeneName 
+  ((STRLEN(?value) - ?medianLength) as ?deviationFromMedianLength)
+WHERE
+{
+  uniprotkb:P05067 a up:Protein ;
+        up:organism/up:scientificName ?scientificName ;
+        rdfs:seeAlso ?orthoGroup ;
+        up:encodedBy/skos:prefLabel ?prefferedGeneName ;
+             up:sequence/rdf:value ?value .
+  OPTIONAL {
+     ?protein up:annotation ?functionAnnotation .
+     ?functionAnnotation a up:Function_Annotation ;
+                         rdfs:comment ?functionComment .
+  }
+  SERVICE<http://sparql.orthodb.org/sparql>{
+    ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
+    ?orthoGroup orthodb:hasMember ?xref .
+    ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
+  }
+}
+""" .

@@ -63,5 +63,14 @@ sh:declare [
   ] ; 
 sh:declare [
     sh:prefix "allie" ;
-    sh:namespace "http://allie.dbcls.jp/"^^ xsd:anyURI ;
-  ].  
+    sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI ;
+  ] ;
+sh:declare [
+    sh:prefix "orthodbGroup" :
+    sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI ;
+  ] ;
+sh:declare [
+    sh:prefix "orthodb" ;
+    sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI ;
+  ]
+.  
