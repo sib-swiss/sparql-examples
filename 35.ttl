@@ -3,7 +3,9 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/>
+prefix uniprotkb:<http://purl.uniprot.org/uniprot/>
+ 
 ex:35
     sh:prefixes up: , rdfs:, rdf: , uniprotkb: ;
     rdf:HTML """Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluser identity""" ;

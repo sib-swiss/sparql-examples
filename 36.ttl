@@ -2,8 +2,11 @@ prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#>
 prefix up: <http://purl.uniprot.org/core/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon: <http://purl.uniprot.org/taxonomy/>
+prefix uniprotkb: <http://purl.uniprot.org/uniprot/>
+prefix orthodb: <http://purl.orthodb.org/>
+prefix orthodbGroup: <http://purl.orthodb.org/odbgroup/>
 ex:36
     sh:prefixes up: , rdfs:, rdf: , uniprotkb: , orthodb:, orthodbGroup: ;
     rdf:HTML """Find the orthologous proteins for UniProtKB entry P05067 using the <a href="http://www.orthod.org">OrthoDB database</a>""" ;
