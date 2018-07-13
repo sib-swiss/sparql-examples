@@ -5,11 +5,11 @@ ex: sh:declare [
         sh:prefix "up" ;
         sh:namespace "http://purl.uniprot.org/core"^^xsd:anyURI ;
   ] ;
-    sh:declare [
+  sh:declare [
 	sh:prefix "keywords" ;
 	sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI ;
   ] ; 
-    sh:declare [
+  sh:declare [
 	sh:prefix "uniprotkb" ;
 	sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI ;
   ] ; 
@@ -17,19 +17,19 @@ ex: sh:declare [
 	sh:prefix "taxon" ;
 	sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI ;
   ] ; 
-sh:declare [
+  sh:declare [
 	sh:prefix "ec" ;
 	sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI ;
   ] ; 
-sh:declare [
+  sh:declare [
 	sh:prefix "rdf" ;
 	sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
   ] ; 
-sh:declare [
+  sh:declare [
 	sh:prefix "rdfs" ;
 	sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
   ] ; 
-sh:declare [
+  sh:declare [
 	sh:prefix "skos" ;
 	sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
   ] ; 
@@ -66,11 +66,10 @@ sh:declare [
     sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI ;
   ] ;
 sh:declare [
-    sh:prefix "orthodbGroup" :
+    sh:prefix "orthodbGroup" ;
     sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI ;
   ] ;
 sh:declare [
     sh:prefix "orthodb" ;
     sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI ;
-  ]
-.  
+  ] .  
