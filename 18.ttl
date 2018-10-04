@@ -9,9 +9,9 @@ ex:18
     sh:select """SELECT ?enzyme (COUNT(?protein) as ?size)
 WHERE
 {
-	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) }
-	?protein up:enzyme ?enzyme. 
-	?enzyme rdfs:subClassOf ?ecClass 
+	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-) }
+	?protein up:enzyme ?enzyme . 
+	?enzyme rdfs:subClassOf ?ecClass . 
 }
 GROUP BY ?enzyme ORDER BY ?enzyme
 """ .
