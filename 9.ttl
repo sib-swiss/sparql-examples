@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:9
     sh:prefixes up: , rdfs: , rdf: ;
-    rdf:HTML """Select all human UniProt entries with a sequence variant that leads to a 'loss of function'""" ;
+    rdf:comment """Select all human UniProt entries with a sequence variant that leads to a 'loss of function'""" ;
     sh:select """SELECT ?protein ?text
 WHERE
 { 

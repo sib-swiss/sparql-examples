@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix skos:<http://www.w3.org/2004/02/skos/core#> 
 ex:21
     sh:prefixes up: , rdfs: , rdf:, skos: ;
-    rdf:HTML """Find where disease related proteins are known to be located in the cell""";
+    rdfs:comment """Find where disease related proteins are known to be located in the cell""";
     sh:select """
 SELECT 
     ?protein 

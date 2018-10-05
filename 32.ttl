@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:32
     sh:prefixes up: , rdfs:, rdf: ;
-    rdf:HTML """Find UniProtKB entries with more than 1 <a href="https://www.uniprot.org/help/topo_dom">Topological domain annotation</a>""" ;
+    rdfs:comment """Find UniProtKB entries with more than 1 <a href="https://www.uniprot.org/help/topo_dom">Topological domain annotation</a>"""^^rdf:HTML ;
     sh:select """SELECT 
     ?protein 
     (GROUP_CONCAT(?comment; separator=", ") AS ?comments)

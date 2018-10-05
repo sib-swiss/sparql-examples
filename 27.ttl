@@ -4,7 +4,7 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 ex:27
     sh:prefixes up: ;
-    rdf:HTML """Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components""" ;
+    rdfs:comment """Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components""" ;
     sh:select """SELECT ?protein ?anyKindOfName ?names ?partType
 WHERE
 {

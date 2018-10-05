@@ -4,7 +4,7 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 ex:25
     sh:prefixes up: ;
-    rdf:HTML """Find any uniprot entry which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'""" ;
+    rdfs:comment """Find any uniprot entry which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'""" ;
     sh:select """SELECT ?protein ?anyKindOfName
 WHERE
 {

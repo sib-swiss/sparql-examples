@@ -3,7 +3,7 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 ex:24
-    rdf:HTML """Find the release number of the uniprot data that is currently being queried""" ;
+    rdfs:comment """Find the release number of the uniprot data that is currently being queried""" ;
     sh:select """SELECT
     ?version    
 FROM <http://sparql.uniprot.org/.well-known/void>

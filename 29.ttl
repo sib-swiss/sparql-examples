@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix allie: <http://allie.dbcls.jp/>
 ex:29
     sh:prefixes up: , rdfs:, allie: ;
-    rdf:HTML """Use <a href="http://allie.dbcls.jp/">ALLIE</a> a service for Abbreviation / Long Form in Japanese and English to search in UniProt using Japanese.""" ;
+    rdfs:comment """Use <a href="http://allie.dbcls.jp/">ALLIE</a> a service for Abbreviation / Long Form in Japanese and English to search in UniProt using Japanese."""^^rdf:HTML ;
     sh:select """SELECT
     ?englishLabelStr ?protein
 WHERE {

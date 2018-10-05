@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:30
     sh:prefixes up: , taxon: ;
-    rdf:HTML """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>""" ;
+    rdfs:comment """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>"""^^rdf:HTML ;
     sh:select """SELECT
   ?protein 
   (GROUP_CONCAT(?locusName; separator=',') AS ?locusNames)

@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:14
     sh:prefixes up: , taxon: ;
-    rdf:HTML """Construct new triples of the type 'HumanProtein' from all human UniProt entries""" ;
+    rdfs:comment """Construct new triples of the type 'HumanProtein' from all human UniProt entries""" ;
     sh:construct """CONSTRUCT
 {
 	?protein a up:HumanProtein .

@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:33
     sh:prefixes up: , rdfs:, rdf: ;
-    rdf:HTML """Find longest comment text associated with a UniProtKB Natural Variant Annotation""" ;
+    rdfs:comment """Find longest comment text associated with a UniProtKB Natural Variant Annotation""" ;
     sh:select """SELECT 
     ?annotation ?comment
 WHERE {
