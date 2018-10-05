@@ -4,7 +4,8 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:13
-    sh:prefixes up: ;
+    a sh:SPARQLAskExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Was any UniProt entry integrated on the 9th of January 2013""" ;
     sh:ask """ASK
 WHERE

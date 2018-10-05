@@ -4,7 +4,8 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:18
-    sh:prefixes up: , rdfs: , rdf: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select the number of UniProt entries for each of the EC (Enzyme Commission) second level categories""";
     sh:select """SELECT ?enzyme (COUNT(?protein) as ?size)
 WHERE

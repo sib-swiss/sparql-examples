@@ -5,7 +5,8 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:34
-    sh:prefixes up: , rdfs:, rdf: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Find the co-occurence count of Topological Domain comment text in UniProtKB entries""" ;
     sh:select """SELECT 
     ?comment1 

@@ -1,9 +1,17 @@
 prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#>
 prefix sh: <http://www.w3.org/ns/shacl#>
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
-ex: sh:declare [
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix up: <http://purl.uniprot.org/core/> 
+prefix faldo: <http://biohackathon.org/resource/faldo#>
+ex:
+  a owl:Ontology ;
+  rdfs:comment """This is a collection of SPARQL queries that are examples for use on different websites.""" ;
+  owl:imports sh: ; #, up: , faldo: ;
+  sh:declare [
         sh:prefix "up" ;
-        sh:namespace "http://purl.uniprot.org/core"^^xsd:anyURI ;
+        sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
   ] ;
   sh:declare [
 	sh:prefix "keywords" ;
@@ -57,10 +65,6 @@ sh:declare [
 	sh:prefix "GO" ;
 	sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI ;
   ] ;  
-sh:declare [
-	sh:prefix "up" ;
-	sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
-  ] ; 
 sh:declare [
     sh:prefix "allie" ;
     sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI ;

@@ -1,0 +1,696 @@
+# baseURI: http://sparql.uniprot.org/.well-known/sparql-examples#
+# imports: http://www.w3.org/ns/shacl#
+
+@prefix : <http://sparql.uniprot.org/.well-known/sparql-examples#> .
+@prefix GO: <http://purl.obolibrary.org/obo/GO_> .
+@prefix allie: <http://allie.dbcls.jp/> .
+@prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#> .
+@prefix faldo: <http://biohackathon.org/resource/faldo#> .
+@prefix orthodb: <http://purl.orthodb.org/> .
+@prefix orthodbGroup: <http://purl.orthodb.org/odbgroup/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix taxon: <http://purl.uniprot.org/taxonomy/> .
+@prefix uniprotkb: <http://purl.uniprot.org/uniprot/> .
+@prefix up: <http://purl.uniprot.org/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:
+  rdf:type owl:Ontology ;
+  rdfs:comment "This is a collection of SPARQL queries that are examples for use on different websites." ;
+  owl:imports sh: ;
+  sh:declare [
+      sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI ;
+      sh:prefix "allie" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI ;
+      sh:prefix "faldo" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI ;
+      sh:prefix "GO" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI ;
+      sh:prefix "dc" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI ;
+      sh:prefix "bibo" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI ;
+      sh:prefix "orthodb" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI ;
+      sh:prefix "orthodbGroup" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
+      sh:prefix "up" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI ;
+      sh:prefix "ec" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI ;
+      sh:prefix "keywords" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI ;
+      sh:prefix "taxon" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI ;
+      sh:prefix "uniprotkb" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
+      sh:prefix "rdf" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+      sh:prefix "rdfs" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ;
+      sh:prefix "xsd" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
+      sh:prefix "owl" ;
+    ] ;
+  sh:declare [
+      sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
+      sh:prefix "skos" ;
+    ] ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#1>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all taxa from the <a href=\"https://www.uniprot.org/taxonomy/\">UniProt taxonomy</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """ 
+SELECT ?taxon
+FROM <http://sparql.uniprot.org/taxonomy>
+WHERE
+{
+    ?taxon a up:Taxon .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#10>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all human UniProt entries with a sequence variant that leads to a tyrosine to phenylalanine substitution" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?annotation ?begin ?text
+WHERE
+{
+        ?protein a up:Protein ;
+            up:organism taxon:9606 ; 
+            up:annotation ?annotation .
+        ?annotation a up:Natural_Variant_Annotation ;
+            rdfs:comment ?text ;
+            up:substitution ?substitution ;
+            up:range/faldo:begin
+                [ faldo:position ?begin ;
+                  faldo:reference ?sequence ] .
+        ?sequence rdf:value ?value .
+        BIND (substr(?value, ?begin, 1) as ?original) .
+        FILTER(?original = 'Y' && ?substitution = 'F') .
+} """ ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#11>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?begin ?end
+WHERE 
+{
+	?protein a up:Protein .
+	?protein up:annotation ?annotation .
+	?annotation a up:Transmembrane_Annotation .
+	?annotation up:range ?range .
+	?range faldo:begin/faldo:position ?begin .
+	?range faldo:end/faldo:position ?end
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#12>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all UniProt entries that were integrated on the 30th of November 2010" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein
+WHERE
+{
+	?protein a up:Protein . 
+	?protein up:created '2010-11-30'^^xsd:date
+} """ ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#13>
+  rdf:type sh:SPARQLAskExecutable ;
+  rdfs:comment "Was any UniProt entry integrated on the 9th of January 2013" ;
+  sh:ask """ASK
+WHERE
+{
+	?protein a up:Protein .
+	?protein up:created '2013-01-09'^^xsd:date
+}""" ;
+  sh:prefixes ex: ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#14>
+  rdfs:comment "Construct new triples of the type 'HumanProtein' from all human UniProt entries" ;
+  sh:construct """CONSTRUCT
+{
+	?protein a up:HumanProtein .
+}
+WHERE
+{
+	?protein a up:Protein .
+	?protein up:organism taxon:9606
+}""" ;
+  sh:prefixes up: ;
+  sh:prefixes taxon: ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#15>
+  rdf:type sh:SPARQLExecutable ;
+  rdfs:comment "Select all triples that relate to the EMBL CDS entry AA089367.1: " ;
+  sh:describe """DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#16>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all triples that relate to the taxon that describes <i>Homo sapiens</i> in the named graph for <a href=\"http://sparql.uniprot.org/taxonomy\">taxonomy</a>"^^rdf:HTML ;
+  sh:describe """DESCRIBE taxon:9606 
+FROM <http://sparql.uniprot.org/taxonomy>
+""" ;
+  sh:prefixes ex: ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#17>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select the average number of cross-references to the <a href=\"${uniprot}database/DB-0070\">PDB</a> database of UniProt entries that have at least one cross-reference to the PDB database"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT (AVG(?linksToPdbPerEntry) AS ?avgLinksToPdbPerEntry)
+WHERE
+{
+	SELECT ?protein (COUNT(DISTINCT ?db) AS ?linksToPdbPerEntry)
+	WHERE
+	{
+		?protein a up:Protein .
+		?protein rdfs:seeAlso ?db .
+		?db up:database &amp;lt;http://purl.uniprot.org/database/PDB&amp;gt;
+	}
+	GROUP BY ?protein ORDER BY DESC(?linksToPdbPerEntry)
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#18>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select the number of UniProt entries for each of the EC (Enzyme Commission) second level categories" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?enzyme (COUNT(?protein) as ?size)
+WHERE
+{
+	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-) }
+	?protein up:enzyme ?enzyme . 
+	?enzyme rdfs:subClassOf ?ecClass . 
+}
+GROUP BY ?enzyme ORDER BY ?enzyme
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#19>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find all Natural Variant Annotations if associated via an evidence tag to an article with a pubmed identifier" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?accession
+    ?annotation_acc 
+    ?pubmed
+WHERE
+{
+        ?protein a up:Protein ;
+            up:annotation ?annotation .
+        ?annotation a up:Natural_Variant_Annotation .
+        ?linkToEvidence rdf:object ?annotation ;
+                        up:attribution ?attribution .
+        ?attribution up:source ?source .
+        ?source a up:Journal_Citation .
+  BIND(SUBSTR(STR(?protein),33) AS ?accession)
+  BIND(IF(CONTAINS(STR(?annotation), \"#SIP\"), SUBSTR(STR(?annotation),33), SUBSTR(STR(?annotation),36))AS?annotation_acc)
+  BIND(SUBSTR(STR(?source),35) AS ?pubmed)
+}
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#2>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all bacterial taxa and their scientific name from the <a href=\"https://www.uniprot.org/taxonomy/\">UniProt taxonomy</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """
+SELECT ?taxon ?name
+WHERE
+{
+    ?taxon a up:Taxon .
+    ?taxon up:scientificName ?name .
+    ?taxon rdfs:subClassOf taxon:2 .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#20>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find how often an article in pubmed was used in an evidence tag (ordered by most used to least)" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?source 
+    (COUNT(?attribution) AS ?attribitions)
+WHERE
+{
+        ?protein a up:Protein ;
+            up:annotation ?annotation .
+        ?linkToEvidence rdf:object ?annotation ;
+                        up:attribution ?attribution .
+        ?attribution up:source ?source .
+        ?source a up:Journal_Citation .
+} GROUP BY ?source ORDER BY DESC(COUNT(?attribution))
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#21>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find where disease related proteins are known to be located in the cell" ;
+  sh:prefixes ex: ;
+  sh:select """
+SELECT 
+    ?protein 
+    ?disease 
+    ?location_inside_cell 
+    ?cellcmpt
+WHERE
+{
+    ?protein up:annotation ?diseaseAnnotation , ?subcellAnnotation .
+    ?diseaseAnnotation up:disease/skos:prefLabel ?disease .
+    ?subcellAnnotation up:locatedIn/up:cellularComponent ?cellcmpt .
+    ?cellcmpt skos:prefLabel ?location_inside_cell .
+}
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#22>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "For two accessions find the GO term labels and group them into GO process,function and component" ;
+  sh:prefixes ex: ;
+  sh:select """
+SELECT 
+    (CONCAT(SUBSTR(STR(?protein), 33)) AS ?uniprot)
+    (GROUP_CONCAT(?celtype; separator=\";\") AS ?celtypes)
+    (GROUP_CONCAT(?biotype; separator=\";\") AS ?biotypes)
+    (GROUP_CONCAT(?moltype; separator=\";\") AS ?moltypes)
+WHERE
+{
+    VALUES (?ac) {(\"Q6GZX4\") (\"Q96375\")}
+    BIND (IRI(CONCAT(\"http://purl.uniprot.org/uniprot/\",?ac)) AS ?protein)
+    ?protein a up:Protein .
+    ?protein up:classifiedWith ?goTerm .
+    #Determine if the type is biological_process
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0008150>.
+        ?goTerm rdfs:label ?biotype .
+    }
+    #Determine if the type is cellular_component
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0005575>.
+        ?goTerm rdfs:label ?celtype .
+    }
+    #Determine if the type is molecular_function
+    OPTIONAL {
+        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0003674> .
+        ?goTerm rdfs:label ?moltype .
+    }
+    #Filter out the uniprot keywords
+    FILTER(bound(?biotype) || bound(?celtype) || bound(?moltype))
+} GROUP BY ?protein
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#23>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Number of reviewed entries (Swiss-Prot) that are related to <a href=\"http://amigo.geneontology.org/amigo/term/GO:0016301\">kinase activity</a>" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT
+    (COUNT(DISTINCT(?protein)) AS ?pc)
+WHERE
+{   
+    ?protein rdf:type up:Protein ;
+        up:reviewed true  ;
+        up:organism taxon:9606 ;
+        up:classifiedWith|(up:classifiedWith/rdfs:subClassOf) GO:0016301 .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#24>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find the release number of the uniprot data that is currently being queried" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT
+    ?version    
+FROM <http://sparql.uniprot.org/.well-known/void>
+WHERE
+{   
+    [] <http://purl.org/pav/2.0/version> ?version
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#25>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find any uniprot entry which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?anyKindOfName
+WHERE
+{
+		?protein a up:Protein .
+		?protein (up:recommendedName|up:alternativeName) ?structuredName .
+		?structuredName ?anyKindOfName  \"HLA class I histocompatibility antigen, B-73 alpha chain\" .
+		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#26>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find any uniprot entry, or an uniprot entries domain or component which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?anyKindOfName
+WHERE
+{
+		?protein a up:Protein .
+		?protein (up:recommendedName|up:alternativeName)|((up:domain|up:component)/(up:recommendedName|up:alternativeName)) ?structuredName .
+		?structuredName ?anyKindOfName  \"HLA class I histocompatibility antigen, B-73 alpha chain\" .
+		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#27>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?anyKindOfName ?names ?partType
+WHERE
+{
+		BIND(<http://purl.uniprot.org/uniprot/P05067> AS ?protein)
+		?protein a up:Protein .
+  		{
+  			?protein (up:recommendedName|up:alternativeName) ?structuredName .
+        }
+        UNION
+  		{
+          VALUES(?partType){(up:domain) (up:component)}
+		  ?protein ?partType ?part .
+          ?part (up:recommendedName|up:alternativeName) ?structuredName .
+	    }
+		?structuredName ?anyKindOfName  ?names .
+		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#28>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Get the list of uniprot entries for the chromosome of proteome <a href=\"https://www.uniprot.org/proteomes/UP000000625\">UP000000625</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+  ?proteome 
+  ?protein
+WHERE
+{
+  ?protein a up:Protein ;
+           up:reviewed true ;
+           up:proteome ?proteome .
+  VALUES (?proteome) {(<http://purl.uniprot.org/proteomes/UP000000625#Chromosome>)}
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#29>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Use <a href=\"http://allie.dbcls.jp/\">ALLIE</a> a service for Abbreviation / Long Form in Japanese and English to search in UniProt using Japanese."^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT
+    ?englishLabelStr ?protein
+WHERE {
+    SERVICE<http://data.allie.dbcls.jp/sparql>{
+            ?x rdfs:label \"アミロイド前駆体タンパク質\"@ja ;
+                rdfs:label ?englishLabel .
+            FILTER(lang(?englishLabel) = \"en\")
+    }
+    BIND (STR(?englishLabel) AS ?englishLabelStr)
+    ?protein a up:Protein .
+    {
+        ?protein (up:recommendedName|up:alternativeName) ?structuredName .
+    }
+    UNION
+    {
+          VALUES(?partType){(up:domain) (up:component)}
+                  ?protein ?partType ?part .
+          ?part (up:recommendedName|up:alternativeName) ?structuredName .
+    }
+    ?structuredName ?anyKindOfName  ?englishLabelStr .
+    ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#3>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all UniProt entries, and their organism and amino acid sequences (including isoforms), for <a href=\"http://purl.uniprot.org/taxonomy/83333\">_E. coli K12_ and all its strains</a>"^^rdfs:HTML ;
+  sh:prefixes ex: ;
+  sh:select """
+SELECT ?protein ?organism ?isoform ?aa_sequence
+WHERE
+{
+    ?protein a up:Protein .
+    ?protein up:organism ?organism .
+    ?organism rdfs:subClassOf* taxon:83333 .
+    ?protein up:sequence ?isoform .
+    ?isoform rdf:value ?aa_sequence .
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#30>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find UniProt entries with merged loci in <a href=\"https://www.uniprot.org/taxonomy/360910\">Bordetella avium</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT
+  ?protein 
+  (GROUP_CONCAT(?locusName; separator=',') AS ?locusNames)
+WHERE 
+{ 
+  ?protein a up:Protein ;
+    up:organism taxon:360910 ;
+    up:encodedBy ?gene .
+  ?gene up:locusName ?locusName .
+} 
+GROUP BY ?protein 
+HAVING (COUNT(?locusName) > 1)
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#31>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find UniParc records whose sequence point to the most database entries" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?sequence ?entries
+WHERE
+{
+    SELECT 
+        ?sequence 
+        (COUNT(?entry) AS ?entries)
+    WHERE
+    {
+        GRAPH <http://sparql.uniprot.org/uniparc> {
+            ?sequence up:sequenceFor ?entry .
+        }
+    } GROUP BY ?sequence
+} ORDER BY DESC(?entries)   
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#32>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find UniProtKB entries with more than 1 <a href=\"https://www.uniprot.org/help/topo_dom\">Topological domain annotation</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?protein 
+    (GROUP_CONCAT(?comment; separator=\", \") AS ?comments)
+WHERE
+{
+    ?protein a up:Protein ;
+            up:annotation ?annotation . 
+    ?annotation rdf:type up:Topological_Domain_Annotation ;
+            rdfs:comment ?comment .
+} 
+GROUP BY ?protein 
+HAVING (COUNT(?annotation) > 1)
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#33>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find longest comment text associated with a UniProtKB Natural Variant Annotation" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?annotation ?comment
+WHERE {
+    ?annotation a up:Natural_Variant_Annotation ;
+        rdfs:comment ?comment . 
+} 
+ORDER BY DESC(STRLEN(?comment))
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#34>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find the co-occurence count of Topological Domain comment text in UniProtKB entries" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?comment1 
+    ?comment2 
+    (COUNT(?comment1) AS ?count1)
+WHERE
+{
+    ?protein a up:Protein ;
+               up:annotation ?annotation1 , 
+                             ?annotation2 . 
+    ?annotation1 rdf:type up:Topological_Domain_Annotation ;
+        rdfs:comment ?rawComment1 .
+    ?annotation2 rdf:type up:Topological_Domain_Annotation ;
+        rdfs:comment ?rawComment2 . 
+    BIND(IF(contains(?rawComment1, ';'), 
+            STRBEFORE(?rawComment1,';'), 
+            ?rawComment1) AS ?comment1)
+    BIND(IF(contains(?rawComment2, ';'), 
+            STRBEFORE(?rawComment2,';'), 
+            ?rawComment2) AS ?comment2)
+    FILTER(?annotation1 != ?annotation2)
+} 
+GROUP BY ?comment1 ?comment2 
+ORDER BY DESC(COUNT(?comment1))
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#35>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluser identity" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+    ?similar ?identity
+FROM <http://sparql.uniprot.org/uniref>
+FROM <http://sparql.uniprot.org/uniprot>
+WHERE
+{
+    BIND (uniprotkb:P05607 AS ?protein)
+    ?cluster up:member ?member ;
+             up:member/up:sequenceFor ?protein;
+             up:identity ?identity .
+    ?member up:sequenceFor ?similar .
+    FILTER(!sameTerm(?similar, ?protein))
+} 
+ORDER BY DESC(?identity)
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#36>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Find the orthologous proteins for UniProtKB entry P05067 using the <a href=\"http://www.orthod.org\">OrthoDB database</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT 
+  ?protein 
+  ?orthoGroup
+  ?scientificName 
+  ?functionComment 
+  ?prefferedGeneName 
+  ((STRLEN(?value) - ?medianLength) as ?deviationFromMedianLength)
+WHERE
+{
+  uniprotkb:P05067 a up:Protein ;
+        up:organism/up:scientificName ?scientificName ;
+        rdfs:seeAlso ?orthoGroup ;
+        up:encodedBy/skos:prefLabel ?prefferedGeneName ;
+             up:sequence/rdf:value ?value .
+  OPTIONAL {
+     ?protein up:annotation ?functionAnnotation .
+     ?functionAnnotation a up:Function_Annotation ;
+                         rdfs:comment ?functionComment .
+  }
+  SERVICE<http://sparql.orthodb.org/sparql>{
+    ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
+    ?orthoGroup orthodb:hasMember ?xref .
+    ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
+  }
+}
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#4>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select the UniProt entry with the <a href=\"https://www.uniprot.org/manual/entry_name\">mnemonic</a> 'A4_HUMAN'"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein
+WHERE
+{
+        ?protein a up:Protein .
+        ?protein up:mnemonic 'A4_HUMAN'
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#5>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all cross-references to external databases of the category <a href=\"${uniprot}database/?query=category:%223D+structure+databases%22\">'3D structure databases'</a> of UniProt entries that are classified with the keyword <a href=\"${uniprot}/keywords/5\">'Acetoin biosynthesis (KW-0005)'</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """ 
+SELECT ?protein ?db
+WHERE
+{
+        ?protein a up:Protein .
+        ?protein rdfs:seeAlso ?db .
+        ?db up:database <http://purl.uniprot.org/database/PDB>
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#6>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all cross-references to external databases of the category <a href=\"https://www.uniprot.org/database/?query=category:%223D+structure+databases%22\">'3D structure databases'</a> of UniProt entries that are classified with the keyword <a href=\"https://www.uniprot.org/keywords/5\">'Acetoin biosynthesis (KW-0005)'</a>"^^rdf:HTML ;
+  sh:prefixes ex: ;
+  sh:select """SELECT DISTINCT ?link
+WHERE
+{
+    ?protein a up:Protein . 
+    ?protein up:classifiedWith keywords:5 .
+    ?protein rdfs:seeAlso ?link .
+    ?link up:database ?db .
+    ?db up:category '3D structure databases'
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#7>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select all UniProt entries, and their recommended protein name, that have a preferred gene name that contains the text 'DNA'" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?name
+WHERE
+{
+        ?protein a up:Protein .
+        ?protein up:recommendedName ?recommended .
+        ?recommended up:fullName ?name .
+        ?protein up:encodedBy ?gene .
+        ?gene skos:prefLabel ?text .
+        FILTER CONTAINS(?text, 'DNA')
+}
+""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#8>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdfs:comment "Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?name ?text
+WHERE
+{
+        ?protein a up:Protein . 
+        ?protein up:organism taxon:9606 .
+        ?protein up:encodedBy ?gene . 
+        ?gene skos:prefLabel ?name .
+        ?protein up:annotation ?annotation .
+        ?annotation a up:Disease_Annotation .
+        ?annotation rdfs:comment ?text
+}""" ;
+.
+<http://sparql.uniprot.org/.well-known/sparql-examples#9>
+  rdf:type sh:SPARQLSelectExecutable ;
+  rdf:comment "Select all human UniProt entries with a sequence variant that leads to a 'loss of function'" ;
+  sh:prefixes ex: ;
+  sh:select """SELECT ?protein ?text
+WHERE
+{ 
+        ?protein a up:Protein .
+        ?protein up:organism taxon:9606 . 
+        ?protein up:annotation ?annotation .
+        ?annotation a up:Natural_Variant_Annotation . 
+        ?annotation rdfs:comment ?text .
+        FILTER (CONTAINS(?text, 'loss of function'))
+}""" ;
+.

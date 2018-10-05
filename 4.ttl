@@ -4,7 +4,8 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:4 
-    sh:prefixes up: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select the UniProt entry with the <a href="https://www.uniprot.org/manual/entry_name">mnemonic</a> 'A4_HUMAN'"""^^rdf:HTML ;
     sh:select """SELECT ?protein
 WHERE

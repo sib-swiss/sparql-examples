@@ -7,10 +7,10 @@ prefix taxon:<http://purl.uniprot.org/taxonomy/>
 prefix uniprotkb:<http://purl.uniprot.org/uniprot/>
  
 ex:35
-    sh:prefixes up: , rdfs:, rdf: , uniprotkb: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluser identity""" ;
-    sh:select """
-SELECT 
+    sh:select """SELECT 
     ?similar ?identity
 FROM <http://sparql.uniprot.org/uniref>
 FROM <http://sparql.uniprot.org/uniprot>

@@ -3,8 +3,9 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>  
-ex:17 
-    sh:prefixes up: , rdfs: , rdf: ;
+ex:17
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select the average number of cross-references to the <a href="${uniprot}database/DB-0070">PDB</a> database of UniProt entries that have at least one cross-reference to the PDB database"""^^rdf:HTML;
     sh:select """SELECT (AVG(?linksToPdbPerEntry) AS ?avgLinksToPdbPerEntry)
 WHERE

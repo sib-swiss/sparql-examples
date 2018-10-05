@@ -5,7 +5,8 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
 ex:31
-    sh:prefixes up: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Find UniParc records whose sequence point to the most database entries""" ;
     sh:select """SELECT ?sequence ?entries
 WHERE

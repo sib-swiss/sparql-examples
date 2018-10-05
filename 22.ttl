@@ -5,7 +5,8 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix skos:<http://www.w3.org/2004/02/skos/core#> 
 ex:22
-    sh:prefixes up: , rdfs: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """For two accessions find the GO term labels and group them into GO process,function and component""" ;
     sh:select """
 SELECT 

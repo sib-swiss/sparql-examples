@@ -4,7 +4,8 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:2
-    sh:prefixes up: , rdfs: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select all bacterial taxa and their scientific name from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>"""^^rdf:HTML ;
     sh:select """
 SELECT ?taxon ?name

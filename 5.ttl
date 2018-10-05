@@ -4,7 +4,8 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:5
-    sh:prefixes up: , rdfs: , rdf: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select all cross-references to external databases of the category <a href="${uniprot}database/?query=category:%223D+structure+databases%22">'3D structure databases'</a> of UniProt entries that are classified with the keyword <a href="${uniprot}/keywords/5">'Acetoin biosynthesis (KW-0005)'</a>"""^^rdf:HTML ;
     sh:select """ 
 SELECT ?protein ?db

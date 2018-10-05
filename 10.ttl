@@ -5,7 +5,8 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix faldo:<http://biohackathon.org/resource/faldo#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>  
 ex:10
-    sh:prefixes up: , rdfs: , rdf: , faldo: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select all human UniProt entries with a sequence variant that leads to a tyrosine to phenylalanine substitution""" ;
     sh:select """SELECT ?protein ?annotation ?begin ?text
 WHERE

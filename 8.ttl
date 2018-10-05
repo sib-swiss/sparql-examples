@@ -5,7 +5,8 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix skos: <http://www.w3.org/2004/02/skos/core#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:8
-    sh:prefixes up: , rdfs: , skos: ;
+    a sh:SPARQLSelectExecutable ;
+    sh:prefixes ex: ;
     rdfs:comment """Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease""" ;
     sh:select """SELECT ?name ?text
 WHERE
