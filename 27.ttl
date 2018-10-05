@@ -2,6 +2,7 @@ prefix ex: <http://sparql.uniprot.org/.well-known/sparql-examples#>
 prefix up: <http://purl.uniprot.org/core/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:27
     sh:prefixes up: ;
     rdfs:comment """Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components""" ;
