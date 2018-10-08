@@ -9,71 +9,55 @@ ex:
   a owl:Ontology ;
   rdfs:comment """This is a collection of SPARQL queries that are examples for use on different websites.""" ;
   owl:imports sh: ; #, up: , faldo: ;
-  sh:declare [
-        sh:prefix "up" ;
-        sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI ;
-  ] ;
-  sh:declare [
+  sh:declare ex:prefix-up , ex:prefix-kewyords, ex:prefix-uniprotkb , ex:prefix-taxon , ex:prefix-ec , ex:prefix-rdf, ex:prefix-rdfs, ex:prefix-skos, ex:prefix-owl, ex:prefix-bibo, ex:prefix-dc, ex:prefix-xsd, ex:prefix-faldo, ex:prefix-GO, ex:prefix-allie, ex:prefix-orthodbGroup, ex:prefix-orthodb .
+ex:prefix-up
+  sh:prefix "up" ;
+  sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI .
+ex:prefix-keywords
 	sh:prefix "keywords" ;
-	sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI .
+ex:prefix-uniprotkb
 	sh:prefix "uniprotkb" ;
-	sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI .
+ex:prefix-taxon
 	sh:prefix "taxon" ;
-	sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI .
+ex:prefix-ec
 	sh:prefix "ec" ;
-	sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI .
+ex:prefix-rdf
 	sh:prefix "rdf" ;
-	sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI .
+ex:prefix-rdfs
 	sh:prefix "rdfs" ;
-	sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
-  ] ; 
-  sh:declare [
+	sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI .
+ex:prefix-skos
 	sh:prefix "skos" ;
-	sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI .
+ex:prefix-owl
 	sh:prefix "owl" ;
-	sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI .
+ex:prefix-bibo
 	sh:prefix "bibo" ;
-	sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI .
+ex:prefix-dc
 	sh:prefix "dc" ;
-	sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI .
+ex:prefix-xsd
 	sh:prefix "xsd" ;
-	sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI .
+ex:prefix-faldo
 	sh:prefix "faldo" ;
-	sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI ;
-  ] ; 
-sh:declare [
+	sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI .
+ex:prefix-GO
 	sh:prefix "GO" ;
-	sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI ;
-  ] ;  
-sh:declare [
+	sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI .
+ex:prefix-allie
     sh:prefix "allie" ;
-    sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI ;
-  ] ;
-sh:declare [
+    sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI .
+ex:prefix-orthodbGroup
     sh:prefix "orthodbGroup" ;
-    sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI ;
-  ] ;
-sh:declare [
+    sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI .
+ex:prefix-orthodb
     sh:prefix "orthodb" ;
-    sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI ;
-  ] .  
+    sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI .
