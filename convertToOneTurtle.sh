@@ -3,7 +3,7 @@ rm examples.ttl
 echo "# baseURI: http://sparql.uniprot.org/.well-known/sparql-examples#" > examples.ttl
 echo "# imports: http://purl.uniprot.org/core/ " >> examples.ttl
 echo "# prefix: ex" >> examples.ttl
-if [ ! -z $(which riot) ]
+if which riot
 then
   riot --formatted=turtle *.ttl  >> examples.ttl
 else
