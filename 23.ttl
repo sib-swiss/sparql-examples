@@ -7,7 +7,7 @@ prefix skos:<http://www.w3.org/2004/02/skos/core#>
 prefix GO:<http://purl.obolibrary.org/obo/GO_>
 prefix taxon:<http://purl.uniprot.org/taxonomy/>
 ex:23
-    a sh:SPARQLSelectExecutable ;
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Number of reviewed entries (Swiss-Prot) that are related to <a href="http://amigo.geneontology.org/amigo/term/GO:0016301">kinase activity</a>""" ;
     sh:select """SELECT

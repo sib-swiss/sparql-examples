@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix faldo:<http://biohackathon.org/resource/faldo#> 
 ex:11
-    a sh:SPARQLSelectExecutable ;
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence""" ;
     sh:select """SELECT ?protein ?begin ?end

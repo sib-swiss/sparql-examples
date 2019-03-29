@@ -4,11 +4,10 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:3
-    a sh:SPARQLSelectExecutable ;
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all UniProt entries, and their organism and amino acid sequences (including isoforms), for <a href="http://purl.uniprot.org/taxonomy/83333">_E. coli K12_ and all its strains</a>"""^^rdfs:HTML ;
-    sh:select """
-SELECT ?protein ?organism ?isoform ?aa_sequence
+    sh:select """SELECT ?protein ?organism ?isoform ?aa_sequence
 WHERE
 {
     ?protein a up:Protein .

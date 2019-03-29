@@ -8,7 +8,7 @@ prefix uniprotkb: <http://purl.uniprot.org/uniprot/>
 prefix orthodb: <http://purl.orthodb.org/>
 prefix orthodbGroup: <http://purl.orthodb.org/odbgroup/>
 ex:36
-    a sh:SPARQLSelectExecutable ;
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Find the orthologous proteins for UniProtKB entry P05067 using the <a href="http://www.orthod.org">OrthoDB database</a>"""^^rdf:HTML ;
     sh:select """SELECT 

@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix taxon:<http://purl.uniprot.org/taxonomy/>
 ex:16
-    a sh:SPARQLSelectExecutable ;
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all triples that relate to the taxon that describes <i>Homo sapiens</i> in the named graph for <a href="http://sparql.uniprot.org/taxonomy">taxonomy</a>"""^^rdf:HTML;
     sh:describe """DESCRIBE taxon:9606 
