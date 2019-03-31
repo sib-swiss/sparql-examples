@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:9
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdf:comment """Select all human UniProt entries with a sequence variant that leads to a 'loss of function'""" ;
+    rdfs:comment """Select all human UniProt entries with a sequence variant that leads to a 'loss of function'""" ;
     sh:select """SELECT ?protein ?text
 WHERE
 { 
