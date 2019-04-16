@@ -14,50 +14,71 @@ ex:prefix-up
   sh:prefix "up" ;
   sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI .
 ex:prefix-keywords
-	sh:prefix "keywords" ;
-	sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI .
+  sh:prefix "keywords" ;
+  sh:namespace "http://purl.uniprot.org/keywords/"^^xsd:anyURI .
 ex:prefix-uniprotkb
-	sh:prefix "uniprotkb" ;
-	sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI .
+  sh:prefix "uniprotkb" ;
+  sh:namespace "http://purl.uniprot.org/uniprot/"^^xsd:anyURI .
 ex:prefix-taxon
-	sh:prefix "taxon" ;
-	sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI .
+  sh:prefix "taxon" ;
+  sh:namespace "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI .
 ex:prefix-ec
-	sh:prefix "ec" ;
-	sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI .
+  sh:prefix "ec" ;
+  sh:namespace "http://purl.uniprot.org/enzyme/"^^xsd:anyURI .
 ex:prefix-rdf
-	sh:prefix "rdf" ;
-	sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI .
+  sh:prefix "rdf" ;
+  sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI .
 ex:prefix-rdfs
-	sh:prefix "rdfs" ;
-	sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI .
+  sh:prefix "rdfs" ;
+  sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI .
 ex:prefix-skos
-	sh:prefix "skos" ;
-	sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI .
+  sh:prefix "skos" ;
+  sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI .
 ex:prefix-owl
-	sh:prefix "owl" ;
-	sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI .
+  sh:prefix "owl" ;
+  sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI .
 ex:prefix-bibo
-	sh:prefix "bibo" ;
-	sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI .
+  sh:prefix "bibo" ;
+  sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI .
 ex:prefix-dc
-	sh:prefix "dc" ;
-	sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI .
+  sh:prefix "dc" ;
+  sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI .
 ex:prefix-xsd
-	sh:prefix "xsd" ;
-	sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI .
+  sh:prefix "xsd" ;
+  sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI .
 ex:prefix-faldo
-	sh:prefix "faldo" ;
-	sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI .
+  sh:prefix "faldo" ;
+  sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI .
 ex:prefix-GO
-	sh:prefix "GO" ;
-	sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI .
+  sh:prefix "GO" ;
+  sh:namespace "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI .
 ex:prefix-allie
-    sh:prefix "allie" ;
-    sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI .
+  sh:prefix "allie" ;
+  sh:namespace "http://allie.dbcls.jp/"^^xsd:anyURI .
 ex:prefix-orthodbGroup
-    sh:prefix "orthodbGroup" ;
-    sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI .
+  sh:prefix "orthodbGroup" ;
+  sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI .
 ex:prefix-orthodb
-    sh:prefix "orthodb" ;
-    sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI .
+  sh:prefix "orthodb" ;
+  sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI .
+ex:prefix-sio 
+  sh:prefix "sio" ;
+  sh:namesapce "http://semanticscience.org/resource/"^^xsd:anyURI .
+ex:prefix-identifiers
+  sh:prefix "identifiers" ;
+  sh:namespace "http://identifiers.org/"^^xsd:anyURI .
+ex:prefix-ensembl 
+  sh:prefix "ensembl" ; 
+  sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl/"^^xsd:anyURI .
+ex:prefix-ensembltranscript 
+  sh:prefix "ensembltranscript" ; 
+  sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.transcript/"^^xsd:anyURI .
+ex:prefix-ensemblexon 
+  sh:prefix "ensemblexon" ; 
+  sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.exon/"^^xsd:anyURI .
+ex:prefix-ensemblprotein 
+  sh:prefix "ensemblprotein" ; 
+  sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.protein/"^^xsd:anyURI .
+ex:prefix-ensemblterms 
+  sh:prefix "ensemblterms" ; 
+  sh:namespace "http://rdf.ebi.ac.uk/terms/ensembl/"^^xsd:anyURI .

@@ -1,0 +1,27 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon: <http://purl.uniprot.org/taxonomy/>
+ex:38
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """For the human entry P05067 (Amyloid-beta precursor protein) find the trascript start ends in Ensembl""" ;
+    sh:select """
+SELECT 
+	?uniprot_uri 
+	?transcript 
+	?begin
+	?end 
+WHERE {
+    BIND(uniprotkb:P05067 AS ?uniprot_uri)
+    SERVICE <https://www.ebi.ac.uk/rdf/services/sparql> {
+      ?ensemblGene ensemblterms:DEPENDENT ?uniprot_uri .
+      ?transcript faldo:location ?location ;
+         obo:SO_transcribed_from ?ensemblGene . 
+      ?location faldo:begin [faldo:position ?begin] ;
+         faldo:end [faldo:position ?end ] .
+  } 
+}
+""" .
