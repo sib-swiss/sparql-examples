@@ -82,3 +82,6 @@ ex:prefix-ensemblprotein
 ex:prefix-ensemblterms 
   sh:prefix "ensemblterms" ; 
   sh:namespace "http://rdf.ebi.ac.uk/terms/ensembl/"^^xsd:anyURI .
+ex:prefix-schema 
+  sh:prefix "schema" ; 
+  sh:namespace "http://schema.org/"^^xsd:anyURI .
