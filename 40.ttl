@@ -1,0 +1,48 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+prefix schema:<http://schema.org/>
+ex:40
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Retrieve human enzymes that targets that metabolize sphingolipids with all drugs having an assay.
+    Considering only drugs with highestDevelopmentPhase 4, and uniprot entries in a reference proteome (KW:1185)""" ;
+    sh:select """
+SELECT DISTINCT 
+  ?protein 
+  ?activityType 
+  ?standardActivityValue 
+  ?standardActivityUnit 
+  ?chemblMolecule 
+  ?chemlbMoleculePrefLabel
+WHERE {
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+    ?rhea rdfs:subClassOf rh:Reaction ;
+      rh:status rh:Approved ;
+      rh:side/rh:contains/rh:compound/rh:chebi/rdfs:subClassOf+ CHEBI:26739 .
+  }
+  ?ca up:catalyzedReaction ?rhea .
+  
+  ?protein up:annotation/up:catalyticActivity ?ca ;
+    up:organism taxon:9606 ;
+    up:classifiedWith keywords:1185 .
+  SERVICE <https://www.ebi.ac.uk/rdf/services/sparql> {
+    ?activity a cco:Activity ;
+      cco:hasMolecule ?chemblMolecule ;
+      cco:hasAssay ?assay ;
+      cco:standardType ?activityType ;
+      cco:standardValue ?standardActivityValue ;
+      cco:standardUnits ?standardActivityUnit .
+    ?chemblMolecule cco:highestDevelopmentPhase 4 ;
+      rdfs:label ?chemblMoleculeLabel ;
+      skos:prefLabel ?chemlbMoleculePrefLabel .
+    ?assay cco:hasTarget ?target .
+    ?target cco:hasTargetComponent/cco:targetCmptXref ?protein .
+    ?protein a cco:UniprotRef .
+  }
+} 
+"""  ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
