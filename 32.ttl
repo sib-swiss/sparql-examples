@@ -4,6 +4,7 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 prefix taxon:<http://purl.uniprot.org/taxonomy/> 
+prefix schema:<http://schema.org/>
 ex:32    
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -20,4 +21,5 @@ WHERE
 } 
 GROUP BY ?protein 
 HAVING (COUNT(?annotation) > 1)
-""" .
+"""  ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

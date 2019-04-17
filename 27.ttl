@@ -3,24 +3,30 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:27
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components""" ;
-    sh:select """SELECT ?protein ?anyKindOfName ?names ?partType
+    sh:select """SELECT
+  ?protein
+  ?anyKindOfName 
+  ?names 
+  ?partType
 WHERE
 {
-		BIND(<http://purl.uniprot.org/uniprot/P05067> AS ?protein)
-		?protein a up:Protein .
-  		{
-  			?protein (up:recommendedName|up:alternativeName) ?structuredName .
-        }
-        UNION
-  		{
-          VALUES(?partType){(up:domain) (up:component)}
-		  ?protein ?partType ?part .
-          ?part (up:recommendedName|up:alternativeName) ?structuredName .
-	    }
-		?structuredName ?anyKindOfName  ?names .
-		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
-}""" .
+  BIND(<http://purl.uniprot.org/uniprot/P05067> AS ?protein)
+  ?protein a up:Protein .
+  {
+    ?protein (up:recommendedName|up:alternativeName) ?structuredName .
+  }
+    UNION
+  {
+    VALUES(?partType){(up:domain) (up:component)}
+    ?protein ?partType ?part .
+    ?part (up:recommendedName|up:alternativeName) ?structuredName .
+  }
+  ?structuredName ?anyKindOfName  ?names .
+  ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}"""  ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

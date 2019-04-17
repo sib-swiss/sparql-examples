@@ -3,6 +3,7 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:9
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -16,4 +17,5 @@ WHERE
         ?annotation a up:Natural_Variant_Annotation . 
         ?annotation rdfs:comment ?text .
         FILTER (CONTAINS(?text, 'loss of function'))
-}""" .
+}"""  ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

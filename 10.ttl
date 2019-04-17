@@ -3,7 +3,8 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>  
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:10
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutables ;
     sh:prefixes ex: ;
@@ -23,4 +24,5 @@ WHERE
         ?sequence rdf:value ?value .
         BIND (substr(?value, ?begin, 1) as ?original) .
         FILTER(?original = 'Y' && ?substitution = 'F') .
-} """ .
+} """ ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

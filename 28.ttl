@@ -3,17 +3,19 @@ prefix up: <http://purl.uniprot.org/core/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
 ex:28
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Get the list of uniprot entries for the chromosome of proteome <a href="https://www.uniprot.org/proteomes/UP000000625">UP000000625</a>"""^^rdf:HTML ;
     sh:select """SELECT 
-  ?proteome 
   ?protein
+  ?proteome 
 WHERE
 {
   ?protein a up:Protein ;
            up:reviewed true ;
            up:proteome ?proteome .
   VALUES (?proteome) {(<http://purl.uniprot.org/proteomes/UP000000625#Chromosome>)}
-}""" .
+}""" ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

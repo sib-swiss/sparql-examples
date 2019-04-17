@@ -7,6 +7,7 @@ prefix taxon: <http://purl.uniprot.org/taxonomy/>
 prefix uniprotkb: <http://purl.uniprot.org/uniprot/>
 prefix orthodb: <http://purl.orthodb.org/>
 prefix orthodbGroup: <http://purl.orthodb.org/odbgroup/>
+prefix schema:<http://schema.org/>
 ex:36
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -36,4 +37,5 @@ WHERE
     ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
   }
 }
-""" .
+"""  ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .

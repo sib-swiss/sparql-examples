@@ -4,6 +4,7 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
 prefix taxon: <http://purl.uniprot.org/taxonomy/>
+prefix schema: <http://schema.org/>
 ex:39
  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -13,7 +14,7 @@ ex:39
   ?rhea 
 WHERE {
   # ECO 269 is experimental evidence
-  BIND (<http://purl.obolibrary.org/obo/ECO_0000269> as ?protein)
+  BIND (<http://purl.obolibrary.org/obo/ECO_0000269> as ?evidence)
   ?protein up:reviewed true ;
     up:organism taxon:9606 ;
     up:classifiedWith keywords:1185 ;
@@ -31,4 +32,5 @@ WHERE {
 
   ?attribution up:evidence ?evidence .
 }
-""" .
+""" ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
