@@ -63,7 +63,7 @@ ex:prefix-orthodb
   sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI .
 ex:prefix-sio 
   sh:prefix "sio" ;
-  sh:namesapce "http://semanticscience.org/resource/"^^xsd:anyURI .
+  sh:namespace "http://semanticscience.org/resource/"^^xsd:anyURI .
 ex:prefix-identifiers
   sh:prefix "identifiers" ;
   sh:namespace "http://identifiers.org/"^^xsd:anyURI .
