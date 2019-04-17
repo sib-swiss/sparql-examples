@@ -9,7 +9,7 @@ ex:
   a owl:Ontology ;
   rdfs:comment """This is a collection of SPARQL queries that are examples for use on different websites.""" ;
   owl:imports sh: ; #, up: , faldo: ;
-  sh:declare ex:prefix-up , ex:prefix-kewyords, ex:prefix-uniprotkb , ex:prefix-taxon , ex:prefix-ec , ex:prefix-rdf, ex:prefix-rdfs, ex:prefix-skos, ex:prefix-owl, ex:prefix-bibo, ex:prefix-dc, ex:prefix-xsd, ex:prefix-faldo, ex:prefix-GO, ex:prefix-allie, ex:prefix-orthodbGroup, ex:prefix-orthodb .
+  sh:declare ex:prefix-up , ex:prefix-kewyords, ex:prefix-uniprotkb , ex:prefix-taxon , ex:prefix-ec , ex:prefix-rdf, ex:prefix-rdfs, ex:prefix-skos, ex:prefix-owl, ex:prefix-bibo, ex:prefix-dc, ex:prefix-xsd, ex:prefix-faldo, ex:prefix-GO, ex:prefix-allie, ex:prefix-orthodbGroup, ex:prefix-orthodb, ex:prefix-sio , ex:prefix-identifiers , ex:prefix-ensembl  , ex:prefix-ensembltranscript ,ex:prefix-ensemblexon ,ex:prefix-ensemblterms ,ex:prefix-schema .
 ex:prefix-up
   sh:prefix "up" ;
   sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI .
@@ -85,3 +85,5 @@ ex:prefix-ensemblterms
 ex:prefix-schema 
   sh:prefix "schema" ; 
   sh:namespace "http://schema.org/"^^xsd:anyURI .
+
+  
