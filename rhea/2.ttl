@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:2
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Select the number of approved reactions involving lipids (subclass of <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18059">CHEBI:18059</a>) based on the ChEBI ontology"""^^rdf:HTML ;
+    sh:select """SELECT
+  (COUNT(DISTINCT ?reaction) AS ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:18059 .
+}""" .
+

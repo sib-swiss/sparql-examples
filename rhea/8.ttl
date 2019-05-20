@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:8
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Select all cross-references (to KEGG, MetaCyc, MACiE, ...) for a given reaction (<a href="rdf.rhea-db.org/11932">RHEA:11932</a>)"""^^rdf:html ;
+    sh:select """SELECT 
+  ?reaction 
+  ?xref 
+WHERE {
+  BIND(rh:11932 AS ?reaction)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:directionalReaction ?directionalReaction .
+  ?reaction rh:bidirectionalReaction ?bidirectionalReaction .
+  OPTIONAL { 
+    ?directionalReaction rdfs:seeAlso ?xref . 
+  }
+  OPTIONAL { 
+    ?bidirectionalReaction rdfs:seeAlso ?xref . 
+  }
+}""" .
+

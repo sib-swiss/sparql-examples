@@ -1,0 +1,29 @@
+prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:19
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+     rdfs:comment """For a given protein (UniProt entry <a href="http://purl.uniprot.org/uniprot/P15877">P15877</a>), show its cofactor and the Rhea reaction(s) that modify the cofactor (federated query) """^^rdf:html ;
+    sh:select """
+SELECT ?chebi
+       ?reaction
+       ?equation
+WHERE {
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    VALUES (?protein) {(uniprotkb:P15877)} .
+    ?protein up:reviewed true .
+    ?protein up:annotation ?annotation .
+    ?annotation a up:Cofactor_Annotation .
+    ?annotation up:cofactor ?chebi .
+  }
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?equation .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+}
+ORDER BY ?chebi""" .
