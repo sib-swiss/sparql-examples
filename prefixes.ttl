@@ -96,7 +96,7 @@ ex:prefix-rhea
   sh:namespace "http://rdf.rhea-db.org/"^^xsd:anyURI .
 ex:prefix-pubmed
   sh:prefix "pubmed" ;
-  sh:namespace " http://rdf.ncbi.nlm.nih.gov/pubmed/"^^xsd:anyURI .
+  sh:namespace "http://rdf.ncbi.nlm.nih.gov/pubmed/"^^xsd:anyURI .
 ex:prefix-mesh
   sh:prefix "mesh" ;
   sh:namespace "http://id.nlm.nih.gov/mesh/"^^xsd:anyURI .
