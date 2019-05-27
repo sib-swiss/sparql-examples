@@ -6,7 +6,7 @@ echo "# baseURI: http://sparql.uniprot.org/.well-known/sparql-examples#" > examp
 echo "# imports: http://purl.uniprot.org/core/ " >> examples.ttl
 echo "# prefix: ex" >> examples.ttl
 
-project="*"
+project="uniprot"
 while getopts uhrs option; do
     case "$option" in
         u) project="uniprot";;
@@ -21,8 +21,8 @@ done
 
 if which riot
 then
-  riot --formatted=turtle prefixes.ttl  > examples.ttl
-  riot --formatted=turtle $project/*.ttl  >> examples.ttl
+  riot --formatted=turtle prefixes.ttl  > examples_${project}.ttl
+  riot --formatted=turtle $project/*.ttl  >> examples_${project}.ttl
 else
-  rapper -q -i turtle <(cat ${project}/[1-9]*.ttl prefixes.ttl) -o turtle  > examples.ttl
+  rapper -q -i turtle <(cat ${project}/[1-9]*.ttl prefixes.ttl) -o turtle  > examples_${project}.ttl
 fi
