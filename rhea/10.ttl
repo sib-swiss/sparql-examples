@@ -18,4 +18,4 @@ WHERE {
   }
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:ec ?ecNumber .
-}""" .
+} GROUP BY ?ecClass ?ecName""" .
