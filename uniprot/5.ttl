@@ -11,8 +11,8 @@ ex:5
     sh:select """SELECT ?protein ?db
 WHERE
 {
-  ?protein a up:Protein .
-    up:classifiedWith keyword:s ;
+  ?protein a up:Protein ;
+    up:classifiedWith keywords:5 ;
     rdfs:seeAlso ?db .
   ?db up:database <http://purl.uniprot.org/database/PDB>
 }"""  ;
