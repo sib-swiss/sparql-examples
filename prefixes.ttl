@@ -152,4 +152,7 @@ ex: sh:declare ex:prefix-uberon .
 ex:prefix-uberon
   sh:prefix "uberon" ;
   sh:namesapce "http://purl.obolibrary.org/obo/uo#"^^xsd:anyURI .
-  
+ex:  sh:declare   ex:prefix-patent .
+ex:prefix-patent
+  sh:prefix "patent" ;
+  sh:namepsace "http://data.epo.org/linked-data/def/patent/"^^xsd:anyURI .
