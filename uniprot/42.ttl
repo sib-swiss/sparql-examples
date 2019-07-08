@@ -1,0 +1,21 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
+ex:42
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Connect patents cited in UniProtKB with those in the patent database at EPO via publication number.""" ;
+    sh:select """
+SELECT ?citation ?patent ?application ?applicationNo
+WHERE
+{
+  ?citation a up:Patent_Citation ;
+    skos:exactMatch ?patent .
+  FILTER(CONTAINS(STR(?patent), 'EP'))
+  BIND(SUBSTR(STR(?patent), 35) AS ?applicationNo)
+  SERVICE<https://data.epo.org/linked-data/query>{
+    ?application patent:publicationNumber ?applicationNo
+  }
+}""" .
