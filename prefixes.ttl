@@ -156,3 +156,15 @@ ex: sh:declare   ex:prefix-patent .
 ex:prefix-patent
   sh:prefix "patent" ;
   sh:namespace "http://data.epo.org/linked-data/def/patent/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-mnet .
+ex:prefix-mnet
+  sh:prefix "mnet" ;
+  sh:namespace "https://rdf.metanetx.org/mnet/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-mnx .
+ex:prefix-mnx
+  sh:prefix "mnx" ;
+  sh:namespace "https://rdf.metanetx.org/schema/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-sp .
+ex:prefix-sp
+  sh:prefix "sp" ;
+  sh:namespace "http://spinrdf.org/sp#"^^xsd:anyURI .
