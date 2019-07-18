@@ -7,12 +7,14 @@ echo "# imports: http://purl.uniprot.org/core/ " >> examples.ttl
 echo "# prefix: ex" >> examples.ttl
 
 project="uniprot"
-while getopts uhrs option; do
+while getopts uhrsgm option; do
     case "$option" in
         u) project="uniprot";;
         h) project="hamap";;
         r) project="rhea";;
         s) project="swisslipids";;
+        g) project="glyconnect";;
+        m) project="metanetx";;
         h) help; exit 0;;
         *) help; exit 1;;
     esac
