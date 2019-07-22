@@ -1,10 +1,6 @@
 #!/usr/bin/bash
-rm examples.ttl
 
 
-echo "# baseURI: http://sparql.uniprot.org/.well-known/sparql-examples#" > examples.ttl
-echo "# imports: http://purl.uniprot.org/core/ " >> examples.ttl
-echo "# prefix: ex" >> examples.ttl
 
 project="uniprot"
 while getopts uhrsgm option; do
@@ -19,6 +15,10 @@ while getopts uhrsgm option; do
         *) help; exit 1;;
     esac
 done
+rm examples_${project}.ttl
+echo "# baseURI: http://sparql.${project}.org/.well-known/sparql-examples#" > examples_${project}.ttl
+echo "# imports: http://purl.uniprot.org/core/ " >> examples_${project}.ttl
+echo "# prefix: ex" >> examples_${project}.ttl
 
 
 if which riot
