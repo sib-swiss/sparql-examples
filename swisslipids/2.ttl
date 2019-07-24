@@ -1,0 +1,30 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:2
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Potential lipid structures for lipid analytes" ;
+rdfs:comment """For a given (list of) lipid Species identifiers, return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies.
+The query should return the lipid recommended names as well as identifiers.
+The list should be sorted by level in the hierarchy (Isomeric subspecies last).
+Future versions of this query should be generic enough to work from any start point (Species, Molecular subspecies, Structural subspecies).
+Recapitulates the “browse lipid analytes” function of the website (in batch).""" ;
+    sh:select """SELECT
+	?id 
+	?rank 
+	?startId 
+    ?startLabel
+WHERE
+{
+  VALUES ?startId { slm:000399814 slm:000390097}
+  ?id rdfs:subClassOf+ ?startId .
+  ?id slm:rank ?rank ;
+	rdfs:label ?name .
+  ?startId rdfs:label ?startLabel .
+      
+} ORDER BY DESC(?rank) ?startId""" .
+
+

@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:19
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Mapping LipidX lipids to possible enzymes" ;
+    rdfs:comment """For a given list of LipidX lipid identifiers return the list of possible structures and relevant enzymes.
+Output should include the LipidX ID, the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the proteins. 
+This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies, and from them retrieves the list of reactions in which they participate, and the enzymes that catalyze them.
+extends ex:16"""^^rdf:HTML ;
+    sh:select """ """ .

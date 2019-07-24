@@ -1,0 +1,33 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:5
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Enzymes for lipids" ;
+    rdfs:comment """For a given (list of) lipids, return a list of all corresponding reactions (Rhea IDs) for that particular lipid that are linked to an enzyme, as well as the enzymes themselves (ID and protein name).
+This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified set of lipid IDs."""^^rdf:HTML ;
+    sh:select """SELECT 
+	?id 
+    ?name
+	?startId 
+    ?startLabel
+    ?citation
+    ?chebi
+WHERE
+{
+  VALUES ?startId { slm:000399814 slm:000390097}
+   ?startId slm:rank slm:Class .
+  ?id rdfs:subClassOf+ ?startId .
+  ?id slm:rank slm:Isomeric_Subspecies ;
+	rdfs:label ?name ;
+      slm:citation ?citation .
+  ?id owl:equivalentClass ?chebi .
+  #TODO federated query to rhea
+  
+  #TODO federated query to UniProt
+} ORDER BY ?startId""" .
+
+

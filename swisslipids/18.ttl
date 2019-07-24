@@ -1,0 +1,17 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:18
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Mapping LipidX lipids to ChEBI" ;
+    rdfs:comment """For a given list of LipidX lipid identifiers return the list of corresponding ChEBI IDs.
+Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the HMDB ID. 
+This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the required ChEBI identifiers from them. 
+Extends ID mapping to LipidX identifiers and by using the hierarchy. 
+extends ex:15"""^^rdf:HTML ;
+    sh:select """ """ .
+
+

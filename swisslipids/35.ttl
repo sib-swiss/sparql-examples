@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:35
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Lipids by fatty acid component and position" ;
+    rdfs:comment """Returns the list of isomeric subspecies containing a specific combination of fatty acids at defined positions.
+If the user supplies a single fatty acid and position (e.g. hexadecanoate at sn1), find all lipids with that fatty acid at that position, irrespective of whether or not there are other fatty acids at positions (here sn2, sn3). 
+could generalize this query to allow logical combinations of fatty acids (e.g. hexadecanoate at sn1 AND (9Z)-octadecenoate at sn2, hexadecanoate at sn1 AND NOT (9Z)-octadecenoate at sn2, etc)
+Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML ;
+    sh:select """ """ .

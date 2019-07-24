@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:10
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Mapping SwissLipids to HMDB" ;
+rdfs:comment """For a given list of SwissLipids lipid identifiers return the list of corresponding HMDB identifiers.
+Output should include SwissLipids identifier and name plus the HMDB identifier. 
+This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
+Recapitulates one ID mapping function on the website.""" ;
+    rdfs:comment """ """ .

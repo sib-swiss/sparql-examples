@@ -1,0 +1,13 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:32
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Possible LIPID MAPS lipid structure composition of organisms" ;
+    rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more organisms (NCBI taxonomic IDs) but considers only those lipids associated with LIPID MAPS identifers.
+Output should include the corresponding SwissLipids ID(s) and name(s), LIPID MAPS identifiers, and the name(s) and NCBI taxonomic ID(s) of the organisms.
+This query first retrieves SwissLipids identifiers for a given list of organisms (NCBI taxonomic IDs). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML ;
+    sh:select """ """ .

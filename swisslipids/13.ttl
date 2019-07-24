@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:13
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label "Mapping SwissLipids to LipidX" ;
+    rdfs:comment """For a given list of SwissLipids identifiers return the list of corresponding LipidX identifiers.
+Output should include SwissLipids identifier and name plus the LipidX identifier. 
+This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
+Extends ID mapping function on the website (LipidX not currently included)."""^^rdf:HTML ;
+    sh:select """ """ .

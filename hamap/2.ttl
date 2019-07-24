@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:2
     a sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all hamap rules"""^^rdf:HTML ;
-    sh:describe """DESCRIBE <http://purl.uniprot.org/hamap/MF_00001#construct>""" .
+    rdfs:comment """Show the triples about <a href="https://hamap.expasy.org/rule/">MF_00001</a>"""^^rdf:HTML ;
+    sh:describe """DESCRIBE <http://purl.uniprot.org/hamap/MF_00001>""" .
 
 
