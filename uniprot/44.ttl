@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
+ex:44
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Find the Rhea and Interpro combinations in UniProtKB entries.""" ;
+    sh:select """
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX up:<http://purl.uniprot.org/core/> 
+PREFIX faldo:<http://biohackathon.org/resource/faldo#> 
+SELECT 
+    ?interpro
+	?rhea
+FROM <http://sparql.uniprot.org/uniprot>
+WHERE 
+{
+	?protein up:reviewed true .
+	?protein up:annotation ?annotation .
+	?annotation up:catalyticActivity ?rhea .
+    ?protein rdfs:seeAlso ?interpro .
+    ?interpro up:database <http://purl.uniprot.org/database/InterPro> .
+} ORDER BY ?rhea""" .
