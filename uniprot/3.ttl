@@ -12,7 +12,7 @@ WHERE
 {
     ?protein a up:Protein .
     ?protein up:organism ?organism .
-    ?organism rdfs:subClassOf* taxon:83333 .
+    ?organism rdfs:subClassOf taxon:83333 .
     ?protein up:sequence ?isoform .
     ?isoform rdf:value ?aa_sequence .
 }""" .
