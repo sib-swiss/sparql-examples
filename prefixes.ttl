@@ -35,6 +35,7 @@ ex:
     ex:prefix-schema , 
     ex:prefix-chembl, 
     ex:prefix-chebi , 
+    ex:prefix-chebihash , 
     ex:prefix-rhea , 
     ex:prefix-pubmed, 
     ex:prefix-mesh, 
@@ -124,6 +125,9 @@ ex:prefix-chembl
 ex:prefix-chebi
   sh:prefix "CHEBI" ;
   sh:namespace "http://purl.obolibrary.org/obo/CHEBI_"^^xsd:anyURI .
+ex:prefix-chebihash
+  sh:prefix "chebihash" ;
+  sh:namespace "http://purl.obolibrary.org/obo/chebi#"^^xsd:anyURI .
 ex:prefix-rhea
   sh:prefix "rh" ;
   sh:namespace "http://rdf.rhea-db.org/"^^xsd:anyURI .

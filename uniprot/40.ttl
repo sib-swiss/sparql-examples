@@ -29,6 +29,7 @@ WHERE {
   ?protein up:annotation/up:catalyticActivity ?ca ;
     up:organism taxon:9606 ;
     up:classifiedWith keywords:1185 .
+  # ChEMBL: retrieve the corresponding targets and with drugs in clinical phase 4
   SERVICE <https://www.ebi.ac.uk/rdf/services/sparql> {
     ?activity a cco:Activity ;
       cco:hasMolecule ?chemblMolecule ;

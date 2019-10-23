@@ -1,0 +1,60 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
+ex:45
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Retrieve drugs that target human enzymes involved in sterol metabolism (federated query).""" ;
+    sh:select """SELECT DISTINCT  ?protein ?proteinFullName ?activityType ?standardActivityValue ?standardActivityUnit ?chemblMolecule ?chemlbMoleculePrefLabel
+WHERE
+  {
+  # ChEBI: retrieve members of the ChEBI class ChEBI:15889 (sterol)
+  # Rhea: retrieve the reactions involving these ChEBI as participants
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+    ?reaction rdfs:subClassOf  rh:Reaction ;
+	      rh:status        rh:Approved ;
+	      rh:side          ?reactionSide .
+    ?reactionSide
+	      rh:contains      ?participant .
+    ?participant rh:compound  ?compound
+    { 
+      ?compound  rh:chebi  ?chebi .
+      ?chebi (rdfs:subClassOf)+ CHEBI:15889
+    } UNION {
+      ?compound  rh:chebi           ?chebi .
+      ?chebi2   rdfs:subClassOf     ?chebiRestriction .
+      ?chebiRestriction
+		a           owl:Restriction ;
+		owl:onProperty      chebihash:has_major_microspecies_at_pH_7_3 ;
+		owl:someValuesFrom  ?chebi .
+      ?chebi2 (rdfs:subClassOf)+ CHEBI:15889
+    }
+  }
+  # UniProt: retrieve the human (taxid:9606, KW-1185) enzymes catalyzing these Rhea reactions 
+  ?ca       up:catalyzedReaction  ?reaction .
+  ?a        up:catalyticActivity  ?ca .
+  ?protein  up:annotation         ?a ;
+	    up:organism           taxon:9606 ;
+	    up:classifiedWith     keywords:1185 ;
+	    up:recommendedName    ?proteinRecName .
+  ?proteinRecName
+	    up:fullName           ?proteinFullName
+  # ChEMBL: retrieve the corresponding targets and with drugs in clinical phase 4
+  SERVICE <https://www.ebi.ac.uk/rdf/services/sparql> { 
+    ?activity a cco:Activity ;
+      cco:hasMolecule ?chemblMolecule ;
+      cco:hasAssay ?assay ;
+      cco:standardType ?activityType ;
+      cco:standardValue ?standardActivityValue ;
+      cco:standardUnits ?standardActivityUnit .
+    ?chemblMolecule cco:highestDevelopmentPhase 4 ;
+      rdfs:label ?chemblMoleculeLabel ;
+      skos:prefLabel ?chemlbMoleculePrefLabel .
+    ?assay cco:hasTarget ?target .
+    ?target cco:hasTargetComponent/cco:targetCmptXref ?protein .
+    ?protein a cco:UniprotRef .
+  }
+}""" ;
+  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
