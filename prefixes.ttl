@@ -111,8 +111,8 @@ ex:prefix-codao
   sh:namesapce "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
 ex:prefix-glycan
   sh:prefix "glycan" ;
-  sh:namesapce "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI .
+  sh:namespace "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI .
 ex:prefix-glyconnect
   sh:prefix "glyconnect" ;
-  sh:namesapce "https://purl.org/glyconnect/"^^xsd:anyURI .
+  sh:namespace "https://purl.org/glyconnect/"^^xsd:anyURI .
   
