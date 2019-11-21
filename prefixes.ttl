@@ -42,7 +42,7 @@ ex:
     ex:prefix-sh, 
     ex:prefix-slm , 
     ex:prefix-codao, 
-    ex:prefix-glycan, 
+    ex:prefix-glyco, 
     ex:prefix-glyconnect .
 ex:prefix-up
   sh:prefix "up" ;
@@ -146,8 +146,8 @@ ex:prefix-slm
 ex:prefix-codao
   sh:prefix "codoa" ;
   sh:namespace "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
-ex:prefix-glycan
-  sh:prefix "glycan" ;
+ex:prefix-glyco
+  sh:prefix "glyco" ;
   sh:namespace "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI .
 ex:prefix-glyconnect
   sh:prefix "glyconnect" ;
@@ -176,3 +176,7 @@ ex: sh:declare   ex:prefix-eunis-species .
 ex:prefix-eunis-species
   sh:prefix "eunisSpecies" ;
   sh:namespace "http://eunis.eea.europa.eu/rdf/species-schema.rdf#" .
+ex: sh:declare   ex:prefix-foaf .
+ex:prefix-foaf
+  sh:prefix "foaf" ;
+  sh:namespace "http://xmlns.com/foaf/0.1/"^^xsd:anyURI .
