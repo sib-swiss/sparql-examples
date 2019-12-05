@@ -1,0 +1,11 @@
+PREFIX foaf:<http://xmlns.com/foaf/0.1/>
+PREFIX glyco:<http://purl.jp/bio/12/glyco/conjugate#>
+ex:2
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Get all Glyconnect glycan with their graphical SNFG representation""" ;
+    sh:select """SELECT distinct ?structure ?image 
+where {
+?structure glyco:glycosylates_at ?specificglycosite .
+?structure foaf:depiction ?image  
+  }""" .

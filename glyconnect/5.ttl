@@ -1,0 +1,11 @@
+PREFIX glycan:<http://purl.jp/bio/12/glyco/glycan#>
+PREFIX foaf:<http://xmlns.com/foaf/0.1/>
+ex:5
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Get all Glyconnect reference papers""" ;
+    sh:select """SELECT distinct ?citation ?pmid
+where {
+?refconjugate glycan:published_in ?citation. 
+?citation foaf:primaryTopicOf ?pmid .  
+}""" .
