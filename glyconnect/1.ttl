@@ -1,0 +1,12 @@
+PREFIX faldo:<http://biohackathon.org/resource/faldo#>
+PREFIX glyco:<http://purl.jp/bio/12/glyco/conjugate#>
+ex:1
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Get all Glyconnect proteins their Uniprot reference isoform""" ;
+    sh:select """SELECT distinct ?glycoprotein ?isoform
+where {
+?glycosite faldo:reference ?isoform .
+?specificglycosite faldo:location ?glycosite .
+?glycoprotein glyco:glycosylated_at ?specificglycosite .
+}""" .
