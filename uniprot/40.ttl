@@ -25,7 +25,6 @@ WHERE {
       rh:side/rh:contains/rh:compound/rh:chebi/rdfs:subClassOf+ CHEBI:26739 .
   }
   ?ca up:catalyzedReaction ?rhea .
-  
   ?protein up:annotation/up:catalyticActivity ?ca ;
     up:organism taxon:9606 ;
     up:classifiedWith keywords:1185 .
