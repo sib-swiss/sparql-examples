@@ -1,0 +1,30 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
+ex:46
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Retrieve images of 'Anas' (Ducks) in the European Environmental Agency databases (federated query).""" ;
+    sh:select """SELECT 
+  ?taxon
+  ?ncbiTaxid
+  ?eunisTaxon
+  ?eunisname 
+  ?image
+WHERE
+{
+  GRAPH<http://sparql.uniprot.org/taxonomy>{
+      ?taxon a up:Taxon .
+      ?taxon rdfs:subClassOf taxon:8835 .
+      BIND(strafter(str(?taxon), 'onomy/') AS ?ncbiTaxid)
+  }
+  SERVICE <https://semantic.eea.europa.eu/sparql> {
+     ?eunisTaxon a eunisSpecies:SpeciesSynonym ;
+           eunisSpecies:binomialName ?eunisname ;
+           eunisSpecies:sameSpeciesNCBI ?ncbiTaxid ;
+           <http://xmlns.com/foaf/0.1/depiction> ?image .
+  }
+}
+""" .

@@ -172,3 +172,7 @@ ex: sh:declare   ex:prefix-sp .
 ex:prefix-sp
   sh:prefix "sp" ;
   sh:namespace "http://spinrdf.org/sp#"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-eunis-species .
+ex:prefix-eunis-species
+  sh:prefix "eunisSpecies" ;
+  sh:namespace "http://eunis.eea.europa.eu/rdf/species-schema.rdf#" .
