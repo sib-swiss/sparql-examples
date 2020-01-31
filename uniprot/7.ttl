@@ -6,11 +6,12 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:7 
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all UniProt entries, and their recommended protein name, that have a preferred gene name that contains the text 'DNA'""" ;
+    rdfs:comment """Select reviewed UniProt entries (Swiss-Prot), and their recommended protein name, that have a preferred gene name that contains the text 'DNA'""" ;
     sh:select """SELECT ?protein ?name
 WHERE
 {
         ?protein a up:Protein .
+        ?protein up:reviewed true .
         ?protein up:recommendedName ?recommended .
         ?recommended up:fullName ?name .
         ?protein up:encodedBy ?gene .
