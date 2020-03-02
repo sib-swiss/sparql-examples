@@ -5,10 +5,16 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all reactions in metanetx"""^^rdf:HTML ;
-    sh:select """SELECT ?reaction
-WHERE
-{
-    [] mnx:reac ?reaction .
+    rdfs:comment """Retrieve the MNXref metabolite with name *N,N-dimethyl-beta-alanine*, together with molecular information.""" ;
+    sh:select """SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
+WHERE {
+    ?metabolite a mnx:CHEM .
+    ?metabolite rdfs:label ?label .
+    ?metabolite rdfs:comment 'N,N-dimethyl-beta-alanine' .
+    ?metabolite mnx:chemSource ?source
+    OPTIONAL { ?metabolite mnx:formula  ?formula }
+    OPTIONAL { ?metabolite mnx:charge   ?charge }
+    OPTIONAL { ?metabolite mnx:inchi    ?inchi }
+    OPTIONAL { ?metabolite mnx:inchikey ?inchikey }
+    OPTIONAL { ?metabolite mnx:smiles   ?smiles }
 }""" .
-
