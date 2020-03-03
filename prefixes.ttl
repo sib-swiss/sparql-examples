@@ -141,24 +141,17 @@ ex:prefix-sh
   sh:prefix "sh" ;
   sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI .
 ex:prefix-slm
-  sh:prefix "slm" ;
+  sh:prefix "SLM" ;
   sh:namespace "https://swisslipids.org/rdf/"^^xsd:anyURI .
 ex:prefix-codao
   sh:prefix "codoa" ;
-<<<<<<< HEAD
-  sh:namespace "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
-ex:prefix-glyco
-  sh:prefix "glyco" ;
-=======
   sh:namesapce "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
 ex:prefix-glycan
   sh:prefix "glycan" ;
->>>>>>> GL/master
   sh:namespace "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI .
 ex:prefix-glyconnect
   sh:prefix "glyconnect" ;
   sh:namespace "https://purl.org/glyconnect/"^^xsd:anyURI .
-<<<<<<< HEAD
 ex: sh:declare ex:prefix-uberon .
 ex:prefix-uberon
   sh:prefix "uberon" ;

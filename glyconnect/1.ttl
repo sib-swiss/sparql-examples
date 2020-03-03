@@ -1,5 +1,9 @@
-PREFIX faldo:<http://biohackathon.org/resource/faldo#>
-PREFIX glyco:<http://purl.jp/bio/12/glyco/conjugate#>
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -8,5 +12,5 @@ ex:1
 where {
 ?glycosite faldo:reference ?isoform .
 ?specificglycosite faldo:location ?glycosite .
-?glycoprotein glyco:glycosylated_at ?specificglycosite .
+?glycoprotein glycan:glycosylated_at ?specificglycosite .
 }""" .
