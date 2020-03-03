@@ -188,3 +188,11 @@ ex: sh:declare   ex:prefix-lscr .
 ex:prefix-lscr
   sh:prefix "lscr" ;
   sh:namespace "http://purl.org/lscr#"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-vg .
+ex:prefix-vg
+  sh:prefix "vg" ;
+  sh:namespace "http://biohackathon.org/resource/vg#"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-obo .
+ex:prefix-obo
+  sh:prefix "obo" ;
+  sh:namespace "http://purl.obolibrary.org/obo/"^^xsd:anyURI .

@@ -1,0 +1,34 @@
+prefix ex: <https://covid-19.sib.swiss/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+
+ex:3
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """For the exons annotated in the INDSC records show the nodes in the pangenome graph that overlap""" ;
+    sh:select """SELECT 
+    DISTINCT 
+        ?n ?annotation ?sbpValue ?bpValue ?sepValue ?epValue
+WHERE
+{ 
+  ?p a vg:Path . 
+  ?u rdfs:seeAlso ?embl . 
+  ?embl up:locatedOn ?p . 
+  ?region faldo:begin ?bp ;
+          faldo:end ?ep .
+  ?bp faldo:reference ?p ;
+  	faldo:position ?bpValue .
+  ?ep faldo:reference ?p ;
+  	faldo:position ?epValue .
+  ?annotation faldo:location ?region ;
+  	a <http://ddbj.nig.ac.jp/ontologies/nucleotide/Exon> 
+  MINUS {?region a vg:Step }
+  ?step a vg:Step ;
+  vg:path ?p ;
+  vg:node ?n ;
+  faldo:begin/faldo:position ?sbpValue ;
+  faldo:end/faldo:position ?sepValue .
+  FILTER((?bpValue <= ?sbpValue) && (?epValue >= ?sepValue))
+}""" .
