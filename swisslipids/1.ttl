@@ -10,7 +10,7 @@ ex:1
     sh:select """SELECT ?category
 WHERE
 {
-    ?category slm:rank slm:Category .
+    ?category SLM:rank SLM:Category .
 }""" .
 
 
