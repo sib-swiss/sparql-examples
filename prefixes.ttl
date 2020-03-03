@@ -180,3 +180,11 @@ ex: sh:declare   ex:prefix-foaf .
 ex:prefix-foaf
   sh:prefix "foaf" ;
   sh:namespace "http://xmlns.com/foaf/0.1/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-genex .
+ex:prefix-genex
+  sh:prefix "genex" ;
+  sh:namespace "http://purl.org/genex#"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-lscr .
+ex:prefix-lscr
+  sh:prefix "lscr" ;
+  sh:namespace "http://purl.org/lscr#"^^xsd:anyURI .
