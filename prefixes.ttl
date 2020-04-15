@@ -210,5 +210,5 @@ ex:prefix-np
   sh:namespace "http://nextprot.org/rdf#"^^xsd:anyURI .
 ex: sh:declare ex:prefix-nextprot .
 ex:prefix-nextprot
-  sh:prefix "nexttprot" ;
+  sh:prefix "nextprot" ;
   sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
