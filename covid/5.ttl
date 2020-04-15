@@ -1,0 +1,46 @@
+prefix ex: <https://covid-19-sparql.expasy.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+
+ex:5
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM...""" ;
+    sh:select """SELECT
+    DISTINCT 
+        STR(?gn) 
+        ?pos 
+        (STR(?snpac) AS ?varid) 
+        (str(?orgaa) AS ?orgAA) 
+        ?annot_type  
+        (STR(?txt) AS ?note)
+        (STR(?varaa) AS ?varAA) 
+        ?freq 
+WHERE
+{
+  VALUES ?entry {nexprot:NX_Q9BYF1 nexprot:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
+  ?entry np:gene /np:name ?gn.
+  ?entry np:isoform ?iso .
+  ?iso np:swissprotDisplayed true; np:variant ?var .
+  ?var np:start ?pos ; np:original ?orgaa; :variation ?varaa .
+  ?var np:evidence / np:allele-frequency ?freq .
+  ?var np:evidence / np:reference ?xref .
+  ?xref np:provenance db:dbSNP; np:accession ?snpac .
+  ?iso np:positionalAnnotation ?annot .
+  optional {?annot rdfs:comment ?txt .}
+  ?annot a ?annot_type .
+  {
+   ?annot np:start ?pos; np:end ?pos.
+   filter not exists {?annot a np:Variant. }
+   filter not exists {?annot a np:SequenceConflict. }
+  }
+  UNION
+  {
+   ?annot a np:DisulfideBond.
+   {?annot  np:start ?pos. }
+    UNION
+   {?annot  np:end ?pos. }
+  }
+ } ORDER BY ?entry ?pos""" .

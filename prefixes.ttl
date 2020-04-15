@@ -196,3 +196,19 @@ ex: sh:declare   ex:prefix-obo .
 ex:prefix-obo
   sh:prefix "obo" ;
   sh:namespace "http://purl.obolibrary.org/obo/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-orth .
+ex:prefix-orth 
+  sh:prefix "orth" ;
+  sh:namespace "http://purl.org/net/orth#"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-insdc .
+ex:prefix-insdc 
+  sh:prefix "insdc" ;
+  sh:namespace "http://identifiers.org/insdc/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-np .
+ex:prefix-np
+  sh:prefix "np" ;
+  sh:namespace "http://nextprot.org/rdf#"^^xsd:anyURI .
+ex: sh:declare ex:prefix-nextprot .
+ex:prefix-nextprot
+  sh:prefix "nexttprot" ;
+  sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
