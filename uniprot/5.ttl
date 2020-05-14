@@ -12,7 +12,7 @@ ex:5
 WHERE
 {
   ?protein a up:Protein ;
-    up:classifiedWith keywords:5 ;s
+    up:classifiedWith keywords:5 ;
     rdfs:seeAlso ?db .
   ?db up:database <http://purl.uniprot.org/database/PDB>
 }"""  ;
