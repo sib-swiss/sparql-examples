@@ -204,6 +204,10 @@ ex: sh:declare   ex:prefix-insdc .
 ex:prefix-insdc 
   sh:prefix "insdc" ;
   sh:namespace "http://identifiers.org/insdc/"^^xsd:anyURI .
+ex: sh:declare   ex:prefix-insdcschema .
+ex:prefix-insdcschema 
+  sh:prefix "insdcschema" ;
+  sh:namespace "http://ddbj.nig.ac.jp/ontologies/nucleotide/"^^xsd:anyURI .
 ex: sh:declare   ex:prefix-np .
 ex:prefix-np
   sh:prefix "np" ;
@@ -212,3 +216,27 @@ ex: sh:declare ex:prefix-nextprot .
 ex:prefix-nextprot
   sh:prefix "nextprot" ;
   sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
+ex: sh:declare ex:prefix-wd . 
+ex:prefix-wd 
+    sh:prefix "wd" ; 
+    sh:namespace "http://www.wikidata.org/entity/" .
+ex: sh:declare ex:prefix-wdt . 
+ex:prefix-wdt 
+    sh:prefix "wdt" ; 
+    sh:namespace "http://www.wikidata.org/prop/direct/" .
+ex: sh:declare 
+ex:prefix-wikibase . 
+    ex:prefix-wikibase sh:prefix "wikibase" ; 
+    sh:namespace "http://wikiba.se/ontology#" .
+ex: sh:declare ex:prefix-p . 
+ex:prefix-p 
+    sh:prefix "p" ; 
+    sh:namespace "http://www.wikidata.org/prop/" .
+ex: sh:declare ex:prefix-ps . 
+ex:prefix-ps 
+    sh:prefix "ps" ; 
+    sh:namespace "http://www.wikidata.org/prop/statement/" .
+ex: sh:declare ex:prefix-pq . 
+ex:prefix-pq 
+    sh:prefix "pq" ; 
+    sh:namespace "http://www.wikidata.org/prop/qualifier/" .

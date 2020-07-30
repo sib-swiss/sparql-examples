@@ -8,21 +8,28 @@ prefix schema:<http://schema.org/>
 ex:38
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """For the human entry P05067 (Amyloid-beta precursor protein) find the trascript start ends in Ensembl""" ;
+    rdfs:comment """For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData""" ;
     sh:select """
 SELECT 
 	?protein 
-	?transcript 
 	?begin
-	?end 
+	?end
+	?chromosome
+	?assembly
 WHERE {
-    BIND(uniprotkb:P05067 AS ?protein)
-    SERVICE <https://www.ebi.ac.uk/rdf/services/sparql> {
-      ?ensemblGene ensemblterms:DEPENDENT ?protein.
-      ?transcript faldo:location ?location ;
-         obo:SO_transcribed_from ?ensemblGene . 
-      ?location faldo:begin [faldo:position ?begin] ;
-         faldo:end [faldo:position ?end ] .
+    BIND(uniprotkb:P05067 AS ?proteinIRI)
+    BIND (SUBSTR(STR(?proteinIRI), STRLEN(STR(uniprotkb:))+1) AS ?protein)
+    SERVICE <https://query.wikidata.org/sparql> {
+        ?wp wdt:P352 ?protein .
+        ?wp wdt:P702 ?wg . 
+        ?wg p:P644 ?wgss .
+        ?wgss ps:P644 ?begin ;
+          pq:P1057 ?chrom ;
+          pq:P659 ?assembly .
+        ?wg p:P645 ?wgse .
+        ?wgse ps:P645 ?end ;
+          pq:P1057 ?chrom ;
+          pq:P659 ?assembly .
   } 
 }
 """  ;
