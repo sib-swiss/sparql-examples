@@ -17,19 +17,22 @@ SELECT
 	?chromosome
 	?assembly
 WHERE {
-    BIND(uniprotkb:P05067 AS ?proteinIRI)
-    BIND (SUBSTR(STR(?proteinIRI), STRLEN(STR(uniprotkb:))+1) AS ?protein)
+    {
+        BIND(uniprotkb:P05067 AS ?proteinIRI)
+        BIND (SUBSTR(STR(?proteinIRI), STRLEN(STR(uniprotkb:))+1) AS ?protein)
+    }
     SERVICE <https://query.wikidata.org/sparql> {
-        ?wp wdt:P352 ?protein .
-        ?wp wdt:P702 ?wg . 
-        ?wg p:P644 ?wgss .
-        ?wgss ps:P644 ?begin ;
-          pq:P1057 ?chrom ;
-          pq:P659 ?assembly .
+        ?wp wdt:P352 ?protein ;
+            wdt:P702 ?wg . 
+        ?wg p:P644   ?wgss .
+        ?wgss ps:P644        ?begin ;
+          pq:P1057/wdt:P1813 ?chromosome ;
+          pq:P659/rdfs:label ?assembly .
         ?wg p:P645 ?wgse .
-        ?wgse ps:P645 ?end ;
-          pq:P1057 ?chrom ;
-          pq:P659 ?assembly .
+        ?wgse ps:P645        ?end ;
+          pq:P1057/wdt:P1813 ?chromosome ;
+          pq:P659/rdfs:label ?assembly .
+        FILTER(lang(?assembly) = "en")
   } 
 }
 """  ;
