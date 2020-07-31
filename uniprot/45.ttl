@@ -13,7 +13,7 @@ ex:45
         ?proteinFullName
         ?wikiChemical
 		?wikiChemicalLabel
-        ?medicalConditionLabel
+        ?medicalConditionTreatedLabel
 WHERE
   {
   # ChEBI: retrieve members of the ChEBI class ChEBI:15889 (sterol)
@@ -53,8 +53,8 @@ WHERE
     ?wikiChemical wdt:P129  ?wp . # Physically interacts with
     ?wikiChemical rdfs:label ?wikiChemicalLabel .
     ?wikiChemical wdt:P2175 ?wmc . # Medical conndition treated
-    ?wmc rdfs:label ?medicalConditionLabel .
-    FILTER(lang(?medicalConditionLabel) = 'en')
+    ?wmc rdfs:label ?medicalConditionTreatedLabel .
+    FILTER(lang(?medicalConditionTreatedLabel) = 'en')
     FILTER(lang(?wikiChemicalLabel) = 'en')
   }
 }   """ ;
