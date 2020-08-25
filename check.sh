@@ -16,7 +16,7 @@ trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 prefixes=$(sparql --results=TSV --data=prefixes.ttl "PREFIX sh:<http://www.w3.org/ns/shacl#> SELECT ?s WHERE {?pn sh:prefix ?prefix ; sh:namespace ?namespaceI . BIND(CONCAT('PREFIX ',?prefix, ':<',(STR(?namespaceI)),'>') AS ?s)}"|grep -v "^\?s$" |tr -d '"')
 
 echo "Prefixes found" 
-for i in $(ls u*/[1-9]*.ttl);
+for i in $(ls */[1-9]*.ttl);
 do
     echo "Checking $i"
     f=$(echo $i | cut -f 2 -d '/' )	
