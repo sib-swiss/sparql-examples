@@ -8,4 +8,5 @@ ex:26
     sh:prefixes ex: ;
     rdfs:label "Lipid analyte composition of organisms" ;
     rdfs:comment """Returns the list of lipid analytes associated with a list of one or more organisms (NCBI taxonomic IDs).
-Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the organisms."""^^rdf:HTML .
+Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the organisms."""^^rdf:HTML ;
+    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .

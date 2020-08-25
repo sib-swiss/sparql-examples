@@ -10,4 +10,5 @@ ex:27
     rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more organisms (NCBI taxonomic IDs).
 Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the organisms.
 This query first identifies SwissLipids identifiers for a given list of NCBI taxonomic IDs. It then retrieves the corresponding Isomeric subspecies and returns those.
-Extends ex:26"""^^rdf:HTML .
+Extends ex:26"""^^rdf:HTML ;
+    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .

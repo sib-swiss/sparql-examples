@@ -25,8 +25,8 @@ WHERE {
         ?reaction rh:side ?reactionSide .
         ?reactionSide rh:contains ?participant .
         ?participant rh:compound ?compound .
-        # compound constraint (ch:CHEBI_16113 == cholesterol)
-        ?compound rh:chebi ch:CHEBI_16113 .
+        # compound constraint (CHEBI:16113 == cholesterol)
+        ?compound rh:chebi CHEBI:16113 .
       }
     }
   }

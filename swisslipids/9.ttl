@@ -11,4 +11,4 @@ ex:9
 Output should include SwissLipids identifier and name plus the LIPID MAPS identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website """^^rdf:HTML ;
-    sh:select """ """ .
+    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .

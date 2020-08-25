@@ -26,5 +26,3 @@ WHERE
   ?startId rdfs:label ?startLabel .
       
 } ORDER BY DESC(?rank) ?startId""" .
-
-

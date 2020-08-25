@@ -9,6 +9,4 @@ ex:6
     rdfs:label "Enzymes for lipids" ;
     rdfs:comment """For a given (list of) lipids, return a list of all corresponding reactions (Rhea IDs) for that particular lipid that are linked to an enzyme, as well as the enzymes themselves (ID and protein name).
 This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified set of lipid IDs."""^^rdf:HTML ;
-    sh:select """ """ .
-
-
+    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .

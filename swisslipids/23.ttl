@@ -8,4 +8,5 @@ ex:23
     sh:prefixes ex: ;
     rdfs:label "Lipid analyte composition of cellular compartments" ;
     rdfs:comment """Returns the list of lipid analytes associated with a list of one or more subcellular locations (GO cellular components).
-Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the cellular components. """^^rdf:HTML .
+Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the cellular components. """^^rdf:HTML ;
+    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .

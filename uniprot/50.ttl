@@ -23,7 +23,7 @@ WHERE {
     ?reactionSide rh:contains ?participant .
     ?participant rh:compound ?compound .
     ?compound rh:chebi ?chebi .
-    ?chebi rdfs:subClassOf* ch:CHEBI_52639
+    ?chebi rdfs:subClassOf* CHEBI:52639
 }
   ?protein up:organism taxon:9606 .
   ?protein up:annotation ?a .
