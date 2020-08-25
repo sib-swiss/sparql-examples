@@ -10,5 +10,4 @@ ex:38
     rdfs:comment """Returns the list of isomeric subspecies that contain the same fatty acid component(s) at the same position(s) as a user-defined lipid, but limits the output to published lipids linked to a PMID.
 Output should include the corresponding SwissLipids ID(s) and name(s) and the PMID(s) for each.
 ￼Extends ex:36
-Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML ;
-    sh:select """ """ .
+Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML .

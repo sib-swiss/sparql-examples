@@ -10,7 +10,4 @@ ex:24
     rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more subcellular locations (GO cellular components).
 Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the cellular components. 
 This query first retrieves SwissLipids identifiers for a given list of GO cellular component identifiers. It then retrieves the corresponding Isomeric subspecies and returns those.
-Extends ex:25"""^^rdf:HTML ;
-    sh:select """ """ .
-
-
+Extends ex:25"""^^rdf:HTML .

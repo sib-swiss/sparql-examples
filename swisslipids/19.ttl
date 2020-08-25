@@ -10,5 +10,4 @@ ex:19
     rdfs:comment """For a given list of LipidX lipid identifiers return the list of possible structures and relevant enzymes.
 Output should include the LipidX ID, the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the proteins. 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies, and from them retrieves the list of reactions in which they participate, and the enzymes that catalyze them.
-extends ex:16"""^^rdf:HTML ;
-    sh:select """ """ .
+extends ex:16"""^^rdf:HTML .

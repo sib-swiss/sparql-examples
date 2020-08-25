@@ -11,4 +11,10 @@ rdfs:comment """For a given list of SwissLipids lipid identifiers return the lis
 Output should include SwissLipids identifier and name plus the HMDB identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
-    rdfs:comment """ """ .
+    sh:select """SELECT
+    ?swissLipid
+    ?hmdb
+WHERE {
+   ?swissLipid rdfs:seeAlso ?hmdb . 
+   FILTER(strstarts(str(?hmdb), 'http://identifiers.org/hmdb/'))
+} """ .

@@ -11,7 +11,4 @@ ex:18
 Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the HMDB ID. 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the required ChEBI identifiers from them. 
 Extends ID mapping to LipidX identifiers and by using the hierarchy. 
-extends ex:15"""^^rdf:HTML ;
-    sh:select """ """ .
-
-
+extends ex:15"""^^rdf:HTML .

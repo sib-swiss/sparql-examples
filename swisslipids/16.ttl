@@ -11,5 +11,4 @@ ex:16
 Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the LIPID MAPS ID. 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies and from them the required LIPID MAPS identifiers. 
 Extends ID mapping to LipidX identifiers and by using the hierarchy. 
-extends ex:15"""^^rdf:HTML ;
-    sh:select """ """ .
+extends ex:15"""^^rdf:HTML .

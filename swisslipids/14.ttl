@@ -10,4 +10,14 @@ ex:14
     rdfs:comment """For a given list of LipidX lipid identifiers return the list of possible Isomeric subspecies.
 Output should include the LipidX ID and the corresponding SwissLipids ID(s) and name(s). 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies."""^^rdf:HTML ;
-    sh:select """ """ .
+    sh:select """SELECT
+    ?swisslipid
+    ?lipidx
+    ?isomericsubSwisslipid
+WHERE {
+    VALUES ?hmdb {'HMDB00269' 'MDB00032'}
+    BIND (IRI(CONCAT('http://identifiers.org/lipidx/', ?lipidx)) AS ?lipidxIRI)
+    ?swisslipid rdfs:seeAlso ?lipidxIRI .
+    ?swisslipid rdfs:subClassOf ?isomericsubSwisslipid .
+    ?isomericsubSwisslipid SLM:rank SLM:Isomeric_Subspecies .
+}""" .

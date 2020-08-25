@@ -11,4 +11,16 @@ ex:15
 Output should include the LipidX ID and the corresponding SwissLipids ID(s) and name(s) plus PubMed ID(s). 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies that are linked to at least one publication, and the corresponding PMIDs. 
 extends ex:15"""^^rdf:HTML ;
-    sh:select """ """ .
+    sh:select """SELECT
+    ?swisslipid
+    ?lipidx
+    ?isomericsubSwisslipid
+    ?pubmed
+WHERE {
+    VALUES ?hmdb {'HMDB00269' 'MDB00032'}
+    BIND (IRI(CONCAT('http://identifiers.org/lipidx/', ?lipidx)) AS ?lipidxIRI)
+    ?swisslipid rdfs:seeAlso ?lipidxIRI .
+    ?swisslipid rdfs:subClassOf ?isomericsubSwisslipid .
+    ?isomericsubSwisslipid SLM:rank SLM:Isomeric_Subspecies .
+    ?isomericsubSwisslipid SLM:citation ?pubmed .
+}""" .

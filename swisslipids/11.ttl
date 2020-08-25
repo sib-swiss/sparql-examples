@@ -12,4 +12,11 @@ Output should include SwissLipids identifier and name plus the HMDB identifier.
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
     rdfs:comment """Select the SwissLipids categories"""^^rdf:HTML ;
-    sh:select """ """ .
+    sh:select """SELECT
+    ?swisslipid
+    ?hmdb
+WHERE {
+    VALUES ?hmdb {'HMDB00269' 'MDB00032'} 
+    BIND (IRI(CONCAT('http://identifiers.org/hmdb/', ?hmdb)) AS ?hmdbIRI) 
+    ?swisslipid rdfs:seeAlso ?hmdbIRI .
+}""" .

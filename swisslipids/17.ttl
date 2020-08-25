@@ -11,7 +11,4 @@ ex:17
 Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the HMDB ID. 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies and from them the required HMDB identifiers. 
 Extends ID mapping to LipidX identifiers and by using the hierarchy. 
-extends ex:16"""^^rdf:HTML ;
-    sh:select """ """ .
-
-
+extends ex:16"""^^rdf:HTML  .

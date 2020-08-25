@@ -11,4 +11,10 @@ ex:13
 Output should include SwissLipids identifier and name plus the LipidX identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Extends ID mapping function on the website (LipidX not currently included)."""^^rdf:HTML ;
-    sh:select """ """ .
+    sh:select """SELECT
+    ?swisslipid
+    ?lipidx
+WHERE {
+    ?swisslipid rdfs:seeAlso ?lipidx .
+    FILTER(STRSTARTS(STR(?lipidx), 'http://identifiers.org/lipidx/'))
+}""" .

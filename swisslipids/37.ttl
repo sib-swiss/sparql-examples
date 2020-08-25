@@ -11,5 +11,4 @@ ex:37
 The user supplies a lipid ID, from which we first retrieve the fatty acids and their positions, after which we search for other lipids with the same combination of fatty acids at the same positions.
 This query could be useful in the website (classification tab): for a given lipid, provide a list of the other lipids with the same “tail”
 e.g. for PA(16:0/18:1(9Z)) => hexadecanoate@sn1 AND (9Z)-octadecenoate@sn2 => PC(16:0/18:1(9Z)), PE(16:0/18:1(9Z)), PG(16:0/18:1(9Z)), PI(16:0/18:1(9Z)), PIP[3](16:0/18:1(9Z)), PIP[4](16:0/18:1(9Z)), PIP[5](16:0/18:1(9Z)), PI2P[3,4](16:0/18:1(9Z)), PI2P[4,5](16:0/18:1(9Z)), PI2P[3,5](16:0/18:1(9Z)), PI3P[3,4,5](16:0/18:1(9Z)), PS(16:0/18:1(9Z))…
-Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML ;
-    sh:select """ """ .
+Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML .

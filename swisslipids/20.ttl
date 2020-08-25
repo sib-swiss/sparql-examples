@@ -9,8 +9,4 @@ ex:20
     rdfs:label "Lipid analyte composition of tissues" ;
     rdfs:comment """Returns the list of lipid analytes identified in a list of tissues (UBERON lipid identifiers).
 Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the tissues. 
-A simple query which does not traverse the hierarchy."""^^rdf:HTML ;
-    sh:select """
-""" .
-
-
+A simple query which does not traverse the hierarchy."""^^rdf:HTML .

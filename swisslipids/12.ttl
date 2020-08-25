@@ -11,4 +11,9 @@ rdfs:comment """For a given list of SwissLipids lipid identifiers return the lis
 Output should include SwissLipids identifier and name plus the ChEBI identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
-    sh:select """ """ .
+    sh:select """SELECT
+    ?swisslipid ?chebi
+WHERE {
+    ?swisslipid owl:equivalentClass ?chebi 
+}
+""" .

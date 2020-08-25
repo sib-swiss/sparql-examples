@@ -9,5 +9,4 @@ ex:32
     rdfs:label "Possible LIPID MAPS lipid structure composition of organisms" ;
     rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more organisms (NCBI taxonomic IDs) but considers only those lipids associated with LIPID MAPS identifers.
 Output should include the corresponding SwissLipids ID(s) and name(s), LIPID MAPS identifiers, and the name(s) and NCBI taxonomic ID(s) of the organisms.
-This query first retrieves SwissLipids identifiers for a given list of organisms (NCBI taxonomic IDs). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML ;
-    sh:select """ """ .
+This query first retrieves SwissLipids identifiers for a given list of organisms (NCBI taxonomic IDs). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML .

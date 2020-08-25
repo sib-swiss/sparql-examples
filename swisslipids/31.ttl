@@ -9,5 +9,4 @@ ex:31
     rdfs:label "Possible LIPID MAPS lipid structure composition of cellular components " ;
     rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more subcellular locations (GO cellular components), but considers only those lipids associated with LIPID MAPS identifers.
 ￼Output should include the corresponding SwissLipids ID(s) and name(s), LIPID MAPS identifiers, and the name(s) and ID(s) of the subcellular locations (GO cellular components).
-This query first retrieves SwissLipids identifiers for a given list of subcellular locations (GO cellular component identifiers). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML ;
-    sh:select """ """ .
+This query first retrieves SwissLipids identifiers for a given list of subcellular locations (GO cellular component identifiers). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML .
