@@ -10,25 +10,26 @@ ex:3
     rdfs:comment """For the exons annotated in the INDSC records show the nodes in the pangenome graph that overlap""" ;
     sh:select """SELECT 
     DISTINCT 
-        ?n ?annotation ?sbpValue ?bpValue ?sepValue ?epValue
+        ?node ?annotation ?sbpValue ?bpValue ?sepValue ?epValue
 WHERE
 { 
-  ?p a vg:Path . 
-  ?u rdfs:seeAlso ?embl . 
-  ?embl up:locatedOn/owl:sameAs ?p . 
+  ?path a vg:Path .
+  ?uniprot rdfs:seeAlso ?emblcds . 
+  ?emblcds up:locatedOn/owl:sameAs ?path .
+  ?step a vg:Step ;
+          vg:path ?path ;
+          vg:node ?node ;
+          faldo:begin/faldo:position ?sbpValue ;
+          faldo:end/faldo:position ?sepValue .
+
   ?region faldo:begin ?bp ;
           faldo:end ?ep .
-  ?bp faldo:reference ?p ;
-  	faldo:position ?bpValue .
-  ?ep faldo:reference ?p ;
-  	faldo:position ?epValue .
   ?annotation faldo:location ?region ;
-  	a <http://ddbj.nig.ac.jp/ontologies/nucleotide/Exon> 
+           a insdcschema:Exon .
+  ?bp faldo:reference ?p ;
+          faldo:position ?bpValue .
+  ?ep faldo:reference ?p ;
+          faldo:position ?epValue .
   MINUS {?region a vg:Step }
-  ?step a vg:Step ;
-  vg:path ?p ;
-  vg:node ?n ;
-  faldo:begin/faldo:position ?sbpValue ;
-  faldo:end/faldo:position ?sepValue .
   FILTER((?bpValue <= ?sbpValue) && (?epValue >= ?sepValue))
 }""" .

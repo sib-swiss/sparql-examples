@@ -23,18 +23,23 @@ WHERE
   VALUES ?entry {nextprot:NX_Q9BYF1 nextprot:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
   ?entry np:gene /np:name ?gn.
   ?entry np:isoform ?iso .
-  ?iso np:swissprotDisplayed true; np:variant ?var .
-  ?var np:start ?pos ; np:original ?orgaa; :variation ?varaa .
+  ?iso np:swissprotDisplayed true; 
+       np:variant ?var .
+  ?var np:start ?pos ; 
+       np:original ?orgaa; 
+       np:variation ?varaa .
   ?var np:evidence / np:allele-frequency ?freq .
   ?var np:evidence / np:reference ?xref .
-  ?xref np:provenance db:dbSNP; np:accession ?snpac .
+  ?xref np:provenance <http://nextprot.org/rdf/db/dbSNP>; 
+        np:accession ?snpac .
   ?iso np:positionalAnnotation ?annot .
   optional {?annot rdfs:comment ?txt .}
   ?annot a ?annot_type .
   {
-   ?annot np:start ?pos; np:end ?pos.
-   filter not exists {?annot a np:Variant. }
-   filter not exists {?annot a np:SequenceConflict. }
+   ?annot np:start ?pos; 
+          np:end ?pos.
+   filter (not exists {?annot a np:Variant. })
+   filter (not exists {?annot a np:SequenceConflict. })
   }
   UNION
   {

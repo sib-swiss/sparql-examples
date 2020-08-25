@@ -12,11 +12,10 @@ ex:4
 	DISTINCT 
 		?insdCDS #?insdCDSBegin ?insdCDSEnd ?step ?path ?node ?nextNode ?nextPath ?insdcStepBegin ?insdcStepEnd ?uniprotSequence
 		?uniprot ?stepBeginInProteinSpace ?stepEndInProteinSpace ?annotationText
-WHERE
 {
 #  Find CDS annoted by INDSC that do not match a UniProt protein.
-  ?insdCDS insdc:translation ?sequence ;
-           a insdc:Coding_Sequence ;
+  ?insdCDS insdcschema:translation ?sequence ;
+           a insdcschema:Coding_Sequence ;
            faldo:location ?insdCDSLocation .
   MINUS {
   	?uniprotSequence rdf:value ?sequence .
@@ -30,31 +29,31 @@ WHERE
                                  faldo:position ?insdCDSEnd] .
   
   ?step a vg:Step ;
-  	vg:path ?path ;
+  	vg:path/skos:closeMatch ?path ;
     vg:node ?node ;
-  	faldo:begin [ faldo:reference ?path ;
+  	faldo:begin [ faldo:reference/skos:closeMatch ?path ;
       				faldo:position ?insdcStepBegin ] ;
-  	faldo:end [ faldo:reference ?path ;
+  	faldo:end [ faldo:reference/skos:closeMatch ?path ;
             		faldo:position ?insdcStepEnd ] .
-# I always forget how to interval ranges :(
+## I always forget how to interval ranges :(
   FILTER ( (?insdcStepBegin >= ?insdCDSBegin && ?insdcStepBegin <= ?insdCDSEnd) || 
     	   (?insdCDSBegin >= ?insdcStepBegin && ?insdCDSBegin <= ?insdcStepEnd) || 
    		   (?insdcStepEnd >= ?insdCDSEnd && ?insdcStepEnd <= ?insdCDSBegin) || 
     	   (?insdCDSEnd >= ?insdcStepEnd && ?insdCDSEnd <= ?insdcStepBegin) )
-#  Then we look for a node close to the ones in the CDS in genome graph space (one step)
+##  Then we look for a node close to the ones in the CDS in genome graph space (one step)
   ?node vg:linksForwardToForward ?nextNode . 
   ?step2 a vg:Step ;
-  	vg:path ?nextPath ;
+  	vg:path/skos:closeMatch ?nextPath ;
     vg:node ?nextNode .
-#  Where that node is on a uniprot matching sequence
-  ?nextinsdCDS insdc:translation ?nextSequence ;
-           a insdc:Coding_Sequence ;
+##  Where that node is on a uniprot matching sequence
+  ?nextinsdCDS insdcschema:translation ?nextSequence ;
+           a insdcschema:Coding_Sequence ;
            faldo:location/faldo:begin/faldo:reference ?nextPath .
   ?uniprot up:sequence/rdf:value ?nextSequence . 
-
   BIND(IF(?insdCDSBegin > ?insdcStepBegin, ?insdCDSBegin, ?insdcStepBegin - ?insdCDSBegin)/3 AS ?stepBeginInProteinSpace)
   BIND(IF(?insdCDSEnd > ?insdcStepEnd, ?insdcStepEnd, ?insdCDSBegin - ?insdcStepEnd)/3 AS ?stepEndInProteinSpace)
   ?uniprot up:annotation ?annotation .
+  ?annotation a up:Active_Site_Annotation .
   ?annotation up:range ?annotationRegion .
   ?annotation rdfs:comment ?annotationText .
   ?annotationRegion faldo:begin/faldo:position ?annotationBegin .
