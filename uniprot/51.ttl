@@ -1,0 +1,30 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema:<http://schema.org/>
+ex:51
+ a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:label """Find all proteins linked to arachidonate (CHEBI:32395)""" ;
+    sh:select """
+SELECT 
+    DISTINCT
+        ?uniprot
+        ?uniprotID
+        ?recname
+        ?gene
+        ?chebi
+        ?uniprotName
+WHERE {
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+     VALUES (?chebi) { (CHEBI:32395) }
+     ?rhea rh:side/rh:contains/rh:compound ?compound .
+     ?compound rh:chebi ?chebi .
+     ?chebi up:name ?uniprotName .
+  }
+  ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
+  ?uniprot up:mnemonic ?uniprotID .
+  ?uniprot up:recommendedName/up:fullName ?recname .
+  OPTIONAL {?uniprot up:encodedBy/skos:prefLabel ?gene .}
+}""" .
