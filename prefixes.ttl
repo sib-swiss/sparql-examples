@@ -42,7 +42,7 @@ ex:
     ex:prefix-sh, 
     ex:prefix-slm , 
     ex:prefix-codao, 
-    ex:prefix-glyco, 
+    ex:prefix-glyco,
     ex:prefix-glyconnect .
 ex:prefix-up
   sh:prefix "up" ;
@@ -219,24 +219,28 @@ ex:prefix-nextprot
 ex: sh:declare ex:prefix-wd . 
 ex:prefix-wd 
     sh:prefix "wd" ; 
-    sh:namespace "http://www.wikidata.org/entity/" .
+    sh:namespace "http://www.wikidata.org/entity/"^^xsd:anyURI  .
 ex: sh:declare ex:prefix-wdt . 
 ex:prefix-wdt 
     sh:prefix "wdt" ; 
-    sh:namespace "http://www.wikidata.org/prop/direct/" .
+    sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI  .
 ex: sh:declare 
 ex:prefix-wikibase . 
     ex:prefix-wikibase sh:prefix "wikibase" ; 
-    sh:namespace "http://wikiba.se/ontology#" .
+    sh:namespace "http://wikiba.se/ontology#"^^xsd:anyURI  .
 ex: sh:declare ex:prefix-p . 
 ex:prefix-p 
     sh:prefix "p" ; 
-    sh:namespace "http://www.wikidata.org/prop/" .
+    sh:namespace "http://www.wikidata.org/prop/"^^xsd:anyURI  .
 ex: sh:declare ex:prefix-ps . 
 ex:prefix-ps 
     sh:prefix "ps" ; 
-    sh:namespace "http://www.wikidata.org/prop/statement/" .
+    sh:namespace "http://www.wikidata.org/prop/statement/"^^xsd:anyURI  .
 ex: sh:declare ex:prefix-pq . 
 ex:prefix-pq 
     sh:prefix "pq" ; 
-    sh:namespace "http://www.wikidata.org/prop/qualifier/" .
+    sh:namespace "http://www.wikidata.org/prop/qualifier/"^^xsd:anyURI  .
+ex: sh:declare ex:prefix-sachem .
+ex:prefix-sachem 
+    sh:prefix "sachem" ;
+    sh:namespace "http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#"^^xsd:anyURI  .
