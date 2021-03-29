@@ -15,7 +15,7 @@ WHERE
 	{
 		?protein a up:Protein .
 		?protein rdfs:seeAlso ?db .
-		?db up:database <http://purl.uniprot.org/database/PDB>;
+		?db up:database <http://purl.uniprot.org/database/PDB> .
 	}
 	GROUP BY ?protein ORDER BY DESC(?linksToPdbPerEntry)
 }""" .
