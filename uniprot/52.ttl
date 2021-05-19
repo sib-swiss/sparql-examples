@@ -7,13 +7,15 @@ ex:52
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with Rhea and ChEMBL via IDSM/Elixir czech republic).""" ;
-    sh:select """SELECT 
-    DISTINCT
-        ?protein
-        ?proteinFullName
-        ?wikiChemical
-		?wikiChemicalLabel
-        ?medicalConditionTreatedLabel
+    sh:select """SELECT
+        DISTINCT  
+            ?protein 
+            ?proteinFullName 
+            ?activityType 
+            ?standardActivityValue 
+            ?standardActivityUnit 
+            ?chemblMolecule 
+            ?chemlbMoleculePrefLabel
 WHERE
   {
   # ChEBI: retrieve members of the ChEBI class ChEBI:15889 (sterol)
@@ -41,7 +43,7 @@ WHERE
   # UniProt: retrieve the human (taxid:9606) enzymes catalyzing these Rhea reactions 
   ?ca       up:catalyzedReaction  ?reaction .
   ?a        up:catalyticActivity  ?ca .
-  ?proteinIRI  up:annotation         ?a ;
+  ?protein  up:annotation         ?a ;
 	    up:organism           taxon:9606 ;
 	    up:recommendedName    ?proteinRecName .
   ?proteinRecName
@@ -56,9 +58,10 @@ WHERE
       cco:standardType ?activityType ;
       cco:standardValue ?standardActivityValue ;
       cco:standardUnits ?standardActivityUnit .
-    ?chemblMolecule cco:highestDevelopmentPhase "4"^^xsd:int ;
+    ?chemblMolecule cco:highestDevelopmentPhase ?highestDevelopmentPhase ;
       rdfs:label ?chemblMoleculeLabel ;
       skos:prefLabel ?chemlbMoleculePrefLabel .
+    FILTER (?highestDevelopmentPhase > 3)
     ?assay cco:hasTarget ?target .
     ?target cco:hasTargetComponent/cco:targetCmptXref ?protein .
     ?protein a cco:UniprotRef .
