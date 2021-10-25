@@ -3,8 +3,9 @@
 
 
 project="uniprot"
-while getopts uhrsgmc option; do
+while getopts uhrsgmcp: option; do
     case "$option" in
+        p) project="$OPTARG";;
         u) project="uniprot";;
         h) project="hamap";;
         r) project="rhea";;
