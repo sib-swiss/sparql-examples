@@ -17,6 +17,14 @@ while getopts uhrsgmcp: option; do
         *) help; exit 1;;
     esac
 done
+
+case "$project" in
+    swiss-prot)
+        project='uniprot';;
+    trembl)
+        project='uniprot';;
+esac
+
 rm examples_${project}.ttl
 echo "# baseURI: http://sparql.${project}.org/.well-known/sparql-examples#" > examples_${project}.ttl
 echo "# imports: http://purl.uniprot.org/core/ " >> examples_${project}.ttl
