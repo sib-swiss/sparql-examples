@@ -19,10 +19,14 @@ while getopts uhrsgmcp: option; do
 done
 
 case "$project" in
-    swiss-prot)
-        project='uniprot';;
     trembl)
-        project='uniprot';;
+        ;&
+    swiss-prot)
+        if [ ! -L "${project}" ]
+        then
+            ln -s uniprot "${project}"
+        fi
+        ;;
 esac
 
 rm examples_${project}.ttl
