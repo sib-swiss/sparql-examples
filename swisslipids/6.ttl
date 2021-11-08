@@ -9,4 +9,24 @@ ex:6
     rdfs:label "Enzymes for lipids" ;
     rdfs:comment """For a given (list of) lipids, return a list of all corresponding reactions (Rhea IDs) for that particular lipid that are linked to an enzyme, as well as the enzymes themselves (ID and protein name).
 This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified set of lipid IDs."""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .
+    sh:select """SELECT
+	?startId
+    ?chebi
+    ?reaction
+    ?protein
+WHERE
+{
+  VALUES ?startId { SL:000399814 SL:000390097}
+  ?startId owl:equivalentClass ?chebi .
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+    ?reaction rdfs:subClassOf rh:Reaction .
+  	?reaction rh:status rh:Approved .
+	?reaction rh:side ?reactionSide .
+  	?reactionSide rh:contains ?participant .
+  	?participant rh:compound ?compound .
+   	?compound rh:chebi ?chebi . 
+  }
+  SERVICE <https://sparql.uniprot.org/sparql> {
+     ?protein up:annotation/up:catalyticActivity/up:catalyzedReaction ?reaction .
+  }
+}""" .

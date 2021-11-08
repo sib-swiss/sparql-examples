@@ -18,12 +18,12 @@ This query does not consider the hierarchy: it looks for reactions and enzymes o
     ?chebi
 WHERE
 {
-  VALUES ?startId { SLM:000399814 SLM:000390097}
-   ?startId SLM:rank SLM:Class .
+  VALUES ?startId { SL:000399814 SL:000390097}
+   ?startId SL:rank SL:Class .
   ?id rdfs:subClassOf+ ?startId .
-  ?id SLM:rank SLM:Isomeric_Subspecies ;
+  ?id SL:rank SL:Isomeric_Subspecies ;
 	rdfs:label ?name ;
-      SLM:citation ?citation .
+      SL:citation ?citation .
   ?id owl:equivalentClass ?chebi .
   #TODO federated query to rhea
   

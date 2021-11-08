@@ -19,9 +19,9 @@ Recapitulates the “browse lipid analytes” function of the website (in batch)
     ?startLabel
 WHERE
 {
-  VALUES ?startId { SLM:000399814 SLM:000390097}
+  VALUES ?startId { SL:000399814 SL:000390097}
   ?id rdfs:subClassOf+ ?startId .
-  ?id SLM:rank ?rank ;
+  ?id SL:rank ?rank ;
 	rdfs:label ?name .
   ?startId rdfs:label ?startLabel .
       

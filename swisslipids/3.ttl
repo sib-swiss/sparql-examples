@@ -19,11 +19,11 @@ Future versions of this query should be generic enough to work from any start po
     ?citation
 WHERE
 {
-  VALUES ?startId { SLM:000399814 SLM:000390097}
+  VALUES ?startId { SL:000399814 SL:000390097}
   ?id rdfs:subClassOf+ ?startId .
-  ?id SLM:rank ?rank ;
+  ?id SL:rank ?rank ;
 	rdfs:label ?name ;
-      SLM:citation ?citation .
+      SL:citation ?citation .
   ?startId rdfs:label ?startLabel .
       
 } ORDER BY DESC(?rank) ?startId""" .

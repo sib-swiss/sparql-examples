@@ -8,5 +8,5 @@ ex:7
     sh:prefixes ex: ;
     rdfs:label "Enzymes for lipid analytes" ;
     rdfs:comment """For a given list of lipid Species, return a list of the corresponding Isomeric subspecies for that particular lipid that are linked to an enzyme (classification Level, ID, name), as well as the enzymes themselves (UniProt AC and name).
-This question would allow a user with (a list of) very high level MS identifications to immediately narrow them to the most likely potential lipid structures and protein targets as in this example: SLM:000056871 / PC(O-36:4) (target species of interest) -> SLM:000028143 / PC(O-16:0/20:4(5Z,8Z,11Z,14Z)) -> LPCAT4, PLA2G4A, PLA2G4C, PLA2G4F (target proteins)"""^^rdf:HTML ;
+This question would allow a user with (a list of) very high level MS identifications to immediately narrow them to the most likely potential lipid structures and protein targets as in this example: SL:000056871 / PC(O-36:4) (target species of interest) -> SL:000028143 / PC(O-16:0/20:4(5Z,8Z,11Z,14Z)) -> LPCAT4, PLA2G4A, PLA2G4C, PLA2G4F (target proteins)"""^^rdf:HTML ;
     sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .

@@ -21,6 +21,6 @@ WHERE {
     BIND (IRI(CONCAT('http://identifiers.org/lipidx/', ?lipidx)) AS ?lipidxIRI)
     ?swisslipid rdfs:seeAlso ?lipidxIRI .
     ?swisslipid rdfs:subClassOf ?isomericsubSwisslipid .
-    ?isomericsubSwisslipid SLM:rank SLM:Isomeric_Subspecies .
-    ?isomericsubSwisslipid SLM:citation ?pubmed .
+    ?isomericsubSwisslipid SL:rank SL:Isomeric_Subspecies .
+    ?isomericsubSwisslipid SL:citation ?pubmed .
 }""" .
