@@ -40,7 +40,7 @@ ex:
     ex:prefix-pubmed, 
     ex:prefix-mesh, 
     ex:prefix-sh, 
-    ex:prefix-slm , 
+    ex:prefix-sl , 
     ex:prefix-codao, 
     ex:prefix-glyco,
     ex:prefix-glyconnect .
@@ -140,8 +140,8 @@ ex:prefix-mesh
 ex:prefix-sh
   sh:prefix "sh" ;
   sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI .
-ex:prefix-slm
-  sh:prefix "SLM" ;
+ex:prefix-sl
+  sh:prefix "SL" ;
   sh:namespace "https://swisslipids.org/rdf/"^^xsd:anyURI .
 ex:prefix-codao
   sh:prefix "codoa" ;
