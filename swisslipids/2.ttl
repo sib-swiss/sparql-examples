@@ -16,7 +16,7 @@ Recapitulates the “browse lipid analytes” function of the website (in batch)
 	?id 
 	?rank 
 	?startId 
-    ?startLabel
+  ?startLabel
 WHERE
 {
   VALUES ?startId { SL:000399814 SL:000390097}
