@@ -8,9 +8,11 @@ ex:3
     sh:prefixes ex: ;
     rdfs:label "Published lipid structures for lipid analytes" ;
     rdfs:comment """For a given (list of) lipid Species identifiers, return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies (level, ID, name) which are associated with at least one publication (PMID).
-The query should return the lipid identifiers, recommended names, and PMIDs. 
+The query should return the lipid identifiers, recommended names (?name), and PMIDs (?citation). 
 The list should be sorted by level in the hierarchy (Isomeric subspecies last).
-Future versions of this query should be generic enough to work from any start point (Species, Molecular subspecies, Structural subspecies).""" ;
+Future versions of this query should be generic enough to work from any start point (Species, Molecular subspecies, Structural subspecies)
+Queried species: SLM:000056420 (Phosphatidylcholine (20:2)) SLM:000308470 (Triacylglycerol (64:6))
+.""" ;
     sh:select """SELECT 
 	?id 
 	?rank 
@@ -19,10 +21,11 @@ Future versions of this query should be generic enough to work from any start po
     ?citation
 WHERE
 {
-  VALUES ?startId { SL:000399814 SL:000390097}
+  VALUES ?startId { SL:000056420 SL:000308470}
   ?id rdfs:subClassOf+ ?startId .
-  ?id SL:rank ?rank ;
-	rdfs:label ?name ;
+  ?id SL:rank ?rank .
+  VALUES ?rank { SL:Isomeric_Subspecie SL:Molecular_Subspecies SL:Structural_Subspecies}
+  ?id rdfs:label ?name ;
       SL:citation ?citation .
   ?startId rdfs:label ?startLabel .
       
