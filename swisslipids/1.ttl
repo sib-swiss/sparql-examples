@@ -7,10 +7,11 @@ ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select the SwissLipids categories"""^^rdf:HTML ;
-    sh:select """SELECT ?category
+    sh:select """SELECT ?category ?label 
 WHERE
 {
     ?category SL:rank SL:Category .
+    ?category rdfs:label ?label .
 }""" .
 
 
