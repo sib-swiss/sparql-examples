@@ -6,15 +6,18 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:13
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:label "Mapping SwissLipids to LipidX" ;
-    rdfs:comment """For a given list of SwissLipids identifiers return the list of corresponding LipidX identifiers.
-Output should include SwissLipids identifier and name plus the LipidX identifier. 
+    rdfs:label "Mapping ChEBI to SwissLipids" ;
+    rdfs:comment """For a given list of ChEBI identifiers return the list of corresponding SwissLipids identifiers.
+Output should include SwissLipids identifier and name plus the HMDB identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
-Extends ID mapping function on the website (LipidX not currently included)."""^^rdf:HTML ;
-    sh:select """SELECT
-    ?swisslipid
-    ?lipidx
+Recapitulates one ID mapping function on the website.""" ;
+    sh:select """# Example 13
+SELECT ?chebi ?slm ?slmName 
 WHERE {
-    ?swisslipid rdfs:seeAlso ?lipidx .
-    FILTER(STRSTARTS(STR(?lipidx), 'http://identifiers.org/lipidx/'))
-}""" .
+  VALUES ?chebi {CHEBI:70846 CHEBI:70771 CHEBI:70829}
+  ?slm rdfs:label ?slmName . 
+  # Corresponding SwissLipids entries
+  ?slm owl:equivalentClass ?chebi .
+}
+ORDER BY ?chebi
+""" .
