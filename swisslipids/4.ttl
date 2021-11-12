@@ -1,29 +1,21 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:4
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Potential lipid structures for lipid classes" ;
-    rdfs:comment """For a given (list of) lipid classes, return a list of the corresponding Isomeric subspecies. 
-The query should return the lipid recommended names as well as identifiers.
+    rdfs:comment """For a given (list of) lipid classes (e.g. SLM:000399814 (Ceramide) SLM:000000007 (Sphingomyelin (iso-d17:1(4E))), return a list of the corresponding Isomeric subspecies. 
+The query should return the lipid recommended names (?name) as well as identifiers (?id).
 Recapitulates the “browse lipid classes” function of the website (in batch)."""^^rdf:HTML ;
-    sh:select """SELECT 
-	?id 
-    ?name
-	?startId 
-    ?startLabel
-    ?citation
+    sh:select """# Example 4
+SELECT ?startId ?startName ?id ?name
 WHERE
 {
-  VALUES ?startId { SL:000399814 SL:000390097}
-   ?startId SL:rank SL:Class .
+  VALUES ?startId { SLM:000399814 SLM:000000567}
+  ?startId SLM:rank SLM:Class .
+  ?startId rdfs:label ?startName .
   ?id rdfs:subClassOf+ ?startId .
-  ?id SL:rank SL:Isomeric_Subspecies ;
-	rdfs:label ?name ;
-      SL:citation ?citation .
-  
-      
-} ORDER BY ?startId""" .
+  ?id SLM:rank SLM:Isomeric_Subspecies ;
+	  rdfs:label ?name .    
+} 
+ORDER BY ?startId
+""" .
