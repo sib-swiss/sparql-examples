@@ -1,8 +1,3 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:38
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
@@ -11,4 +6,27 @@ ex:38
 Output should include the corresponding SwissLipids ID(s) and name(s) and the PMID(s) for each.
 ￼Extends ex:36
 Output should include the corresponding SwissLipids ID(s) and name(s)."""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .
+    sh:select """# Example 38
+SELECT ?startId ?startName ?tail1 ?tailName1 ?tail2 ?tailName2 ?id ?name ?pubmed
+WHERE {
+  VALUES ?startId { SLM:000121946 }
+  ?startId rdfs:label ?startName .
+  # tail components
+  ?startId haspart: ?tail1 .
+  ?startId haspart: ?tail2 .
+  FILTER(!sameTerm(?tail1, ?tail2))
+  ?tail1 rdfs:label ?tailName1 .
+  ?tail2 rdfs:label ?tailName2 .
+
+  # Retrieve lipids with similar tails
+  ?id haspart: ?tail1 , ?tail2 .
+  
+  # Restrict to isomeric subspecies with PubMed citation(s)
+  ?id SLM:rank SLM:Isomeric_Subspecies .
+  ?id SLM:citation ?pubmed .
+
+  # Retrieve name
+  ?id rdfs:label ?name .
+}
+ORDER BY ?id ?tail1 ?tail2
+""" .
