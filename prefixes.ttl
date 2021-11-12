@@ -140,9 +140,9 @@ ex:prefix-mesh
 ex:prefix-sh
   sh:prefix "sh" ;
   sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI .
-ex:prefix-sl
-  sh:prefix "SL" ;
-  sh:namespace "https://swisslipids.org/rdf/"^^xsd:anyURI .
+ex:prefix-slm
+  sh:prefix "SLM" ;
+  sh:namespace "https://swisslipids.org/rdf/SLM_"^^xsd:anyURI .
 ex:prefix-codao
   sh:prefix "codoa" ;
   sh:namesapce "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
