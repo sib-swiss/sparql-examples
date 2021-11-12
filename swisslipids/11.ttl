@@ -12,6 +12,7 @@ Output should include SwissLipids identifier and name plus the HMDB identifier.
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
     sh:select """# Example 11
+prefix HMDB:<http://identifiers.org/hmdb/>
 SELECT ?hmdb ?slm ?slmName 
 WHERE {
   VALUES ?hmdb {HMDB:HMDB00269 HMDB:HMDB00032 HMDB:HMDB01383}

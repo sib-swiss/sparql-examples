@@ -15,8 +15,24 @@ trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
 prefixes=$(sparql --results=TSV --data=prefixes.ttl "PREFIX sh:<http://www.w3.org/ns/shacl#> SELECT ?s WHERE {?pn sh:prefix ?prefix ; sh:namespace ?namespaceI . BIND(CONCAT('PREFIX ',?prefix, ':<',(STR(?namespaceI)),'>') AS ?s)}"|grep -v "^\?s$" |tr -d '"')
 
+project="*"
+while getopts uhrsgmcp: option; do
+    case "$option" in
+        p) project="$OPTARG";;
+        u) project="uniprot";;
+        h) project="hamap";;
+        r) project="rhea";;
+        s) project="swisslipids";;
+        g) project="glyconnect";;
+        m) project="metanetx";;
+        c) project="covid";;
+        h) help; exit 0;;
+        *) help; exit 1;;
+    esac
+done
+
 echo "Prefixes found" 
-for i in $(ls */[1-9]*.ttl);
+for i in $(ls -rX $project/[1-9]*.ttl);
 do
     echo "Checking $i"
     f=$(echo $i | cut -f 2 -d '/' )	
