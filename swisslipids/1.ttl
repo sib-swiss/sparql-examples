@@ -1,17 +1,13 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select the SwissLipids categories"""^^rdf:HTML ;
-    sh:select """SELECT ?category ?label 
+    rdfs:comment """Select the SwissLipids categories and their labels."""^^rdf:HTML ;
+    sh:select """# Example 1
+SELECT ?category ?label
 WHERE
 {
-    ?category SL:rank SL:Category .
+    ?category SLM:rank SLM:Category .
     ?category rdfs:label ?label .
-}""" .
-
-
+}
+""" .
