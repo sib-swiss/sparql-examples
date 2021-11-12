@@ -1,33 +1,30 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:label "Enzymes for lipids" ;
-    rdfs:comment """For a given (list of) lipids, return a list of all corresponding reactions (Rhea IDs) for that particular lipid that are linked to an enzyme, as well as the enzymes themselves (ID and protein name).
-This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified set of lipid IDs."""^^rdf:HTML ;
-    sh:select """SELECT 
-	?id 
-    ?name
-	?startId 
-    ?startLabel
-    ?citation
-    ?chebi
+    rdfs:label "Lipid reactions" ;
+    rdfs:comment """For a given lipid (SLM:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
+This query does consider the hierarchy: it looks for reactions involving the specified lipid and/or its more specific forms."""^^rdf:HTML ;
+    sh:select """# Example 5
+SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation 
 WHERE
 {
-  VALUES ?startId { SL:000399814 SL:000390097}
-   ?startId SL:rank SL:Class .
-  ?id rdfs:subClassOf+ ?startId .
-  ?id SL:rank SL:Isomeric_Subspecies ;
-	rdfs:label ?name ;
-      SL:citation ?citation .
+  # SwissLipids query (list of) identifier(s)
+  VALUES ?startId { SLM:000399814 }
+  # name
+  ?startId rdfs:label ?startName .
+  # Retrieve children lipids 
+  ?id rdfs:subClassOf* ?startId .
+  ?id rdfs:label ?name .
+  # ChEBI x-ref
   ?id owl:equivalentClass ?chebi .
-  #TODO federated query to rhea
-  
-  #TODO federated query to UniProt
-} ORDER BY ?startId""" .
+  # federated query to Rhea
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+  	?rhea rh:equation ?rheaEquation .
+  	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
+  }    
+} 
+ORDER BY  ?startId ?id
+""" .
 
 
