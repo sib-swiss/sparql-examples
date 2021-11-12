@@ -6,16 +6,18 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-rdfs:comment """For a given list of HMDB identifiers return the list of corresponding SwissLipids identifiers.
+    rdfs:label "Mapping HMDB to SwissLipids" ;
+    rdfs:comment """For a given list of HMDB identifiers return the list of corresponding SwissLipids identifiers.
 Output should include SwissLipids identifier and name plus the HMDB identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
-    rdfs:comment """Select the SwissLipids categories"""^^rdf:HTML ;
-    sh:select """SELECT
-    ?swisslipid
-    ?hmdb
+    sh:select """# Example 11
+SELECT ?hmdb ?slm ?slmName 
 WHERE {
-    VALUES ?hmdb {'HMDB00269' 'MDB00032'} 
-    BIND (IRI(CONCAT('http://identifiers.org/hmdb/', ?hmdb)) AS ?hmdbIRI) 
-    ?swisslipid rdfs:seeAlso ?hmdbIRI .
-}""" .
+  VALUES ?hmdb {HMDB:HMDB00269 HMDB:HMDB00032 HMDB:HMDB01383}
+  ?slm rdfs:label ?slmName . 
+  # Corresponding SwissLipids entries
+  ?slm rdfs:seeAlso ?hmdb .
+}
+ORDER BY ?hmdb
+""" .
