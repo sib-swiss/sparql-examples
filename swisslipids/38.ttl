@@ -1,3 +1,4 @@
+prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
 ex:38
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
