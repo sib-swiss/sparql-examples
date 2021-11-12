@@ -7,13 +7,14 @@ ex:12
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Mapping SwissLipids to ChEBI" ;
-rdfs:comment """For a given list of SwissLipids lipid identifiers return the list of corresponding ChEBI identifiers.
-Output should include SwissLipids identifier and name plus the ChEBI identifier. 
-This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
-Recapitulates one ID mapping function on the website.""" ;
-    sh:select """SELECT
-    ?swisslipid ?chebi
+rdfs:comment """Retrieve mapping between SwissLipids lipid identifiers and their corresponding ChEBI identifiers.
+Output should include SwissLipids identifier and name plus the ChEBI identifier.""" ;
+    sh:select """# Example 12
+SELECT ?slm ?slmName ?chebi
 WHERE {
-    ?swisslipid owl:equivalentClass ?chebi 
+  ?slm rdfs:label ?slmName . 
+  # Corresponding ChEBI entries
+  ?slm owl:equivalentClass ?chebi .
 }
+ORDER BY ?slm
 """ .
