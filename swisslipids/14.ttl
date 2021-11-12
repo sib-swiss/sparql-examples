@@ -6,18 +6,25 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:14
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:label "Mapping LipidX lipids to possible structures" ;
-    rdfs:comment """For a given list of LipidX lipid identifiers return the list of possible Isomeric subspecies.
-Output should include the LipidX ID and the corresponding SwissLipids ID(s) and name(s). 
-This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies."""^^rdf:HTML ;
-    sh:select """SELECT
-    ?swisslipid
-    ?lipidx
-    ?isomericsubSwisslipid
+    rdfs:label "Mapping LIPID MAPS lipids to ChEBI via SwissLipids" ;
+    rdfs:comment """For a given list of LIPID MAPS identifiers return the list of corresponding ChEBI IDs.
+Output should include LIPID MAPS ID, the corresponding SwissLipids ID and name, plus the ChEBI ID. 
+This query first identifies SwissLipids identifiers for a given list of HMDB identifiers. It then retrieves all children  and from them the required LIPID MAPS identifiers. 
+extends ex:9"""^^rdf:HTML ;
+    sh:select """# Example 14
+SELECT ?lipidmaps ?slm ?slmName ?chebi
 WHERE {
-    VALUES ?hmdb {'HMDB00269' 'MDB00032'}
-    BIND (IRI(CONCAT('http://identifiers.org/lipidx/', ?lipidx)) AS ?lipidxIRI)
-    ?swisslipid rdfs:seeAlso ?lipidxIRI .
-    ?swisslipid rdfs:subClassOf ?isomericsubSwisslipid .
-    ?isomericsubSwisslipid SL:rank SL:Isomeric_Subspecies .
-}""" .
+  #VALUES ?lipidmaps {lipidmaps:LMSP01020001 lipidmaps:LMST01010069 lipidmaps:LMST04030222}
+  ?slm rdfs:label ?slmName . 
+  # Corresponding SwissLipids entries
+  ?slm rdfs:seeAlso ?lipidmaps .
+  FILTER regex(str(?lipidmaps), "lipidmaps") .
+
+  # Hierarchical search
+  #?children rdfs:subClassOf* ?slm .
+  #?children rdfs:label ?name .
+  # Corresponding ChEBI entries
+  ?slm owl:equivalentClass ?chebi .
+}
+ORDER BY ?lipidmaps ?slm ?chebi
+""" .
