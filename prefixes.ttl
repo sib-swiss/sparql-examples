@@ -244,3 +244,7 @@ ex: sh:declare ex:prefix-sachem .
 ex:prefix-sachem 
     sh:prefix "sachem" ;
     sh:namespace "http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#"^^xsd:anyURI  .
+ex: sh:declare ex:prefix-lipidmaps .
+ex:prefix-lipidmaps
+    sh:prefix "lipidmaps" ;
+    sh:namespace "https://www.lipidmaps.org/rdf/"^^xsd:anyURI  .

@@ -12,7 +12,7 @@ WHERE {
   ?slm rdfs:label ?slmName . 
   # Corresponding LIPID MAPS
   ?slm rdfs:seeAlso ?lipidmaps .
-  FILTER regex(str(?lipidmaps), "lipidmaps") .
+  FILTER (strstarts(str(?lipidmaps), str(lipidmaps:))) .
 }
 ORDER BY ?slm
 """ .
