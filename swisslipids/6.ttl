@@ -1,32 +1,33 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:6
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Enzymes for lipids" ;
-    rdfs:comment """For a given (list of) lipids, return a list of all corresponding reactions (Rhea IDs) for that particular lipid that are linked to an enzyme, as well as the enzymes themselves (ID and protein name).
-This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified set of lipid IDs."""^^rdf:HTML ;
-    sh:select """SELECT
-	?startId
-    ?chebi
-    ?reaction
-    ?protein
+    rdfs:comment """For a given lipid (SLM:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation), as well as their enzymes as annotated in UniProtKB/Swiss-Prot) enzymes themselves (ID and protein name).
+This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified lipid."""^^rdf:HTML ;
+    sh:select """# Example 6
+SELECT ?startId ?startName ?chebi ?rhea ?rheaEquation ?uniprot ?uniprotName
 WHERE
 {
-  VALUES ?startId { SL:000399814 SL:000390097}
+  # SwissLipids query (list of) identifier(s)
+  VALUES ?startId { SLM:000399814 }
+  # name
+  ?startId rdfs:label ?startName .
+  # ChEBI x-ref
   ?startId owl:equivalentClass ?chebi .
+  # federated query to Rhea
   SERVICE <https://sparql.rhea-db.org/sparql> {
-    ?reaction rdfs:subClassOf rh:Reaction .
-  	?reaction rh:status rh:Approved .
-	?reaction rh:side ?reactionSide .
-  	?reactionSide rh:contains ?participant .
-  	?participant rh:compound ?compound .
-   	?compound rh:chebi ?chebi . 
-  }
+  	?rhea rh:equation ?rheaEquation .
+  	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
+  }    
+  # federated query to UniProt
   SERVICE <https://sparql.uniprot.org/sparql> {
-     ?protein up:annotation/up:catalyticActivity/up:catalyzedReaction ?reaction .
+    ?uniprot up:reviewed true .
+    ?uniprot up:recommendedName/up:fullName ?uniprotName .
+    ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
   }
-}""" .
+} 
+ORDER BY ?startId
+""" .
+
+
