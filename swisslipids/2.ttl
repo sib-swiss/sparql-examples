@@ -1,28 +1,27 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:2
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Potential lipid structures for lipid analytes" ;
-rdfs:comment """For a given (list of) lipid Species identifiers, return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies.
+rdfs:comment """For a given (list of) lipid Species identifier(s) (e.g. SLM:000056420 (Phosphatidylcholine (20:2)) SLM:000308470 (Triacylglycerol (64:6))), return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies.
 The query should return the lipid recommended names as well as identifiers.
 The list should be sorted by level in the hierarchy (Isomeric subspecies last).
 Future versions of this query should be generic enough to work from any start point (Species, Molecular subspecies, Structural subspecies).
 Recapitulates the “browse lipid analytes” function of the website (in batch).""" ;
-    sh:select """SELECT
-	?id 
-	?rank 
-	?startId 
-  ?startLabel
+    sh:select """# Example 2
+SELECT ?startId ?startName ?rank ?id ?name
 WHERE
 {
-  VALUES ?startId { SL:000399814 SL:000390097}
+  # query: list of SwissLipids Species identifiers
+  VALUES ?startId { SLM:000056420 SLM:000308470 }
+  ?startId SLM:rank SLM:Species .
+  # SwissLipids Species name
+  ?startId rdfs:label ?startName .  
+  # Hierarchical search
   ?id rdfs:subClassOf+ ?startId .
-  ?id SL:rank ?rank ;
-	rdfs:label ?name .
-  ?startId rdfs:label ?startLabel .
-      
-} ORDER BY DESC(?rank) ?startId""" .
+  ?id SLM:rank ?rank .
+  VALUES ?rank { SLM:Isomeric_Subspecies SLM:Molecular_Subspecies SLM:Structural_Subspecies}
+  ?id rdfs:label ?name .
+} 
+ORDER BY DESC(?rank) ?startId
+""" .
