@@ -1,12 +1,31 @@
 prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:7
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Enzymes for lipid analytes" ;
-    rdfs:comment """For a given list of lipid Species, return a list of the corresponding Isomeric subspecies for that particular lipid that are linked to an enzyme (classification Level, ID, name), as well as the enzymes themselves (UniProt AC and name).
-This question would allow a user with (a list of) very high level MS identifications to immediately narrow them to the most likely potential lipid structures and protein targets as in this example: SL:000056871 / PC(O-36:4) (target species of interest) -> SL:000028143 / PC(O-16:0/20:4(5Z,8Z,11Z,14Z)) -> LPCAT4, PLA2G4A, PLA2G4C, PLA2G4F (target proteins)"""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO}""" .
+    rdfs:comment """For a given list of lipid Species, return a list of the corresponding Isomeric subspecies for that particular lipid that are linked to an enzyme as annotated in UniProtKB (UniProt AC and recommended name).
+This question would allow a user with (a list of) very high level MS identifications to immediately narrow them to the most likely potential lipid structures and protein targets as in this example: SLM:000056871 / PC(O-36:4) (target species of interest) -> SLM:000028143 / PC(O-16:0/20:4(5Z,8Z,11Z,14Z)) -> LPCAT4, PLA2G4A, PLA2G4C, PLA2G4F (target proteins)"""^^rdf:HTML ;
+    sh:select """# Example 7
+SELECT ?startId ?startLabel ?id ?name 
+WHERE 
+  # Queried lipid species
+  VALUES ?startId { SLM:000056871 }
+  ?startId rdfs:label ?startLabel . 
+  # Corresponding Isomeric subspecies
+  ?id rdfs:subClassOf+ ?startId .  
+  ?id SLM:rank SLM:Isomeric_Subspecie ;
+	  rdfs:label ?name .
+  # Mapped ChEBI
+  ?id owl:equivalentClass ?chebi .  
+  # federated query to Rhea
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+  	?rhea rh:equation ?rheaEquation .
+  	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
+  }    
+  # federated query to UniProt
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    ?uniprot up:reviewed true .
+    ?uniprot up:recommendedName/up:fullName ?uniprotName .
+    ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
+  }
+""" .
