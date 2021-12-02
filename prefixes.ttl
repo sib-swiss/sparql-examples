@@ -257,3 +257,11 @@ ex: sh:declare ex:prefix-eco .
 ex:prefix-eco
     sh:prefix "ECO" ;
     sh:namespace "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI  .
+ex: sh:declare ex:prefix-dcterms .
+ex:prefix-dcterms
+    sh:prefix "dcterms" ;
+    sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI .
+ex: sh:declare ex:prefix-busco .
+ex:prefix-busco
+    sh:prefix "busco" ;
+    sh:namespace "http://busco.ezlab.org/schema#"^^xsd:anyURI .
