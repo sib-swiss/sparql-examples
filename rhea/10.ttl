@@ -1,3 +1,5 @@
+# Query 10: copy the text here
+
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
