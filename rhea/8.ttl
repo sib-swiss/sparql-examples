@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:8
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all cross-references (to KEGG, MetaCyc, MACiE, ...) for a given reaction (<a href="rdf.rhea-db.org/11932">RHEA:11932</a>)"""^^rdf:html ;
+    rdfs:comment """Select all cross-references (to KEGG, MetaCyc, MACiE, ...) for a given reaction (<a href="http://rdf.rhea-db.org/11932">RHEA:11932</a>)"""^^rdf:html ;
     sh:select """SELECT 
   ?reaction 
   ?xref 
