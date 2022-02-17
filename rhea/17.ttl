@@ -1,3 +1,9 @@
+# Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy.
+# 
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=chebi:18059
+#
+
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,21 +11,30 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:17
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select the descendant reaction(s) of a given reaction (<a href="http://rdf.rhea-db.org/11628">RHEA:11628</a>) in the Rhea hierarchy (using rdfs:subClassOf+)"""^^rdf:html ;
-    sh:select """SELECT
-  ?reaction
-  ?equation
-  ?descendantReaction
-  ?descendantEquation 
+    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e a children of <a href="http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18059">CHEBI:18059</a> in the ChEBI hierarchy."""^^rdf:html ;
+    sh:select """SELECT distinct ?chebi ?name ?rhea ?equation
 WHERE {
-  BIND(rh:11628 AS ?reaction)
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?equation .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:equation ?equation .
+  ?rhea rh:side/rh:contains/rh:compound ?compound .
+  #
+  # the ChEBI can be used either as a small molecule, the reactive part of a macromolecule or as a polymer.
+  #
+  {
+    ?chebi rdfs:subClassOf* CHEBI:18059 .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  }
+  UNION
+  {
+    ?not7_3 rdfs:subClassOf* CHEBI:18059 .
 
-  ?descendantReaction rdfs:subClassOf rh:Reaction .
-  ?descendantReaction rh:status rh:Approved .
-  ?descendantReaction rdfs:subClassOf+ ?reaction .
-  ?descendantReaction rh:equation ?descendantEquation .
+    ?not7_3 rdfs:subClassOf ?chebiRestriction .
+    ?chebiRestriction a owl:Restriction .
+    ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
+    ?chebiRestriction owl:someValuesFrom ?chebi .  
+  
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  }
+  ?chebi up:name ?name .
 }""" .
 

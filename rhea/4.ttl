@@ -1,3 +1,8 @@
+# Select all cross-references mapped to RHEA:21016
+# 
+# This query mimics the Cross-references section of 
+# https://www.rhea-db.org/rhea/21016
+#
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,16 +10,25 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:4
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all approved reactions using <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:29985">CHEBI:29985</a> (L-glutamate) as small molecule participant"""^^rdf:HTML ;
-    sh:select """SELECT
-  ?reaction 
-  ?reactionEquation 
+    rdfs:comment """# Select all cross-references mapped to <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>. This query mimics the Cross-references section of <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>"""^^rdf:HTML ;
+    sh:select """SELECT distinct ?rhea ?rheaDir ?xref 
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
-  ?reaction rh:side ?reactionSide .
-  ?reactionSide rh:contains ?participant .
-  ?participant rh:compound ?compound .
-  ?compound rh:chebi CHEBI:29985
+  ?rhea rdfs:subClassOf rh:Reaction .
+  VALUES (?rhea) {(rh:21016)}
+  {
+    ?rhea rdfs:seeAlso ?xref .
+    BIND(?rhea as ?rheaDir)
+  }
+  UNION
+  {
+    ?rhea rh:directionalReaction ?directionalReaction .
+    ?directionalReaction rdfs:seeAlso ?xref . 
+    BIND(?directionalReaction as ?rheaDir  )
+  }
+  UNION
+  {
+    ?rhea rh:bidirectionalReaction ?bidirectionalReaction .
+    ?bidirectionalReaction rdfs:seeAlso ?xref . 
+    BIND(?bidirectionalReaction as ?rheaDir  )
+  }
 }""" .

@@ -1,3 +1,7 @@
+# Select all ChEBI compounds used in Rhea as reaction participant
+# 
+# This query can not be expressed in the Rhea web site
+
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,22 +9,17 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:15
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all the descendants of <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35179">CHEBI:35179</a> (a 2-oxo carboxylate) in the ChEBI hierarchy (using rdfs:subClassOf) used in Rhea reaction(s), and show the reaction(s)"""^^rdf:html ;
-    sh:select """SELECT
-  ?chebi
-  ?compoundName 
-  ?reaction 
-  ?reactionEquation 
+    rdfs:comment """Select all ChEBI compounds used in Rhea as reaction participant"""^^rdf:html ;
+    sh:select """SELECT ?chebi ?name (count(?rhea) as ?countRhea)
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
-  ?reaction rh:side ?reactionSide .
-  ?reactionSide rh:contains ?participant .
-  ?participant rh:compound ?compound .
-  ?compound rh:name ?compoundName .
-  ?compound rh:chebi ?chebi .
-  ?chebi rdfs:subClassOf+ CHEBI:35179 .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:side/rh:contains/rh:compound ?compound .
+  #
+  # the ChEBI can be used either as a small molecule, the reactive part of a macromolecule or as a polymer.
+  #
+  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  ?chebi up:name ?name .
 }
-ORDER BY ?chebi""" .
+GROUP BY ?chebi ?name
+ORDER BY DESC(?countRhea)""" .
 

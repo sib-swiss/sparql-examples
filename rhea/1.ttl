@@ -1,4 +1,7 @@
-# Query 1: Select all Rhea reactions (unspecified direction), with "Approved" status
+# Query 1
+# Select all Rhea reactions (unspecified direction) 
+# and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
+#
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -6,13 +9,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions (unspecified direction), with "Approved" status""" ;
-    sh:select """SELECT 
-  ?reaction 
-  ?reactionEquation 
+    rdfs:comment """Select all Rhea reactions (unspecified direction) and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.""" ;
+    sh:select """SELECT ?rhea ?id ?accession ?isChemicallyBalanced ?isTransport  ?equation 
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:id ?id .
+  ?rhea rh:accession ?accession .
+  ?rhea rh:equation ?equation .
+  ?rhea rh:isTransport ?isTransport .
+  ?rhea rh:isChemicallyBalanced ?isChemicallyBalanced .
 }""" .
 

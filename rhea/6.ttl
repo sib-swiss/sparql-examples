@@ -1,3 +1,6 @@
+# Select all Rhea reactions mapped to MetaCyc reactions
+# MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions
+# Rhea web query: https://www.rhea-db.org/rhea?query=metacyc:*
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,13 +8,27 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:6
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-   rdfs:comment """Select all approved reactions annotated with a given Pubmed ID (<a href="http://rdf.ncbi.nlm.nih.gov/pubmed/2460092">2460092</a>)"""^^rdf:HTML ;
-    sh:select """SELECT
-  ?reaction
-  ?reactionEquation
+   rdfs:comment """Select all Rhea reactions mapped to MetaCyc reactions. MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions. Corresponding Rhea web query is <a href="https://www.rhea-db.org/rhea?query=metacyc:*">https://www.rhea-db.org/rhea?query=metacyc:*</a>"""^^rdf:HTML ;
+    sh:select """SELECT distinct ?rhea ?rheaDir ?metacyc
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
-  ?reaction rh:citation pubmed:2460092 .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  {
+    ?rhea rdfs:seeAlso ?metacyc .
+    FILTER CONTAINS(str(?metacyc), "METACYC") 
+    BIND(?rhea as ?rheaDir)
+  }
+  UNION
+  {
+    ?rhea rh:directionalReaction ?directionalReaction .
+    ?directionalReaction rdfs:seeAlso ?metacyc . 
+    FILTER CONTAINS(str(?metacyc), "METACYC") 
+    BIND(?directionalReaction as ?rheaDir  )
+  }
+  UNION
+  {
+    ?rhea rh:bidirectionalReaction ?bidirectionalReaction .
+    ?bidirectionalReaction rdfs:seeAlso ?metacyc . 
+    FILTER CONTAINS(str(?metacyc), "METACYC") 
+    BIND(?bidirectionalReaction as ?rheaDir  )
+  }
 }""" .

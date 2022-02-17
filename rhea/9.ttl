@@ -1,3 +1,8 @@
+# Select all Rhea reactions mapped to EC numbers (enzyme classification) 
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=ec:*
+#
+
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,16 +10,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:9
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all approved reactions linked to a given EC number (<a href="http://purl.uniprot.org/enzyme/1.1.1.353">EC 1.1.1.353</a>)"""^^rdf:html ;
-    sh:select """SELECT
-  ?reaction 
-  ?reactionEquation 
+    rdfs:comment """Select all Rhea reactions mapped to EC numbers (enzyme classification). This query corresponds to the Rhea web site query as <a href="https://www.rhea-db.org/rhea?query=ec:*">https://www.rhea-db.org/rhea?query=ec:*</a>"""^^rdf:html ;
+    sh:select """SELECT ?ec ?ecNumber ?rhea ?accession ?equation 
 WHERE {
-  BIND(ec:1.1.1.353 AS ?ecNumber)
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
-  ?reaction rh:ec ?ecNumber .
-}
-ORDER BY ?reaction""" .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:accession ?accession .
+  ?rhea rh:ec ?ec .
+  BIND(strafter(str(?ec),str(ec:)) as ?ecNumber)
+  ?rhea rh:isTransport ?isTransport .
+  ?rhea rh:equation ?equation .
+}""" .
 

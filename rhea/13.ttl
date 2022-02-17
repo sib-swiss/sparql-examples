@@ -1,3 +1,10 @@
+# Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot
+# return the number of UniProtKB entries
+# 
+# Federated query using a service to UniProt SPARQL endpoint
+#
+# This query cannot be performed using the Rhea search web site
+
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,13 +12,17 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:13
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all the descendants of <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35179">CHEBI:35179</a> (a 2-oxo carboxylate) in the ChEBI hierarchy (using rdfs:subClassOf+), used in Rhea reactions or not"""^^rdf:html ;
-    sh:select """SELECT
-  ?chebiDescendant  
-  (STR(?label) AS ?chebiDescendantName) 
+    rdfs:comment """Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot and return the number of UniProtKB entries. It is a federated query using a service to UniProt SPARQL endpoint"""^^rdf:html ;
+    sh:select """SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
 WHERE {
-  ?chebiDescendant rdfs:subClassOf+ CHEBI:35179 .
-  ?chebiDescendant rdfs:label ?label .
-}
-ORDER BY ?chebiDescendant""" .
+  SERVICE <https://sparql.uniprot.org/sparql> { 
+    ?uniprot up:reviewed true . 
+    ?uniprot up:mnemonic ?mnemo . 
+    ?uniprot up:organism ?taxid .
+    VALUES (?taxid) { (taxon:83333) }
+    ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
+  }
+  ?rhea rh:accession ?accession .
+  ?rhea rh:equation ?equation .
+}""" .
 

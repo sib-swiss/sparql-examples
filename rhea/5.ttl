@@ -1,3 +1,7 @@
+# Select all Rhea reactions mapped to KEGG reactions
+# KEGG reactions are mapped to Rhea bidirectional reactions
+# Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*
+#
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -5,25 +9,11 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-   rdfs:comment """ Select all approved reactions using L-glutamine <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:29985">CHEBI:29985</a> AND L-glutamate (<a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:58359">CHEBI:58359</a>) in different reaction sides"""^^rdf:HTML ;
-    sh:select """SELECT
-    ?reaction
-    ?reactionEquation
+   rdfs:comment """Select all Rhea reactions mapped to KEGG reactions. KEGG reactions are mapped to Rhea bidirectional reactions. This corresponds to the <a href="https://www.rhea-db.org/rhea?query=kegg:*">this</a> Rhea web query"""^^rdf:HTML ;
+    sh:select """SELECT ?rhea ?kegg ?rheaDir 
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-  ?reaction rh:equation ?reactionEquation .
-
-  ?reaction rh:side ?reactionSide1 .
-  ?reactionSide1 rh:contains ?participant1 .
-  ?participant1 rh:compound ?compound1 .
-  ?compound1 rh:chebi CHEBI:29985 .
-
-  ?reaction rh:side ?reactionSide2 .
-  ?reactionSide2 rh:contains ?participant2 .
-  ?participant2 rh:compound ?compound2 .
-  ?compound2 rh:chebi CHEBI:58359 .
-
-  ?reactionSide1 rh:transformableTo ?reactionSide2 .
-}
-ORDER BY ?reaction""" .
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:bidirectionalReaction ?rheaDir .
+  ?rheaDir rdfs:seeAlso ?kegg .
+  FILTER (regex(str(?kegg),'kegg'))
+}""" .
