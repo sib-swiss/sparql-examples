@@ -1,4 +1,4 @@
-Select all Rhea reactions used to annotate enzyme sequences in UniProtKB
+# Select all Rhea reactions used to annotate enzyme sequences in UniProtKB
 # return the number of UniProtKB entries
 # Federated query using a service to UniProt SPARQL endpoint
 #
