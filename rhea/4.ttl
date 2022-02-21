@@ -10,7 +10,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:4
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """# Select all cross-references mapped to <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>. This query mimics the Cross-references section of <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>"""^^rdf:HTML ;
+    rdfs:comment """Select all cross-references mapped to <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>. This query mimics the Cross-references section of <a href="https://www.rhea-db.org/rhea/21016">RHEA:21016</a>"""^^rdf:HTML ;
     sh:select """SELECT distinct ?rhea ?rheaDir ?xref 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
