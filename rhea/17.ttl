@@ -11,8 +11,15 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:17
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e a children of <a href="http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:18059">CHEBI:18059</a> in the ChEBI hierarchy."""^^rdf:html ;
-    sh:select """SELECT distinct ?chebi ?name ?rhea ?equation
+    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy."""^^rdf:html ;
+    sh:select """
+# Query 17
+# Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy.
+# 
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=chebi:18059
+#
+SELECT distinct ?chebi ?name ?rhea ?equation
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:equation ?equation .

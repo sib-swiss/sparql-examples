@@ -11,8 +11,15 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:16
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant, in opposite side and return Rhea reactions that have <a href="http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:29985">CHEBI:29985</a> (L-glutamate) as reaction participant in one side and <a href="http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:58359">CHEBI:58359</a> (L-glutamine) in the other side."""^^rdf:html ;
-    sh:select """SELECT ?chebi1 ?name1 ?chebi2 ?name2 ?rhea ?equation
+    rdfs:comment """Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side"""^^rdf:html ;
+    sh:select """
+# Query 16
+# Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side
+# Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
+# and CHEBI:58359 (L-glutamine) in the other side
+#
+# This query cannot be expressed in the Rhea web site
+SELECT ?chebi1 ?name1 ?chebi2 ?name2 ?rhea ?equation
 WHERE {
   VALUES (?chebi1) { (CHEBI:29985) }
   ?chebi1 up:name ?name1 .

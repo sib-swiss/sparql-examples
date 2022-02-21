@@ -8,8 +8,15 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:8
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions mapped to GO molecular function. This query corresponds to the Rhea web site query as <a href="https://www.rhea-db.org/rhea?query=go:*">https://www.rhea-db.org/rhea?query=go:*</a>"""^^rdf:html ;
-    sh:select """SELECT ?go ?rhea ?equation 
+    rdfs:comment """Select all Rhea reactions mapped to GO molecular function"""^^rdf:html ;
+    sh:select """
+# Query 8
+# Select all Rhea reactions mapped to GO molecular function
+# 
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=go:*
+#
+SELECT ?go ?rhea ?equation 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rdfs:seeAlso ?go .

@@ -12,8 +12,16 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:13
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot and return the number of UniProtKB entries. It is a federated query using a service to UniProt SPARQL endpoint"""^^rdf:html ;
-    sh:select """SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
+    rdfs:comment """Select all Rhea reactions used in UniProtKB/Swiss-Prot for a given organism (NCBI taxonomy ID)."""^^rdf:html ;
+    sh:select """
+# Query 13
+# Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot
+# return the number of UniProtKB entries
+# 
+# Federated query using a service to UniProt SPARQL endpoint
+#
+# This query cannot be performed using the Rhea search web site
+SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
     ?uniprot up:reviewed true . 

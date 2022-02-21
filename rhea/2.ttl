@@ -8,8 +8,12 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:2
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions annotated with a given Pubmed identifier (PMID = <a href="https://pubmed.ncbi.nlm.nih.gov/29867142/">29867142</a>)"""^^rdf:HTML ;
-    sh:select """SELECT ?pubmed ?rhea ?accession ?isTransport  ?equation 
+    rdfs:comment """Select all Rhea reactions annotated with a given Pubmed ID"""^^rdf:HTML ;
+    sh:select """
+# Query 2 
+# Select all Rhea reactions annotated with a given Pubmed identifier (PMID = 29867142)
+#
+SELECT ?pubmed ?rhea ?accession ?isTransport  ?equation 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:accession ?accession .

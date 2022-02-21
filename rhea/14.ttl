@@ -10,8 +10,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:14
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions that have <a href="http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:29985">CHEBI:29985</a> (L-glutamate) as reaction participant."""^^rdf:html ;
-    sh:select """SELECT distinct ?chebi ?rhea ?equation
+    rdfs:comment """Select all Rhea reactions that have a given ChEBI ID as reaction participant"""^^rdf:html ;
+    sh:select """
+# Query 14
+# Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
+# 
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=chebi:29985
+SELECT distinct ?chebi ?rhea ?equation
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:equation ?equation .

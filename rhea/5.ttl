@@ -9,8 +9,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-   rdfs:comment """Select all Rhea reactions mapped to KEGG reactions. KEGG reactions are mapped to Rhea bidirectional reactions. This corresponds to the <a href="https://www.rhea-db.org/rhea?query=kegg:*">this</a> Rhea web query"""^^rdf:HTML ;
-    sh:select """SELECT ?rhea ?kegg ?rheaDir 
+   rdfs:comment """Select all Rhea reactions mapped to KEGG reactions"""^^rdf:HTML ;
+    sh:select """
+# Query 5 
+# Select all Rhea reactions mapped to KEGG reactions
+# KEGG reactions are mapped to Rhea bidirectional reactions
+# Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*
+#
+SELECT ?rhea ?kegg ?rheaDir 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:bidirectionalReaction ?rheaDir .

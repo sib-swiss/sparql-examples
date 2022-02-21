@@ -9,8 +9,13 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions (unspecified direction) and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.""" ;
-    sh:select """SELECT ?rhea ?id ?accession ?isChemicallyBalanced ?isTransport  ?equation 
+    rdfs:comment """Select all Rhea reactions""" ;
+    sh:select """
+# Query 1
+# Select all Rhea reactions (unspecified direction) 
+# and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
+#
+SELECT ?rhea ?id ?accession ?isChemicallyBalanced ?isTransport  ?equation 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:id ?id .

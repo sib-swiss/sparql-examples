@@ -10,7 +10,12 @@ ex:15
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all ChEBI compounds used in Rhea as reaction participant"""^^rdf:html ;
-    sh:select """SELECT ?chebi ?name (count(?rhea) as ?countRhea)
+    sh:select """
+# Query 15
+# Select all ChEBI compounds used in Rhea as reaction participant
+# 
+# This query can not be expressed in the Rhea web site
+SELECT ?chebi ?name (count(?rhea) as ?countRhea)
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:side/rh:contains/rh:compound ?compound .

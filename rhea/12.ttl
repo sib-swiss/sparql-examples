@@ -13,8 +13,17 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:12
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions used to annotate enzyme sequences in UniProtKB. This returns the number of UniProtKB entries. It is a federated query using a service to UniProt SPARQL endpoint. This query corresponds to the Rhea web site query as <a href="https://www.rhea-db.org/rhea?query=uniprot:*">https://www.rhea-db.org/rhea?query=uniprot:*</a>"""^^rdf:html ;
-    sh:select """SELECT ?spCount ?rhea ?accession ?equation 
+    rdfs:comment """Select all Rhea reactions linked to enzyme sequences in UniProtKB"""^^rdf:html ;
+    sh:select """
+# Query 12
+# Select all Rhea reactions used to annotate enzyme sequences in UniProtKB
+# return the number of UniProtKB entries
+# Federated query using a service to UniProt SPARQL endpoint
+#
+# This query corresponds to the Rhea web site query :
+# https://www.rhea-db.org/rhea?query=uniprot:*
+#
+SELECT ?spCount ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
   	SELECT ?rhea (count(?uniprot) as ?uniprotCount) {

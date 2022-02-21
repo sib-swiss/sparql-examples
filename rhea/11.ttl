@@ -11,8 +11,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Retrieve the count of reactions mapped to each level (main class) of the enzyme classification"""^^rdf:html ;
-    sh:select """SELECT ?ecClass (STR(?ecName) AS ?ecClassName) (COUNT(?rhea) AS ?rheaCount)
+    rdfs:comment """Distribution of reactions according to the first class of the enzyme classification (federated query)"""^^rdf:html ;
+    sh:select """
+# Query 11
+# Retrieve the count of reactions mapped to each level (main class) of the enzyme classification
+# 
+# This query mimics the Filter section of the Rhea web site (Browse all reactions)
+# https://www.rhea-db.org/rhea?query=
+SELECT ?ecClass (STR(?ecName) AS ?ecClassName) (COUNT(?rhea) AS ?rheaCount)
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> {
     VALUES (?ecClass) { (ec:1.-.-.-)(ec:2.-.-.-)(ec:3.-.-.-)(ec:4.-.-.-)(ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-)}

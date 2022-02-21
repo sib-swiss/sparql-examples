@@ -8,8 +8,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:6
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-   rdfs:comment """Select all Rhea reactions mapped to MetaCyc reactions. MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions. Corresponding Rhea web query is <a href="https://www.rhea-db.org/rhea?query=metacyc:*">https://www.rhea-db.org/rhea?query=metacyc:*</a>"""^^rdf:HTML ;
-    sh:select """SELECT distinct ?rhea ?rheaDir ?metacyc
+   rdfs:comment """Select all Rhea reactions mapped to MetaCyc reactions"""^^rdf:HTML ;
+    sh:select """
+# Query 6 
+# Select all Rhea reactions mapped to MetaCyc reactions
+# MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions
+# Rhea web query: https://www.rhea-db.org/rhea?query=metacyc:*
+#
+SELECT distinct ?rhea ?rheaDir ?metacyc
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   {
