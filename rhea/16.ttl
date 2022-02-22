@@ -12,8 +12,7 @@ ex:16
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side"""^^rdf:html ;
-    sh:select """
-# Query 16
+    sh:select """# Query 16
 # Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side
 # Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
 # and CHEBI:58359 (L-glutamine) in the other side

@@ -12,8 +12,7 @@ ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Distribution of reactions according to the first class of the enzyme classification (federated query)"""^^rdf:html ;
-    sh:select """
-# Query 11
+    sh:select """# Query 11
 # Retrieve the count of reactions mapped to each level (main class) of the enzyme classification
 # 
 # This query mimics the Filter section of the Rhea web site (Browse all reactions)

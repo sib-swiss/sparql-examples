@@ -11,8 +11,7 @@ ex:9
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions mapped to enzyme classification (EC numbers)"""^^rdf:html ;
-    sh:select """
-# Query 9
+    sh:select """# Query 9
 # Select all Rhea reactions mapped to EC numbers (enzyme classification)
 # 
 # This query corresponds to the Rhea web site query :

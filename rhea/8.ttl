@@ -9,8 +9,7 @@ ex:8
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions mapped to GO molecular function"""^^rdf:html ;
-    sh:select """
-# Query 8
+    sh:select """# Query 8
 # Select all Rhea reactions mapped to GO molecular function
 # 
 # This query corresponds to the Rhea web site query :

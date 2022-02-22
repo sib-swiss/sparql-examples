@@ -11,8 +11,7 @@ ex:4
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all cross-references for a given reaction"""^^rdf:HTML ;
-    sh:select """
-# Query 4
+    sh:select """# Query 4
 # Select all cross-references mapped to RHEA:21016
 # 
 # This query mimics the Cross-references section of 

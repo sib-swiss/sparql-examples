@@ -14,8 +14,7 @@ ex:12
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions linked to enzyme sequences in UniProtKB"""^^rdf:html ;
-    sh:select """
-# Query 12
+    sh:select """# Query 12
 # Select all Rhea reactions used to annotate enzyme sequences in UniProtKB
 # return the number of UniProtKB entries
 # Federated query using a service to UniProt SPARQL endpoint

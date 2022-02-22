@@ -10,8 +10,7 @@ ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions""" ;
-    sh:select """
-# Query 1
+    sh:select """# Query 1
 # Select all Rhea reactions (unspecified direction) 
 # and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
 #

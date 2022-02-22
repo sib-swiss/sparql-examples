@@ -10,8 +10,7 @@ ex:7
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions mapped to Reactome reactions</a>""" ;
-    sh:select """
-# Query 7 
+    sh:select """# Query 7 
 # Select all Rhea reactions mapped to Reactome reactions
 # MetaCyc reactions are mapped to either undirected, left-to-right or right-to-left reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=reactome:*

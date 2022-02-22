@@ -9,8 +9,7 @@ ex:2
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions annotated with a given Pubmed ID"""^^rdf:HTML ;
-    sh:select """
-# Query 2 
+    sh:select """# Query 2 
 # Select all Rhea reactions annotated with a given Pubmed identifier (PMID = 29867142)
 #
 SELECT ?pubmed ?rhea ?accession ?isTransport  ?equation 

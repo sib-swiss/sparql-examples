@@ -10,8 +10,7 @@ ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
    rdfs:comment """Select all Rhea reactions mapped to KEGG reactions"""^^rdf:HTML ;
-    sh:select """
-# Query 5 
+    sh:select """# Query 5 
 # Select all Rhea reactions mapped to KEGG reactions
 # KEGG reactions are mapped to Rhea bidirectional reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*

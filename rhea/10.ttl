@@ -14,8 +14,7 @@ ex:10
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions linked to an enzyme classification (sub)-class"""^^rdf:html ;
-    sh:select """
-# Query 10
+    sh:select """# Query 10
 # Select all Rhea reactions mapped to 
 # 
 # This query corresponds to the Rhea web site query :

@@ -11,8 +11,7 @@ ex:14
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all Rhea reactions that have a given ChEBI ID as reaction participant"""^^rdf:html ;
-    sh:select """
-# Query 14
+    sh:select """# Query 14
 # Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
 # 
 # This query corresponds to the Rhea web site query :
