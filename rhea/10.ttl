@@ -29,7 +29,7 @@ WHERE {
   ?rhea rh:ec ?ec .
   BIND(strafter(str(?ec),str(ec:)) as ?ecNumber)
   # class (e.g EC 1.-.-.-)
-  FILTER (regex(?ecNumber,'^1\\.')) 
+  FILTER (regex(?ecNumber,'^1\\\.')) 
   # sub-class  (e.g EC 1.1.-.-)
   #FILTER (regex(?ecNumber,'^1\\.1\\.')) 
   # sub-sub-class (e.g EC 1.1.1.-)
