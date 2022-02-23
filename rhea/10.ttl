@@ -31,8 +31,8 @@ WHERE {
   # class (e.g EC 1.-.-.-)
   FILTER (regex(?ecNumber,'^1\\\.')) 
   # sub-class  (e.g EC 1.1.-.-)
-  #FILTER (regex(?ecNumber,'^1\\.1\\.')) 
+  #FILTER (regex(?ecNumber,'^1\\\.1\\\.')) 
   # sub-sub-class (e.g EC 1.1.1.-)
-  #FILTER (regex(?ecNumber,'^1\\.1\\.1\\.')) 
+  #FILTER (regex(?ecNumber,'^1\\\.1\\\.1\\\.')) 
   ?rhea rh:equation ?equation .
 }""" .
