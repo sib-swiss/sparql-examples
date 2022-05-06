@@ -43,7 +43,8 @@ ex:
     ex:prefix-sl , 
     ex:prefix-codao, 
     ex:prefix-glyco,
-    ex:prefix-glyconnect .
+    ex:prefix-glyconnect ,
+    ex:prefix-eco .
 ex:prefix-up
   sh:prefix "up" ;
   sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI .
@@ -248,3 +249,7 @@ ex: sh:declare ex:prefix-lipidmaps .
 ex:prefix-lipidmaps
     sh:prefix "lipidmaps" ;
     sh:namespace "https://www.lipidmaps.org/rdf/"^^xsd:anyURI  .
+ex: sh:declare ex:prefix-eco .
+ex:prefix-eco
+    sh:prefix "ECO" ;
+    sh:namespace "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI  .
