@@ -24,5 +24,4 @@ WHERE {
     rdfs:seeAlso ?chemblEntry .
   ?chemblEntry up:database <http://purl.uniprot.org/database/ChEMBL> .
 } 
-"""  ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+"""  .

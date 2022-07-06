@@ -21,5 +21,4 @@ WHERE
 } 
 GROUP BY ?protein 
 HAVING (COUNT(?annotation) > 1)
-"""  ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+"""  .

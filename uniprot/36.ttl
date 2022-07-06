@@ -37,5 +37,4 @@ WHERE
     ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
   }
 }
-"""  ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+"""  .

@@ -24,5 +24,4 @@ WHERE
         ?sequence rdf:value ?value .
         BIND (substr(?value, ?begin, 1) as ?original) .
         FILTER(?original = 'Y' && ?substitution = 'F') .
-} """ ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+} """ .

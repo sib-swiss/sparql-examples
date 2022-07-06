@@ -18,5 +18,4 @@ WHERE
 	?annotation up:range ?range .
 	?range faldo:begin/faldo:position ?begin .
 	?range faldo:end/faldo:position ?end
-}""" ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+}""" .

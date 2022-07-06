@@ -29,7 +29,10 @@ case "$project" in
         ;;
 esac
 
-rm examples_${project}.ttl
+if [ -f examples_${project}.ttl ]
+then
+    rm examples_${project}.ttl
+fi
 echo "# baseURI: http://sparql.${project}.org/.well-known/sparql-examples#" > examples_${project}.ttl
 echo "# imports: http://purl.uniprot.org/core/ " >> examples_${project}.ttl
 echo "# prefix: ex" >> examples_${project}.ttl

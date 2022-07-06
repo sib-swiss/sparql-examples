@@ -22,5 +22,4 @@ WHERE
     ?subcellAnnotation up:locatedIn/up:cellularComponent ?cellcmpt .
     ?cellcmpt skos:prefLabel ?location_inside_cell .
 }
-""" ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+""" .

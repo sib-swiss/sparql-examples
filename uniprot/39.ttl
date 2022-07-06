@@ -32,5 +32,4 @@ WHERE {
 
   ?attribution up:evidence ?evidence .
 }
-""" ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+""" .

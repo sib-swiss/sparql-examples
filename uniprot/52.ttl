@@ -66,5 +66,4 @@ WHERE
     ?target cco:hasTargetComponent/cco:targetCmptXref ?protein .
     ?protein a cco:UniprotRef .
   }
-}""" ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+}""" .
