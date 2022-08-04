@@ -12,5 +12,5 @@ ex:24
 FROM <http://sparql.uniprot.org/.well-known/void>
 WHERE
 {   
-    [] <http://purl.org/pav/2.0/version> ?version
+    [] <http://purl.org/pav/version> ?version
 }""" .
