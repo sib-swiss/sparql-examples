@@ -1,0 +1,34 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
+ex:54
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Proteins with annotated binding sites for ligands similar to heme""" ;
+    sh:select """SELECT 
+  ?protein
+  ?mnemonic
+  ?proteinName
+  ?ligandSimilarityScore
+  ?ligand
+WHERE {
+  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> {
+    ?ssc sachem:compound ?ligand; 
+      sachem:score ?ligandSimilarityScore ;
+      sachem:similaritySearch ?sss .
+        # Smiles of Heme
+    ?sss    sachem:query "CC1=C(CCC([O-])=O)C2=[N+]3C1=Cc1c(C)c(C=C)c4C=C5C(C)=C(C=C)C6=[N+]5[Fe-]3(n14)n1c(=C6)c(C)c(CCC([O-])=O)c1=C2";
+      sachem:cutoff "8e-1"^^xsd:double ;
+      sachem:aromaticityMode sachem:aromaticityDetect ;
+      sachem:similarityRadius 1 ;
+      sachem:tautomerMode sachem:ignoreTautomers .
+  }
+  ?protein up:mnemonic ?mnemonic ;
+    up:recommendedName/up:fullName ?proteinName ;
+    up:annotation ?annotation ;
+  ?annotation a up:Binding_Site_Annotation ;
+      up:ligand/rdfs:subClassOf ?ligand .
+}
+ORDER BY DESC(?ligandSimilarityScore)""" .

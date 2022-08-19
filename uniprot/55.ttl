@@ -1,0 +1,29 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
+ex:55
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Number of proteins with annotated binding sites for metals or metal sulfur clusters (and experimental evidence for the binding)""" ;
+    sh:select """SELECT
+  ?ligand
+  ?name 
+  (COUNT(DISTINCT ?protein) as ?entries)
+WHERE {
+   ?protein up:annotation ?annotation .
+   
+   VALUES ?evs { obo:ECO_0000269 obo:ECO_0007744 } .
+   VALUES ?chebids { CHEBI:25213 CHEBI:25214 } .
+   ?st rdf:subject ?protein ; 
+       rdf:predicate up:annotation ; 
+       rdf:object ?annotation ;
+       up:attribution/up:evidence ?evs .
+
+   ?annotation up:ligand/rdfs:subClassOf ?ligand .
+   ?ligand rdfs:subClassOf+ ?chebids ;
+     rdfs:label ?ligandName .
+}
+GROUP BY ?ligand ?ligandName
+ORDER BY DESC(?entries)""" .
