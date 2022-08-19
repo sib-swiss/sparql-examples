@@ -27,7 +27,7 @@ WHERE {
   }
   ?protein up:mnemonic ?mnemonic ;
     up:recommendedName/up:fullName ?proteinName ;
-    up:annotation ?annotation ;
+    up:annotation ?annotation .
   ?annotation a up:Binding_Site_Annotation ;
       up:ligand/rdfs:subClassOf ?ligand .
 }
