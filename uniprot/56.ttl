@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
+ex:56
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes ex: ;
+    rdfs:comment """Select Enzymes that have Ligands that have a known allosteric effect""" ;
+    rdfs:seeAlso <https://www.youtube.com/watch?v=DuSinQd9YhA> ;
+    sh:select """SELECT
+  ?protein
+  ?ligandName 
+  ?ligandNote
+  ?chebi
+WHERE {
+   ?protein up:annotation ?annotation .
+   ?annotation a up:Binding_Site_Annotation . 
+   ?annotation up:ligand ?ligand .
+   ?ligand rdfs:comment ?ligandNote ;
+     rdfs:subClassOf ?chebi ;
+     rdfs:label ?ligandName .
+   FILTER(REGEX(?ligandNote, "allosteric", "i"))
+}
+""" .
