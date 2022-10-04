@@ -32,7 +32,7 @@ while getopts uhrsgmcp: option; do
 done
 
 echo "Prefixes found" 
-for i in $(ls -rX $project/[1-9]*.ttl);
+for i in $(ls -t $project/[1-9]*.ttl);
 do
     echo "Checking $i"
     f=$(echo $i | cut -f 2 -d '/' )	
