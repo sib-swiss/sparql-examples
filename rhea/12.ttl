@@ -22,7 +22,7 @@ ex:12
 # This query corresponds to the Rhea web site query :
 # https://www.rhea-db.org/rhea?query=uniprot:*
 #
-SELECT ?spCount ?rhea ?accession ?equation 
+SELECT ?uniprotCount ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
   	SELECT ?rhea (count(?uniprot) as ?uniprotCount) {
