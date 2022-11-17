@@ -14,6 +14,6 @@ SELECT DISTINCT
   ?protein
 WHERE {
   ?protein a up:Protein ;
-    up:sequence ?sequence ;
+    up:sequence ?sequence .
   MINUS { ?sequence up:fragment [] }
 } """ .
