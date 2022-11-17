@@ -6,13 +6,14 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:20
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Find how often an article in pubmed was used in an evidence tag (ordered by most used to least)""";
+    rdfs:comment """Find how often an article in pubmed was used in an evidence tag in a human protein (ordered by most used to least)""";
     sh:select """SELECT 
     ?source 
     (COUNT(?attribution) AS ?attribitions)
 WHERE
 {
         ?protein a up:Protein ;
+            up:organism taxon:9606 ;
             up:annotation ?annotation .
         ?linkToEvidence rdf:object ?annotation ;
                         up:attribution ?attribution .
