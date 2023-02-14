@@ -6,14 +6,14 @@ ex:6
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Enzymes for lipids" ;
-    rdfs:comment """For a given lipid (SLM:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation), as well as their enzymes as annotated in UniProtKB/Swiss-Prot) enzymes themselves (ID and protein name).
+    rdfs:comment """For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation), as well as their enzymes as annotated in UniProtKB/Swiss-Prot) enzymes themselves (ID and protein name).
 This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified lipid."""^^rdf:HTML ;
     sh:select """# Example 6
 SELECT ?startId ?startName ?chebi ?rhea ?rheaEquation ?uniprot ?uniprotName
 WHERE
 {
   # SwissLipids query (list of) identifier(s)
-  VALUES ?startId { SLM:000399814 }
+  VALUES ?startId { SWISSLIPID:000399814 }
   # name
   ?startId rdfs:label ?startName .
   # ChEBI x-ref

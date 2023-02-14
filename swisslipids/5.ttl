@@ -6,14 +6,14 @@ ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:label "Lipid reactions" ;
-    rdfs:comment """For a given lipid (SLM:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
+    rdfs:comment """For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
 This query does consider the hierarchy: it looks for reactions involving the specified lipid and/or its more specific forms."""^^rdf:HTML ;
     sh:select """# Example 5
 SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation 
 WHERE
 {
   # SwissLipids query (list of) identifier(s)
-  VALUES ?startId { SLM:000399814 }
+  VALUES ?startId { SWISSLIPID:000399814 }
   # name
   ?startId rdfs:label ?startName .
   # Retrieve children lipids 

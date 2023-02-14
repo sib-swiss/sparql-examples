@@ -11,7 +11,7 @@ ex:1
 SELECT ?category ?label
 WHERE
 {
-    ?category SLM:rank SLM:Category .
+    ?category SWISSLIPID:rank SWISSLIPID:Category .
     ?category rdfs:label ?label .
 }
 """ .
