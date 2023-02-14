@@ -146,7 +146,7 @@ ex:prefix-sh
   sh:prefix "sh" ;
   sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI .
 ex:prefix-slm
-  sh:prefix "SWISSLIPIDS" ;
+  sh:prefix "SWISSLIPID" ;
   sh:namespace "https://swisslipids.org/rdf/SLM_"^^xsd:anyURI .
 ex:prefix-codao
   sh:prefix "codoa" ;
