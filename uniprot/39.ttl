@@ -16,8 +16,6 @@ WHERE {
   # ECO 269 is experimental evidence
   BIND (<http://purl.obolibrary.org/obo/ECO_0000269> as ?evidence)
   ?protein up:reviewed true ;
-    up:organism taxon:9606 ;
-    up:classifiedWith keywords:1185 ;
     up:annotation ?a ;
     up:attribution ?attribution  .
 
