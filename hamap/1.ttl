@@ -7,7 +7,7 @@ ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
     rdfs:comment """Select all hamap rules"""^^rdf:HTML ;
-    sh:select """SELECT ?rule
+    sh:select """SELECT ?query
 WHERE
 {
     ?rule sh:construct ?query  .
