@@ -6,13 +6,13 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:18
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select the number of UniProt entries for each of the EC (Enzyme Commission) second level categories""";
-    sh:select """SELECT ?enzyme (COUNT(?protein) as ?size)
+    rdfs:comment """Select the number of UniProt entries for each of the EC (Enzyme Commission) top level categories""";
+    sh:select """SELECT ?ecClass (COUNT(?protein) as ?size)
 WHERE
 {
-	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-) }
-	?protein up:enzyme ?enzyme . 
-	?enzyme rdfs:subClassOf ?ecClass . 
+	VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) } .
+	?protein ( up:enzyme | up:domain/up:enzyme | up:component/up:enzyme ) ?enzyme .
+	?enzyme rdfs:subClassOf ?ecClass .
 }
-GROUP BY ?enzyme ORDER BY ?enzyme
+GROUP BY ?ecClass ORDER BY ?ecClass
 """ .
