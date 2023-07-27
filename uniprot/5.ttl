@@ -7,12 +7,11 @@ prefix schema:<http://schema.org/>
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select a mapping of UniProt to PDB entries using the UniProt cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database:""";
+    rdfs:comment """Select a mapping of UniProt to PDB entries using the UniProt cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database""";
     sh:select """SELECT ?protein ?db
 WHERE
 {
-  ?protein a up:Protein ;
-    up:classifiedWith keywords:5 ;
-    rdfs:seeAlso ?db .
-  ?db up:database <http://purl.uniprot.org/database/PDB>
+    ?protein a up:Protein .
+    ?protein rdfs:seeAlso ?db .
+    ?db up:database <http://purl.uniprot.org/database/PDB>
 }"""  .
