@@ -12,5 +12,6 @@ WHERE
 {
     ?taxon a up:Taxon .
     ?taxon up:scientificName ?name .
+    # Taxon subclasses are materialized, do not use rdfs:subClassOf+
     ?taxon rdfs:subClassOf taxon:2 .
 }""" .

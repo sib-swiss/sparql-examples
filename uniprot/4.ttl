@@ -10,6 +10,6 @@ ex:4
     sh:select """SELECT ?protein
 WHERE
 {
-        ?protein a up:Protein .
-        ?protein up:mnemonic 'A4_HUMAN'
+    ?protein a up:Protein .
+    ?protein up:mnemonic 'A4_HUMAN'
 }""" .
