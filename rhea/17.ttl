@@ -1,6 +1,6 @@
 # Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy.
 # 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=chebi:18059
 #
 

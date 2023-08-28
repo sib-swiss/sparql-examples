@@ -2,7 +2,7 @@
 # return the number of UniProtKB entries
 # Federated query using a service to UniProt SPARQL endpoint
 #
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=uniprot:*
 #
 
@@ -19,7 +19,7 @@ ex:12
 # return the number of UniProtKB entries
 # Federated query using a service to UniProt SPARQL endpoint
 #
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=uniprot:*
 #
 SELECT ?uniprotCount ?rhea ?accession ?equation 

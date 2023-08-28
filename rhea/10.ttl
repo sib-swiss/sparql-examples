@@ -1,6 +1,6 @@
 # Select all Rhea reactions mapped to 
 # 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=ec:1.*
 # https://www.rhea-db.org/rhea?query=ec:1.1.*
 # https://www.rhea-db.org/rhea?query=ec:1.1.1.*
@@ -17,7 +17,7 @@ ex:10
     sh:select """# Query 10
 # Select all Rhea reactions mapped to 
 # 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=ec:1.*
 # https://www.rhea-db.org/rhea?query=ec:1.1.*
 # https://www.rhea-db.org/rhea?query=ec:1.1.1.*

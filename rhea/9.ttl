@@ -1,5 +1,5 @@
 # Select all Rhea reactions mapped to EC numbers (enzyme classification) 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=ec:*
 #
 
@@ -14,7 +14,7 @@ ex:9
     sh:select """# Query 9
 # Select all Rhea reactions mapped to EC numbers (enzyme classification)
 # 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=ec:*
 #
 SELECT ?ec ?ecNumber ?rhea ?accession ?equation 

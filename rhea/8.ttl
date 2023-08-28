@@ -1,5 +1,5 @@
 # Select all Rhea reactions mapped to GO molecular function
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=go:*
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
@@ -12,7 +12,7 @@ ex:8
     sh:select """# Query 8
 # Select all Rhea reactions mapped to GO molecular function
 # 
-# This query corresponds to the Rhea website query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=go:*
 #
 SELECT ?go ?rhea ?equation 
