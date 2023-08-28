@@ -1,6 +1,6 @@
 # Retrieve the count of reactions mapped to each level (main class) of the enzyme classification
 # 
-# This query mimics the Filter section of the Rhea web site (Browse all reactions)
+# This query mimics the Filter section of the Rhea website (Browse all reactions)
 # https://www.rhea-db.org/rhea?query=
 
 # Query 11: add a comment here
@@ -15,7 +15,7 @@ ex:11
     sh:select """# Query 11
 # Retrieve the count of reactions mapped to each level (main class) of the enzyme classification
 # 
-# This query mimics the Filter section of the Rhea web site (Browse all reactions)
+# This query mimics the Filter section of the Rhea website (Browse all reactions)
 # https://www.rhea-db.org/rhea?query=
 SELECT ?ecClass (STR(?ecName) AS ?ecClassName) (COUNT(?rhea) AS ?rheaCount)
 WHERE {

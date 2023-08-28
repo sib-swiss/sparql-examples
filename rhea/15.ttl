@@ -1,6 +1,6 @@
 # Select all ChEBI compounds used in Rhea as reaction participant
 # 
-# This query can not be expressed in the Rhea web site
+# This query can not be expressed in the Rhea website
 
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
@@ -13,7 +13,7 @@ ex:15
     sh:select """# Query 15
 # Select all ChEBI compounds used in Rhea as reaction participant
 # 
-# This query can not be expressed in the Rhea web site
+# This query can not be expressed in the Rhea website
 SELECT ?chebi ?name (count(?rhea) as ?countRhea)
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .

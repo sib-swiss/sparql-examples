@@ -3,7 +3,7 @@
 # 
 # Federated query using a service to UniProt SPARQL endpoint
 #
-# This query cannot be performed using the Rhea search web site
+# This query cannot be performed using the Rhea search website
 
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
@@ -19,7 +19,7 @@ ex:13
 # 
 # Federated query using a service to UniProt SPARQL endpoint
 #
-# This query cannot be performed using the Rhea search web site
+# This query cannot be performed using the Rhea search website
 SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 

@@ -2,7 +2,7 @@
 # Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
 # and CHEBI:58359 (L-glutamine) in the other side
 #
-# This query cannot be expressed in the Rhea web site
+# This query cannot be expressed in the Rhea website
 
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
@@ -17,7 +17,7 @@ ex:16
 # Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
 # and CHEBI:58359 (L-glutamine) in the other side
 #
-# This query cannot be expressed in the Rhea web site
+# This query cannot be expressed in the Rhea website
 SELECT ?chebi1 ?name1 ?chebi2 ?name2 ?rhea ?equation
 WHERE {
   VALUES (?chebi1) { (CHEBI:29985) }

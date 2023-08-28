@@ -1,6 +1,6 @@
 # Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
 # 
-# This query corresponds to the Rhea web site query :
+# This query corresponds to the Rhea website query :
 # https://www.rhea-db.org/rhea?query=chebi:29985
 
 prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
@@ -14,7 +14,7 @@ ex:14
     sh:select """# Query 14
 # Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
 # 
-# This query corresponds to the Rhea web site query :
+# This query corresponds to the Rhea website query :
 # https://www.rhea-db.org/rhea?query=chebi:29985
 SELECT distinct ?chebi ?rhea ?equation
 WHERE {
