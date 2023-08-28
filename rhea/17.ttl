@@ -11,11 +11,11 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:17
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
-    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy."""^^rdf:html ;
+    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy."""^^rdf:html ;
     sh:select """# Query 17
-# Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy.
+# Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy.
 # 
-# This query corresponds to the Rhea web site query :
+# This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=chebi:18059
 #
 SELECT distinct ?chebi ?name ?rhea ?equation
@@ -26,19 +26,17 @@ WHERE {
   #
   # the ChEBI can be used either as a small molecule, the reactive part of a macromolecule or as a polymer.
   #
-  {
-    ?chebi rdfs:subClassOf* CHEBI:18059 .
+  { 
+    ?chebi rdfs:subClassOf* CHEBI:18059 . # lipid
     ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
   }
-  UNION
-  {
-    ?not7_3 rdfs:subClassOf* CHEBI:18059 .
-
+  UNION 
+  { # add non-pH 7.3 species
+    ?not7_3 rdfs:subClassOf* CHEBI:18059 . # lipid
     ?not7_3 rdfs:subClassOf ?chebiRestriction .
     ?chebiRestriction a owl:Restriction .
     ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
-    ?chebiRestriction owl:someValuesFrom ?chebi .  
-  
+    ?chebiRestriction owl:someValuesFrom ?chebi .
     ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
   }
   ?chebi up:name ?name .
