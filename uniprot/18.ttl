@@ -10,7 +10,7 @@ ex:18
     sh:select """SELECT ?ecClass (COUNT(?protein) as ?size)
 WHERE
 {
-    VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) (EC:7.-.-.-)} .
+    VALUES (?ecClass) {(ec:1.-.-.-) (ec:2.-.-.-) (ec:3.-.-.-) (ec:4.-.-.-) (ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-)} .
     ?protein ( up:enzyme | up:domain/up:enzyme | up:component/up:enzyme ) ?enzyme .
     # Enzyme subclasses are materialized, do not use rdfs:subClassOf+
     ?enzyme rdfs:subClassOf ?ecClass .
