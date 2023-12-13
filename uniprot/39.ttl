@@ -15,19 +15,21 @@ ex:39
 WHERE {
   # ECO 269 is experimental evidence
   BIND (<http://purl.obolibrary.org/obo/ECO_0000269> as ?evidence)
-  ?protein up:reviewed true ;
-    up:annotation ?a ;
-    up:attribution ?attribution  .
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:reviewed true ;
+      up:annotation ?a ;
+      up:attribution ?attribution  .
 
-  ?a a up:Catalytic_Activity_Annotation ;
-    up:catalyticActivity ?ca .
-  ?ca up:catalyzedReaction ?rhea .
+    ?a a up:Catalytic_Activity_Annotation ;
+      up:catalyticActivity ?ca .
+    ?ca up:catalyzedReaction ?rhea .
   
-  [] rdf:subject ?a ;
-    rdf:predicate up:catalyticActivity ;
-    rdf:object ?ca ;
-    up:attribution ?attribution .
+    [] rdf:subject ?a ;
+      rdf:predicate up:catalyticActivity ;
+      rdf:object ?ca ;
+      up:attribution ?attribution .
 
-  ?attribution up:evidence ?evidence .
+    ?attribution up:evidence ?evidence .
+  }
 }
 """ .
