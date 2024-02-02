@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00048
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least one variant of the type \"C->X\" (Cys to anything else) that are linked to one or more diseases''' ;
+  sh:select '''select distinct ?entry where {
+ {
+	?entry np:isoform ?iso.
+	?iso np:variant ?var.
+	?var np:disease ?_.	 
+	?var np:original \"C\"^^xsd:string.
+ } UNION {
+ ?entry np:isoform ?iso .
+	?iso np:proteoform ?pf.
+	?pf np:difference ?var.
+	?var np:evidence / np:negative false. # positive evidence
+	?pf np:diseaseRelatedVariant / np:term nextprot_cv:ME_0000013 . # cause of disease
+	?var np:original \"C\"^^xsd:string.
+	
+ }
+}'''
+.

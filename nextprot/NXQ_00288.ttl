@@ -1,0 +1,17 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00288
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Biological Process and Molecular Function GO terms related to UniPathway metabolic pathways''' ;
+  sh:select '''select distinct (str(?pathwayname) as ?unipathway) ?related (str(?pathlabel) as ?GO_BP) (str(?pathlabel2) as ?GO_MF) where {
+ ?entry np:isoform ?iso.
+ ?iso np:pathway ?pathannot .
+ ?pathannot np:term ?pathterm; rdfs:comment ?pathwayname. 
+ ?pathterm np:related ?related .
+ {?related a np:GoBiologicalProcessCv ; rdfs:label ?pathlabel .}
+ UNION
+ {?related a np:GoMolecularFunctionCv ; rdfs:label ?pathlabel2 .}
+}'''
+.

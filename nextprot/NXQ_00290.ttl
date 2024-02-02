@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00290
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site''' ;
+  sh:select '''select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ec) where
+
+{ ?entry np:recommendedName ?name_entity . 
+ ?name_entity a np:ProteinName; rdfs:label ?name. 
+ ?entry np:isoform ?iso. 
+ ?iso np:enzymeClassification /rdfs:comment ?ec. 
+ ?iso np:cofactor /np:interactant /skos:exactMatch chebi:CHEBI_29108. # Ca(2+) cofactor 
+ ?iso np:bindingSite /np:interactant ?inter.
+ ?inter np:accession \"CHEBI:29108\"^^xsd:string # binding site interactant Ca(2+)
+}
+order by asc(?ec)'''
+.

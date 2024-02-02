@@ -1,0 +1,15 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00043
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that bind zinc and are not oxidoreductase and not involved in transcription''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso .
+ ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0479. # metal-binding
+ ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0862. # zinc
+ filter not exists {?iso np:uniprotKeyword / np:term nextprot_cv:KW-0804} # transcription
+ filter not exists {?iso np:uniprotKeyword / np:term nextprot_cv:KW-0560} # oxidoreductase
+}'''
+.

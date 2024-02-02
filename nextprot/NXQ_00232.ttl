@@ -1,0 +1,15 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00232
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with sequences 100% identical to other proteins, grouped''' ;
+  sh:select '''select distinct ?entry (group_concat(distinct substr(str(?entry2),34); separator = \",\") as ?sameseq) where {
+ ?entry np:isoform / np:sequence / np:chain ?chain1.
+ ?entry2 np:isoform / np:sequence / np:chain ?chain2.
+ filter ( (?chain1 = ?chain2) && (?entry != ?entry2))
+}
+group by ?entry
+order by ?entry'''
+.

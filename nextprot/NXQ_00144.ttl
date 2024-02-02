@@ -1,0 +1,17 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00144
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that contains a sequence \"QHP\" where the Proline is amidated''' ;
+  sh:select '''select distinct ?entry where {
+?entry np:isoform ?isoform.
+?isoform np:ptm ?ptm.
+?ptm np:term nextprot_cv:PTM-0257 . # Proline amide
+?ptm np:start ?ptmpos .
+?isoform np:sequence / np:chain ?seq.
+bind(substr(?seq, ?ptmpos-2, 3) as ?modseq)
+filter ( regex(?modseq, \"QHP\") )
+}'''
+.

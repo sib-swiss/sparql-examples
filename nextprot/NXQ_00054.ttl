@@ -1,0 +1,15 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00054
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\"''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ ?iso np:function ?statement.
+ ?statement np:term / np:childOf nextprot_cv:GO_0005102.
+ filter not exists { ?statement np:negativeEvidence ?negev. } # No negative function evidence
+ ?iso np:uniprotKeyword/np:term nextprot_cv:KW-0391.
+}'''
+.

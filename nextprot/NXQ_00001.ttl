@@ -1,0 +1,33 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00001
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins phosphorylated and located in the cytoplasm''' ;
+  sh:select '''select distinct ?entry where {
+ values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
+ ?entry np:isoform ?iso.
+ ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0597. # Phosphorylated
+ ?iso np:cellularComponent ?loc .
+ ?loc np:term /np:childOf ?cytoloc.
+ filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence
+}
+
+# Assign values to the variable ?cytoloc 
+# The values correspond to the two controlled vocabulary (cv) terms for cytoplam:
+# SL-0086 is the UniProt subcellular location term 
+# GO_0005737 is the Gene Ontology cellular component term
+#
+# Use the same name of the variable (?iso and ?loc) in several statements.
+# It is the name of the variable that enforces the constraints.
+#
+# Phosphorylated proteins are retrieved using a keyword:
+# KW-0597 is the UniProt keyword for phosphorylated
+#
+# Use np:childOf to include children of a term.
+# Cytosol (SL-0091), the child term of cytoplasm, will thus be included.
+#
+# Exclude negative locatization evidences.
+# This enforces that the protein is located in the cytoplasm.'''
+.

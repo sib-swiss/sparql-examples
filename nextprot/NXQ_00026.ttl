@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00026
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins interacting with at least one protein which is located in the mitochondrion''' ;
+  sh:select '''select distinct ?entry where {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
+ 
+ ?entry np:isoform / np:interaction ?it .
+ ?it np:quality np:GOLD . # remove this filter for lower quality interactions
+ ?it np:interactant ?interactant.
+ ?interactant np:isoform? / np:cellularComponent ?loc .
+ # the question mark at np:isoform allows to select also isoform-specific interactions
+ ?loc np:term / np:childOf ?mitoloc.
+ filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence
+}'''
+.

@@ -1,0 +1,22 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00248
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Variants with phenotype annotation that map to a 3D structure''' ;
+  sh:select '''select distinct ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),\"...\") as ?pdbsample) where {
+ ?entry np:gene / np:name / rdfs:label ?gen .
+ ?entry np:isoform ?iso.
+ ?iso np:proteoform ?pf .
+ ?pf rdfs:label ?pfname .
+ ?pf np:phenotypicVariation ?pv1 .
+ ?pf np:difference ?pfmod .
+ ?pfmod a np:Variant .
+ ?pfmod np:start ?vstart; np:end ?vend .
+ ?iso np:pdbMapping ?pdbmap.
+ ?pdbmap rdfs:comment ?pdbac.
+ ?pdbmap np:start ?pdbstart ; np:end ?pdbend.
+ filter(?pdbstart <= ?vstart && ?pdbend >= ?vend ) 
+} group by ?entry ?pfname ?pdbsample'''
+.

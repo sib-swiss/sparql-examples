@@ -1,0 +1,17 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00132
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with a 3D structure in complex with another human protein which is not reported as binary interactant''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry a np:Entry.
+ ?entry np:reference ?ref.
+ ?ref np:provenance db:PDB; np:accession ?ac.
+ ?entry2 a np:Entry.
+ ?ac ^:accession/^:reference ?entry2.
+ filter(?entry != ?entry2).
+ filter not exists{?entry np:isoform /np:binaryInteraction / np:interactant ?entry2.}
+}'''
+.

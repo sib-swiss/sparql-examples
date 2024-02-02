@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00034
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least one homeobox domain and with at least one variant in the homeobox domain(s)''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ # with >=1 homeobox domain
+ ?iso np:region ?st1.
+ ?st1 np:term nextprot_cv:DO-00312; np:start ?start; np:end ?end.
+ # with >=1 variant
+ ?iso np:variant ?var.
+ ?var np:start ?varpos.
+ # one variant in the homeobox domain
+ filter (?varpos >=?start && ?varpos <=?end)
+}'''
+.

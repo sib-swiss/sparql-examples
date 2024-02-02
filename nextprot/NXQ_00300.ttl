@@ -1,0 +1,36 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00300
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with protein existence \"At protein level\" (PE=1) that have no function annotated, are highly expressed in brain and have homologs in Drosophila melanogaster according to OrthoDB''' ;
+  sh:select '''PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX odb: <http://purl.orthodb.org/>
+
+select ?entry (str(?name) as ?human_name) (group_concat(distinct str(?fly_name); SEPARATOR = \",\") as ?fly_names) where
+{
+?entry np:isoform ?iso.
+?entry np:gene / np:recommendedName / rdfs:label ?name.
+?entry np:existence np:Evidence_at_protein_level .
+filter not exists { ?iso np:functionInfo ?_. }
+filter not exists { ?iso np:catalyticActivity ?_ .} 
+filter not exists { ?iso np:transportActivity ?_ .} 
+filter not exists { ?iso np:pathway ?_. }
+filter not exists { ?iso np:function / np:term ?fterm . filter(?fterm != nextprot_cv:GO_0005524 && ?fterm != nextprot_cv:GO_0000287 && ?fterm != nextprot_cv:GO_0005515 && ?fterm != nextprot_cv:GO_0042802 && ?fterm != nextprot_cv:GO_0008270 && ?fterm != nextprot_cv:GO_0051260 && ?fterm != nextprot_cv:GO_0005509 && ?fterm != nextprot_cv:GO_0003676 && ?fterm != nextprot_cv:GO_0003824 && ?fterm != nextprot_cv:GO_0007165 && ?fterm != nextprot_cv:GO_0035556 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)}
+?iso np:expression ?e1.
+?e1 np:term/np:childOf nextprot_cv:TS-0095; np:evidence/np:observedExpression np:High.
+{
+service <http://sparql.orthodb.org/sparql>
+{?gene rdfs:seeAlso ?entry; odb:memberOf ?og.
+?og odb:ogBuiltAt [up:scientificName ?clade]
+; odb:hasMember ?ortholog.
+?ortholog odb:name ?fly_name; up:organism/a/up:scientificName 'Drosophila melanogaster'.
+filter (?clade='Metazoa') }
+}
+} group by ?entry str(?name)'''
+.

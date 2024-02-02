@@ -1,0 +1,13 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00104
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins whose gene is on chromosome 21 with at least one disease annotation from Orphanet''' ;
+  sh:select '''select distinct ?entry (str(?disname) as ?disease) where {
+ ?entry np:isoform ?iso; np:gene / np:chromosome \"21\"^^xsd:string .
+ ?iso np:disease ?medannot .
+ ?medannot rdfs:comment ?disname; np:evidence / np:assignedBy source:Orphanet.	 
+}'''
+.

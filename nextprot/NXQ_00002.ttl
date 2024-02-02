@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00002
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are located in both the nucleus and in the cytoplasm''' ;
+  sh:select '''select distinct ?entry where {
+ values ?cytoloc {nextprot_cv:GO_0005737 nextprot_cv:SL-0086} # GO and SL values for cytoplasm
+ values ?nucloc {nextprot_cv:GO_0005634 nextprot_cv:SL-0191} # GO and SL values for nucleus
+ ?entry np:isoform ?iso.
+ ?iso np:cellularComponent ?loc1, ?loc2 .
+ ?loc1 np:term /np:childOf ?cytoloc .
+ ?loc2 np:term /np:childOf ?nucloc .
+ filter not exists {?loc1 np:negativeEvidence ?negev} # No negative localization evidence
+ filter not exists {?loc2 np:negativeEvidence ?negev} # No negative localization evidence
+}
+
+# Note the dot \".\" at the end of statements.
+# If missing, you will get a syntax error.
+#
+# Use a comma to retrieve two localizations in:
+# ?iso np:cellularComponent ?loc1, ?loc2 .'''
+.

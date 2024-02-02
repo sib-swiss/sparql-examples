@@ -1,0 +1,32 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00267
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins binding estradiol and/or similar molecules (similarity search with SMILES), and their associated GO_MF terms''' ;
+  sh:select '''PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
+PREFIX chembl: <http://rdf.ebi.ac.uk/terms/chembl#>
+
+SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
+ 		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {
+ 		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chembl> {
+ 		?compound sachem:similarCompoundSearch [ sachem:query \"CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O\" ] . # smiles chain for estradiol
+		 }
+		 		?ACTIVITY rdf:type chembl:Activity;
+		chembl:hasMolecule ?compound;
+ chembl:hasAssay ?ASSAY.
+		 ?ASSAY chembl:hasTarget ?TARGET.
+		 ?TARGET chembl:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target
+		 ?TARGET chembl:hasTargetComponent ?COMPONENT.
+		 ?COMPONENT chembl:targetCmptXref ?UNIPROT.
+		 filter(contains(str(?UNIPROT),\"uniprot\"))
+		 }
+	?entry skos:exactMatch ?UNIPROT.
+	?entry np:isoform ?iso.
+	?iso np:goMolecularFunction / np:term ?gomf .
+	?gomf rdfs:label ?gomflab .
+} 
+group by ?entry'''
+.

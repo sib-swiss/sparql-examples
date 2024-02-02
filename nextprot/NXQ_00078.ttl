@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00078
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins which have been identified in at least one proteomics set and that are secreted''' ;
+  sh:select '''select distinct ?entry where {
+ values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
+ ?entry np:isoform ?iso.
+ ?iso np:cellularComponent ?loc .
+ ?loc np:term/np:childOf ?sloc .
+ filter not exists {?sloc np:negativeEvidence ?negev} # No negative localization evidence
+ #filter not exists {?iso np:cellularComponent /np:term nextprot_cv:GO_0070062 .
+ #					 filter not exists {?iso np:cellularComponent /np:term /np:childOf nextprot_cv:SL-0243 .}
+ #					} # you can uncomment this to filters out extracellular exosome only location (2240 entries), most of them evidenced only by large-scale proteomic analysis
+ ?iso np:peptideMapping ?map.
+}'''
+.

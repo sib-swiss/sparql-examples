@@ -1,0 +1,22 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00281
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Protein pairs with at least 50 common interactors (excluding keratins) ''' ;
+  sh:select '''select distinct ?entry ?gene ?entry2 ?gene2 ?commonitcnt ?sampleit where {
+ {
+ select distinct ?entry (str(?gen) as ?gene) ?entry2 (str(?gen2) as ?gene2) (count (distinct ?commonpartner) as ?commonitcnt) (str(sample(?genit)) as ?sampleit) where {
+ ?entry np:isoform / np:interaction ?it1; np:gene / np:name / rdfs:label ?gen.
+ ?it1 np:quality np:GOLD; np:interactant ?commonpartner .
+ ?entry2 np:isoform / np:interaction ?it2; np:gene / np:name / rdfs:label ?gen2.
+ ?it2 np:quality np:GOLD; np:interactant ?commonpartner . 
+ ?commonpartner np:gene / np:name / rdfs:label ?genit .
+ filter(?entry != ?entry2)
+ filter(!contains(?gen,\"KRT\") && !contains(?gen2,\"KRT\") && !contains(?genit,\"KRT\")) # remove sticky keratins
+} group by ?entry ?gen ?entry2 ?gen2 having (count (distinct ?commonpartner) >= 50) 				}
+filter(substr(str(?entry),34) < substr(str(?entry2),34)) # ensures only one row by it pair
+}
+order by desc(?commonitcnt)'''
+.

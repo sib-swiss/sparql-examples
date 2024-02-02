@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00082
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins whose genes are on chromosome 21 that have \"gold\" variants not associated with a disease''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:gene / np:chromosome \"21\"^^xsd:string; np:isoform / np:variant ?variant.
+ ?variant np:evidence / np:quality np:GOLD.
+ filter not exists { ?variant np:disease ?disease. }
+ filter ( not exists { 
+	?entry np:isoform / np:proteoform ?pf.
+	?pf np:difference ?variant.
+	?variant np:evidence / np:negative false. # variant with positive evidence
+	?pf np:diseaseRelatedVariant / np:term nextprot_cv:ME_0000013 . # variant is causing disease
+ } ) 
+}'''
+.

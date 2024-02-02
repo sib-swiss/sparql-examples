@@ -1,0 +1,15 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00278
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Authors who have reported more than 25000 human protein-protein interactions ''' ;
+  sh:select '''select distinct (str(?auth) AS ?auth1) (count (distinct ?itid) as ?itcnt) where {
+ ?entry np:isoform / np:binaryInteraction ?interaction.
+ ?interaction np:evidence / np:reference ?publi .
+ ?publi np:author / np:name ?auth .
+ ?interaction np:interactant ?interactant; np:quality np:GOLD; np:entryAnnotationId ?itid.
+} group by ?auth having (count (distinct ?itid) > 25000)
+order by desc(?itcnt)'''
+.

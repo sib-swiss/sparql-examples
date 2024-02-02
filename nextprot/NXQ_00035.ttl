@@ -1,0 +1,16 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00035
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins located in the mitochondrion and which are enzymes''' ;
+  sh:select '''select distinct ?entry where {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
+ ?entry np:isoform / np:enzymeClassification ?_ .
+ ?entry np:isoform ?iso.
+ ?iso np:cellularComponent ?loc .
+ ?loc np:term / np:childOf ?mitoloc.
+ filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence
+}'''
+.

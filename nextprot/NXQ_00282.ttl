@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00282
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with an interaction mapping encompassing a coiled coil or bZip region ''' ;
+  sh:select '''select distinct ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partnergene) where {
+ ?entry np:isoform ?iso; np:gene / np:recommendedName / rdfs:label ?gen .
+ ?iso np:swissprotDisplayed true; np:interactionMapping ?itmap .
+ ?itmap np:interactant ?entry2; np:start ?its; np:end ?ite .
+ bind(?ite - ?its + 1 as ?itlen)
+ ?entry2 np:isoform? ?iso2; np:gene / np:recommendedName / rdfs:label ?gen2.
+ ?iso2 np:swissprotDisplayed true.
+ {?iso np:coiledCoilRegion ?coil . }
+ union
+ {?iso np:region ?coil . 
+ ?coil np:term nextprot_cv:DO-00078 # bzip
+ }
+ ?coil np:start ?cs; np:end ?ce .
+ bind(?ce - ?cs + 1 as ?coilen)
+ filter (?cs >= ?its -15 && ?ce <= ?ite + 15) # overlap
+ filter(xsd:float(?itlen) / xsd:float(?coilen) < 2.0) # itlen no more than 2 coilen
+} order by ?entry'''
+.

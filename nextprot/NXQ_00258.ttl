@@ -1,0 +1,28 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00258
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins involved in diseases due to intronic variants with one selected publication''' ;
+  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX so:<http://purl.obolibrary.org/obo/SO_>
+
+select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
+ service <http://rdf.disgenet.org/sparql/> {
+ select distinct ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) where {
+ ?vda sio:SIO_000628 ?variant,?disease .
+	?vda sio:SIO_000772 ?article .
+ ?disease a sio:SIO_010299 ; dcterms:title ?diseaseTitle . # true disease, use ncit:C7057 for traits
+ ?variant a so:0001627 ; dcterms:title ?variantTitle . # intron variant
+ ?variant so:associated_with ?gene .
+ ?gene a ncit:C16612; sio:SIO_010078 ?protein .
+ } group by ?protein ?diseaseTitle ?sampleArticle
+ }
+ BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ ?entry np:swissprotPage ?unipage .
+ ?entry np:gene / np:recommendedName / rdfs:label ?gen .
+} order by ?entry'''
+.

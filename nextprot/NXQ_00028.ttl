@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00028
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins associated with a disease but without a disease-causing amino-acid substitution variant''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ { 
+	 ?iso np:medical / rdf:type np:Disease.
+ } union { 
+ ?iso np:uniprotKeyword / np:term ?kw .
+	 ?kw np:termType \"Disease\"^^xsd:string
+	 filter (?kw != nextprot_cv:KW-0656)
+ }
+ filter ( not exists { ?entry np:isoform / np:variant / np:disease ?_ . } )
+ filter ( not exists { 
+	?entry np:isoform / np:proteoform ?pf.
+	?pf np:difference / np:evidence / np:negative false. # positive evidence only
+	?pf np:diseaseRelatedVariant / np:term nextprot_cv:ME_0000013 . # cause of disease
+ } ) 
+}'''
+.

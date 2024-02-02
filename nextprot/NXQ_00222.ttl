@@ -1,0 +1,23 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00222
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with both RNA-seq expression and observed IHC expression \"high\" in brain or one of its subparts''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso .
+ ?iso np:expression ?exprna, ?expihc.
+ ?exprna np:term ?rnatiss .
+ ?exprna np:evidence ?evirna.
+ ?evirna np:observedExpression np:Positive.
+ ?evirna np:evidenceCode nextprot_cv:ECO_0000295. # RNA-seq
+ ?rnatiss np:childOf nextprot_cv:TS-0095. #brain
+ ?expihc np:quality np:GOLD .
+ ?expihc np:term ?ihctiss .
+ ?expihc np:evidence ?eviihc.
+ ?eviihc np:evidenceCode nextprot_cv:ECO_0001055. #IHC
+ ?eviihc np:observedExpression np:High.
+ ?ihctiss np:childOf ?rnatiss .
+}'''
+.

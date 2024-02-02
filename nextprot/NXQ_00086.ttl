@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00086
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins whose genes are located in chromosome 2 region from 2p12 to 2p24.2''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:gene ?gene .
+ ?gene np:chromosome \"2\"^^xsd:string .
+ ?gene np:band ?band.
+ filter (?band >= \"p12\"@en && ?band <= \"p24.2\"@en )
+}'''
+.

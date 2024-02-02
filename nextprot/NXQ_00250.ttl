@@ -1,0 +1,13 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00250
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that act as transporters and their TCDB numbers''' ;
+  sh:select '''select distinct ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {
+ ?entry np:isoform/ np:transportActivity ?tr.
+ ?tr rdfs:comment ?trcom; np:evidence / np:reference ?ref.
+ ?ref a np:Xref; np:accession ?acc .
+} order by ?acc'''
+.

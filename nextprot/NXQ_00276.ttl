@@ -1,0 +1,38 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00276
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Diseases/phenotypes associated with coding variants and associated publications for a given gene''' ;
+  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX so:<http://purl.obolibrary.org/obo/SO_>
+
+select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {
+ service <http://rdf.disgenet.org/sparql/> {
+ ?vda sio:SIO_000628 ?umls, ?variant .
+ ?vda sio:SIO_000772 ?article .
+ ?umls dcterms:title ?umlsTerm.
+ {?umls a sio:SIO_010299 .} # disease
+ union
+ {?umls a sio:SIO_010056 .} # or phenotype
+ ?variant a so:0001583 ; dcterms:title ?variantTitle . # Missense variant
+ ?variant so:associated_with ?gene .
+ ?gene a ncit:C16612; sio:SIO_010078 ?protein .
+ ?gene sio:SIO_000205 ?gname.
+ filter(contains(str(?gname),\"HBB\")) # Hemoglobin gene (NX_P68871)
+ }
+
+ BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ ?entry np:swissprotPage ?unipage .
+ ?entry np:isoform ?iso .
+ ?iso np:swissprotDisplayed true .
+ ?iso np:variant ?var .
+ ?var np:evidence /np:reference ?xref .
+ ?xref np:provenance db:dbSNP; np:accession ?snpac .
+ ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .
+ filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned
+}'''
+.

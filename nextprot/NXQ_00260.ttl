@@ -1,0 +1,40 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00260
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with high-frequency missense variants involved in bacterial infection, with dbSNP identifiers and position on the canonical isoform''' ;
+  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX so:<http://purl.obolibrary.org/obo/SO_>
+
+select distinct ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) where {
+ service <http://rdf.disgenet.org/sparql/> {
+ SELECT DISTINCT ?protein ?variantTitle ?umlsTerm
+ WHERE {
+ ?vda sio:SIO_000628 ?umls, ?variant .
+ ?umls dcterms:title ?umlsTerm ; skos:exactMatch ?doid .
+ ?doid rdfs:subClassOf+ <http://purl.obolibrary.org/obo/DOID_104> . # DO id for bacterial infection
+ ?variant a so:0001583 ; dcterms:title ?variantTitle . # Missense variant
+ ?variant so:associated_with ?gene .
+ ?variant sio:SIO_000223 ?altAl .
+ ?altAl rdf:type <http://purl.obolibrary.org/obo/GENO_0000476>; sio:SIO_000900 ?altAlFreq .
+ ?altAlFreq a sio:SIO_001367; sio:SIO_000300 ?altAlFreqVal .
+ filter(?altAlFreqVal > 0.01) # freq > 1%
+ ?gene a ncit:C16612; sio:SIO_010078 ?protein .
+ }
+ }
+
+ BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ ?entry np:swissprotPage ?unipage .
+ ?entry np:isoform ?iso .
+ ?iso np:swissprotDisplayed true .
+ ?iso np:variant ?var .
+ ?var np:evidence /np:reference ?xref .
+ ?xref np:provenance db:dbSNP; np:accession ?snpac .
+ ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .
+ filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned
+} order by ?entry'''
+.

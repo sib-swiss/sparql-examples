@@ -1,0 +1,21 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00286
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Protein domains or regions that frequently occur in interaction mappings''' ;
+  sh:select '''select distinct (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) where {
+ ?entry np:isoform ?iso; np:gene / np:name / rdfs:label ?gen .
+ ?iso np:swissprotDisplayed true; np:interactionMapping ?itmap .
+ ?itmap np:entryAnnotationId ?itid; np:start ?its; np:end ?ite .
+ bind(?ite - ?its + 1 as ?itlen)
+ ?iso np:region ?reg .
+ ?reg np:start ?rs; np:end ?re; np:term ?rterm .
+ ?rterm rdfs:label ?rlab .
+ bind(?re - ?rs + 1 as ?rlen)
+ filter (?rs >= ?its - 15 && ?re <= ?ite + 15)
+ filter(xsd:float(?itlen) / xsd:float(?rlen) < 2.0)
+} group by ?rlab having(count(distinct ?itid) >= 10)
+order by desc(?itcnt)'''
+.

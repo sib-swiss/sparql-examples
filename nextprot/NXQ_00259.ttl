@@ -1,0 +1,26 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00259
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins involved in diseases with clinical manifestations that include long organs ''' ;
+  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+
+select distinct ?entry (str(?gen) as ?genx) ?umlsTerm where {
+ service <http://rdf.disgenet.org/sparql/> {
+ select distinct ?protein ?umlsTerm where {
+ ?gda sio:SIO_000628 ?gene,?disease .
+ ?disease a sio:SIO_010056 . # traits or phenotypes
+ ?disease dcterms:title ?umlsTerm .
+ filter(contains(str(?umlsTerm),\"Long \"))
+ ?gene a ncit:C16612; sio:SIO_010078 ?protein .
+ } 
+ }
+ BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ ?entry np:swissprotPage ?unipage .
+ ?entry np:gene / np:recommendedName / rdfs:label ?gen .
+} order by ?entry'''
+.

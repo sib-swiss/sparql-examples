@@ -1,0 +1,16 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00137
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that potentially interact with Class I PDZ domains (whose C-terminal sequence has a PDZ-binding consensus)''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ ?iso np:matureProtein / np:end ?mend.
+ ?iso np:sequence / np:chain ?seq.
+ filter (strlen(?seq) > 2).
+ bind (substr(?seq, ?mend-2, 3) as ?cterseq).
+ filter(regex(?cterseq,'[ST].[ILV]')). # short motif consensus for C-terminal PDZ-binding
+}'''
+.

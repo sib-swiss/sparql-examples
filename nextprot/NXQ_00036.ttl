@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00036
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are oxidoreductases and that bind to NAD/NADP''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ ?iso np:uniprotKeyword /np:term nextprot_cv:KW-0560. #oxidoreductase
+ ?iso np:uniprotKeyword /np:term ?kw
+ filter( ?kw in (nextprot_cv:KW-0520,nextprot_cv:KW-0521)) # NAD or NADP
+}'''
+.

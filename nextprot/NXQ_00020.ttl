@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00020
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least 2 HPA antibodies whose genes are located on chromosome 21 and that are highly expressed according to IHC in heart''' ;
+  sh:select '''select ?entry where {
+ select distinct ?entry ?id where {
+ ?entry np:gene / np:chromosome \"21\"^^xsd:string .
+ ?entry np:isoform / np:expressionProfile ?s1.
+ ?s1 np:term / np:childOf nextprot_cv:TS-0445.
+ ?s1 np:evidence ?evi.
+ ?evi np:observedExpression np:High.
+ ?evi np:evidenceCode nextprot_cv:ECO_0001055.
+ ?entry np:isoform / np:antibodyMapping ?map.
+	 ?map np:evidence / np:reference / np:accession ?id . 
+ }
+} group by ?entry having (count(?id)>=2)'''
+.

@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00033
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least one phosphotyrosine but no phosphoserine or phosphothreonine''' ;
+  sh:select '''select distinct ?entry where {
+ select ?entry ?iso (count(?ptm) as ?ptmCnt) where {
+ ?entry np:isoform ?iso.
+ ?iso np:modifiedResidue ?ptm.
+ ?ptm np:term nextprot_cv:PTM-0255 #phosphotyrosine.
+ filter (
+ not exists { ?iso np:modifiedResidue / np:term nextprot_cv:PTM-0253. } #phosphoserine
+ &&
+ not exists { ?iso np:modifiedResidue / np:term nextprot_cv:PTM-0254. } #phosphothreonine
+ )
+ } group by ?entry ?iso having ( count(?ptm) >= 1 )
+}'''
+.

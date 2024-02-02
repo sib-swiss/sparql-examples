@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00025
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least 50 interactors that are not associated with a disease''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ ?iso np:binaryInteraction/np:interactant ?interactant.
+ 
+ # with no disease
+ filter not exists {
+ {
+ ?iso np:medical / rdf:type np:Disease.
+ } union {
+ ?iso np:uniprotKeyword / np:term ?kw .
+ ?kw np:termType \"Disease\"^^xsd:string
+ filter (?kw != nextprot_cv:KW-0656)
+ }
+ }
+
+} group by ?entry ?iso having (count(?interactant) >= 50)'''
+.

@@ -1,0 +1,17 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00108
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that have a 3D structure in PDB that overlap by at least 50 amino acids with a SH3 domain''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?isoform.
+ ?isoform np:pdbMapping ?struc.
+ ?struc np:start ?s1 ; np:end ?s2.
+ ?isoform np:region ?dom.
+ ?dom np:term nextprot_cv:DO-00615 ; np:start ?d1 ; np:end ?d2.
+ bind ( if(?d2<?s2, ?d2, ?s2) - if(?d1>?s1, ?d1, ?s1) as ?overlap) .
+ filter (?overlap>50)
+}'''
+.

@@ -1,0 +1,22 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00251
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least one proteotypic peptide 9aa+ not mapping on canonical isoform''' ;
+  sh:select '''select ?entry (sample(?isopos) as ?samplematch) where {
+ ?entry np:isoform ?iso1, ?isononcano.
+ ?iso1 np:swissprotDisplayed true .
+ ?isononcano np:swissprotDisplayed false .
+ ?isononcano np:peptideMapping ?pm.
+ ?pm np:peptideName ?pepname.
+ ?pm np:proteotypic true.
+ ?pm np:start ?pos ; np:end ?pos2 .
+ filter(?pos2 - ?pos >= 8) # peptide length >= 9
+ bind(strafter(str(?isononcano),\"-\") as ?isostr)
+ bind(concat(concat(?isostr,\"-\"),?pos) as ?isopos)
+ filter not exists {?iso1 np:peptideMapping/ np:peptideName ?pepname.}
+ }
+group by ?entry'''
+.

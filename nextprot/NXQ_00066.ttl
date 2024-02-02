@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00066
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are cytoplasmic with alternate O-glycosylation or phosphorylation at the same positions''' ;
+  sh:select '''select distinct ?entry where {
+ values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
+ 
+ ?entry np:isoform ?iso.
+ ?iso np:cellularComponent ?loc .
+ ?loc np:term /np:childOf ?cytoloc .
+ filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence
+ ?iso np:modifiedResidue /np:term ?ptmtype.
+ ?iso np:modifiedResidue /np:start ?ptmpos.
+ filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255)) 
+ ?iso np:glycosylationSite /np:start ?ptmpos.
+}'''
+.

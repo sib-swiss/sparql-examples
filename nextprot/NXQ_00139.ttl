@@ -1,0 +1,28 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00139
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Protein kinases which are high-confidence drug targets according to CHEMBL''' ;
+  sh:select '''PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+
+select distinct ?entry (str(?gen) as ?gene) where {
+ SERVICE<https://idsm.elixir-czech.cz/sparql/endpoint/idsm>{
+ SELECT distinct ?protein WHERE {
+ 		?target cco:hasTargetComponent ?tarComp . 
+ 		?target cco:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target
+		?tarComp cco:targetCmptXref ?protein . 
+		#?protein a cco:UniprotRef .
+		filter(contains(str(?protein),\"uniprot\"))
+		?activity a cco:Activity ; cco:hasMolecule ?drug ; cco:hasAssay ?assay .
+		?drug cco:hasMechanism / cco:hasTarget ?target . # known drug action mechanism
+		?assay cco:hasTarget ?target; cco:targetConfScore ?score .
+		filter(?score > 8) # high-confidence assay
+ }
+ 	 }
+ ?entry skos:exactMatch ?protein .	 
+ ?entry np:isoform / np:uniprotKeyword / np:term nextprot_cv:KW-0418. #kinase	
+ ?entry np:gene / np:recommendedName / rdfs:label ?gen.
+}'''
+.

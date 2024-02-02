@@ -1,0 +1,16 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00097
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:gene / np:chromosome \"2\"^^xsd:string .
+ ?entry np:isoform ?iso.
+ ?iso np:variant /np:start ?varpos.
+ ?iso np:modifiedResidue ?modres.
+ ?modres np:term nextprot_cv:PTM-0255.
+ ?modres np:start ?varpos.
+}'''
+.

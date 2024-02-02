@@ -1,0 +1,18 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00057
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are located in the mitochondrion with an experimental evidence originating not from HPA or DKFZ-GFP''' ;
+  sh:select '''select distinct ?entry where {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
+
+ ?entry np:isoform ?iso.
+ ?iso np:cellularComponent ?loc.
+ ?loc np:term /np:childOf ?mitoloc.
+ filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence
+ ?loc np:evidence /np:assignedBy ?src.
+ filter ( ?src not in (source:Human_protein_atlas, source:GFP-cDNAEMBL))
+}'''
+.

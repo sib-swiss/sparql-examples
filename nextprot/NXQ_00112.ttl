@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00112
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins located in nucleus and nowhere else''' ;
+  sh:select '''select ?entry where {
+ {
+ select ?entry (count(?loc) as ?anyLoc) (sum(?inNucleus) as ?nucleusLoc)
+ where {
+ ?entry np:isoform / np:cellularComponent ?loc .
+ ?loc np:evidence / np:negative false .
+ ?loc np:term ?locterm.
+ bind( exists {
+ ?locterm np:childOf / rdfs:label ?label.
+ filter (regex(?label, '^[Nn]ucleus$'))
+ } as ?inNucleus)
+ }
+ group by ?entry
+ }
+ filter ( ?anyLoc = ?nucleusLoc)
+}'''
+.

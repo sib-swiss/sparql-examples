@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00023
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins that are involved in transport and located in a membrane and that are not glycosylated (experimentally or predicted)''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso .
+ {
+ ?iso np:goBiologicalProcess ?gofunc .
+	?gofunc np:term / np:childOf nextprot_cv:GO_0006810. # GO value for transport
+	filter not exists {?gofunc np:negativeEvidence ?negev} # No negative function evidence
+ } union {
+ ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0813. # KW for transport
+ }
+ { 
+ ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0812. # transmembrane
+ } union {
+ ?iso np:topology / np:term nextprot_cv:CVTO_0004. # intramembrane
+ } 
+ filter not exists { ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0325 } # not a glycoprotein
+}'''
+.

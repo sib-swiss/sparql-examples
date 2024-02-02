@@ -1,0 +1,14 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00298
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Recommended isoform names for MSH6''' ;
+  sh:select '''select distinct ?iso ?name where {
+ entry:NX_P52701 np:isoform ?iso. # MSH6 entry
+ ?iso np:recommendedName ?name_entity .
+ ?name_entity a np:IsoformName; rdfs:label ?name.
+}
+order by asc(?iso)'''
+.

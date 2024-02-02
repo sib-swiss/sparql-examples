@@ -1,0 +1,21 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00118
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins with at least one somatic variant''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?iso.
+ ?iso np:variant ?var.
+ { 
+ ?var rdfs:comment ?comment.
+ filter (contains (?comment,'somatic'))
+ }
+ union
+ {
+ ?var np:evidence ?ev.
+ ?ev np:assignedBy source:Cosmic.
+ }
+}'''
+.

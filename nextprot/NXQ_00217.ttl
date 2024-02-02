@@ -1,0 +1,22 @@
+prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:NXQ_00217
+ sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Proteins associated with an incomplete EC number, no function annotated and high expression in liver''' ;
+  sh:select '''select distinct ?entry where {
+ ?entry np:isoform ?isox.
+ ?isox np:enzymeClassification / np:term / rdfs:label ?eclabel.
+ filter regex(?eclabel, '-'^^xsd:string) # incomplete EC number
+ ?isox np:highExpression /np:term /np:childOf nextprot_cv:TS-0564. # highly expressed in liver
+ { 
+ ?isox np:functionInfo / rdfs:comment ?functext .
+ filter(strstarts(?functext,\"Probable\") || strstarts(?functext,\"Putative\")) 
+ }
+ UNION
+ { 
+ filter not exists {?isox np:functionInfo ?_ } # entries with no function at all
+ }
+}'''
+.
