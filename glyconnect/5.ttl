@@ -1,4 +1,4 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples>
 prefix up: <http://purl.uniprot.org/core/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
