@@ -6,7 +6,7 @@ ex:NXQ_00040
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that are enzymes and with at least one mutagenesis site that decrease or abolish activity''' ;
   sh:select '''select distinct ?entry where {
- ?entry:isoform ?iso.
+ ?nextprot:isoform ?iso.
  ?iso np:enzymeClassification ?_ .
  ?iso np:mutagenesis/rdfs:comment ?comment
  filter regex(?comment, '(decrease|abolish).*activity','i')

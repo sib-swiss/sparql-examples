@@ -6,7 +6,7 @@ ex:NXQ_00298
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Recommended isoform names for MSH6''' ;
   sh:select '''select distinct ?iso ?name where {
- entry:NX_P52701 np:isoform ?iso. # MSH6 entry
+ nextprot:NX_P52701 np:isoform ?iso. # MSH6 entry
  ?iso np:recommendedName ?name_entity .
  ?name_entity a np:IsoformName; rdfs:label ?name.
 }

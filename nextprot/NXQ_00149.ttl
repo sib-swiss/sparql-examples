@@ -10,7 +10,7 @@ ex:NXQ_00149
 (count(?pvlabel) as ?severe_count) 
 (group_concat(?pvlabel;separator=\", and \") as ?severe_list) 
 WHERE {
- entry:NX_P38398 np:isoform / np:proteoform ?pf .
+ nextprot:NX_P38398 np:isoform / np:proteoform ?pf .
  ?pf rdfs:label ?pfname .
  ?pf np:phenotypicVariation ?pv1 .
  ?pv1 rdfs:comment ?pvlabel .

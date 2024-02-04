@@ -7,7 +7,7 @@ ex:NXQ_00148
   rdfs:comment '''Variants with normal \"ubiquitin-protein transferase activity\" and decreased or increased binding to UBE2D1 (example: BRCA1-p.Ile89Thr)''' ;
   sh:select '''SELECT distinct ?pfname ?impact_on_ubi_trsfrt_activity ?impact_on_binding_UBE2D1 WHERE {
  values (?ubi_trsfrt_activity ?no_impact ?UBE2D1 ?impact) 
- { (nextprot_cv:GO_0004842 nextprot_cv:ME_0000003 entry:NX_P51668 nextprot_cv:ME_0000002) }
+ { (nextprot_cv:GO_0004842 nextprot_cv:ME_0000003 nextprot:NX_P51668 nextprot_cv:ME_0000002) }
  ?pf a np:Proteoform .
  ?pf rdfs:label ?pfname .
  ?pf np:phenotypicVariation ?pv1 .

@@ -6,7 +6,7 @@ ex:NXQ_00294
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Variants in MECP2 causing Rett Syndrome''' ;
   sh:select '''select distinct ?start ?stop ?original ?modified where { 
- entry:NX_P51608 np:isoform ?iso. #MECP2 entry 
+ nextprot:NX_P51608 np:isoform ?iso. #MECP2 entry 
  ?iso np:swissprotDisplayed true. #Swissprot canonical isoform 
  {
  ?iso np:variant ?v.

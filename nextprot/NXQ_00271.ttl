@@ -7,7 +7,7 @@ ex:NXQ_00271
   rdfs:comment '''Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM...''' ;
   sh:select '''select distinct (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where
 {
- values ?entry {entry:NX_Q9BYF1 entry:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
+ values ?entry {nextprot:NX_Q9BYF1 nextprot:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
  ?entry np:gene /np:recommendedName / rdfs:label ?gn.
  ?entry np:isoform ?iso .
  ?iso np:swissprotDisplayed true; np:variant ?var .

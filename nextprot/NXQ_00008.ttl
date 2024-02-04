@@ -6,8 +6,8 @@ ex:NXQ_00008
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose genes are less than 50000 bp away from the location of the gene coding for protein p53''' ;
   sh:select '''select distinct ?entry where {
- entry:NX_P04637 np:gene /np:begin ?s; np:gene/np:chromosome ?chr.
+ nextprot:NX_P04637 np:gene /np:begin ?s; np:gene/np:chromosome ?chr.
  ?entry np:gene/np:begin ?gs; np:gene/np:chromosome ?chr.
- filter ( ?gs > (?s -50000) && ?gs <= (?s +50000) && ?entry != entry:NX_P04637 )
+ filter ( ?gs > (?s -50000) && ?gs <= (?s +50000) && ?entry != nextprot:NX_P04637 )
 }'''
 .

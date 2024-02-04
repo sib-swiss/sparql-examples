@@ -1,0 +1,1007 @@
+@prefix faldo: <http://biohackathon.org/resource/faldo#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix up:    <http://purl.uniprot.org/core/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+[ sh:namespace  "http://rdf.ebi.ac.uk/resource/ensembl.protein/"^^xsd:anyURI;
+  sh:prefix     "ensemblprotein"
+] .
+
+[ sh:namespace  "http://purl.uniprot.org/keywords/"^^xsd:anyURI;
+  sh:prefix     "keywords"
+] .
+
+[ sh:namespace  "https://swisslipids.org/rdf/SLM_"^^xsd:anyURI;
+  sh:prefix     "SWISSLIPID"
+] .
+
+[ a             owl:Ontology;
+  rdfs:comment  "This is a collection of SPARQL queries that are examples for use on different websites.";
+  owl:imports   sh:;
+  sh:declare    [ sh:namespace  "http://www.wikidata.org/prop/"^^xsd:anyURI;
+                  sh:prefix     "p"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ebi.ac.uk/resource/ensembl.exon/"^^xsd:anyURI;
+                  sh:prefix     "ensemblexon"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/dc/terms/"^^xsd:anyURI;
+                  sh:prefix     "dcterms"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.uniprot.org/enzyme/"^^xsd:anyURI;
+                  sh:prefix     "ec"
+                ];
+  sh:declare    [ sh:namespace  "http://ddbj.nig.ac.jp/ontologies/nucleotide/"^^xsd:anyURI;
+                  sh:prefix     "insdcschema"
+                ];
+  sh:declare    [ sh:namespace  "http://xmlns.com/foaf/0.1/"^^xsd:anyURI;
+                  sh:prefix     "foaf"
+                ];
+  sh:declare    [ sh:namespace  "https://rdf.metanetx.org/schema/"^^xsd:anyURI;
+                  sh:prefix     "mnx"
+                ];
+  sh:declare    [ sh:namespace  "http://www.wikidata.org/prop/qualifier/"^^xsd:anyURI;
+                  sh:prefix     "pq"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/uo#"^^xsd:anyURI;
+                  sh:prefix     "uberon"
+                ];
+  sh:declare    [ sh:namespace  "http://www.wikidata.org/entity/"^^xsd:anyURI;
+                  sh:prefix     "wd"
+                ];
+  sh:declare    [ sh:namespace  "https://purl.org/glyconnect/"^^xsd:anyURI;
+                  sh:prefix     "glyconnect"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.orthodb.org/"^^xsd:anyURI;
+                  sh:prefix     "orthodb"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.rhea-db.org/"^^xsd:anyURI;
+                  sh:prefix     "rh"
+                ];
+  sh:declare    [ sh:namespace  "http://biohackathon.org/resource/faldo#"^^xsd:anyURI;
+                  sh:prefix     "faldo"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.uniprot.org/uniprot/"^^xsd:anyURI;
+                  sh:prefix     "uniprotkb"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI;
+                  sh:prefix     "skos"
+                ];
+  sh:declare    [ sh:namespace  "http://wikiba.se/ontology#"^^xsd:anyURI;
+                  sh:prefix     "wikibase"
+                ];
+  sh:declare    [ sh:namesapce  "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI;
+                  sh:prefix     "codoa"
+                ];
+  sh:declare    [ sh:namespace  "http://identifiers.org/insdc/"^^xsd:anyURI;
+                  sh:prefix     "insdc"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/"^^xsd:anyURI;
+                  sh:prefix     "obo"
+                ];
+  sh:declare    [ sh:namespace  "http://nextprot.org/rdf/entry/"^^xsd:anyURI;
+                  sh:prefix     "nextprot"
+                ];
+  sh:declare    [ sh:namespace  "http://nextprot.org/rdf#"^^xsd:anyURI;
+                  sh:prefix     "np"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/2002/07/owl#"^^xsd:anyURI;
+                  sh:prefix     "owl"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/ontology/bibo/"^^xsd:anyURI;
+                  sh:prefix     "bibo"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI;
+                  sh:prefix     "orthodbGroup"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/dc/terms/"^^xsd:anyURI;
+                  sh:prefix     "dc"
+                ];
+  sh:declare    [ sh:namespace  "http://identifiers.org/"^^xsd:anyURI;
+                  sh:prefix     "identifiers"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.uniprot.org/taxonomy/"^^xsd:anyURI;
+                  sh:prefix     "taxon"
+                ];
+  sh:declare    [ sh:namespace  "http://biohackathon.org/resource/vg#"^^xsd:anyURI;
+                  sh:prefix     "vg"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/net/orth#"^^xsd:anyURI;
+                  sh:prefix     "orth"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ncbi.nlm.nih.gov/pubmed/"^^xsd:anyURI;
+                  sh:prefix     "pubmed"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI;
+                  sh:prefix     "rdfs"
+                ];
+  sh:declare    [ sh:namespace  "http://id.nlm.nih.gov/mesh/"^^xsd:anyURI;
+                  sh:prefix     "mesh"
+                ];
+  sh:declare    [ sh:namespace  "http://allie.dbcls.jp/"^^xsd:anyURI;
+                  sh:prefix     "allie"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/chebi/"^^xsd:anyURI;
+                  sh:prefix     "chebislash"
+                ];
+  sh:declare    [ sh:namespace  "https://www.lipidmaps.org/rdf/"^^xsd:anyURI;
+                  sh:prefix     "lipidmaps"
+                ];
+  sh:declare    [ sh:namespace  "http://nextprot.org/rdf#"^^xsd:anyURI;
+                  sh:prefix     "np"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ebi.ac.uk/resource/ensembl.transcript/"^^xsd:anyURI;
+                  sh:prefix     "ensembltranscript"
+                ];
+  sh:declare    [ sh:namespace  "http://www.wikidata.org/prop/direct/"^^xsd:anyURI;
+                  sh:prefix     "wdt"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI;
+                  sh:prefix     "rdf"
+                ];
+  sh:declare    [] ;
+  sh:declare    [ sh:namespace  "https://rdf.metanetx.org/mnet/"^^xsd:anyURI;
+                  sh:prefix     "mnet"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI;
+                  sh:prefix     "ECO"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/ns/shacl#"^^xsd:anyURI;
+                  sh:prefix     "sh"
+                ];
+  sh:declare    [ sh:namespace  "http://busco.ezlab.org/schema#"^^xsd:anyURI;
+                  sh:prefix     "busco"
+                ];
+  sh:declare    [ sh:namespace  "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI;
+                  sh:prefix     "xsd"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ebi.ac.uk/resource/ensembl/"^^xsd:anyURI;
+                  sh:prefix     "ensembl"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ebi.ac.uk/terms/chembl#"^^xsd:anyURI;
+                  sh:prefix     "cco"
+                ];
+  sh:declare    [ sh:namespace  "http://semanticscience.org/resource/"^^xsd:anyURI;
+                  sh:prefix     "sio"
+                ];
+  sh:declare    [] ;
+  sh:declare    [ sh:namespace  "http://data.epo.org/linked-data/def/patent/"^^xsd:anyURI;
+                  sh:prefix     "patent"
+                ];
+  sh:declare    [] ;
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/chebi#"^^xsd:anyURI;
+                  sh:prefix     "chebihash"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/genex#"^^xsd:anyURI;
+                  sh:prefix     "genex"
+                ];
+  sh:declare    [ sh:namespace  "http://schema.org/"^^xsd:anyURI;
+                  sh:prefix     "schema"
+                ];
+  sh:declare    [ sh:namespace  "http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#"^^xsd:anyURI;
+                  sh:prefix     "sachem"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/GO_"^^xsd:anyURI;
+                  sh:prefix     "GO"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.obolibrary.org/obo/CHEBI_"^^xsd:anyURI;
+                  sh:prefix     "CHEBI"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.uniprot.org/core/"^^xsd:anyURI;
+                  sh:prefix     "up"
+                ];
+  sh:declare    [ sh:namespace  "http://www.wikidata.org/prop/statement/"^^xsd:anyURI;
+                  sh:prefix     "ps"
+                ];
+  sh:declare    [ sh:namespace  "http://rdf.ebi.ac.uk/terms/ensembl/"^^xsd:anyURI;
+                  sh:prefix     "ensemblterms"
+                ];
+  sh:declare    [ sh:namespace  "http://purl.org/lscr#"^^xsd:anyURI;
+                  sh:prefix     "lscr"
+                ]
+] .
+
+[ sh:namespace  "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI;
+  sh:prefix     "glycan"
+] .
+
+_:b0    sh:declare    _:b0;
+        sh:namespace  "http://eunis.eea.europa.eu/rdf/species-schema.rdf#"^^xsd:anyURI;
+        sh:prefix     "eunisSpecies" .
+
+_:b1    sh:declare    _:b1;
+        sh:namespace  "http://spinrdf.org/sp#"^^xsd:anyURI;
+        sh:prefix     "sp" .
+@prefix ex:   <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00036  rdfs:comment  "Proteins that are oxidoreductases and that bind to NAD/NADP";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword /:term cv:KW-0560. #oxidoreductase\n ?iso np:uniprotKeyword /:term ?kw\n filter( ?kw in (cv:KW-0520,cv:KW-0521)) # NAD or NADP\n}" .
+
+ex:NXQ_00057  rdfs:comment  "Proteins that are located in the mitochondrion with an experimental evidence originating not from HPA or DKFZ-GFP";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739} # SL and GO values for mitochondrion\n\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc.\n ?loc np:term /:childOf ?mitoloc.\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n ?loc np:evidence /:assignedBy ?src.\n filter ( ?src not in (source:Human_protein_atlas, source:GFP-cDNAEMBL))\n}" .
+
+ex:NXQ_00078  rdfs:comment  "Proteins which have been identified in at least one proteomics set and that are secreted";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?sloc {cv:GO_0005576 cv:SL-0243} # GO and SL values for secreted\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term/:childOf ?sloc .\n filter not exists {?sloc np:negativeEvidence ?negev} # No negative localization evidence\n #filter not exists {?iso np:cellularComponent /:term cv:GO_0070062 .\n #\t\t\t\t\t filter not exists {?iso np:cellularComponent /:term /:childOf cv:SL-0243 .}\n #\t\t\t\t\t} # you can uncomment this to filters out extracellular exosome only location (2240 entries), most of them evidenced only by large-scale proteomic analysis\n ?iso np:peptideMapping ?map.\n}" .
+
+ex:NXQ_00099  rdfs:comment  "Secreted proteins that have at least one PTM in a position of a variant";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?sloc {cv:GO_0005576 cv:SL-0243} # GO and SL values for secreted\n ?entry np:isoform ?iso .\n ?iso np:swissprotDisplayed true . # restricted to main isoform due to computing time (> 98% of sites)\n ?iso np:cellularComponent ?anno .\n ?anno np:quality np:GOLD; np:term /:childOf ?sloc. # secreted\n filter not exists { ?anno np:negativeEvidence ?_ }\n # excludes \"extracellular exosome\"-only location, most of them evidenced only by large-scale proteomic analysis\n filter not exists { \n\t ?iso np:cellularComponent /:term cv:GO_0070062 . # extracellular exosome\n \t filter not exists { ?iso np:cellularComponent /:term /:childOf cv:SL-0243 .}\n \t} \n ?iso np:variant /:start ?varpos.\n ?iso np:ptm /:start ?varpos.\n}" .
+
+ex:NXQ_00270  rdfs:comment  "Proteins belonging to Rett syndrome pathways, and their subcellular locations (GOLD)";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX wp: <http://vocabularies.wikipathways.org/wp#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nselect ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {\n service <http://sparql.wikipathways.org/sparql> {\n\n {?geneProduct a wp:Protein}\n union\n {?geneProduct a wp:GeneProduct}\n \n ?geneProduct rdfs:label ?genraw .\n bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).\n\n filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching\n ?geneProduct dcterms:isPartOf ?pathway .\n ?pathway a wp:Pathway .\n ?pathway wp:organism ?organism .\n filter(contains(str(?organism),\"9606\"))\n ?pathway dc:title ?pathwayname .\n filter(regex(?pathwayname,\"rett\",\"i\")).\n }\n ?entry a np:Entry .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?locannot .\n ?locannot np:term ?locterm .\n ?locterm rdfs:label ?loclab .\n ?locannot np:evidence ?locev .\n ?locev np:quality np:GOLD .\n filter not exists {?locannot np:negativeEvidence ?locev .}\n}\ngroup by ?entry ?gen ?pathwayname\norder by ?entry" .
+
+ex:NXQ_00107  rdfs:comment  "Proteins with a protein existence not \"At protein level\" (PE=1) and with a HGNC approved gene name that contains \"orf\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:existence ?level.\n filter (?level != np:Evidence_at_protein_level).\n ?entry np:reference ?r.\n ?r np:provenance db:HGNC ; np:accession ?ac.\n filter (regex(?ac,'orf')) .\n}" .
+
+ex:NXQ_00128  rdfs:comment  "Proteins whose gene is annotated to be induced by interferons";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:induction /rdfs:comment ?comment.\n filter(regex (?comment,'IFN|interferon',\"i\"))\n}" .
+
+ex:NXQ_00149  rdfs:comment  "BRCA1 variants with at least 5 different Severe phenotypes";
+        sh:prefixes   [] ;
+        sh:select     "SELECT \n?pfname \n(count(?pvlabel) as ?severe_count) \n(group_concat(?pvlabel;separator=\", and \") as ?severe_list) \nWHERE {\n entry:NX_P38398 np:isoform / np:proteoform ?pf .\n ?pf rdfs:label ?pfname .\n ?pf np:phenotypicVariation ?pv1 .\n ?pv1 rdfs:comment ?pvlabel .\n ?pv1 np:evidence / np:severity np:Severe . \n }\ngroup by ?pfname having (count(?pvlabel)>=5)\norder by desc(count(?pvlabel)) ?pfname" .
+
+ex:NXQ_00007  rdfs:comment  "Proteins associated with diseases that are associated with cardiovascular aspects";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform /:medical / np:term /:related / np:childOf cv:D002318.\n}" .
+
+ex:NXQ_00028  rdfs:comment  "Proteins associated with a disease but without a disease-causing amino-acid substitution variant";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n { \n\t ?iso np:medical / rdf:type np:Disease.\n } union { \n ?iso np:uniprotKeyword / np:term ?kw .\n\t ?kw np:termType \"Disease\"^^xsd:string\n\t filter (?kw != cv:KW-0656)\n }\n filter ( not exists { ?entry np:isoform / np:variant / np:disease ?_ . } )\n filter ( not exists { \n\t?entry np:isoform / np:proteoform ?pf.\n\t?pf np:difference / np:evidence / np:negative false. # positive evidence only\n\t?pf np:diseaseRelatedVariant / np:term cv:ME_0000013 . # cause of disease\n } ) \n}" .
+
+ex:NXQ_00220  rdfs:comment  "Proteins located on chromosome MT (mitochondrial) coded by a gene located on the plus strand";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene ?gene .\n ?gene np:chromosome \"MT\"^^xsd:string; np:strand \"1\"^^xsd:string .\n }" .
+
+ex:NXQ_00049  rdfs:comment  "Proteins with at least one variant of the types \"A->R\" or \"R->A\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform/:variant ?statement.\n {?statement np:original \"A\"^^xsd:string;:variation \"R\"^^xsd:string}\n UNION\n {?statement np:original \"R\"^^xsd:string;:variation \"A\"^^xsd:string}\n}" .
+
+ex:NXQ_00241  rdfs:comment  "Interaction annotations from SwissProt ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?txt) as ?itinfo) where {\n select distinct ?entry ?txt where {\n ?entry np:isoform ?iso.\n ?iso np:interactionInfo / rdfs:comment ?txt.\n } order by ?entry\n}" .
+
+ex:NXQ_00070  rdfs:comment  "Proteins secreted but without a signal sequence";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?sloc {cv:GO_0005576 cv:SL-0243} # GO and SL values for secreted\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term/:childOf ?sloc .\n filter not exists {?sloc np:negativeEvidence ?negev} # No negative localization evidence\n filter not exists {?iso np:cellularComponent /:term cv:GO_0070062 .\n\t\t\t\t\t filter not exists {?iso np:cellularComponent /:term /:childOf cv:SL-0243 .}\n\t\t\t\t\t} # filters out extracellular exosome only location (2758 entries)\n filter not exists {?iso np:signalPeptide ?_}\n}" .
+
+ex:NXQ_00283  rdfs:comment  "Proteins with no reported mitochondrial localization but interacting with 20 or more mitochondrial proteins ('gold' quality) ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?gen) as ?gene) (count(distinct ?mitopartner) as ?mitcnt) (count(distinct ?partner) as ?itcnt) where {\nvalues ?mitloc {cv:GO_0005739 cv:SL-0173} # GO and SL values for mitochondrion\n ?entry np:isoform ?iso.\n ?entry np:gene / np:recommendedName / rdfs:label ?gen.\n filter not exists { ?iso np:cellularComponent /:term / np:childOf ?mitloc }\n ?iso np:binaryInteraction ?it, ?it2.\n ?it np:interactant ?mitopartner; np:quality np:GOLD .\n ?mitopartner np:isoform / np:cellularComponent ?loc .\n ?loc np:quality np:GOLD; np:term / np:childOf ?mitloc .\n ?it2 np:interactant ?partner; np:quality np:GOLD .\n} group by ?entry ?gen ?mitcnt having (count(distinct ?mitopartner) >= 20)\norder by desc(?mitcnt)" .
+
+ex:NXQ_00020  rdfs:comment  "Proteins with at least 2 HPA antibodies whose genes are located on chromosome 21 and that are highly expressed according to IHC in heart";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry where {\n select distinct ?entry ?id where {\n ?entry np:gene / np:chromosome \"21\"^^xsd:string .\n ?entry np:isoform / np:expressionProfile ?s1.\n ?s1 np:term / np:childOf cv:TS-0445.\n ?s1 np:evidence ?evi.\n ?evi np:observedExpression np:High.\n ?evi np:evidenceCode cv:ECO_0001055.\n ?entry np:isoform / np:antibodyMapping ?map.\n\t ?map np:evidence / np:reference / np:accession ?id . \n }\n} group by ?entry having (count(?id)>=2)" .
+
+ex:NXQ_00041  rdfs:comment  "Proteins that are annotated with GO \"F\" (function) terms prefixed by \"Not\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:goMolecularFunction ?statement.\n ?statement np:negativeEvidence ?ev.\n}" .
+
+ex:NXQ_00233  rdfs:comment  "Proteins that are PE>1 with at least one proteotypic peptide of at least 9 amino-acids identified in a human sample ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?level {\n \t:Evidence_at_transcript_level # PE=2\n \t:Inferred_from_homology \t# PE=3\n \t:Predicted \t# PE=4\n\t:Uncertain \t# PE=5\n\t}\n ?entry a np:Entry .\n ?entry np:existence ?level .\n ?entry np:isoform / np:peptideMapping ?pm.\n ?pm np:proteotypic true .\n ?pm np:start ?pos1 ; np:end ?pos2 .\n filter((?pos2 - ?pos1 + 1) >= 9)\n }" .
+
+ex:NXQ_00062  rdfs:comment  "Proteins which have at least one zinc finger of any subtype";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:zincFingerRegion ?_.\n}" .
+
+ex:NXQ_00254  rdfs:comment  "Proteins with associated pathways in WikiPathways";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX wp: <http://vocabularies.wikipathways.org/wp#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nselect distinct ?entry ?gen ?pathwayname where {\n service <http://sparql.wikipathways.org/sparql> {\n\n {?geneProduct a wp:Protein}\n union\n {?geneProduct a wp:GeneProduct}\n \n ?geneProduct rdfs:label ?genraw .\n\t bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).\n filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching\n\n ?geneProduct dcterms:isPartOf ?pathway .\n ?pathway a wp:Pathway .\n ?pathway wp:organism ?organism .\n filter(contains(str(?organism),\"9606\")) # Human proteins\n ?pathway dc:title ?pathwayname .\n }\n ?entry a np:Entry .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n}\norder by ?pathwayname" .
+
+ex:NXQ_00083  rdfs:comment  "Proteins that are expressed only in liver";
+        sh:prefixes   [] ;
+        sh:select     "Select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:detectedExpression /:term ?tiss, ?tiss2.\n ?tiss2 np:childOf cv:TS-0564. # Liver\n} group by ?entry ?iso having(count(distinct ?tiss) = count(distinct ?tiss2))" .
+
+ex:NXQ_00296  rdfs:comment  "Pathways in which SCN1A GOLD interactants are involved";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?pathway where {\n entry:NX_P35498 np:isoform /:binaryInteraction ?interaction.\n ?interaction np:interactant ?entry; np:quality np:GOLD.\n ?entry a np:Entry.\n ?entry np:isoform /:pathway /rdfs:comment ?pathway.\n}\norder by asc(?pathway)" .
+
+ex:NXQ_00112  rdfs:comment  "Proteins located in nucleus and nowhere else";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry where {\n {\n select ?entry (count(?loc) as ?anyLoc) (sum(?inNucleus) as ?nucleusLoc)\n where {\n ?entry np:isoform / np:cellularComponent ?loc .\n ?loc np:evidence / np:negative false .\n ?loc np:term ?locterm.\n bind( exists {\n ?locterm np:childOf / rdfs:label ?label.\n filter (regex(?label, '^[Nn]ucleus$'))\n } as ?inNucleus)\n }\n group by ?entry\n }\n filter ( ?anyLoc = ?nucleusLoc)\n}" .
+
+ex:NXQ_00012  rdfs:comment  "Proteins that interact with protein RBM17 and that are involved in splicing";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n entry:NX_Q96I25 np:isoform / np:interaction / np:interactant ?entry.\n ?entry np:isoform / np:uniprotKeyword / np:term cv:KW-0508\n}" .
+
+ex:NXQ_00204  rdfs:comment  "Proteins with protein existence \"At transcript level\" (PE=2) or \"Inferred from homology\" (PE=3) or \"Predicted\" (PE=4)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?level {\n#\t:Evidence_at_protein_level # PE=1 \n np:Evidence_at_transcript_level # PE=2\n np:Inferred_from_homology # PE=3\n np:Predicted # PE=4\n#\t:Uncertain # PE=5\n }\n ?entry a np:Entry .\n ?entry np:existence ?level .\n}" .
+
+ex:NXQ_00033  rdfs:comment  "Proteins with at least one phosphotyrosine but no phosphoserine or phosphothreonine";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n select ?entry ?iso (count(?ptm) as ?ptmCnt) where {\n ?entry np:isoform ?iso.\n ?iso np:modifiedResidue ?ptm.\n ?ptm np:term cv:PTM-0255 #phosphotyrosine.\n filter (\n not exists { ?iso np:modifiedResidue / np:term cv:PTM-0253. } #phosphoserine\n &&\n not exists { ?iso np:modifiedResidue / np:term cv:PTM-0254. } #phosphothreonine\n )\n } group by ?entry ?iso having ( count(?ptm) >= 1 )\n}" .
+
+ex:NXQ_00225  rdfs:comment  "Proteins with high proline content";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?AAcnt ?seqlen ?AAdensity where {\n ?entry np:isoform ?iso.\n ?iso np:swissprotDisplayed true .\n ?iso np:sequence / np:chain ?seq .\n ?iso np:sequence / np:length ?seqlen .\n bind( strlen( replace( str(?seq), \"[^P]\", \"\")) as ?AAcnt) # replace all non-Proline by empty string\n bind(xsd:float(?AAcnt)/xsd:float(?seqlen) as ?AAdensity)\n filter(?AAcnt > 10)\n}\norder by desc(?AAdensity)\nlimit 100 # will bring-up the 100 most relevant cases" .
+
+ex:NXQ_00054  rdfs:comment  "Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:function ?statement.\n ?statement np:term / np:childOf cv:GO_0005102.\n filter not exists { ?statement np:negativeEvidence ?negev. } # No negative function evidence\n ?iso np:uniprotKeyword/:term cv:KW-0391.\n}" .
+
+ex:NXQ_00246  rdfs:comment  "Proteins which are enzymes catalyzing a reaction involving lipids";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX rh:<http://rdf.rhea-db.org/>\nPREFIX ch:<http://purl.obolibrary.org/obo/>\n\nselect distinct ?entry where {\n#select distinct ?entry str(?xlab) where {\n service <https://sparql.rhea-db.org/sparql> {\n SELECT distinct ?chebi WHERE {\n ?reaction rdfs:subClassOf rh:Reaction .\n ?reaction rh:status rh:Approved .\n ?reaction rh:side ?reactionSide .\n ?reactionSide rh:contains ?participant .\n ?participant rh:compound ?compound .\n ?compound rh:chebi ?chebi .\n ?chebi rdfs:subClassOf+ ch:CHEBI_18059 .\n } \n } \n ?entry np:isoform / np:smallMoleculeInteraction / np:interactant ?x .\n ?x rdfs:label ?xlab .\n ?x skos:exactMatch ?chebi .\n} order by ?entry" .
+
+ex:NXQ_00075  rdfs:comment  "Proteins which have been detected in the HUPO liver proteome set but not the HUPO plasma proteome set";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\nvalues ?pepsources { \n source:PeptideAtlas_human_Liver \n source:MassIVE_human_Liver\n }\n ?entry a np:Entry.\n ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy ?pepsources .\n filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:PeptideAtlas_human_Blood_Plasma . }\n filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:MassIVE_human_Blood_Plasma . }\n}" .
+
+ex:NXQ_00267  rdfs:comment  "Proteins binding estradiol and/or similar molecules (similarity search with SMILES), and their associated GO_MF terms";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>\nPREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>\nPREFIX chembl: <http://rdf.ebi.ac.uk/terms/chembl#>\n\nSELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {\n \t\tSERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {\n \t\tSERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chembl> {\n \t\t?compound sachem:similarCompoundSearch [ sachem:query \"CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O\" ] . # smiles chain for estradiol\n\t\t }\n\t\t \t\t?ACTIVITY rdf:type chembl:Activity;\n\t\tchembl:hasMolecule ?compound;\n chembl:hasAssay ?ASSAY.\n\t\t ?ASSAY chembl:hasTarget ?TARGET.\n\t\t ?TARGET chembl:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target\n\t\t ?TARGET chembl:hasTargetComponent ?COMPONENT.\n\t\t ?COMPONENT chembl:targetCmptXref ?UNIPROT.\n\t\t filter(contains(str(?UNIPROT),\"uniprot\"))\n\t\t }\n\t?entry skos:exactMatch ?UNIPROT.\n\t?entry np:isoform ?iso.\n\t?iso np:goMolecularFunction / np:term ?gomf .\n\t?gomf rdfs:label ?gomflab .\n} \ngroup by ?entry" .
+
+ex:NXQ_00288  rdfs:comment  "Biological Process and Molecular Function GO terms related to UniPathway metabolic pathways";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (str(?pathwayname) as ?unipathway) ?related (str(?pathlabel) as ?GO_BP) (str(?pathlabel2) as ?GO_MF) where {\n ?entry np:isoform ?iso.\n ?iso np:pathway ?pathannot .\n ?pathannot np:term ?pathterm; rdfs:comment ?pathwayname. \n ?pathterm np:related ?related .\n {?related a np:GoBiologicalProcessCv ; rdfs:label ?pathlabel .}\n UNION\n {?related a np:GoMolecularFunctionCv ; rdfs:label ?pathlabel2 .}\n}" .
+
+ex:NXQ_00104  rdfs:comment  "Proteins whose gene is on chromosome 21 with at least one disease annotation from Orphanet";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?disname) as ?disease) where {\n ?entry np:isoform ?iso; np:gene / np:chromosome \"21\"^^xsd:string .\n ?iso np:disease ?medannot .\n ?medannot rdfs:comment ?disname; np:evidence / np:assignedBy source:Orphanet.\t \n}" .
+
+ex:NXQ_00125  rdfs:comment  "Domains that are entirely covered by 3D structures";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?domlabel where {\n ?entry np:isoform ?isoform.\n ?isoform np:pdbMapping ?struc.\n ?struc np:start ?s1 ; np:end ?s2.\n ?isoform np:domain ?dom.\n ?dom np:start ?d1 ; np:end ?d2.\n ?dom np:term/rdfs:label ?domlabel\n filter ((?s1 <= ?d1) && (?s2 >= ?d2))\n}" .
+
+ex:NXQ_00146  rdfs:comment  "Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n?entry np:isoform / np:peptideMapping ?pm.\n?pm np:proteotypic true .\n?pm np:peptideName ?pepid .\n#?pm np:start ?pos1 ; np:end ?pos2 .\n#filter((?pos2 - ?pos1 + 1) >= 7) # This is not absolutely required for current query since 7 is the minimum length for accepted proteotypic peptides\nfilter not exists {\n ?entry np:isoform / np:peptideMapping ?pm2.\n ?pm2 np:start ?p1 ; np:end ?p2 .\n ?pm2 np:proteotypic true .\n filter((?p2 - ?p1 + 1) >= 9)\n }\n}\ngroup by ?entry having(count (distinct ?pepid) >= 2)" .
+
+ex:NXQ_00004  rdfs:comment  "Proteins expressed in brain with observed IHC expression \"high\" but not expressed in testis";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n # get all expression\n ?iso np:expression ?e1.\n # highly expressed in brain\n ?e1 np:term/:childOf cv:TS-0095;:evidence/:observedExpression np:High.\n # not expressed in testis\n ?iso np:undetectedExpression ?e2.\n ?e2 np:term cv:TS-1030.\n filter not exists { ?iso np:detectedExpression / np:term / np:childOf cv:TS-1030 }\n}\n\n# Use the semicolon ';' to refer to the previous subject (?e1)\n# Only IHC data has observed expression \"High\" so ECO is not specified.\n#\n# Note that we also exclude expression detected in testis." .
+
+ex:NXQ_00025  rdfs:comment  "Proteins with at least 50 interactors that are not associated with a disease";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:binaryInteraction/:interactant ?interactant.\n \n # with no disease\n filter not exists {\n {\n ?iso np:medical / rdf:type np:Disease.\n } union {\n ?iso np:uniprotKeyword / np:term ?kw .\n ?kw np:termType \"Disease\"^^xsd:string\n filter (?kw != cv:KW-0656)\n }\n }\n\n} group by ?entry ?iso having (count(?interactant) >= 50)" .
+
+ex:NXQ_00217  rdfs:comment  "Proteins associated with an incomplete EC number, no function annotated and high expression in liver";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?isox.\n ?isox np:enzymeClassification / np:term / rdfs:label ?eclabel.\n filter regex(?eclabel, '-'^^xsd:string) # incomplete EC number\n ?isox np:highExpression /:term /:childOf cv:TS-0564. # highly expressed in liver\n { \n ?isox np:functionInfo / rdfs:comment ?functext .\n filter(strstarts(?functext,\"Probable\") || strstarts(?functext,\"Putative\")) \n }\n UNION\n { \n filter not exists {?isox np:functionInfo ?_ } # entries with no function at all\n }\n}" .
+
+ex:NXQ_00046  rdfs:comment  "Proteins with a gene alternative name starting with IL27";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?recname ?altname where {\n ?entry np:gene ?gn.\n ?gn np:recommendedName / rdfs:label ?recname.\n ?gn np:alternativeName / rdfs:label ?altname.\n filter (regex(?altname, \"^IL27\"))\n}" .
+
+ex:NXQ_00238  rdfs:comment  "Proteins that are lipoproteins";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword / np:term cv:KW-0449.\n}" .
+
+ex:NXQ_00067  rdfs:comment  "Proteins with alternative acetylation or Ubl conjugation (SUMO or Ubiquitin) at the same positions";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:crossLink /:start ?ptmpos.\n ?iso np:modifiedResidue ?ptm.\n ?ptm np:start ?ptmpos.\n ?ptm rdfs:comment ?comment.\n # We use this filter to select acetylations\n filter regex(?comment, \"acetyl\",\"i\")\n}" .
+
+ex:NXQ_00259  rdfs:comment  "Proteins involved in diseases with clinical manifestations that include long organs ";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\n\nselect distinct ?entry (str(?gen) as ?genx) ?umlsTerm where {\n service <http://rdf.disgenet.org/sparql/> {\n select distinct ?protein ?umlsTerm where {\n ?gda sio:SIO_000628 ?gene,?disease .\n ?disease a sio:SIO_010056 . # traits or phenotypes\n ?disease dcterms:title ?umlsTerm .\n filter(contains(str(?umlsTerm),\"Long \"))\n ?gene a ncit:C16612; sio:SIO_010078 ?protein .\n } \n }\n BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .\n ?entry np:swissprotPage ?unipage .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n} order by ?entry" .
+
+ex:NXQ_00280  rdfs:comment  "Proteins interacting with at least 10 members of a protein family ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?gen) as ?gene) (str(?xlab) as ?itfamily) ?itcnt ?membercnt ((xsd:float(?itcnt) / xsd:float(?membercnt)) as ?ratio) where {\n {\n select ?xterm ?xlab (count(distinct ?member) as ?membercnt) where {\n ?member np:isoform? / np:familyName /:term /:childOf ?xterm.\n ?xterm rdfs:label ?xlab .\n } group by ?xterm ?xlab\n } \n {\n select ?xterm ?entry ?gen (count (distinct ?interactant) as ?itcnt) where {\n ?entry np:isoform ?iso; np:gene / np:name / rdfs:label ?gen .\n ?iso np:interaction ?it.\n ?it np:quality np:GOLD; np:interactant ?interactant.\n ?interactant np:familyName /:term /:childOf ?xterm . \n } group by ?xterm ?entry ?gen having (count (distinct ?interactant) >= 10)\t\n }\n} \norder by desc(?ratio)\nlimit 60" .
+
+ex:NXQ_00117  rdfs:comment  "Proteins with at least one sequence variant";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:variant ?var.\n}" .
+
+ex:NXQ_00138  rdfs:comment  "Proteins with 10 or more gold interactions with SH3 domain-containing proteins";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:interaction ?it.\n ?it np:quality np:GOLD.\n ?it np:interactant ?interactant.\n ?interactant np:isoform? / np:domain / np:term cv:DO-00615. # SH3\n}\ngroup by ?entry having (count (distinct ?interactant) >= 10)" .
+
+ex:NXQ_00017  rdfs:comment  "Proteins larger than 1000 amino acids that are located in the nucleus and expressed in the nervous system";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?nucloc {cv:GO_0005634 cv:SL-0191} # GO and SL values for nucleus\n \n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term/:childOf ?nucloc.\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n ?iso np:detectedExpression/:term/:childOf cv:TS-1313.\n ?iso np:sequence/:length ?len.\n filter (?len>1000)\n}" .
+
+ex:NXQ_00209  rdfs:comment  "Glycosylation sites and cross links positions on SwissProt canonical isoforms";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?iso ?ptmtype ?pos ?modres where {\n?entry np:isoform ?iso.\n?iso np:swissprotDisplayed true .\n?iso np:sequence / np:chain ?seq .\n?iso np:ptm ?ptm.\n?ptm np:term ?modterm.\n?ptm np:start ?pos.\nbind (substr(?seq,?pos,1) as ?modres)\t.\n{\n?ptm a np:GlycosylationSite .\nbind(\"glyco\" as ?ptmtype)\n}\nunion\n{\n?ptm a np:CrossLink .\nbind(\"cross-link\" as ?ptmtype)\n}\n}\norder by ?iso\n#limit 100" .
+
+ex:NXQ_00038  rdfs:comment  "Proteins with at least one selenocysteine in their sequence";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform/:selenocysteine ?statement.\n}" .
+
+ex:NXQ_00059  rdfs:comment  "Proteins that are glycosylated and phosphorylated on an extracellular topological domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:topologicalDomain ?topodom.\n ?topodom np:term cv:CVTO_0002.\n ?topodom np:start ?topostart ; np:end ?topoend.\n ?iso np:positionalAnnotation ?annot,?annot2.\n ?annot a np:ModifiedResidue.\n ?annot np:term ?ptmtype.\n filter (?ptmtype in (cv:PTM-0253, cv:PTM-0254, cv:PTM-0255)) \n ?annot2 a np:GlycosylationSite.\n ?annot np:start ?ptmpos.\n ?annot2 np:start ?glypos.\n filter ((?ptmpos >= ?topostart) && (?ptmpos <= ?topoend))\n filter ((?glypos >= ?topostart) && (?glypos <= ?topoend))\n}" .
+
+ex:NXQ_00230  rdfs:comment  "Proteins with experimentally determined lengthy alpha-helices (> 75 aa)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?gen) as ?gene) ?hlen where {\n ?entry np:isoform ?iso.\n ?entry np:gene / np:recommendedName / rdfs:label ?gen.\n ?iso np:helix ?hel .\n ?hel np:start ?s; np:end ?e .\n bind((?e - ?s + 1) as ?hlen )\n filter(?hlen > 75)\n} \norder by desc(?hlen)" .
+
+ex:NXQ_00251  rdfs:comment  "Proteins with at least one proteotypic peptide 9aa+ not mapping on canonical isoform";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry (sample(?isopos) as ?samplematch) where {\n ?entry np:isoform ?iso1, ?isononcano.\n ?iso1 np:swissprotDisplayed true .\n ?isononcano np:swissprotDisplayed false .\n ?isononcano np:peptideMapping ?pm.\n ?pm np:peptideName ?pepname.\n ?pm np:proteotypic true.\n ?pm np:start ?pos ; np:end ?pos2 .\n filter(?pos2 - ?pos >= 8) # peptide length >= 9\n bind(strafter(str(?isononcano),\"-\") as ?isostr)\n bind(concat(concat(?isostr,\"-\"),?pos) as ?isopos)\n filter not exists {?iso1 np:peptideMapping/ np:peptideName ?pepname.}\n }\ngroup by ?entry" .
+
+ex:NXQ_00080  rdfs:comment  "Proteins with at least one 3D structure of resolution less than 3 Angstroms";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:pdbMapping ?map.\n ?map np:resolution ?res_and_unit.\n bind (xsd:float(substr(?res_and_unit,0,strlen(?res_and_unit)-2)) as ?res)\n filter (?res <= 3.0)\n}" .
+
+ex:NXQ_00272  rdfs:comment  "Proteins involved in coronaviruses/SARS-CoV-2 pathways with associated medical information";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX wp: <http://vocabularies.wikipathways.org/wp#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nselect distinct ?entry (str(?gen) AS ?gene) ?pathwayname (str(?discom) AS ?discom1) ?medsource where {\n service <http://sparql.wikipathways.org/sparql> {\n {?geneProduct a wp:Protein}\n union\n {?geneProduct a wp:GeneProduct}\n\n ?geneProduct rdfs:label ?genraw .\n bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).\n filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching\n\n ?geneProduct dcterms:isPartOf ?pathway .\n ?pathway a wp:Pathway .\n ?pathway wp:organism ?organism .\n filter(contains(str(?organism),\"9606\"))\n\n ?pathway dc:title ?pathwayname .\n filter(regex(?pathwayname,\"sars-cov-2\",\"i\")|| regex(?pathwayname,\"corona\",\"i\") ).\n }\n\n ?entry a np:Entry .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n ?entry np:isoform ?iso.\n ?iso np:medical ?med.\n ?med rdfs:comment ?discom.\n ?med np:evidence/:assignedBy ?medsource.\n}\norder by ?entry" .
+
+ex:NXQ_00109  rdfs:comment  "Proteins that have a MS-identified proteotypic peptide that maps partly or fully into a signal sequence";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?overlap where {\n ?entry np:isoform ?iso.\n #get Signal position (start is always 1)\n ?iso np:signalPeptide [:end ?s2] .\n ?iso np:peptideMapping ?pm .\n ?pm np:proteotypic true .\n #get peptide position\n ?pm np:start ?p1 ; np:end ?p2 .\n #match positions\n filter ( ?p1 < ?s2 )\n bind ( if(?p2<?s2, ?p2, ?s2) - ?p1 as ?overlap) .\n filter(?overlap > 2)\n}" .
+
+ex:NXQ_00301  rdfs:comment  "PE1 entries that comply with HPP guidelines (at least 2 non overlapping peptides of at least 9aa from a single data source)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:existence np:Evidence_at_protein_level . \n ?entry np:isoform / np:uniprotKeyword / np:term cv:KW-1267. \n}" .
+
+ex:NXQ_00130  rdfs:comment  "Proteins with a DNA-binding region but not located in the nucleus";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?entry np:gene / np:name / rdfs:label ?gen .\n ?iso np:dnaBindingRegion ?dnab.\n filter not exists { ?entry np:isoform / np:cellularComponent /:term /:childOf cv:SL-0191} # SL for nucleus\n filter not exists { ?entry np:isoform / np:cellularComponent /:term /:childOf cv:GO_0005634} # GO for nucleus\n}" .
+
+ex:NXQ_00009  rdfs:comment  "Proteins with 3 disulfide bonds and that are not annotated as hormones ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?isoform.\n ?isoform np:ptm ?statement.\n ?statement a np:DisulfideBond.\n filter not exists { ?entry np:isoform / np:function / np:term /:childOf cv:GO_0005179. } # GO Hormone activity\n} group by ?entry ?isoform having (count(?statement) =3 )" .
+
+ex:NXQ_00030  rdfs:comment  "Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry where {\n ?entry np:familyName / np:term/^:term/^:familyName ?member.\n ?entry np:gene / np:chromosome \"2\"^^xsd:string .\n} group by ?entry having ( count(distinct ?member) >= 5 )" .
+
+ex:NXQ_00222  rdfs:comment  "Proteins with both RNA-seq expression and observed IHC expression \"high\" in brain or one of its subparts";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:expression ?exprna, ?expihc.\n ?exprna np:term ?rnatiss .\n ?exprna np:evidence ?evirna.\n ?evirna np:observedExpression np:Positive.\n ?evirna np:evidenceCode cv:ECO_0000295. # RNA-seq\n ?rnatiss np:childOf cv:TS-0095. #brain\n ?expihc np:quality np:GOLD .\n ?expihc np:term ?ihctiss .\n ?expihc np:evidence ?eviihc.\n ?eviihc np:evidenceCode cv:ECO_0001055. #IHC\n ?eviihc np:observedExpression np:High.\n ?ihctiss np:childOf ?rnatiss .\n}" .
+
+ex:NXQ_00051  rdfs:comment  "Proteins that have at least one 3D structure solved by NMR";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:pdbMapping ?map.\n ?map np:method ?meth\n filter (contains(?meth,'NMR'))\n}" .
+
+ex:NXQ_00243  rdfs:comment  "Proteins with a signal sequence ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:signalPeptide ?_.\n}" .
+
+ex:NXQ_00072  rdfs:comment  "Proteins with a cross-reference to CCDS";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:reference / np:provenance db:CCDS.\n}" .
+
+ex:NXQ_00093  rdfs:comment  "Proteins with a sequence containing \"FF.+QYE\" where \".+\" is any peptide of any length";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:sequence / np:chain ?chain.\n filter ( regex(?chain, \"FF.+QYE\") )\n}" .
+
+ex:NXQ_00143  rdfs:comment  "Proteins for which none of the reported proteotypic peptides is from PeptideAtlas nor MassIVE";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry where {\n ?entry np:isoform / np:peptideMapping ?pm.\n ?pm np:proteotypic true .\n ?pm np:peptideSource ?src .\n bind (?src = source:MassIVE as ?massive)\t \n bind (?src = source:PeptideAtlas as ?pa)\t \n bind (?src != source:MassIVE && ?src != source:PeptideAtlas as ?other)\n} \ngroup by ?entry\nhaving (sum(?massive)=0 && sum(?pa)=0 && sum(?other)>0)" .
+
+ex:NXQ_00001  rdfs:comment  "Proteins phosphorylated and located in the cytoplasm";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?cytoloc {cv:SL-0086 cv:GO_0005737} # SL and GO values for cytoplasm\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword / np:term cv:KW-0597. # Phosphorylated\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?cytoloc.\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n}\n\n# Assign values to the variable ?cytoloc \n# The values correspond to the two controlled vocabulary (cv) terms for cytoplam:\n# SL-0086 is the UniProt subcellular location term \n# GO_0005737 is the Gene Ontology cellular component term\n#\n# Use the same name of the variable (?iso and ?loc) in several statements.\n# It is the name of the variable that enforces the constraints.\n#\n# Phosphorylated proteins are retrieved using a keyword:\n# KW-0597 is the UniProt keyword for phosphorylated\n#\n# Use np:childOf to include children of a term.\n# Cytosol (SL-0091), the child term of cytoplasm, will thus be included.\n#\n# Exclude negative locatization evidences.\n# This enforces that the protein is located in the cytoplasm." .
+
+ex:NXQ_00022  rdfs:comment  "Proteins with no function annotated";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n filter not exists { ?iso np:functionInfo ?_. }\n filter not exists { ?iso np:catalyticActivity ?_ .} \n filter not exists { ?iso np:transportActivity ?_ .} \n filter not exists { ?iso np:pathway ?_. }\n filter not exists { \n ?iso np:function / np:term ?fterm . \n\t\t\t filter(?fterm != cv:GO_0005524 && ?fterm != cv:GO_0000287 && ?fterm != cv:GO_0005515 && ?fterm != cv:GO_0042802\n\t\t\t && ?fterm != cv:GO_0008270 && ?fterm != cv:GO_0051260 && ?fterm != cv:GO_0005509\n\t\t\t\t\t && ?fterm != cv:GO_0003676 && ?fterm != cv:GO_0003824 && ?fterm != cv:GO_0007165 && ?fterm != cv:GO_0035556\n\t\t\t\t\t && ?fterm != cv:GO_0046914 && ?fterm != cv:GO_0046872)\n }\n filter not exists { ?entry np:existence np:Uncertain } # Remove PE5 proteins\n}" .
+
+ex:NXQ_00043  rdfs:comment  "Proteins that bind zinc and are not oxidoreductase and not involved in transcription";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:uniprotKeyword / np:term cv:KW-0479. # metal-binding\n ?iso np:uniprotKeyword / np:term cv:KW-0862. # zinc\n filter not exists {?iso np:uniprotKeyword / np:term cv:KW-0804} # transcription\n filter not exists {?iso np:uniprotKeyword / np:term cv:KW-0560} # oxidoreductase\n}" .
+
+ex:NXQ_00235  rdfs:comment  "Proteins with at least two antibodies available from Human Protein Atlas that have associated tissue expression annotations from immunohistochemistry studies ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:antibodyMapping ?abmap.\n ?abmap np:evidence / np:reference / np:accession ?aid .\n ?iso np:expressionProfile / np:evidence ?ev .\n ?ev np:evidenceCode cv:ECO_0001055.\n# ?ev np:quality np:GOLD .\n}\ngroup by ?entry having(count(distinct ?aid) > 1)\norder by ?entry" .
+
+ex:NXQ_00064  rdfs:comment  "Proteins which are enzymes and that have an incomplete EC number";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform/ np:enzymeClassification ?ec.\n ?ec np:term / rdfs:label ?eclabel.\n filter regex(?eclabel, '-'^^xsd:string)\n}" .
+
+ex:NXQ_00256  rdfs:comment  "Variants identified in exome datasets in a frequent homozygote state";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?varpos where\n{\n ?entry np:isoform ?iso . \n ?iso np:swissprotDisplayed true .\n ?iso np:variant ?var . \n ?var np:start ?varpos . \n ?var np:evidence ?ev .\n ?var np:evidence / np:homozygoteCount ?hcnt . \n filter(?hcnt > 100000) \n } \n order by desc(?hcnt)" .
+
+ex:NXQ_00085  rdfs:comment  "Proteins with Poly-Proline stretches";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:compositionallyBiasedRegion / rdfs:comment ?desc.\n filter (contains(?desc,'Pro residues')).\n}" .
+
+ex:NXQ_00298  rdfs:comment  "Recommended isoform names for MSH6";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?iso ?name where {\n entry:NX_P52701 np:isoform ?iso. # MSH6 entry\n ?iso np:recommendedName ?name_entity .\n ?name_entity a np:IsoformName; rdfs:label ?name.\n}\norder by asc(?iso)" .
+
+ex:NXQ_00135  rdfs:comment  "Proteins involved in both Wnt and Hippo signaling pathways";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n # cv:GO:0016055 wnt pathway\n ?iso np:goBiologicalProcess ?func1 .\n ?func1 np:term / np:childOf cv:GO_0016055.\n filter not exists { ?func1 np:negativeEvidence ?negev. } # No negative function evidence\n # cv:GO:0035329 Hippo pathway\n ?iso np:goBiologicalProcess ?func2 .\n ?func2 np:term / np:childOf cv:GO_0035329.\n filter not exists { ?func2 np:negativeEvidence ?negev. } # No negative function evidence\n}" .
+
+ex:NXQ_00014  rdfs:comment  "Proteins with one SH2 and two SH3 domains";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n #with 1 SH3\n {select ?iso where{?iso np:region ?stat1. ?stat1 np:term cv:DO-00614\n } group by ?iso having(count( ?stat1)=1)}\n #with 2 SH2\n {select ?iso where{?iso np:region ?stat2. ?stat2 np:term cv:DO-00615\n } group by ?iso having(count( ?stat2)=2)}\n} group by ?entry" .
+
+ex:NXQ_00035  rdfs:comment  "Proteins located in the mitochondrion and which are enzymes";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739} # SL and GO values for mitochondrion\n ?entry np:isoform / np:enzymeClassification ?_ .\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term / np:childOf ?mitoloc.\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n}" .
+
+ex:NXQ_00248  rdfs:comment  "Variants with phenotype annotation that map to a 3D structure";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),\"...\") as ?pdbsample) where {\n ?entry np:gene / np:name / rdfs:label ?gen .\n ?entry np:isoform ?iso.\n ?iso np:proteoform ?pf .\n ?pf rdfs:label ?pfname .\n ?pf np:phenotypicVariation ?pv1 .\n ?pf np:difference ?pfmod .\n ?pfmod a np:Variant .\n ?pfmod np:start ?vstart; np:end ?vend .\n ?iso np:pdbMapping ?pdbmap.\n ?pdbmap rdfs:comment ?pdbac.\n ?pdbmap np:start ?pdbstart ; np:end ?pdbend.\n filter(?pdbstart <= ?vstart && ?pdbend >= ?vend ) \n} group by ?entry ?pfname ?pdbsample" .
+
+ex:NXQ_00077  rdfs:comment  "Proteins which are expressed in liver according to IHC data but not found in HUPO liver proteome set";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform /:expression ?s1.\n ?s1 np:evidence ?evi;:term/:childOf cv:TS-0564. #Liver\n ?evi np:evidenceCode cv:ECO_0001055; np:observedExpression ?level .\n filter (?level not in (:Negative))\n filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:PeptideAtlas_human_Liver . }\n filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:MassIVE_human_Liver . }\n}" .
+
+ex:NXQ_00269  rdfs:comment  "Proteins with associated cancer pathways in WikiPathways (via Disease Ontology classification)";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX wp: <http://vocabularies.wikipathways.org/wp#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nselect distinct ?entry (str(?gen) as ?gene) ?pathwayname where {\n service <http://sparql.wikipathways.org/sparql> {\n {?geneProduct a wp:Protein}\n union\n {?geneProduct a wp:GeneProduct}\n ?geneProduct rdfs:label ?genraw .\n bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).\n filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching\n ?geneProduct dcterms:isPartOf ?pathway .\n ?pathway a wp:Pathway .\n ?pathway wp:organism ?organism .\n filter(contains(str(?organism),\"9606\")) # Human proteins\n ?pathway dc:title ?pathwayname .\n ?pathway wp:ontologyTag <http://purl.obolibrary.org/obo/DOID_162> . # Parent id for all cancers\n }\n ?entry a np:Entry .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n}\norder by ?pathwayname" .
+
+ex:NXQ_00106  rdfs:comment  "Proteins annotated as glycosylated but with no recorded glycosylation site";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword / np:term cv:KW-0325.\n filter not exists { ?entry np:isoform /:glycosylationSite ?_. }\n}" .
+
+ex:NXQ_00290  rdfs:comment  "Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ec) where\n\n{ ?entry np:recommendedName ?name_entity . \n ?name_entity a np:ProteinName; rdfs:label ?name. \n ?entry np:isoform ?iso. \n ?iso np:enzymeClassification /rdfs:comment ?ec. \n ?iso np:cofactor /:interactant /skos:exactMatch chebi:CHEBI_29108. # Ca(2+) cofactor \n ?iso np:bindingSite /:interactant ?inter.\n ?inter np:accession \"CHEBI:29108\"^^xsd:string # binding site interactant Ca(2+)\n}\norder by asc(?ec)" .
+
+ex:NXQ_00127  rdfs:comment  "Proteins with at least one known SUMOylation site";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:crossLink /rdfs:comment ?comment.\n filter(contains (?comment,'SUMO'))\n}" .
+
+ex:NXQ_00148  rdfs:comment  "Variants with normal \"ubiquitin-protein transferase activity\" and decreased or increased binding to UBE2D1 (example: BRCA1-p.Ile89Thr)";
+        sh:prefixes   [] ;
+        sh:select     "SELECT distinct ?pfname ?impact_on_ubi_trsfrt_activity ?impact_on_binding_UBE2D1 WHERE {\n values (?ubi_trsfrt_activity ?no_impact ?UBE2D1 ?impact) \n { (cv:GO_0004842 cv:ME_0000003 entry:NX_P51668 cv:ME_0000002) }\n ?pf a np:Proteoform .\n ?pf rdfs:label ?pfname .\n ?pf np:phenotypicVariation ?pv1 .\n ?pv1 np:impactedObject / np:term ?ubi_trsfrt_activity .\n ?pv1 np:term ?no_impact .\n ?no_impact rdfs:label ?impact_on_ubi_trsfrt_activity .\n ?pf np:phenotypicVariation ?pv2 .\n ?pv2 np:impactedObject / np:interactant ?UBE2D1 .\n ?pv2 np:term ?sub_impact .\n ?sub_impact np:childOf ?impact .\n ?sub_impact rdfs:label ?impact_on_binding_UBE2D1 .\n}" .
+
+ex:NXQ_00006  rdfs:comment  "Proteins whose genes are on chromosome 13 and are associated with a disease";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:chromosome \"13\"^^xsd:string.\n ?entry np:isoform ?iso.\n {\n\t ?iso np:medical / rdf:type np:Disease.\n } union { \n ?iso np:uniprotKeyword / np:term ?kw .\n\t ?kw np:termType \"Disease\"^^xsd:string\n\t filter (?kw != cv:KW-0656)\n }\n}" .
+
+ex:NXQ_00027  rdfs:comment  "Proteins with one or more glycosylation sites reported in PubMed:20570859 or PubMed:14760718";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?publications where {\n values ?pmid {\"20570859\"^^xsd:string \"14760718\"^^xsd:string}\n # get all assertions from the publications\n ?entry np:isoform/:glycosylationSite ?statement.\n ?statement np:evidence/:reference/:from ?xref .\n ?xref np:accession ?pmid ; np:provenance db:PubMed .\n}" .
+
+ex:NXQ_00219  rdfs:comment  "Proteins entries from a list of gene names";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?gene\n {\"UBA6\" \"PXDNL\" \"CNOT1\" \"TCAF2\" \"ARHGAP32\" \"HACD1\" \"AKR1B15\" \"SGK1\" \"MYO1C\" \"LGALS9\"\n \"PIK3CD\" \"PDE2A\" \"DNM1L\"} # space or nl-separated\n \n bind (STRDT (?gene,xsd:string) as ?genename ) . # converts raw string to ^^xsd:string\n ?entry np:gene / np:recommendedName / rdfs:label ?genename .\n }" .
+
+ex:NXQ_00048  rdfs:comment  "Proteins with at least one variant of the type \"C->X\" (Cys to anything else) that are linked to one or more diseases";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n {\n\t?entry np:isoform ?iso.\n\t?iso np:variant ?var.\n\t?var np:disease ?_.\t \n\t?var np:original \"C\"^^xsd:string.\n } UNION {\n ?entry np:isoform ?iso .\n\t?iso np:proteoform ?pf.\n\t?pf np:difference ?var.\n\t?var np:evidence / np:negative false. # positive evidence\n\t?pf np:diseaseRelatedVariant / np:term cv:ME_0000013 . # cause of disease\n\t?var np:original \"C\"^^xsd:string.\n\t\n }\n}" .
+
+ex:NXQ_00240  rdfs:comment  "Gold binary interactions with other human proteins ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?interactant where {\n ?entry np:isoform ?iso.\n ?entry np:isoform/:binaryInteraction ?interaction.\n ?interaction np:interactant ?interactant; np:quality np:GOLD.\n filter not exists { ?interactant a np:Xref . }\n filter(?interactant != ?entry) # remove self-interacting proteins\n}\norder by ?entry" .
+
+ex:NXQ_00069  rdfs:comment  "Proteins which are the substrate of protein kinase SYK";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n {\n ?iso np:modifiedResidue ?ptm.\n ?ptm np:term ?ptmtype.\n ?ptm rdfs:comment ?comment.\n filter (?ptmtype in (cv:PTM-0253, cv:PTM-0254, cv:PTM-0255)) \n filter regex(?comment, \"SYK\",\"i\")\n # filter regex(?comment, \"auto\",\"i\")\n }\n union\n {\n ?iso np:ptmInfo / rdfs:comment ?ptmtext . \n filter regex(?ptmtext, \"SYK\",\"i\")\t\n #filter regex(?ptmtext, \"autophos\",\"i\")\t\n }\n }" .
+
+ex:NXQ_00261  rdfs:comment  "Glycosylation sites from GlyConnect";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?iso ?pos ?comment where {\n?entry np:isoform ?iso.\n?iso np:swissprotDisplayed true .\n?iso np:glycosylationSite ?glyco.\n?glyco np:evidence / np:assignedBy source:GlyConnect. \n?glyco rdfs:comment ?comment.\n?glyco np:start ?pos.\n\n} order by ?entry" .
+
+ex:NXQ_00090  rdfs:comment  "Proteins which are linked to a disease and that do not have orthologs/paralogs in mouse";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n {\n ?iso np:medical / rdf:type np:Disease.\n } union {\n ?iso np:uniprotKeyword / np:term ?kw .\n ?kw np:termType \"Disease\"^^xsd:string\n filter (?kw != cv:KW-0656)\n }\n FILTER NOT EXISTS { ?entry np:reference / np:provenance db:MGI . }\n}" .
+
+ex:NXQ_00282  rdfs:comment  "Proteins with an interaction mapping encompassing a coiled coil or bZip region ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partnergene) where {\n ?entry np:isoform ?iso; np:gene / np:recommendedName / rdfs:label ?gen .\n ?iso np:swissprotDisplayed true; np:interactionMapping ?itmap .\n ?itmap np:interactant ?entry2; np:start ?its; np:end ?ite .\n bind(?ite - ?its + 1 as ?itlen)\n ?entry2 np:isoform? ?iso2; np:gene / np:recommendedName / rdfs:label ?gen2.\n ?iso2 np:swissprotDisplayed true.\n {?iso np:coiledCoilRegion ?coil . }\n union\n {?iso np:region ?coil . \n ?coil np:term cv:DO-00078 # bzip\n }\n ?coil np:start ?cs; np:end ?ce .\n bind(?ce - ?cs + 1 as ?coilen)\n filter (?cs >= ?its -15 && ?ce <= ?ite + 15) # overlap\n filter(xsd:float(?itlen) / xsd:float(?coilen) < 2.0) # itlen no more than 2 coilen\n} order by ?entry" .
+
+ex:NXQ_00119  rdfs:comment  "Proteins with at least one annotated mutagenesis site";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:mutagenesis ?mut.\n}" .
+
+ex:NXQ_00140  rdfs:comment  "Proteins that interact with viral proteins";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX up:<http://purl.uniprot.org/core/>\nPREFIX taxon:<http://purl.uniprot.org/taxonomy/>\n\nselect distinct ?entry where {\n ?entry np:isoform ?iso.\n optional {?iso np:interactionInfo ?itinfo .}\n {\n ?itinfo rdfs:comment ?txt.\n filter(contains(?txt,\"viral\") || contains(?txt,\"virus\")).\n } # refers to a virus in the free-text interactionInfo topic\nUNION\n { ?iso np:uniprotKeyword / np:term cv:KW-0945.} # host-virus interaction keyword\nUNION\n {\n SERVICE <http://sparql.uniprot.org/sparql> {\n SELECT distinct ?viralinteractor WHERE # get viral proteins with an IntAct xref\n {\n\t?viralinteractor a up:Protein .\n\t?viralinteractor rdfs:seeAlso ?db .\n\t?db up:database <http://purl.uniprot.org/database/IntAct> .\n \t?viralinteractor up:organism ?tax .\n\t?tax up:scientificName ?orgname.\n\tfilter(contains(?orgname,\"virus\"))\n }\n }\n ?entry np:isoform / np:binaryInteraction ?it .\n ?it np:interactant ?interactant; np:quality np:GOLD. # NeXtprot entries with a GOLD IntAct binary interaction\n ?interactant skos:exactMatch ?viralinteractor . # interactant must be in the uniprot service result set to select the entry\n } \nUNION\n {\n SERVICE <http://sparql.uniprot.org/sparql> {\n SELECT distinct ?humprotein WHERE # get human proteins that share a PDB xref with a viral protein (same PDB id)\n {\n\t?humprotein a up:Protein .\n ?humprotein up:organism taxon:9606 . \n\t?humprotein rdfs:seeAlso ?db .\n\t?db up:database <http://purl.uniprot.org/database/PDB> .\n\t?viralprotein a up:Protein .\n\t?viralprotein rdfs:seeAlso ?db .\n ?viralprotein up:organism ?tax .\n\t?tax up:scientificName ?orgname.\n\tfilter(contains(?orgname,\"virus\"))\n }\n }\n ?entry skos:exactMatch ?humprotein .\t\n } \n}\norder by ?entry" .
+
+ex:NXQ_00019  rdfs:comment  "Proteins with more than 12 WD repeats (ie: with at least two beta-propellers)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n {select ?iso where{\n ?iso np:repeat ?rep. ?rep np:term cv:DO-00722\n }\n group by ?iso having(count( ?rep) > 12)}\n}" .
+
+ex:NXQ_00040  rdfs:comment  "Proteins that are enzymes and with at least one mutagenesis site that decrease or abolish activity";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry:isoform ?iso.\n ?iso np:enzymeClassification ?_ .\n ?iso np:mutagenesis/rdfs:comment ?comment\n filter regex(?comment, '(decrease|abolish).*activity','i')\n}" .
+
+ex:NXQ_00232  rdfs:comment  "Proteins with sequences 100% identical to other proteins, grouped";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (group_concat(distinct substr(str(?entry2),34); separator = \",\") as ?sameseq) where {\n ?entry np:isoform / np:sequence / np:chain ?chain1.\n ?entry2 np:isoform / np:sequence / np:chain ?chain2.\n filter ( (?chain1 = ?chain2) && (?entry != ?entry2))\n}\ngroup by ?entry\norder by ?entry" .
+
+ex:NXQ_00061  rdfs:comment  "Proteins which have at least one 3D structure that spans the complete sequence of the mature protein";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:pdbMapping ?pdbmap.\n ?pdbmap np:start ?pdbstart ; np:end ?pdbend.\n ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]\n filter (?mend-?mstart > 0)\t \n filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))\n}" .
+
+ex:NXQ_00253  rdfs:comment  "Human pathways in which at least one protein is mitochondrial GOLD";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX wp: <http://vocabularies.wikipathways.org/wp#>\nPREFIX dcterms: <http://purl.org/dc/terms/>\n\nselect ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) where {\n service <http://sparql.wikipathways.org/sparql> {\n\n { ?geneProduct a wp:GeneProduct . }\n union\n { ?geneProduct a wp:Protein . }\n ?geneProduct rdfs:label ?genraw .\n bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).\n filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching\n ?geneProduct dcterms:isPartOf ?pathway .\n ?pathway a wp:Pathway .\n ?pathway wp:organism ?organism .\n filter(contains(str(?organism),\"9606\"))\n ?pathway dc:title ?pathwayname .\n }\n\n ?entry a np:Entry .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n ?entry np:isoform / np:cellularComponent ?loc .\n values ?mitoloc {cv:SL-0173 cv:GO_0005739 } # SL and GO values for mitochondrion\n ?loc np:term / np:childOf ?mitoloc. # mitochondrion\n ?loc np:evidence / np:quality np:GOLD .\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n}\ngroup by ?pathwayname\norder by ?pathwayname" .
+
+ex:NXQ_00082  rdfs:comment  "Proteins whose genes are on chromosome 21 that have \"gold\" variants not associated with a disease";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:chromosome \"21\"^^xsd:string; np:isoform / np:variant ?variant.\n ?variant np:evidence / np:quality np:GOLD.\n filter not exists { ?variant np:disease ?disease. }\n filter ( not exists { \n\t?entry np:isoform / np:proteoform ?pf.\n\t?pf np:difference ?variant.\n\t?variant np:evidence / np:negative false. # variant with positive evidence\n\t?pf np:diseaseRelatedVariant / np:term cv:ME_0000013 . # variant is causing disease\n } ) \n}" .
+
+ex:NXQ_00295  rdfs:comment  "References for SCN1A variants causing Dravet syndrome";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (str(?publiid) as ?PMID) ?title where {\n entry:NX_P35498 np:isoform ?iso. #SCN1A entry\n ?iso np:swissprotDisplayed true. #Swissprot canonical isoform \n {\n ?iso np:variant ?v.\n ?v np:disease cv:DI-01023. #UniProtKB term for Dravet syndrome\n ?v np:evidence /:reference ?pub.\n ?pub np:title ?title.\n ?pub np:from ?xref .\n ?xref np:accession ?publiid ; np:provenance db:PubMed .\n }\n union\n {\n ?iso np:proteoform ?pf.\n ?pf np:diseaseRelatedVariant ?ann.\n filter not exists {?ann np:negativeEvidence ?negev} # No negative disease evidence\n ?ann np:impactedObject /:term cv:C116573. #NCI Thesaurus term for Dravet syndrome\n ?ann np:evidence /:reference ?pub.\n ?pub np:title ?title.\n ?pub np:from ?xref .\n ?xref np:accession ?publiid ; np:provenance db:PubMed .\n }\n}" .
+
+ex:NXQ_00111  rdfs:comment  "Proteins with one transmembrane domain and no annotated topology";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:swissprotDisplayed true .\n ?iso np:topology ?tm.\n ?tm a np:TransmembraneRegion.\n filter (not exists { ?iso np:topology ?topodom.\n ?topodom a np:TopologicalDomain.\n })\n} group by ?entry having (count( ?tm)=1)" .
+
+ex:NXQ_00132  rdfs:comment  "Proteins with a 3D structure in complex with another human protein which is not reported as binary interactant";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry a np:Entry.\n ?entry np:reference ?ref.\n ?ref np:provenance db:PDB; np:accession ?ac.\n ?entry2 a np:Entry.\n ?ac ^:accession/^:reference ?entry2.\n filter(?entry != ?entry2).\n filter not exists{?entry np:isoform /:binaryInteraction / np:interactant ?entry2.}\n}" .
+
+ex:NXQ_00011  rdfs:comment  "Proteins that are expressed in liver and involved in transport";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:detectedExpression/:term/:childOf cv:TS-0564.\n cv:KW-0813 np:related ?tra.\n ?iso np:generalAnnotation / np:term ?tra.\n}" .
+
+ex:NXQ_00203  rdfs:comment  "Proteins with a mature chain of from 300 to 400 residues";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend].\n filter (?mend-?mstart > 0). # chain fully defined\n bind(?mend - ?mstart as ?mlen)\t \n filter(?mlen >= 300 && ?mlen <= 400)\n}" .
+
+ex:NXQ_00032  rdfs:comment  "Proteins with a coiled coil region and that are involved in transcription but do not contain a bZIP domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:function ?func .\n ?func np:term / np:childOf cv:GO_0006351. # Transcription\n filter not exists {?func np:negativeEvidence ?negev. } # no negative evidence\n ?iso np:region/rdf:type np:CoiledCoilRegion.\n filter not exists { ?iso np:region/:term cv:DO-00078 } # Bzip domain\n}" .
+
+ex:NXQ_00224  rdfs:comment  "Transmembrane proteins with at least 100 consecutive aa located in the EXTRACELLULAR OR LUMENAL compartment.";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where { \n ?entry np:isoform ?iso. \n ?iso np:topologicalDomain ?topdom . \n ?topdom np:term ?topterm . \n filter (?topterm in (cv:CVTO_0002, cv:CVTO_0003, cv:CVTO_0007)) # extracellular, exoplasmic loop, lumenal\n ?topdom np:start ?domstart; np:end ?domend . \n filter ((?domend - ?domstart) >= 100) \n}" .
+
+ex:NXQ_00053  rdfs:comment  "Proteins which are involved in cell adhesion according to GO with an evidence which is not used in automatic assertion nor a sequence similarity evidence used in manual assertion";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform/:function ?statement.\n ?statement np:term / np:childOf cv:GO_0007155.\n filter not exists { ?statement np:negativeEvidence ?negev. } # No negative function evidence\n ?statement np:evidence/:evidenceCode ?ecode.\n filter not exists { ?ecode np:childOf cv:ECO_0000501. } # Automatic assertion\n filter not exists { ?ecode np:childOf cv:ECO_0000250. } # Sequence similarity evidence used in manual assertion\n}" .
+
+ex:NXQ_00245  rdfs:comment  "Proteins with a propeptide ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:propeptide ?propep .\n}" .
+
+ex:NXQ_00074  rdfs:comment  "Proteins belonging to a family with at least two members in the human proteome";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:familyName / np:term ?ac.\n ?member np:familyName / np:term ?ac.\n} group by ?entry having (count(distinct ?member) >= 2 )" .
+
+ex:NXQ_00266  rdfs:comment  "Proteins binding estradiol and/or similar molecules (substructure search with SMILES) and their associated GO_MF terms";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>\nPREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>\nPREFIX chembl: <http://rdf.ebi.ac.uk/terms/chembl#>\n\nSELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {\n\tSERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {\n\t\tSERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chembl> {\n\t\t ?compound sachem:substructureSearch [ sachem:query \"CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O\" ] . # smiles chain for estradiol\n\t\t}\n\t\t?ACTIVITY rdf:type chembl:Activity;\n\t\tchembl:hasMolecule ?compound;\n\t\tchembl:hasAssay ?ASSAY.\n\t\t?ASSAY chembl:hasTarget ?TARGET.\n\t\t?TARGET chembl:hasTargetComponent ?COMPONENT.\n\t\t?TARGET chembl:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target\n\t\t?COMPONENT chembl:targetCmptXref ?UNIPROT.\n\t\t#?UNIPROT rdf:type chembl:UniprotRef.\n\t\tfilter(contains(str(?UNIPROT),\"uniprot\"))\n\t}\n\n\t?entry skos:exactMatch ?UNIPROT.\n\t?entry np:isoform ?iso.\n\t?iso np:goMolecularFunction / np:term ?gomf .\n\t?gomf rdfs:label ?gomflab .\n}\n\nGROUP BY ?entry" .
+
+ex:NXQ_00287  rdfs:comment  "Proteins with interactions obtained from x-ray crystallography";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:binaryInteraction /:evidence ?ev.\n ?ev np:interactionDetectionMethod cv:MI_0114. # x-ray crystallography\n}" .
+
+ex:NXQ_00103  rdfs:comment  "Proteins that do not have a cross-reference to an Ensembl ENSG";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry a np:Entry.\n filter not exists { ?entry np:reference / np:provenance db:Ensembl . }\n}" .
+
+ex:NXQ_00124  rdfs:comment  "What are the 25 most frequent families with member count";
+        sh:prefixes   [] ;
+        sh:select     "select (str(?famlab) as ?familylabel) (count(distinct(?member)) as ?membercnt) where{\n ?member np:familyName /:term /:childOf / rdfs:label ?famlab .\n} group by ?famlab\norder by desc(?membercnt)\nlimit 25" .
+
+ex:NXQ_00145  rdfs:comment  "Proteins which include a mature chain of less or equal to 50 amino acid residues whose C-terminus is amidated";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n?entry np:isoform ?isoform.\n?isoform np:ptm ?ptm.\n?ptm rdfs:comment ?comment.\nfilter regex(?comment, \"amid\",\"i\")\n?ptm np:start ?ptmpos .\n?isoform np:matureProtein [ np:start ?mstart ; np:end ?mend]\nfilter ((?mend = ?ptmpos) && (?mend-?mstart < 50))\n}" .
+
+ex:NXQ_00003  rdfs:comment  "Proteins with 7 transmembrane regions";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:topology ?statement.\n ?statement a np:TransmembraneRegion.\n} group by ?entry ?iso having(count( ?statement)=7)\n\n# 'a' can also be used instead of 'rdf:type' \n# 'a' is a synonym of 'rdf:type'\n# \n# Apply the grouping criterion (group by) for the results.\n# This groups entries with isoforms having 7 transmembrane regions.\n# Apply the aggregate function (count) to the variable ?statement.\n# This counts the number of transmembrane region statements for each isoform." .
+
+ex:NXQ_00024  rdfs:comment  "Proteins with more than 10 reported interactions (of 'gold' quality)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform/:binaryInteraction ?interaction.\n ?interaction np:interactant ?interactant; np:quality np:GOLD.\n ?interactant a np:Entry.\n} group by ?entry having (count(distinct ?interactant) > 10)" .
+
+ex:NXQ_00216  rdfs:comment  "Phosphorylation sites from PeptideAtlas Phosphoproteome";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (sample(?iso) as ?isospl) (sample(?pos) as ?posspl) where {\n ?entry np:isoform ?iso .\n ?iso np:ptm ?ptm.\n ?ptm np:entryAnnotationId ?ptmid; np:start ?pos .\n ?ptm np:evidence / np:assignedBy source:PeptideAtlas_human_phosphoproteome .\n} \ngroup by ?ptmid\norder by ?isospl ?posspl" .
+
+ex:NXQ_00045  rdfs:comment  "Proteins with an active site that is a proton acceptor";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?comment where {\n ?entry np:isoform/ np:activeSite /rdfs:comment ?comment.\n filter (contains (?comment,'Proton acceptor'))\n}" .
+
+ex:NXQ_00237  rdfs:comment  "Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry (count(distinct(?statement)) as ?tmcnt) where {\n ?entry np:isoform ?iso.\n ?iso np:swissprotDisplayed true .\n ?iso np:topology ?statement.\n ?statement a np:TransmembraneRegion.\n} \ngroup by ?entry\norder by desc(?tmcnt)" .
+
+ex:NXQ_00066  rdfs:comment  "Proteins that are cytoplasmic with alternate O-glycosylation or phosphorylation at the same positions";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?cytoloc {cv:SL-0086 cv:GO_0005737} # SL and GO values for cytoplasm\n \n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?cytoloc .\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n ?iso np:modifiedResidue /:term ?ptmtype.\n ?iso np:modifiedResidue /:start ?ptmpos.\n filter (?ptmtype in (cv:PTM-0253, cv:PTM-0254, cv:PTM-0255)) \n ?iso np:glycosylationSite /:start ?ptmpos.\n}" .
+
+ex:NXQ_00258  rdfs:comment  "Proteins involved in diseases due to intronic variants with one selected publication";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\nPREFIX so:<http://purl.obolibrary.org/obo/SO_>\n\nselect distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {\n service <http://rdf.disgenet.org/sparql/> {\n select distinct ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) where {\n ?vda sio:SIO_000628 ?variant,?disease .\n\t?vda sio:SIO_000772 ?article .\n ?disease a sio:SIO_010299 ; dcterms:title ?diseaseTitle . # true disease, use ncit:C7057 for traits\n ?variant a so:0001627 ; dcterms:title ?variantTitle . # intron variant\n ?variant so:associated_with ?gene .\n ?gene a ncit:C16612; sio:SIO_010078 ?protein .\n } group by ?protein ?diseaseTitle ?sampleArticle\n }\n BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .\n ?entry np:swissprotPage ?unipage .\n ?entry np:gene / np:recommendedName / rdfs:label ?gen .\n} order by ?entry" .
+
+ex:NXQ_00087  rdfs:comment  "Proteins whose genes are on chromosome X and which do not have a ortholog in mouse";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:chromosome \"X\"^^xsd:string .\n filter not exists { ?entry np:reference / np:provenance db:MGI . }\n}" .
+
+ex:NXQ_00279  rdfs:comment  "Proteins for which an interaction mapping region is described for both interactants ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?gen) AS ?gene) ?entry2 (str(?gen2) AS ?gene2) where {\n ?entry np:isoform ?iso; np:gene / np:recommendedName / rdfs:label ?gen .\n ?iso np:interactionMapping / np:interactant ?entry2.\n ?entry2 np:gene / np:recommendedName / rdfs:label ?gen2 .\n filter exists { ?entry2 np:isoform / np:interactionMapping / np:interactant ?entry.}\n} order by ?entry" .
+
+ex:NXQ_00137  rdfs:comment  "Proteins that potentially interact with Class I PDZ domains (whose C-terminal sequence has a PDZ-binding consensus)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:matureProtein / np:end ?mend.\n ?iso np:sequence / np:chain ?seq.\n filter (strlen(?seq) > 2).\n bind (substr(?seq, ?mend-2, 3) as ?cterseq).\n filter(regex(?cterseq,'[ST].[ILV]')). # short motif consensus for C-terminal PDZ-binding\n}" .
+
+ex:NXQ_00016  rdfs:comment  "Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?sloc {cv:GO_0005576 cv:SL-0243} # GO and SL values for secreted\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?anno .\n ?anno np:term /:childOf ?sloc .\n filter not exists { ?anno np:negativeEvidence ?_ }\n #\n # filter not exists {?iso np:cellularComponent /:term cv:GO_0070062 .\n # filter not exists {?iso np:cellularComponent /:term /:childOf cv:SL-0243 .}\n # } \n # you can uncomment this to filters out extracellular exosome only location (2240 entries), \n # most of them evidenced only by large-scale proteomic analysis \n #\n ?iso np:sequence / np:chain ?seq. \n ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]\n filter ((?mend-?mstart > 0) && (?mend-?mstart < 1000))\t \n bind (?mend - ?mstart + 1 as ?mlen)\t \n bind (substr(?seq, ?mstart, ?mlen) as ?mseq)\t \n filter (!regex (?mseq,'C'))\n}" .
+
+ex:NXQ_00208  rdfs:comment  "Proteins which are ion channels and are associated with a disease";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword /:term cv:KW-0407. #ion channel\n {\n ?iso np:medical / rdf:type np:Disease.\n } union {\n ?iso np:uniprotKeyword / np:term ?kw .\n ?kw np:termType \"Disease\"^^xsd:string\n filter (?kw != cv:KW-0656)\n }\n}" .
+
+ex:NXQ_00037  rdfs:comment  "Proteins that bind RNA but do not contain a RRM domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:uniprotKeyword /:term cv:KW-0694. #RNA-binding\n filter not exists {?iso np:region/:term cv:DO-00581} #RRM\n}" .
+
+ex:NXQ_00058  rdfs:comment  "Proteins which are located on the genome next to a protein which is involved in spermatogenesis";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (?neighbour as ?entry) (str(?gen) as ?spergen) where {\n {\n select distinct ?chr ?gen ?sperstart (MAX(?ldist) as ?lmin) (MIN(?rdist) as ?rmin) where {\n ?entryx np:isoform / np:function ?func .\n\t ?func np:term / np:childOf cv:GO_0007283 . # Involvment in spermatogenesis\n\t filter not exists {?func np:negativeEvidence ?negev}\n ?entryx np:gene ?gene.\n ?gene np:begin ?sperstart; np:end ?e; np:chromosome ?chr; np:recommendedName / rdfs:label ?gen.\n ?ngen np:chromosome ?chr. \n ?ngen np:begin ?n_begin; np:end ?n_end .\n filter ( ?n_end > (?sperstart - 1000000) && ?n_begin <= (?sperstart + 1000000) && ?ngen != ?gene)\n bind(?sperstart - ?n_begin as ?dist)\n bind(if(?dist<0,?dist,-1000000) as ?ldist)\n bind(if(?dist>0,?dist,1000000) as ?rdist)\n } group by ?chr ?gen ?sperstart\n }\n bind(?sperstart - ?lmin as ?lchrpos)\n ?lgene np:begin ?lchrpos; np:chromosome ?chr.\n bind(?sperstart - ?rmin as ?rchrpos)\n ?rgene np:begin ?rchrpos; np:chromosome ?chr.\n { ?neighbour np:gene ?lgene. } # left gene\n\t union\n { ?neighbour np:gene ?rgene. } # right gene\n} order by ?gen" .
+
+ex:NXQ_00079  rdfs:comment  "Proteins with at least one 3D structure and that are phosphorylated";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword / np:term cv:KW-0597. # Phosphoprotein\n ?iso np:pdbMapping ?map.\n}" .
+
+ex:NXQ_00250  rdfs:comment  "Proteins that act as transporters and their TCDB numbers";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {\n ?entry np:isoform/ np:transportActivity ?tr.\n ?tr rdfs:comment ?trcom; np:evidence / np:reference ?ref.\n ?ref a np:Xref; np:accession ?acc .\n} order by ?acc" .
+
+ex:NXQ_00271  rdfs:comment  "Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM...";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where\n{\n values ?entry {entry:NX_Q9BYF1 entry:NX_O15393} # proteins of interest (ACE2, TMPRSS2)\n ?entry np:gene /:recommendedName / rdfs:label ?gn.\n ?entry np:isoform ?iso .\n ?iso np:swissprotDisplayed true; np:variant ?var .\n ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .\n optional {?var np:evidence / np:alleleFrequency ?freq .}\n ?var np:evidence / np:reference ?xref .\n ?iso np:positionalAnnotation ?annot .\n optional {?annot rdfs:comment ?txt .}\n ?annot a ?annot_type .\n {\n ?annot np:start ?pos; np:end ?pos.\n filter not exists {?annot a np:Variant. }\n filter not exists {?annot a np:SequenceConflict. }\n }\n union\n {\n ?annot a np:DisulfideBond.\n {?annot np:start ?pos. }\n union\n {?annot np:end ?pos. }\n }\n } order by ?entry ?pos" .
+
+ex:NXQ_00108  rdfs:comment  "Proteins that have a 3D structure in PDB that overlap by at least 50 amino acids with a SH3 domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?isoform.\n ?isoform np:pdbMapping ?struc.\n ?struc np:start ?s1 ; np:end ?s2.\n ?isoform np:region ?dom.\n ?dom np:term cv:DO-00615 ; np:start ?d1 ; np:end ?d2.\n bind ( if(?d2<?s2, ?d2, ?s2) - if(?d1>?s1, ?d1, ?s1) as ?overlap) .\n filter (?overlap>50)\n}" .
+
+ex:NXQ_00300  rdfs:comment  "Proteins with protein existence \"At protein level\" (PE=1) that have no function annotated, are highly expressed in brain and have homologs in Drosophila melanogaster according to OrthoDB";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX dct: <http://purl.org/dc/terms/>\nPREFIX lscr: <http://purl.org/lscr#>\nPREFIX obo: <http://purl.obolibrary.org/obo/>\nPREFIX orth: <http://purl.org/net/orth#>\nPREFIX up: <http://purl.uniprot.org/core/>\nPREFIX odb: <http://purl.orthodb.org/>\n\nselect ?entry (str(?name) as ?human_name) (group_concat(distinct str(?fly_name); SEPARATOR = \",\") as ?fly_names) where\n{\n?entry np:isoform ?iso.\n?entry np:gene / np:recommendedName / rdfs:label ?name.\n?entry np:existence np:Evidence_at_protein_level .\nfilter not exists { ?iso np:functionInfo ?_. }\nfilter not exists { ?iso np:catalyticActivity ?_ .} \nfilter not exists { ?iso np:transportActivity ?_ .} \nfilter not exists { ?iso np:pathway ?_. }\nfilter not exists { ?iso np:function / np:term ?fterm . filter(?fterm != cv:GO_0005524 && ?fterm != cv:GO_0000287 && ?fterm != cv:GO_0005515 && ?fterm != cv:GO_0042802 && ?fterm != cv:GO_0008270 && ?fterm != cv:GO_0051260 && ?fterm != cv:GO_0005509 && ?fterm != cv:GO_0003676 && ?fterm != cv:GO_0003824 && ?fterm != cv:GO_0007165 && ?fterm != cv:GO_0035556 && ?fterm != cv:GO_0046914 && ?fterm != cv:GO_0046872)}\n?iso np:expression ?e1.\n?e1 np:term/:childOf cv:TS-0095;:evidence/:observedExpression np:High.\n{\nservice <http://sparql.orthodb.org/sparql>\n{?gene rdfs:seeAlso ?entry; odb:memberOf ?og.\n?og odb:ogBuiltAt [up:scientificName ?clade]\n; odb:hasMember ?ortholog.\n?ortholog odb:name ?fly_name; up:organism/a/up:scientificName 'Drosophila melanogaster'.\nfilter (?clade='Metazoa') }\n}\n} group by ?entry str(?name)" .
+
+ex:NXQ_00008  rdfs:comment  "Proteins whose genes are less than 50000 bp away from the location of the gene coding for protein p53";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n entry:NX_P04637 np:gene /:begin ?s;:gene/:chromosome ?chr.\n ?entry np:gene/:begin ?gs;:gene/:chromosome ?chr.\n filter ( ?gs > (?s -50000) && ?gs <= (?s +50000) && ?entry != entry:NX_P04637 )\n}" .
+
+ex:NXQ_00029  rdfs:comment  "Proteins anchored to the membrane via a GPI-anchor";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:lipidationSite / rdfs:comment ?mod.\n filter(contains(?mod,\"GPI-anchor\")).\n}" .
+
+ex:NXQ_00221  rdfs:comment  "Proteins with RNA-seq observed expression \"not detected\" and IHC observed expression : \"high\" (same tissue or children)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:expression ?exp, ?exp2.\n ?exp np:term ?tiss .\n ?exp np:negativeEvidence / np:evidenceCode cv:ECO_0000295. # RNA-seq\n ?exp2 np:quality np:GOLD .\n ?exp2 np:term ?tiss2 .\n ?exp2 np:evidence ?evi2.\n ?evi2 np:evidenceCode cv:ECO_0001055. # IHC\n ?evi2 np:observedExpression np:High.\n ?tiss2 np:childOf ?tiss . # same tissue or children\n}" .
+
+ex:NXQ_00242  rdfs:comment  "Proteins with a mitochondrial transit peptide";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:mitochondrialTransitPeptide ?mit. \n}" .
+
+ex:NXQ_00092  rdfs:comment  "Proteins with a sequence containing \"FF.QYE\" where \".\" is any single amino-acid";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry rdf:type np:Entry.\n ?entry np:isoform / np:sequence / np:chain ?chain.\n filter ( regex(?chain, \"FF.QYE\") )\n}" .
+
+ex:NXQ_00021  rdfs:comment  "Proteins with at least one HPA antibody that are located in the peroxisome";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?peroxiloc {cv:GO_0005777 cv:SL-0204} # GO and SL values for peroxisome\n \n ?entry np:isoform ?iso. \n ?iso np:antibodyMapping ?map. \n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?peroxiloc. # peroxisomal\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n}" .
+
+ex:NXQ_00042  rdfs:comment  "Proteins that bind a metal and are secreted";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?sloc {cv:GO_0005576 cv:SL-0243} # GO and SL values for secreted\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?sloc . \n filter not exists {?sloc np:negativeEvidence ?negev} # No negative localization evidence\n #filter not exists {?iso np:cellularComponent /:term cv:GO_0070062 .\n\t\t\t\t\t #filter not exists {?iso np:cellularComponent /:term /:childOf cv:SL-0243 .}\n\t\t\t\t\t#} # filters out extracellular exosome only location (2758 entries)\n ?iso np:goMolecularFunction / np:term /:childOf cv:GO_0046872 . # metal-binding\t\n}" .
+
+ex:NXQ_00234  rdfs:comment  "Proteins with at least two proteotypic synthetic peptides from SRMAtlas of at least 9 amino acids in length";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:srmPeptideMapping ?srm .\n ?srm np:start ?ps; np:end ?pe .\n filter(?pe - ?ps + 1 >= 9)\n ?srm np:proteotypic true .\n ?srm np:peptideName ?pepid .\n} \ngroup by ?entry having(count(distinct ?pepid) > 1)" .
+
+ex:NXQ_00063  rdfs:comment  "Proteins that have at least one RRM RNA-binding domain and either no GO \"RNA binding\" or a GO \"RNA binding\" with evidence cv:ECO_0000501 or cv:ECO_0000250";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n {\n ?entry np:isoform ?iso.\n # >=1 RRM RNA-binding domain\n ?iso np:region/:term cv:DO-00581.\n # No GO \"RNA binding\" \n filter not exists {\n ?iso np:function/:term /:childOf cv:GO_0003723\n }\n }\n union{\n ?entry np:isoform ?iso.\n # >=1 RRM RNA-binding domain\n ?iso np:region/:term cv:DO-00581.\n # GO \"RNA binding\" with evidence IEA or ISS\n ?iso np:function ?s1.\n ?s1 np:term /:childOf cv:GO_0003723.\n filter not exists { ?s1 np:negativeEvidence ?negev. } # No negative function evidence\n ?s1 np:evidence /:evidenceCode /:childOf ?pcode.\n values ?pcode { cv:ECO_0000501 cv:ECO_0000250 }\n }\n}" .
+
+ex:NXQ_00255  rdfs:comment  "Variants identified in exome datasets with a frequency of >0.1";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?varpos ?freq where\n{\n ?entry np:isoform ?iso . \n ?iso np:swissprotDisplayed true .\n ?iso np:variant ?var . \n ?var np:start ?varpos . \n ?var np:evidence ?ev .\n ?ev np:alleleNumber ?anb .\n ?ev np:alleleFrequency ?freq . \n filter(?freq > 0.1 && ?anb > 100000) \n } order by desc(?freq)" .
+
+ex:NXQ_00084  rdfs:comment  "Proteins whose genes are on chromosome 18 and that are experimentally (cv:ECO_0000269) known to be glycosylated or phosphorylated or acetylated";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry {\n ?entry np:gene / np:chromosome \"18\"^^xsd:string.\n ?entry np:isoform ?iso.\n {\n ?iso np:glycosylationSite ?ptm1.\n ?ptm1 np:evidence /:evidenceCode / np:childOf cv:ECO_0000269\n } \n union {\n ?iso np:modifiedResidue ?ptm2.\n ?ptm2 rdfs:comment ?com.\n ?ptm2 np:evidence / np:evidenceCode / np:childOf cv:ECO_0000269\n filter (regex(?com, '^phospho|acetyl','i'))\n }\n}" .
+
+ex:NXQ_00276  rdfs:comment  "Diseases/phenotypes associated with coding variants and associated publications for a given gene";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\nPREFIX so:<http://purl.obolibrary.org/obo/SO_>\n\nselect distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {\n service <http://rdf.disgenet.org/sparql/> {\n ?vda sio:SIO_000628 ?umls, ?variant .\n ?vda sio:SIO_000772 ?article .\n ?umls dcterms:title ?umlsTerm.\n {?umls a sio:SIO_010299 .} # disease\n union\n {?umls a sio:SIO_010056 .} # or phenotype\n ?variant a so:0001583 ; dcterms:title ?variantTitle . # Missense variant\n ?variant so:associated_with ?gene .\n ?gene a ncit:C16612; sio:SIO_010078 ?protein .\n ?gene sio:SIO_000205 ?gname.\n filter(contains(str(?gname),\"HBB\")) # Hemoglobin gene (NX_P68871)\n }\n\n BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .\n ?entry np:swissprotPage ?unipage .\n ?entry np:isoform ?iso .\n ?iso np:swissprotDisplayed true .\n ?iso np:variant ?var .\n ?var np:evidence /:reference ?xref .\n ?xref np:provenance db:dbSNP; np:accession ?snpac .\n ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .\n filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned\n}" .
+
+ex:NXQ_00297  rdfs:comment  "PDB structures spanning the complete sequence of the mature protein";
+        sh:prefixes   [] ;
+        sh:select     "select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = \",\") as ?pdbacs) where { \n ?entry np:isoform ?iso.\n ?iso np:pdbMapping ?pdbmap.\n ?pdbmap np:evidence /:reference ?ref.\n ?ref np:provenance db:PDB.\n ?ref np:accession ?pdbac.\n ?pdbmap np:start ?pdbstart ; np:end ?pdbend.\n ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]\n filter (?mend-?mstart > 0)\t \n filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))\n} group by ?entry" .
+
+ex:NXQ_00113  rdfs:comment  "Proteins with protein existence \"At protein level\" (PE=1) and at least one proteotypic peptide";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:peptideMapping ?pm .\n ?entry np:existence np:Evidence_at_protein_level .\n ?pm np:proteotypic true .\n}" .
+
+ex:NXQ_00013  rdfs:comment  "Proteins that have a protein kinase domain but lack protein kinase activity";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:region /:term cv:DO-00529.\n filter not exists { ?iso np:enzymeClassification / np:term /:childOf cv:2_7_-_- }\n}" .
+
+ex:NXQ_00034  rdfs:comment  "Proteins with at least one homeobox domain and with at least one variant in the homeobox domain(s)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n # with >=1 homeobox domain\n ?iso np:region ?st1.\n ?st1 np:term cv:DO-00312;:start ?start;:end ?end.\n # with >=1 variant\n ?iso np:variant ?var.\n ?var np:start ?varpos.\n # one variant in the homeobox domain\n filter (?varpos >=?start && ?varpos <=?end)\n}" .
+
+ex:NXQ_00226  rdfs:comment  "Proteins with at least 2 validating peptides >=9aa found in blood plasma, urine or cerebrospinal fluid (criteria for biomarker)].";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where { \nvalues ?pepsources { \n source:PeptideAtlas_human_Cerebrospinal_Fluid \n source:PeptideAtlas_human_Blood_Plasma \n source:PeptideAtlas_human_Urine \n source:MassIVE_human_Cerebrospinal_Fluid \n source:MassIVE_human_Blood_Plasma \n source:MassIVE_human_Urine \n } \n ?entry np:isoform ?iso. \n ?iso np:peptideMapping ?pm . \n ?pm np:peptideName ?pepid .\n ?pm np:evidence / np:assignedBy ?pepsources . \n ?pm np:proteotypic true . \n ?pm np:start ?p1 ; np:end ?p2 . \n filter(?p2-?p1 >= 8) # peptide length >= 9 \n} \ngroup by ?entry having(count (distinct ?pepid) > 1) # at least two such peptides" .
+
+ex:NXQ_00055  rdfs:comment  "Proteins which have genes of length greater than 2 million bp";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:length ?l.\n filter (?l > 2000000)\n}" .
+
+ex:NXQ_00247  rdfs:comment  "Proteins with a molecular weight less than 25 kDa";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?mw where {\n ?entry np:isoform / np:sequence / np:molecularWeight ?mw.\n filter ( ?mw < 25000) \n} order by ?mw" .
+
+ex:NXQ_00076  rdfs:comment  "Proteins which are located in mitochondrion and have at least one HPA antibody and exist in at least one proteome identification sets";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739} # SL and GO values for mitochondrion\n \n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?mitoloc .\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n ?iso np:antibodyMapping ?abmap.\n ?iso np:peptideMapping ?pepmap.\n}" .
+
+ex:NXQ_00097  rdfs:comment  "Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:chromosome \"2\"^^xsd:string .\n ?entry np:isoform ?iso.\n ?iso np:variant /:start ?varpos.\n ?iso np:modifiedResidue ?modres.\n ?modres np:term cv:PTM-0255.\n ?modres np:start ?varpos.\n}" .
+
+ex:NXQ_00289  rdfs:comment  "KEGG and Reactome pathway names";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?src (str(?pathwayname) as ?pw) where {\n ?entry np:isoform / np:pathway ?pathannot .\n ?pathannot rdfs:comment ?pathwayname; np:evidence / np:assignedBy ?src.\n filter(?src = source:Reactome || ?src = source:KEGG_PTW)\n} order by ?pathwayname" .
+
+ex:NXQ_00105  rdfs:comment  "Proteins with at least one cross-reference to SMR (Swiss Model Repository) but no cross-references to PDB";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry a np:Entry.\n ?entry np:reference / np:provenance db:SMR.\n filter not exists { ?entry np:reference / np:provenance db:PDB }\n}" .
+
+ex:NXQ_00126  rdfs:comment  "Peptides that are potential neo N-termini from undescribed isoforms";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?pep where {\n ?entry np:isoform ?iso .\n ?iso np:peptideMapping ?pm.\n ?pm np:start ?p1 ; np:end ?p2 .\n ?pm np:proteotypic true .\n filter(?p1 > 2). # must not be already N-terminal\n ?iso np:sequence / np:chain ?chain.\n bind (substr(?chain, ?p1, ?p2 - ?p1 + 1) as ?pep) .\n bind (substr(?chain, ?p1-1, 1) as ?prevAA) .\n bind (substr(?chain, ?p1, 1) as ?firstAA) .\n bind (substr(?chain, ?p2, 1) as ?lastAA) .\n filter(!regex (?prevAA,'[KR]')) # must be semi-tryptic in N-ter\n filter(regex (?prevAA,'M') || regex (?firstAA,'M')) # must be N-terminal\n filter(!regex (?firstAA,'[DEFIKLRY]')) #plausible 2nd AA\n filter(regex (?lastAA,'[KR]')) # must be tryptic in C-ter\n filter not exists { # The candidate peptide must not already exist as N-ter in a described isoform\n ?entry np:isoform ?iso2.\n ?iso2 np:sequence / np:chain ?chain2.\n ?iso2 np:matureProtein [ np:start ?mstart ; np:end ?mend]\n bind (substr(?chain2, ?mstart, ?mend - ?mstart + 1) as ?mat2) .\n filter(strlen(?mat2) > 30).\n bind (substr(?mat2, 2, strlen(?mat2) - 1) as ?mat22) .\n filter(regex(?mat2,concat(\"^\", ?pep)) || regex(?mat22,concat(\"^\", ?pep))).\n }\n} \norder by ?pep\n\n# overestimated, need additional filter(s)\n# but for instance AELEEVTLDGKPLQALR, AELEEVTLDGKPLQALRVTDLKAALEQR and AELEEVTLDGKPLQALRVTDLKAALEQR in Q9UKV3\n# are N-acetylated and good markers for an additional iso starting at M-59" .
+
+ex:NXQ_00147  rdfs:comment  "Proteins with a variant having an impact on the nucleus localization at level GOLD";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry \nwhere {\n values ?ioTerm {cv:GO_0005634} . # nucleus\n ?entry np:isoform / np:proteoform / np:phenotypicVariation ?phvar .\n ?phvar np:term / np:childOf cv:ME_0000002 . # children of impact\n ?phvar np:evidence / np:quality np:GOLD .\n ?phvar np:impactedObject / np:term ?ioTerm .\n}" .
+
+ex:NXQ_00005  rdfs:comment  "Proteins located in mitochondrion and that lack a transit peptide";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739 } # SL and GO values for mitochondrion\n ?entry np:isoform ?iso.\n filter not exists { ?iso np:uniprotKeyword /:term cv:KW-0809 } # Transit peptide\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?mitoloc.\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n}\n\n# Variables start with ? and can be given any name.\n# Variables such as ?entry and ?mitoloc (location in the mitochondrion) are easily understood by humans." .
+
+ex:NXQ_00026  rdfs:comment  "Proteins interacting with at least one protein which is located in the mitochondrion";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739} # SL and GO values for mitochondrion\n \n ?entry np:isoform / np:interaction ?it .\n ?it np:quality np:GOLD . # remove this filter for lower quality interactions\n ?it np:interactant ?interactant.\n ?interactant np:isoform? / np:cellularComponent ?loc .\n # the question mark at np:isoform allows to select also isoform-specific interactions\n ?loc np:term / np:childOf ?mitoloc.\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n}" .
+
+ex:NXQ_00218  rdfs:comment  "Proteins for which different splice isoforms have a different subcellular location or function";
+        sh:prefixes   [] ;
+        sh:select     "#A0A1B0GVQ0,A0AVT1 ,A0PJK1...\n\n\n\nselect distinct ?entry where {\n ?entry np:isoform ?iso1, ?iso2.\n ?iso1 np:swissprotDisplayed true .\n ?iso2 np:swissprotDisplayed false .\n {\n ?iso2 np:function / np:term ?functerm .\n filter (?functerm != cv:GO_0005515) #protein-binding\n filter not exists {?iso1 np:function / np:term ?functerm .}\n }\n UNION\n {\n ?iso2 np:functionInfo / rdfs:comment ?functext .\n filter not exists {?iso1 np:functionInfo / rdfs:comment ?functext .}\n }\n UNION\n {\n ?iso2 np:cellularComponent / np:term ?locterm .\n filter not exists {?iso1 np:cellularComponent / np:term ?locterm}\n }\n}" .
+
+ex:NXQ_00047  rdfs:comment  "Proteins with a gene name that starts with \"CLDN\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene / np:name / rdfs:label ?name.\n filter (regex(?name, \"^CLDN\"@en))\n}" .
+
+ex:NXQ_00239  rdfs:comment  "Proteins with cross-references to InterPro";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?iprac where {\n ?entry np:reference ?ref.\n ?ref np:provenance db:InterPro.\n ?ref np:accession ?iprac}\norder by ?entry ?iprac" .
+
+ex:NXQ_00068  rdfs:comment  "Proteins with a protein existence \"At transcript level\" (PE=2)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:existence np:Evidence_at_transcript_level\n}" .
+
+ex:NXQ_00089  rdfs:comment  "Protein that have a signal sequence which is not cleaved";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:signalPeptide / rdfs:comment ?comment .\n filter(contains(?comment,\"Not cleaved\"))\n}" .
+
+ex:NXQ_00260  rdfs:comment  "Proteins with high-frequency missense variants involved in bacterial infection, with dbSNP identifiers and position on the canonical isoform";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX dcterms: <http://purl.org/dc/terms/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>\nPREFIX so:<http://purl.obolibrary.org/obo/SO_>\n\nselect distinct ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) where {\n service <http://rdf.disgenet.org/sparql/> {\n SELECT DISTINCT ?protein ?variantTitle ?umlsTerm\n WHERE {\n ?vda sio:SIO_000628 ?umls, ?variant .\n ?umls dcterms:title ?umlsTerm ; skos:exactMatch ?doid .\n ?doid rdfs:subClassOf+ <http://purl.obolibrary.org/obo/DOID_104> . # DO id for bacterial infection\n ?variant a so:0001583 ; dcterms:title ?variantTitle . # Missense variant\n ?variant so:associated_with ?gene .\n ?variant sio:SIO_000223 ?altAl .\n ?altAl rdf:type <http://purl.obolibrary.org/obo/GENO_0000476>; sio:SIO_000900 ?altAlFreq .\n ?altAlFreq a sio:SIO_001367; sio:SIO_000300 ?altAlFreqVal .\n filter(?altAlFreqVal > 0.01) # freq > 1%\n ?gene a ncit:C16612; sio:SIO_010078 ?protein .\n }\n }\n\n BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .\n ?entry np:swissprotPage ?unipage .\n ?entry np:isoform ?iso .\n ?iso np:swissprotDisplayed true .\n ?iso np:variant ?var .\n ?var np:evidence /:reference ?xref .\n ?xref np:provenance db:dbSNP; np:accession ?snpac .\n ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .\n filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned\n} order by ?entry" .
+
+ex:NXQ_00281  rdfs:comment  "Protein pairs with at least 50 common interactors (excluding keratins) ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?gene ?entry2 ?gene2 ?commonitcnt ?sampleit where {\n {\n select distinct ?entry (str(?gen) as ?gene) ?entry2 (str(?gen2) as ?gene2) (count (distinct ?commonpartner) as ?commonitcnt) (str(sample(?genit)) as ?sampleit) where {\n ?entry np:isoform / np:interaction ?it1; np:gene / np:name / rdfs:label ?gen.\n ?it1 np:quality np:GOLD; np:interactant ?commonpartner .\n ?entry2 np:isoform / np:interaction ?it2; np:gene / np:name / rdfs:label ?gen2.\n ?it2 np:quality np:GOLD;:interactant ?commonpartner . \n ?commonpartner np:gene / np:name / rdfs:label ?genit .\n filter(?entry != ?entry2)\n filter(!contains(?gen,\"KRT\") && !contains(?gen2,\"KRT\") && !contains(?genit,\"KRT\")) # remove sticky keratins\n} group by ?entry ?gen ?entry2 ?gen2 having (count (distinct ?commonpartner) >= 50) \t\t\t\t}\nfilter(substr(str(?entry),34) < substr(str(?entry2),34)) # ensures only one row by it pair\n}\norder by desc(?commonitcnt)" .
+
+ex:NXQ_00118  rdfs:comment  "Proteins with at least one somatic variant";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:variant ?var.\n { \n ?var rdfs:comment ?comment.\n filter (contains (?comment,'somatic'))\n }\n union\n {\n ?var np:evidence ?ev.\n ?ev np:assignedBy source:Cosmic.\n }\n}" .
+
+ex:NXQ_00139  rdfs:comment  "Protein kinases which are high-confidence drug targets according to CHEMBL";
+        sh:prefixes   [] ;
+        sh:select     "PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>\n\nselect distinct ?entry (str(?gen) as ?gene) where {\n SERVICE<https://idsm.elixir-czech.cz/sparql/endpoint/idsm>{\n SELECT distinct ?protein WHERE {\n \t\t?target cco:hasTargetComponent ?tarComp . \n \t\t?target cco:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target\n\t\t?tarComp cco:targetCmptXref ?protein . \n\t\t#?protein a cco:UniprotRef .\n\t\tfilter(contains(str(?protein),\"uniprot\"))\n\t\t?activity a cco:Activity ; cco:hasMolecule ?drug ; cco:hasAssay ?assay .\n\t\t?drug cco:hasMechanism / cco:hasTarget ?target . # known drug action mechanism\n\t\t?assay cco:hasTarget ?target; cco:targetConfScore ?score .\n\t\tfilter(?score > 8) # high-confidence assay\n }\n \t }\n ?entry skos:exactMatch ?protein .\t \n ?entry np:isoform / np:uniprotKeyword / np:term cv:KW-0418. #kinase\t\n ?entry np:gene / np:recommendedName / rdfs:label ?gen.\n}" .
+
+ex:NXQ_00018  rdfs:comment  "Proteins that are acetylated and methylated and located in the nucleus";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?nucloc {cv:GO_0005634 cv:SL-0191} # GO and SL values for nucleus\n\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc .\n ?loc np:term/:childOf ?nucloc.\n filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence\n ?iso np:uniprotKeyword/:term cv:KW-0007,cv:KW-0488. # acetylated and methylated\n}" .
+
+ex:NXQ_00039  rdfs:comment  "Proteins with a mutagenesis in a position that correspond to an annotated active site";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:mutagenesis /:start ?mutaPos.\n ?iso np:activeSite /:start ?actsitePos.\n filter (?mutaPos=?actsitePos)\n}" .
+
+ex:NXQ_00231  rdfs:comment  "Proteins with sequences 100% identical to other proteins";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:sequence / np:chain ?chain1.\n ?entry2 np:isoform / np:sequence / np:chain ?chain2.\n filter ( (?chain1 = ?chain2) && (?entry != ?entry2))\n}" .
+
+ex:NXQ_00060  rdfs:comment  "Proteins which have one or more negatively charged residue in a transmembrane domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:transmembraneRegion ?tm.\n ?tm np:start ?tmstart ; np:end ?tmend.\n ?iso np:sequence /:chain ?chain.\n bind (substr(?chain, ?tmstart, ?tmend - ?tmstart + 1) as ?tmseq)\n filter (regex(?tmseq, '([DE]+.*[^DE]){1,}')) # Change the 1 for the number of acidic residues required (5 seems to be the max)\n}" .
+
+ex:NXQ_00081  rdfs:comment  "Proteins with at least one 3D structure and that are located in the mitochondrion and are linked with a disease";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?mitoloc {cv:SL-0173 cv:GO_0005739} # SL and GO values for mitochondrion\n ?entry np:isoform ?iso.\n ?iso np:pdbMapping ?map.\n ?iso np:cellularComponent ?loc .\n ?loc np:term /:childOf ?mitoloc . # mitochondrial\n filter not exists { ?loc np:negativeEvidence ?negev. } # No negative localization evidence\n {\n ?iso np:medical / rdf:type np:Disease.\n } union {\n ?iso np:uniprotKeyword / np:term ?kw .\n ?kw np:termType \"Disease\"^^xsd:string\n filter (?kw != cv:KW-0656)\n }\n}" .
+
+ex:NXQ_00294  rdfs:comment  "Variants in MECP2 causing Rett Syndrome";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?start ?stop ?original ?modified where { \n entry:NX_P51608 np:isoform ?iso. #MECP2 entry \n ?iso np:swissprotDisplayed true. #Swissprot canonical isoform \n {\n ?iso np:variant ?v.\n ?v np:disease cv:DI-00999. #UniProtKB term for Rett Syndrome\n ?v np:start ?start.\n ?v np:end ?stop.\n filter((?stop - ?start) = 0) #single amino acid variants (SAAVs)\n ?v np:original ?original.\n ?v np:variation ?modified.\n }\n union\n {\n ?iso np:proteoform ?pf.\n ?pf np:diseaseRelatedVariant ?ann.\n filter not exists {?ann np:negativeEvidence ?negev} # No negative disease evidence\n ?ann np:impactedObject /:term cv:C75488. #NCI Thesaurus term for Rett Syndrome\n ?pf np:difference ?v.\n ?v np:start ?start.\n ?v np:end ?stop.\n filter((?stop - ?start) = 0)\n ?v np:original ?original.\n ?v np:variation ?modified.\n }\n}\norder by asc(?start)" .
+
+ex:NXQ_00302  rdfs:comment  "PE1 entries that do not comply with HPP guidelines (at least 2 non overlapping peptides of at least 9aa from a single data source)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:existence np:Evidence_at_protein_level .\n ?entry np:isoform ?iso.\n filter not exists { ?iso np:uniprotKeyword / np:term cv:KW-1267.}\n}" .
+
+ex:NXQ_00131  rdfs:comment  "Terms of controlled vocabularies containing some word(s)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct convertNextProt.sh NXQ_00001.ttl NXQ_00002.ttl NXQ_00003.ttl NXQ_00004.ttl NXQ_00005.ttl NXQ_00006.ttl NXQ_00007.ttl NXQ_00008.ttl NXQ_00009.ttl NXQ_00010.ttl NXQ_00011.ttl NXQ_00012.ttl NXQ_00013.ttl NXQ_00014.ttl NXQ_00015.ttl NXQ_00016.ttl NXQ_00017.ttl NXQ_00018.ttl NXQ_00019.ttl NXQ_00020.ttl NXQ_00021.ttl NXQ_00022.ttl NXQ_00023.ttl NXQ_00024.ttl NXQ_00025.ttl NXQ_00026.ttl NXQ_00027.ttl NXQ_00028.ttl NXQ_00029.ttl NXQ_00030.ttl NXQ_00031.ttl NXQ_00032.ttl NXQ_00033.ttl NXQ_00034.ttl NXQ_00035.ttl NXQ_00036.ttl NXQ_00037.ttl NXQ_00038.ttl NXQ_00039.ttl NXQ_00040.ttl NXQ_00041.ttl NXQ_00042.ttl NXQ_00043.ttl NXQ_00044.ttl NXQ_00045.ttl NXQ_00046.ttl NXQ_00047.ttl NXQ_00048.ttl NXQ_00049.ttl NXQ_00051.ttl NXQ_00052.ttl NXQ_00053.ttl NXQ_00054.ttl NXQ_00055.ttl NXQ_00057.ttl NXQ_00058.ttl NXQ_00059.ttl NXQ_00060.ttl NXQ_00061.ttl NXQ_00062.ttl NXQ_00063.ttl NXQ_00064.ttl NXQ_00065.ttl NXQ_00066.ttl NXQ_00067.ttl NXQ_00068.ttl NXQ_00069.ttl NXQ_00070.ttl NXQ_00072.ttl NXQ_00073.ttl NXQ_00074.ttl NXQ_00075.ttl NXQ_00076.ttl NXQ_00077.ttl NXQ_00078.ttl NXQ_00079.ttl NXQ_00080.ttl NXQ_00081.ttl NXQ_00082.ttl NXQ_00083.ttl NXQ_00084.ttl NXQ_00085.ttl NXQ_00086.ttl NXQ_00087.ttl NXQ_00089.ttl NXQ_00090.ttl NXQ_00092.ttl NXQ_00093.ttl NXQ_00097.ttl NXQ_00099.ttl NXQ_00103.ttl NXQ_00104.ttl NXQ_00105.ttl NXQ_00106.ttl NXQ_00107.ttl NXQ_00108.ttl NXQ_00109.ttl NXQ_00111.ttl NXQ_00112.ttl NXQ_00113.ttl NXQ_00117.ttl NXQ_00118.ttl NXQ_00119.ttl NXQ_00124.ttl NXQ_00125.ttl NXQ_00126.ttl NXQ_00127.ttl NXQ_00128.ttl NXQ_00130.ttl where { \n ?term rdfs:label ?label ; a ?type .\n # ---------------------------\n # exact match\n # --------------------------- \n filter(?label = \"peroxisome\"^^xsd:string)\n \n # ---------------------------\n # starting with peroxisome\n # --------------------------- \n # filter(regex(?label,\"^peroxisome\"))\n \n # ---------------------------\n # containing peroxisome\n # ---------------------------\n # filter(regex(?label,\"peroxisome\"))\n \n # ------------------------------------\n # containing peroxisome and receptor \n # ------------------------------------\n # filter(regex(?label,\"peroxisome.*receptor\"))\n} limit 20" .
+
+ex:NXQ_00010  rdfs:comment  "Proteins that are glycosylated and are not located in the membrane";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:uniprotKeyword / np:term cv:KW-0325.\n filter not exists { ?iso np:uniprotKeyword / np:term cv:KW-0812.} # KW for Transmembrane\n filter not exists { ?iso np:topology / np:term cv:CVTO_0004 } # intramembrane segment\n}" .
+
+ex:NXQ_00202  rdfs:comment  "Proteins with from 2 to 4 transmembrane regions";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:topology ?statement.\n ?statement a np:TransmembraneRegion.\n} group by ?entry ?iso having(count( ?statement)>=2 && count( ?statement)<=4)" .
+
+ex:NXQ_00031  rdfs:comment  "Proteins with more than 10 alternative isoforms";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n} group by ?entry having (count(?iso)>10)" .
+
+ex:NXQ_00223  rdfs:comment  "100 most-cited publications in neXtProt and the corresponding number of associated entries";
+        sh:prefixes   [] ;
+        sh:select     "select (str(?publiid) as ?PMID) (str(?tt) as ?title) (count(distinct ?entry) as ?ecnt) \nwhere {\n ?entry a np:Entry .\n ?entry np:reference ?ref .\n ?ref a np:Publication.\n ?ref np:title ?tt .\n ?ref np:from ?xref .\n ?xref np:accession ?publiid .\n ?xref np:provenance db:PubMed .\n}\ngroup by ?publiid ?tt\norder by desc(?ecnt)\nlimit 100" .
+
+ex:NXQ_00052  rdfs:comment  "Proteins with a sequence that does not contain a lysine in the mature region";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n ?iso np:sequence / np:chain ?seq.\n ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]\n bind(?mend - ?mstart + 1 as ?mlen)\n bind(substr(?seq, ?mstart, ?mlen) as ?mseq)\n filter (!regex (?mseq,'K'))\n}" .
+
+ex:NXQ_00244  rdfs:comment  "Proteins with a variant having an impact on a binary interaction ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry ?interactant where {\n ?entry np:isoform / np:proteoform / np:phenotypicVariation ?phvar .\n ?phvar np:term / np:childOf cv:ME_0000002 . # children of impact\n ?phvar np:evidence / np:quality np:GOLD .\n ?phvar np:impactedObject / np:interactant ?interactant.\n}" .
+
+ex:NXQ_00073  rdfs:comment  "Proteins with no known (annotated) domain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry a np:Entry.\n filter not exists { ?entry np:isoform / np:region/rdf:type np:Domain}\n}" .
+
+ex:NXQ_00265  rdfs:comment  "Retrieve all positional annotations at a given position on a neXtProt isoform";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where\n{ \n values ?iso { isoform:NX_Q99728-1 }\n values ?poi {107} # position of interest\n \n{ \n ?iso np:positionalAnnotation ?statement . optional {?statement rdfs:comment ?txt .}\n\n ?statement a ?annot_type .\n ?statement np:start ?spos; np:end ?epos .\n}\n union\n \n{ \n ?iso np:proteoform ?pf . \n ?pf np:difference ?varmut; np:phenotypicVariation ?phvar . \n ?varmut np:start ?spos; np:end ?epos. \n ?phvar np:term ?phtype; np:impactedObject /:term /rdfs:label ?ioTermlab .\n ?phvar a ?annot_type .\n ?phtype np:childOf cv:ME_0000002; rdfs:label ?effect . # children of impact \n bind (concat(CONCAT(?effect,\" \"),?ioTermlab) as ?txt) }\n\n filter((?spos <= ?poi) && (?epos >= ?poi)) # select annotations encompassing the position of interest\n} order by ?spos" .
+
+ex:NXQ_00286  rdfs:comment  "Protein domains or regions that frequently occur in interaction mappings";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) where {\n ?entry np:isoform ?iso; np:gene / np:name / rdfs:label ?gen .\n ?iso np:swissprotDisplayed true; np:interactionMapping ?itmap .\n ?itmap np:entryAnnotationId ?itid; np:start ?its; np:end ?ite .\n bind(?ite - ?its + 1 as ?itlen)\n ?iso np:region ?reg .\n ?reg np:start ?rs; np:end ?re; np:term ?rterm .\n ?rterm rdfs:label ?rlab .\n bind(?re - ?rs + 1 as ?rlen)\n filter (?rs >= ?its - 15 && ?re <= ?ite + 15)\n filter(xsd:float(?itlen) / xsd:float(?rlen) < 2.0)\n} group by ?rlab having(count(distinct ?itid) >= 10)\norder by desc(?itcnt)" .
+
+ex:NXQ_00144  rdfs:comment  "Proteins that contains a sequence \"QHP\" where the Proline is amidated";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n?entry np:isoform ?isoform.\n?isoform np:ptm ?ptm.\n?ptm np:term cv:PTM-0257 . # Proline amide\n?ptm np:start ?ptmpos .\n?isoform np:sequence / np:chain ?seq.\nbind(substr(?seq, ?ptmpos-2, 3) as ?modseq)\nfilter ( regex(?modseq, \"QHP\") )\n}" .
+
+ex:NXQ_00002  rdfs:comment  "Proteins that are located in both the nucleus and in the cytoplasm";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n values ?cytoloc {cv:GO_0005737 cv:SL-0086} # GO and SL values for cytoplasm\n values ?nucloc {cv:GO_0005634 cv:SL-0191} # GO and SL values for nucleus\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?loc1, ?loc2 .\n ?loc1 np:term /:childOf ?cytoloc .\n ?loc2 np:term /:childOf ?nucloc .\n filter not exists {?loc1 np:negativeEvidence ?negev} # No negative localization evidence\n filter not exists {?loc2 np:negativeEvidence ?negev} # No negative localization evidence\n}\n\n# Note the dot \".\" at the end of statements.\n# If missing, you will get a syntax error.\n#\n# Use a comma to retrieve two localizations in:\n# ?iso np:cellularComponent ?loc1, ?loc2 ." .
+
+ex:NXQ_00023  rdfs:comment  "Proteins that are involved in transport and located in a membrane and that are not glycosylated (experimentally or predicted)";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso .\n {\n ?iso np:goBiologicalProcess ?gofunc .\n\t?gofunc np:term / np:childOf cv:GO_0006810. # GO value for transport\n\tfilter not exists {?gofunc np:negativeEvidence ?negev} # No negative function evidence\n } union {\n ?iso np:uniprotKeyword / np:term cv:KW-0813. # KW for transport\n }\n { \n ?iso np:uniprotKeyword / np:term cv:KW-0812. # transmembrane\n } union {\n ?iso np:topology / np:term cv:CVTO_0004. # intramembrane\n } \n filter not exists { ?iso np:uniprotKeyword / np:term cv:KW-0325 } # not a glycoprotein\n}" .
+
+ex:NXQ_00044  rdfs:comment  "Proteins involved in the Reactome pathway \"Respiratory electron transport\"";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:pathway ?p.\n ?p np:evidence /:reference ?xref.\n ?xref np:provenance db:Reactome; np:accession \"R-HSA-611105\"^^xsd:string.\n}" .
+
+ex:NXQ_00236  rdfs:comment  "Proteins with subcellular location gold and list of all these locations";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {\n ?entry np:isoform ?iso.\n ?iso np:cellularComponent ?locannot .\n ?locannot np:term ?locterm .\n ?locterm rdfs:label ?loclab .\n ?locannot np:evidence ?locev .\n ?locev np:quality np:GOLD .\n filter not exists {?locannot np:negativeEvidence ?locev .}\n}\nGROUP BY ?entry" .
+
+ex:NXQ_00065  rdfs:comment  "Proteins that have more than one catalytic activity";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform / np:enzymeClassification / np:term ?ec .\n} \ngroup by ?entry having (count(distinct ?ec)>1)" .
+
+ex:NXQ_00086  rdfs:comment  "Proteins whose genes are located in chromosome 2 region from 2p12 to 2p24.2";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:gene ?gene .\n ?gene np:chromosome \"2\"^^xsd:string .\n ?gene np:band ?band.\n filter (?band >= \"p12\"@en && ?band <= \"p24.2\"@en )\n}" .
+
+ex:NXQ_00278  rdfs:comment  "Authors who have reported more than 25000 human protein-protein interactions ";
+        sh:prefixes   [] ;
+        sh:select     "select distinct (str(?auth) AS ?auth1) (count (distinct ?itid) as ?itcnt) where {\n ?entry np:isoform / np:binaryInteraction ?interaction.\n ?interaction np:evidence / np:reference ?publi .\n ?publi np:author / np:name ?auth .\n ?interaction np:interactant ?interactant; np:quality np:GOLD; np:entryAnnotationId ?itid.\n} group by ?auth having (count (distinct ?itid) > 25000)\norder by desc(?itcnt)" .
+
+ex:NXQ_00299  rdfs:comment  "Proteins interacting with small molecules according to DrugBank";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry (group_concat(distinct str(?lbl); SEPARATOR = \";\") as ?mol) where {\n ?entry np:isoform / np:smallMoleculeInteraction / np:interactant ?ref . \n ?ref np:provenance db:DrugBank. \n ?ref rdfs:label ?lbl. \n}\ngroup by ?entry" .
+
+ex:NXQ_00136  rdfs:comment  "Proteins whose sequence was updated in 2014";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry a np:Entry.\n ?entry np:history / np:lastSequenceUpdate ?sequpd.\n filter(contains(str(?sequpd),\"2014\"))\n}" .
+
+ex:NXQ_00015  rdfs:comment  "Proteins with a PDZ domain that interact with at least one protein which is expressed in brain";
+        sh:prefixes   [] ;
+        sh:select     "select distinct ?entry where {\n ?entry np:isoform ?iso.\n ?iso np:region / np:term cv:DO-00477. #PDZ domain\n ?iso np:binaryInteraction/:interactant/:isoform?/:detectedExpression/:term/:childOf cv:TS-0095 #brain\n}" .

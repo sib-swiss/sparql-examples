@@ -6,7 +6,7 @@ ex:NXQ_00012
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that interact with protein RBM17 and that are involved in splicing''' ;
   sh:select '''select distinct ?entry where {
- entry:NX_Q96I25 np:isoform / np:interaction / np:interactant ?entry.
+ nextprot:NX_Q96I25 np:isoform / np:interaction / np:interactant ?entry.
  ?entry np:isoform / np:uniprotKeyword / np:term nextprot_cv:KW-0508
 }'''
 .
