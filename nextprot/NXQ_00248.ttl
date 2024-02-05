@@ -2,21 +2,26 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00248
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Variants with phenotype annotation that map to a 3D structure''' ;
+ schema:keyword "phenotype";
+ schema:keyword "variant";
+ schema:keyword "3D structure";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),\"...\") as ?pdbsample) where {
- ?entry np:gene / np:name / rdfs:label ?gen .
- ?entry np:isoform ?iso.
- ?iso np:proteoform ?pf .
+ ?entry :gene / :name / rdfs:label ?gen .
+ ?entry :isoform ?iso.
+ ?iso :proteoform ?pf .
  ?pf rdfs:label ?pfname .
- ?pf np:phenotypicVariation ?pv1 .
- ?pf np:difference ?pfmod .
- ?pfmod a np:Variant .
- ?pfmod np:start ?vstart; np:end ?vend .
- ?iso np:pdbMapping ?pdbmap.
+ ?pf :phenotypicVariation ?pv1 .
+ ?pf :difference ?pfmod .
+ ?pfmod a :Variant .
+ ?pfmod :start ?vstart; :end ?vend .
+ ?iso :pdbMapping ?pdbmap.
  ?pdbmap rdfs:comment ?pdbac.
- ?pdbmap np:start ?pdbstart ; np:end ?pdbend.
+ ?pdbmap :start ?pdbstart ; :end ?pdbend.
  filter(?pdbstart <= ?vstart && ?pdbend >= ?vend ) 
 } group by ?entry ?pfname ?pdbsample'''
 .

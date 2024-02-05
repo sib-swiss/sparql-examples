@@ -2,12 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00289
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''KEGG and Reactome pathway names''' ;
+ schema:keyword "pathway";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?src (str(?pathwayname) as ?pw) where {
- ?entry np:isoform / np:pathway ?pathannot .
- ?pathannot rdfs:comment ?pathwayname; np:evidence / np:assignedBy ?src.
+ ?entry :isoform / :pathway ?pathannot .
+ ?pathannot rdfs:comment ?pathwayname; :evidence / :assignedBy ?src.
  filter(?src = source:Reactome || ?src = source:KEGG_PTW)
 } order by ?pathwayname'''
 .

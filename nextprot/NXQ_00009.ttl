@@ -2,13 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00009
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with 3 disulfide bonds and that are not annotated as hormones ''' ;
+ schema:keyword "PTM";
+ schema:keyword "function";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?isoform.
- ?isoform np:ptm ?statement.
- ?statement a np:DisulfideBond.
- filter not exists { ?entry np:isoform / np:function / np:term /np:childOf nextprot_cv:GO_0005179. } # GO Hormone activity
+ ?entry :isoform ?isoform.
+ ?isoform :ptm ?statement.
+ ?statement a :DisulfideBond.
+ filter not exists { ?entry :isoform / :function / :term /:childOf nextprot_cv:GO_0005179. } # GO Hormone activity
 } group by ?entry ?isoform having (count(?statement) =3 )'''
 .

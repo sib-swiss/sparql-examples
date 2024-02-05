@@ -2,18 +2,22 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00135
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins involved in both Wnt and Hippo signaling pathways''' ;
+ schema:keyword "pathway";
+ schema:keyword "function";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso .
+ ?entry :isoform ?iso .
  # nextprot_cv:GO:0016055 wnt pathway
- ?iso np:goBiologicalProcess ?func1 .
- ?func1 np:term / np:childOf nextprot_cv:GO_0016055.
- filter not exists { ?func1 np:negativeEvidence ?negev. } # No negative function evidence
+ ?iso :goBiologicalProcess ?func1 .
+ ?func1 :term / :childOf nextprot_cv:GO_0016055.
+ filter not exists { ?func1 :negativeEvidence ?negev. } # No negative function evidence
  # nextprot_cv:GO:0035329 Hippo pathway
- ?iso np:goBiologicalProcess ?func2 .
- ?func2 np:term / np:childOf nextprot_cv:GO_0035329.
- filter not exists { ?func2 np:negativeEvidence ?negev. } # No negative function evidence
+ ?iso :goBiologicalProcess ?func2 .
+ ?func2 :term / :childOf nextprot_cv:GO_0035329.
+ filter not exists { ?func2 :negativeEvidence ?negev. } # No negative function evidence
 }'''
 .

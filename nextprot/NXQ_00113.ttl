@@ -2,12 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00113
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with protein existence \"At protein level\" (PE=1) and at least one proteotypic peptide''' ;
+ schema:keyword "protein existence";
+ schema:keyword "peptide";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform / np:peptideMapping ?pm .
- ?entry np:existence np:Evidence_at_protein_level .
- ?pm np:proteotypic true .
+ ?entry :isoform / :peptideMapping ?pm .
+ ?entry :existence :Evidence_at_protein_level .
+ ?pm :proteotypic true .
 }'''
 .

@@ -2,17 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00075
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which have been detected in the HUPO liver proteome set but not the HUPO plasma proteome set''' ;
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
 values ?pepsources { 
  source:PeptideAtlas_human_Liver 
  source:MassIVE_human_Liver
  }
- ?entry a np:Entry.
- ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy ?pepsources .
- filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:PeptideAtlas_human_Blood_Plasma . }
- filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:MassIVE_human_Blood_Plasma . }
+ ?entry a :Entry.
+ ?entry :isoform / :peptideMapping / :evidence / :assignedBy ?pepsources .
+ filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:PeptideAtlas_human_Blood_Plasma . }
+ filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:MassIVE_human_Blood_Plasma . }
 }'''
 .

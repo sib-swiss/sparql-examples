@@ -2,15 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00219
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins entries from a list of gene names''' ;
+ schema:keyword "gene";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
  values ?gene
  {\"UBA6\" \"PXDNL\" \"CNOT1\" \"TCAF2\" \"ARHGAP32\" \"HACD1\" \"AKR1B15\" \"SGK1\" \"MYO1C\" \"LGALS9\"
  \"PIK3CD\" \"PDE2A\" \"DNM1L\"} # space or nl-separated
  
  bind (STRDT (?gene,xsd:string) as ?genename ) . # converts raw string to ^^xsd:string
- ?entry np:gene / np:recommendedName / rdfs:label ?genename .
+ ?entry :gene / :recommendedName / rdfs:label ?genename .
  }'''
 .

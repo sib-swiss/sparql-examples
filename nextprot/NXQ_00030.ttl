@@ -2,11 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00030
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome''' ;
+ schema:keyword "family";
+ schema:keyword "chromosomal location";
+ schema:keyword "tutorial";
   sh:select '''select ?entry where {
- ?entry np:familyName / np:term/^:term/^:familyName ?member.
- ?entry np:gene / np:chromosome \"2\"^^xsd:string .
+ ?entry :familyName / :term/^:term/^:familyName ?member.
+ ?entry :gene / :chromosome \"2\"^^xsd:string .
 } group by ?entry having ( count(distinct ?member) >= 5 )'''
 .

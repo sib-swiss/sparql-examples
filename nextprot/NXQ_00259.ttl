@@ -2,9 +2,13 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00259
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins involved in diseases with clinical manifestations that include long organs ''' ;
+ schema:keyword "disease";
+ schema:keyword "federated query";
+ schema:keyword "tutorial";
   sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
@@ -20,7 +24,7 @@ select distinct ?entry (str(?gen) as ?genx) ?umlsTerm where {
  } 
  }
  BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
- ?entry np:swissprotPage ?unipage .
- ?entry np:gene / np:recommendedName / rdfs:label ?gen .
+ ?entry :swissprotPage ?unipage .
+ ?entry :gene / :recommendedName / rdfs:label ?gen .
 } order by ?entry'''
 .

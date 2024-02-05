@@ -2,22 +2,29 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00148
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Variants with normal \"ubiquitin-protein transferase activity\" and decreased or increased binding to UBE2D1 (example: BRCA1-p.Ile89Thr)''' ;
+ schema:keyword "enzyme";
+ schema:keyword "phenotype";
+ schema:keyword "function";
+ schema:keyword "PPI";
+ schema:keyword "variant";
+ schema:keyword "tutorial";
   sh:select '''SELECT distinct ?pfname ?impact_on_ubi_trsfrt_activity ?impact_on_binding_UBE2D1 WHERE {
  values (?ubi_trsfrt_activity ?no_impact ?UBE2D1 ?impact) 
  { (nextprot_cv:GO_0004842 nextprot_cv:ME_0000003 nextprot:NX_P51668 nextprot_cv:ME_0000002) }
- ?pf a np:Proteoform .
+ ?pf a :Proteoform .
  ?pf rdfs:label ?pfname .
- ?pf np:phenotypicVariation ?pv1 .
- ?pv1 np:impactedObject / np:term ?ubi_trsfrt_activity .
- ?pv1 np:term ?no_impact .
+ ?pf :phenotypicVariation ?pv1 .
+ ?pv1 :impactedObject / :term ?ubi_trsfrt_activity .
+ ?pv1 :term ?no_impact .
  ?no_impact rdfs:label ?impact_on_ubi_trsfrt_activity .
- ?pf np:phenotypicVariation ?pv2 .
- ?pv2 np:impactedObject / np:interactant ?UBE2D1 .
- ?pv2 np:term ?sub_impact .
- ?sub_impact np:childOf ?impact .
+ ?pf :phenotypicVariation ?pv2 .
+ ?pv2 :impactedObject / :interactant ?UBE2D1 .
+ ?pv2 :term ?sub_impact .
+ ?sub_impact :childOf ?impact .
  ?sub_impact rdfs:label ?impact_on_binding_UBE2D1 .
 }'''
 .

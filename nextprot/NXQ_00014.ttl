@@ -2,16 +2,20 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00014
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with one SH2 and two SH3 domains''' ;
+ schema:keyword "region";
+ schema:keyword "domain";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
+ ?entry :isoform ?iso.
  #with 1 SH3
- {select ?iso where{?iso np:region ?stat1. ?stat1 np:term nextprot_cv:DO-00614
+ {select ?iso where{?iso :region ?stat1. ?stat1 :term nextprot_cv:DO-00614
  } group by ?iso having(count( ?stat1)=1)}
  #with 2 SH2
- {select ?iso where{?iso np:region ?stat2. ?stat2 np:term nextprot_cv:DO-00615
+ {select ?iso where{?iso :region ?stat2. ?stat2 :term nextprot_cv:DO-00615
  } group by ?iso having(count( ?stat2)=2)}
 } group by ?entry'''
 .

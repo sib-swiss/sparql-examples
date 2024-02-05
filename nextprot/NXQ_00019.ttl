@@ -2,13 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00019
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with more than 12 WD repeats (ie: with at least two beta-propellers)''' ;
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
+ ?entry :isoform ?iso.
  {select ?iso where{
- ?iso np:repeat ?rep. ?rep np:term nextprot_cv:DO-00722
+ ?iso :repeat ?rep. ?rep :term nextprot_cv:DO-00722
  }
  group by ?iso having(count( ?rep) > 12)}
 }'''

@@ -2,15 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00138
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with 10 or more gold interactions with SH3 domain-containing proteins''' ;
+ schema:keyword "PPI";
+ schema:keyword "tutorial";
+ schema:keyword "region";
+ schema:keyword "domain";
+ schema:keyword "quality";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:interaction ?it.
- ?it np:quality np:GOLD.
- ?it np:interactant ?interactant.
- ?interactant np:isoform? / np:domain / np:term nextprot_cv:DO-00615. # SH3
+ ?entry :isoform ?iso.
+ ?iso :interaction ?it.
+ ?it :quality :GOLD.
+ ?it :interactant ?interactant.
+ ?interactant :isoform? / :domain / :term nextprot_cv:DO-00615. # SH3
 }
 group by ?entry having (count (distinct ?interactant) >= 10)'''
 .

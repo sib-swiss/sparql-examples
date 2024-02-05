@@ -2,13 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00040
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that are enzymes and with at least one mutagenesis site that decrease or abolish activity''' ;
+ schema:keyword "enzyme";
+ schema:keyword "tutorial";
+ schema:keyword "mutagenesis";
+ schema:keyword "function";
   sh:select '''select distinct ?entry where {
  ?nextprot:isoform ?iso.
- ?iso np:enzymeClassification ?_ .
- ?iso np:mutagenesis/rdfs:comment ?comment
+ ?iso :enzymeClassification ?_ .
+ ?iso :mutagenesis/rdfs:comment ?comment
  filter regex(?comment, '(decrease|abolish).*activity','i')
 }'''
 .

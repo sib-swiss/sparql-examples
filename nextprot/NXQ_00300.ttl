@@ -2,9 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00300
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with protein existence \"At protein level\" (PE=1) that have no function annotated, are highly expressed in brain and have homologs in Drosophila melanogaster according to OrthoDB''' ;
+ schema:keyword "protein existence";
+ schema:keyword "federated query";
+ schema:keyword "expression";
+ schema:keyword "gene";
+ schema:keyword "function";
+ schema:keyword "name";
+ schema:keyword "phylogeny";
+ schema:keyword "tutorial";
   sh:select '''PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -14,16 +23,16 @@ PREFIX odb: <http://purl.orthodb.org/>
 
 select ?entry (str(?name) as ?human_name) (group_concat(distinct str(?fly_name); SEPARATOR = \",\") as ?fly_names) where
 {
-?entry np:isoform ?iso.
-?entry np:gene / np:recommendedName / rdfs:label ?name.
-?entry np:existence np:Evidence_at_protein_level .
-filter not exists { ?iso np:functionInfo ?_. }
-filter not exists { ?iso np:catalyticActivity ?_ .} 
-filter not exists { ?iso np:transportActivity ?_ .} 
-filter not exists { ?iso np:pathway ?_. }
-filter not exists { ?iso np:function / np:term ?fterm . filter(?fterm != nextprot_cv:GO_0005524 && ?fterm != nextprot_cv:GO_0000287 && ?fterm != nextprot_cv:GO_0005515 && ?fterm != nextprot_cv:GO_0042802 && ?fterm != nextprot_cv:GO_0008270 && ?fterm != nextprot_cv:GO_0051260 && ?fterm != nextprot_cv:GO_0005509 && ?fterm != nextprot_cv:GO_0003676 && ?fterm != nextprot_cv:GO_0003824 && ?fterm != nextprot_cv:GO_0007165 && ?fterm != nextprot_cv:GO_0035556 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)}
-?iso np:expression ?e1.
-?e1 np:term/np:childOf nextprot_cv:TS-0095; np:evidence/np:observedExpression np:High.
+?entry :isoform ?iso.
+?entry :gene / :recommendedName / rdfs:label ?name.
+?entry :existence :Evidence_at_protein_level .
+filter not exists { ?iso :functionInfo ?_. }
+filter not exists { ?iso :catalyticActivity ?_ .} 
+filter not exists { ?iso :transportActivity ?_ .} 
+filter not exists { ?iso :pathway ?_. }
+filter not exists { ?iso :function / :term ?fterm . filter(?fterm != nextprot_cv:GO_0005524 && ?fterm != nextprot_cv:GO_0000287 && ?fterm != nextprot_cv:GO_0005515 && ?fterm != nextprot_cv:GO_0042802 && ?fterm != nextprot_cv:GO_0008270 && ?fterm != nextprot_cv:GO_0051260 && ?fterm != nextprot_cv:GO_0005509 && ?fterm != nextprot_cv:GO_0003676 && ?fterm != nextprot_cv:GO_0003824 && ?fterm != nextprot_cv:GO_0007165 && ?fterm != nextprot_cv:GO_0035556 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)}
+?iso :expression ?e1.
+?e1 :term/:childOf nextprot_cv:TS-0095;:evidence/:observedExpression :High.
 {
 service <http://sparql.orthodb.org/sparql>
 {?gene rdfs:seeAlso ?entry; odb:memberOf ?og.

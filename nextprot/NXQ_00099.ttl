@@ -2,22 +2,27 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00099
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Secreted proteins that have at least one PTM in a position of a variant''' ;
+ schema:keyword "PTM";
+ schema:keyword "variant";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
   sh:select '''select distinct ?entry where {
  values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
- ?entry np:isoform ?iso .
- ?iso np:swissprotDisplayed true . # restricted to main isoform due to computing time (> 98% of sites)
- ?iso np:cellularComponent ?anno .
- ?anno np:quality np:GOLD; np:term /np:childOf ?sloc. # secreted
- filter not exists { ?anno np:negativeEvidence ?_ }
+ ?entry :isoform ?iso .
+ ?iso :swissprotDisplayed true . # restricted to main isoform due to computing time (> 98% of sites)
+ ?iso :cellularComponent ?anno .
+ ?anno :quality :GOLD; :term /:childOf ?sloc. # secreted
+ filter not exists { ?anno :negativeEvidence ?_ }
  # excludes \"extracellular exosome\"-only location, most of them evidenced only by large-scale proteomic analysis
  filter not exists { 
-	 ?iso np:cellularComponent /np:term nextprot_cv:GO_0070062 . # extracellular exosome
- 	 filter not exists { ?iso np:cellularComponent /np:term /np:childOf nextprot_cv:SL-0243 .}
+	 ?iso :cellularComponent /:term nextprot_cv:GO_0070062 . # extracellular exosome
+ 	 filter not exists { ?iso :cellularComponent /:term /:childOf nextprot_cv:SL-0243 .}
  	} 
- ?iso np:variant /np:start ?varpos.
- ?iso np:ptm /np:start ?varpos.
+ ?iso :variant /:start ?varpos.
+ ?iso :ptm /:start ?varpos.
 }'''
 .

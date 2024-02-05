@@ -2,12 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00106
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins annotated as glycosylated but with no recorded glycosylation site''' ;
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0325.
- filter not exists { ?entry np:isoform /np:glycosylationSite ?_. }
+ ?entry :isoform ?iso.
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0325.
+ filter not exists { ?entry :isoform /:glycosylationSite ?_. }
 }'''
 .

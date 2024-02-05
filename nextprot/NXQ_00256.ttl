@@ -2,17 +2,20 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00256
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Variants identified in exome datasets in a frequent homozygote state''' ;
+ schema:keyword "variant";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry ?varpos where
 {
- ?entry np:isoform ?iso . 
- ?iso np:swissprotDisplayed true .
- ?iso np:variant ?var . 
- ?var np:start ?varpos . 
- ?var np:evidence ?ev .
- ?var np:evidence / np:homozygoteCount ?hcnt . 
+ ?entry :isoform ?iso . 
+ ?iso :swissprotDisplayed true .
+ ?iso :variant ?var . 
+ ?var :start ?varpos . 
+ ?var :evidence ?ev .
+ ?var :evidence / :homozygoteCount ?hcnt . 
  filter(?hcnt > 100000) 
  } 
  order by desc(?hcnt)'''

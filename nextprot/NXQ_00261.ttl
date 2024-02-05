@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00261
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Glycosylation sites from GlyConnect''' ;
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword "isoforms";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry ?iso ?pos ?comment where {
-?entry np:isoform ?iso.
-?iso np:swissprotDisplayed true .
-?iso np:glycosylationSite ?glyco.
-?glyco np:evidence / np:assignedBy source:GlyConnect. 
+?entry :isoform ?iso.
+?iso :swissprotDisplayed true .
+?iso :glycosylationSite ?glyco.
+?glyco :evidence / :assignedBy source:GlyConnect. 
 ?glyco rdfs:comment ?comment.
-?glyco np:start ?pos.
+?glyco :start ?pos.
 
 } order by ?entry'''
 .

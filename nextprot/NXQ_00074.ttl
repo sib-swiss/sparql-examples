@@ -2,11 +2,14 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00074
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins belonging to a family with at least two members in the human proteome''' ;
+ schema:keyword "family";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:familyName / np:term ?ac.
- ?member np:familyName / np:term ?ac.
+ ?entry :familyName / :term ?ac.
+ ?member :familyName / :term ?ac.
 } group by ?entry having (count(distinct ?member) >= 2 )'''
 .

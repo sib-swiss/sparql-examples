@@ -2,14 +2,20 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00027
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with one or more glycosylation sites reported in PubMed:20570859 or PubMed:14760718''' ;
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "publication";
   sh:select '''select distinct ?entry ?publications where {
  values ?pmid {\"20570859\"^^xsd:string \"14760718\"^^xsd:string}
  # get all assertions from the publications
- ?entry np:isoform/np:glycosylationSite ?statement.
- ?statement np:evidence/np:reference/np:from ?xref .
- ?xref np:accession ?pmid ; np:provenance db:PubMed .
+ ?entry :isoform/:glycosylationSite ?statement.
+ ?statement :evidence/:reference/:from ?xref .
+ ?xref :accession ?pmid ; :provenance db:PubMed .
 }'''
 .

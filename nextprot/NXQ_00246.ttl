@@ -2,9 +2,14 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00246
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are enzymes catalyzing a reaction involving lipids''' ;
+ schema:keyword "enzyme";
+ schema:keyword "federated query";
+ schema:keyword "tutorial";
+ schema:keyword "function";
   sh:select '''PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX ch:<http://purl.obolibrary.org/obo/>
 
@@ -21,7 +26,7 @@ select distinct ?entry where {
  ?chebi rdfs:subClassOf+ ch:CHEBI_18059 .
  } 
  } 
- ?entry np:isoform / np:smallMoleculeInteraction / np:interactant ?x .
+ ?entry :isoform / :smallMoleculeInteraction / :interactant ?x .
  ?x rdfs:label ?xlab .
  ?x skos:exactMatch ?chebi .
 } order by ?entry'''

@@ -2,11 +2,14 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00089
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Protein that have a signal sequence which is not cleaved''' ;
+ schema:keyword "signal sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform / np:signalPeptide / rdfs:comment ?comment .
+ ?entry :isoform / :signalPeptide / rdfs:comment ?comment .
  filter(contains(?comment,\"Not cleaved\"))
 }'''
 .

@@ -2,11 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00087
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose genes are on chromosome X and which do not have a ortholog in mouse''' ;
+ schema:keyword "chromosomal location";
+ schema:keyword "tutorial";
+ schema:keyword "ortholog";
+ schema:keyword "cross-reference";
   sh:select '''select distinct ?entry where {
- ?entry np:gene / np:chromosome \"X\"^^xsd:string .
- filter not exists { ?entry np:reference / np:provenance db:MGI . }
+ ?entry :gene / :chromosome \"X\"^^xsd:string .
+ filter not exists { ?entry :reference / :provenance db:MGI . }
 }'''
 .

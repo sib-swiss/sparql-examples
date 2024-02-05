@@ -2,14 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00069
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are the substrate of protein kinase SYK''' ;
+ schema:keyword "PTM";
+ schema:keyword "phosphorylation";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
+ ?entry :isoform ?iso.
  {
- ?iso np:modifiedResidue ?ptm.
- ?ptm np:term ?ptmtype.
+ ?iso :modifiedResidue ?ptm.
+ ?ptm :term ?ptmtype.
  ?ptm rdfs:comment ?comment.
  filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255)) 
  filter regex(?comment, \"SYK\",\"i\")
@@ -17,7 +21,7 @@ ex:NXQ_00069
  }
  union
  {
- ?iso np:ptmInfo / rdfs:comment ?ptmtext . 
+ ?iso :ptmInfo / rdfs:comment ?ptmtext . 
  filter regex(?ptmtext, \"SYK\",\"i\")	
  #filter regex(?ptmtext, \"autophos\",\"i\")	
  }

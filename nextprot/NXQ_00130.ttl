@@ -2,14 +2,20 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00130
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a DNA-binding region but not located in the nucleus''' ;
+ schema:keyword "tutorial";
+ schema:keyword "region";
+ schema:keyword "subcellular location";
+ schema:keyword "nucleotide binding";
+ schema:keyword "domain";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?entry np:gene / np:name / rdfs:label ?gen .
- ?iso np:dnaBindingRegion ?dnab.
- filter not exists { ?entry np:isoform / np:cellularComponent /np:term /np:childOf nextprot_cv:SL-0191} # SL for nucleus
- filter not exists { ?entry np:isoform / np:cellularComponent /np:term /np:childOf nextprot_cv:GO_0005634} # GO for nucleus
+ ?entry :isoform ?iso.
+ ?entry :gene / :name / rdfs:label ?gen .
+ ?iso :dnaBindingRegion ?dnab.
+ filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:SL-0191} # SL for nucleus
+ filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:GO_0005634} # GO for nucleus
 }'''
 .

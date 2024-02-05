@@ -2,29 +2,33 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00265
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Retrieve all positional annotations at a given position on a neXtProt isoform''' ;
+ schema:keyword "isoforms";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
 { 
  values ?iso { isoform:NX_Q99728-1 }
  values ?poi {107} # position of interest
  
 { 
- ?iso np:positionalAnnotation ?statement . optional {?statement rdfs:comment ?txt .}
+ ?iso :positionalAnnotation ?statement . optional {?statement rdfs:comment ?txt .}
 
  ?statement a ?annot_type .
- ?statement np:start ?spos; np:end ?epos .
+ ?statement :start ?spos; :end ?epos .
 }
  union
  
 { 
- ?iso np:proteoform ?pf . 
- ?pf np:difference ?varmut; np:phenotypicVariation ?phvar . 
- ?varmut np:start ?spos; np:end ?epos. 
- ?phvar np:term ?phtype; np:impactedObject /np:term /rdfs:label ?ioTermlab .
+ ?iso :proteoform ?pf . 
+ ?pf :difference ?varmut; :phenotypicVariation ?phvar . 
+ ?varmut :start ?spos; :end ?epos. 
+ ?phvar :term ?phtype; :impactedObject /:term /rdfs:label ?ioTermlab .
  ?phvar a ?annot_type .
- ?phtype np:childOf nextprot_cv:ME_0000002; rdfs:label ?effect . # children of impact 
+ ?phtype :childOf nextprot_cv:ME_0000002; rdfs:label ?effect . # children of impact 
  bind (concat(CONCAT(?effect,\" \"),?ioTermlab) as ?txt) }
 
  filter((?spos <= ?poi) && (?epos >= ?poi)) # select annotations encompassing the position of interest

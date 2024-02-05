@@ -2,16 +2,20 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00018
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that are acetylated and methylated and located in the nucleus''' ;
+ schema:keyword "PTM";
+ schema:keyword "subcellular location";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
  values ?nucloc {nextprot_cv:GO_0005634 nextprot_cv:SL-0191} # GO and SL values for nucleus
 
- ?entry np:isoform ?iso.
- ?iso np:cellularComponent ?loc .
- ?loc np:term/np:childOf ?nucloc.
- filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence
- ?iso np:uniprotKeyword/np:term nextprot_cv:KW-0007,nextprot_cv:KW-0488. # acetylated and methylated
+ ?entry :isoform ?iso.
+ ?iso :cellularComponent ?loc .
+ ?loc :term/:childOf ?nucloc.
+ filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
+ ?iso :uniprotKeyword/:term nextprot_cv:KW-0007,nextprot_cv:KW-0488. # acetylated and methylated
 }'''
 .

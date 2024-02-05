@@ -2,19 +2,22 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00004
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins expressed in brain with observed IHC expression \"high\" but not expressed in testis''' ;
+ schema:keyword "expression";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
+ ?entry :isoform ?iso.
  # get all expression
- ?iso np:expression ?e1.
+ ?iso :expression ?e1.
  # highly expressed in brain
- ?e1 np:term/np:childOf nextprot_cv:TS-0095; np:evidence/np:observedExpression np:High.
+ ?e1 :term/:childOf nextprot_cv:TS-0095;:evidence/:observedExpression :High.
  # not expressed in testis
- ?iso np:undetectedExpression ?e2.
- ?e2 np:term nextprot_cv:TS-1030.
- filter not exists { ?iso np:detectedExpression / np:term / np:childOf nextprot_cv:TS-1030 }
+ ?iso :undetectedExpression ?e2.
+ ?e2 :term nextprot_cv:TS-1030.
+ filter not exists { ?iso :detectedExpression / :term / :childOf nextprot_cv:TS-1030 }
 }
 
 # Use the semicolon ';' to refer to the previous subject (?e1)

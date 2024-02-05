@@ -2,12 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00085
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with Poly-Proline stretches''' ;
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso .
- ?iso np:compositionallyBiasedRegion / rdfs:comment ?desc.
+ ?entry :isoform ?iso .
+ ?iso :compositionallyBiasedRegion / rdfs:comment ?desc.
  filter (contains(?desc,'Pro residues')).
 }'''
 .

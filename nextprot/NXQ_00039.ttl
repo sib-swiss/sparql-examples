@@ -2,13 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00039
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a mutagenesis in a position that correspond to an annotated active site''' ;
+ schema:keyword "enzyme";
+ schema:keyword "tutorial";
+ schema:keyword "active site";
+ schema:keyword "mutagenesis";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:mutagenesis /np:start ?mutaPos.
- ?iso np:activeSite /np:start ?actsitePos.
+ ?entry :isoform ?iso.
+ ?iso :mutagenesis /:start ?mutaPos.
+ ?iso :activeSite /:start ?actsitePos.
  filter (?mutaPos=?actsitePos)
 }'''
 .

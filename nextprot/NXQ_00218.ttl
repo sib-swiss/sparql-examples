@@ -2,31 +2,36 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00218
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins for which different splice isoforms have a different subcellular location or function''' ;
+ schema:keyword "isoforms";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
+ schema:keyword "function";
   sh:select '''#A0A1B0GVQ0,A0AVT1 ,A0PJK1...
 
 
 
 select distinct ?entry where {
- ?entry np:isoform ?iso1, ?iso2.
- ?iso1 np:swissprotDisplayed true .
- ?iso2 np:swissprotDisplayed false .
+ ?entry :isoform ?iso1, ?iso2.
+ ?iso1 :swissprotDisplayed true .
+ ?iso2 :swissprotDisplayed false .
  {
- ?iso2 np:function / np:term ?functerm .
+ ?iso2 :function / :term ?functerm .
  filter (?functerm != nextprot_cv:GO_0005515) #protein-binding
- filter not exists {?iso1 np:function / np:term ?functerm .}
+ filter not exists {?iso1 :function / :term ?functerm .}
  }
  UNION
  {
- ?iso2 np:functionInfo / rdfs:comment ?functext .
- filter not exists {?iso1 np:functionInfo / rdfs:comment ?functext .}
+ ?iso2 :functionInfo / rdfs:comment ?functext .
+ filter not exists {?iso1 :functionInfo / rdfs:comment ?functext .}
  }
  UNION
  {
- ?iso2 np:cellularComponent / np:term ?locterm .
- filter not exists {?iso1 np:cellularComponent / np:term ?locterm}
+ ?iso2 :cellularComponent / :term ?locterm .
+ filter not exists {?iso1 :cellularComponent / :term ?locterm}
  }
 }'''
 .

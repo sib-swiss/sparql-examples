@@ -2,14 +2,19 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00216
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Phosphorylation sites from PeptideAtlas Phosphoproteome''' ;
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
+ schema:keyword "phosphorylation";
   sh:select '''select distinct (sample(?iso) as ?isospl) (sample(?pos) as ?posspl) where {
- ?entry np:isoform ?iso .
- ?iso np:ptm ?ptm.
- ?ptm np:entryAnnotationId ?ptmid; np:start ?pos .
- ?ptm np:evidence / np:assignedBy source:PeptideAtlas_human_phosphoproteome .
+ ?entry :isoform ?iso .
+ ?iso :ptm ?ptm.
+ ?ptm :entryAnnotationId ?ptmid; :start ?pos .
+ ?ptm :evidence / :assignedBy source:PeptideAtlas_human_phosphoproteome .
 } 
 group by ?ptmid
 order by ?isospl ?posspl'''

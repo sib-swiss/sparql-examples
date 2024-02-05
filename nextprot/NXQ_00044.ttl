@@ -2,12 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00044
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins involved in the Reactome pathway \"Respiratory electron transport\"''' ;
+ schema:keyword "pathway";
+ schema:keyword "function";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform / np:pathway ?p.
- ?p np:evidence /np:reference ?xref.
- ?xref np:provenance db:Reactome; np:accession \"R-HSA-611105\"^^xsd:string.
+ ?entry :isoform / :pathway ?p.
+ ?p :evidence /:reference ?xref.
+ ?xref :provenance db:Reactome; :accession \"R-HSA-611105\"^^xsd:string.
 }'''
 .

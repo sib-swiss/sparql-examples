@@ -2,12 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00013
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that have a protein kinase domain but lack protein kinase activity''' ;
+ schema:keyword "enzyme";
+ schema:keyword "tutorial";
+ schema:keyword "region";
+ schema:keyword "domain";
+ schema:keyword "function";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:region /np:term nextprot_cv:DO-00529.
- filter not exists { ?iso np:enzymeClassification / np:term /np:childOf nextprot_cv:2_7_-_- }
+ ?entry :isoform ?iso.
+ ?iso :region /:term nextprot_cv:DO-00529.
+ filter not exists { ?iso :enzymeClassification / :term /:childOf nextprot_cv:2_7_-_- }
 }'''
 .

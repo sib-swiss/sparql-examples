@@ -2,21 +2,25 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00140
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that interact with viral proteins''' ;
+ schema:keyword "PPI";
+ schema:keyword "federated query";
+ schema:keyword "tutorial";
   sh:select '''PREFIX up:<http://purl.uniprot.org/core/>
 PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
 
 select distinct ?entry where {
- ?entry np:isoform ?iso.
- optional {?iso np:interactionInfo ?itinfo .}
+ ?entry :isoform ?iso.
+ optional {?iso :interactionInfo ?itinfo .}
  {
  ?itinfo rdfs:comment ?txt.
  filter(contains(?txt,\"viral\") || contains(?txt,\"virus\")).
  } # refers to a virus in the free-text interactionInfo topic
 UNION
- { ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0945.} # host-virus interaction keyword
+ { ?iso :uniprotKeyword / :term nextprot_cv:KW-0945.} # host-virus interaction keyword
 UNION
  {
  SERVICE <http://sparql.uniprot.org/sparql> {
@@ -30,8 +34,8 @@ UNION
 	filter(contains(?orgname,\"virus\"))
  }
  }
- ?entry np:isoform / np:binaryInteraction ?it .
- ?it np:interactant ?interactant; np:quality np:GOLD. # NeXtprot entries with a GOLD IntAct binary interaction
+ ?entry :isoform / :binaryInteraction ?it .
+ ?it :interactant ?interactant; :quality :GOLD. # NeXtprot entries with a GOLD IntAct binary interaction
  ?interactant skos:exactMatch ?viralinteractor . # interactant must be in the uniprot service result set to select the entry
  } 
 UNION

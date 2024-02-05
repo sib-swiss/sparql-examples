@@ -2,17 +2,22 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00006
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose genes are on chromosome 13 and are associated with a disease''' ;
+ schema:keyword "chromosomal location";
+ schema:keyword "disease";
+ schema:keyword "tutorial";
+ schema:keyword "keyword";
   sh:select '''select distinct ?entry where {
- ?entry np:gene / np:chromosome \"13\"^^xsd:string.
- ?entry np:isoform ?iso.
+ ?entry :gene / :chromosome \"13\"^^xsd:string.
+ ?entry :isoform ?iso.
  {
-	 ?iso np:medical / rdf:type np:Disease.
+	 ?iso :medical / rdf:type :Disease.
  } union { 
- ?iso np:uniprotKeyword / np:term ?kw .
-	 ?kw np:termType \"Disease\"^^xsd:string
+ ?iso :uniprotKeyword / :term ?kw .
+	 ?kw :termType \"Disease\"^^xsd:string
 	 filter (?kw != nextprot_cv:KW-0656)
  }
 }'''

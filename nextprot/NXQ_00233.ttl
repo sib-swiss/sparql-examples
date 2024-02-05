@@ -2,9 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00233
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that are PE>1 with at least one proteotypic peptide of at least 9 amino-acids identified in a human sample ''' ;
+ schema:keyword "protein existence";
+ schema:keyword "peptide";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
   sh:select '''select distinct ?entry where {
  values ?level {
  	:Evidence_at_transcript_level # PE=2
@@ -12,11 +18,11 @@ ex:NXQ_00233
  	:Predicted 	# PE=4
 	:Uncertain 	# PE=5
 	}
- ?entry a np:Entry .
- ?entry np:existence ?level .
- ?entry np:isoform / np:peptideMapping ?pm.
- ?pm np:proteotypic true .
- ?pm np:start ?pos1 ; np:end ?pos2 .
+ ?entry a :Entry .
+ ?entry :existence ?level .
+ ?entry :isoform / :peptideMapping ?pm.
+ ?pm :proteotypic true .
+ ?pm :start ?pos1 ; :end ?pos2 .
  filter((?pos2 - ?pos1 + 1) >= 9)
  }'''
 .

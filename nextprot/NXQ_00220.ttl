@@ -2,11 +2,14 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00220
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins located on chromosome MT (mitochondrial) coded by a gene located on the plus strand''' ;
+ schema:keyword "chromosomal location";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:gene ?gene .
- ?gene np:chromosome \"MT\"^^xsd:string; np:strand \"1\"^^xsd:string .
+ ?entry :gene ?gene .
+ ?gene :chromosome \"MT\"^^xsd:string; :strand \"1\"^^xsd:string .
  }'''
 .

@@ -2,12 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00299
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins interacting with small molecules according to DrugBank''' ;
+ schema:keyword "small molecule interaction";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry (group_concat(distinct str(?lbl); SEPARATOR = \";\") as ?mol) where {
- ?entry np:isoform / np:smallMoleculeInteraction / np:interactant ?ref . 
- ?ref np:provenance db:DrugBank. 
+ ?entry :isoform / :smallMoleculeInteraction / :interactant ?ref . 
+ ?ref :provenance db:DrugBank. 
  ?ref rdfs:label ?lbl. 
 }
 group by ?entry'''

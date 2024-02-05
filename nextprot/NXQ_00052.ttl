@@ -2,13 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00052
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a sequence that does not contain a lysine in the mature region''' ;
+ schema:keyword "processing";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso .
- ?iso np:sequence / np:chain ?seq.
- ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]
+ ?entry :isoform ?iso .
+ ?iso :sequence / :chain ?seq.
+ ?iso :matureProtein [ :start ?mstart ; :end ?mend]
  bind(?mend - ?mstart + 1 as ?mlen)
  bind(substr(?seq, ?mstart, ?mlen) as ?mseq)
  filter (!regex (?mseq,'K'))

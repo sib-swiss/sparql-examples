@@ -2,18 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00223
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''100 most-cited publications in neXtProt and the corresponding number of associated entries''' ;
+ schema:keyword "publication";
+ schema:keyword "tutorial";
   sh:select '''select (str(?publiid) as ?PMID) (str(?tt) as ?title) (count(distinct ?entry) as ?ecnt) 
 where {
- ?entry a np:Entry .
- ?entry np:reference ?ref .
- ?ref a np:Publication.
- ?ref np:title ?tt .
- ?ref np:from ?xref .
- ?xref np:accession ?publiid .
- ?xref np:provenance db:PubMed .
+ ?entry a :Entry .
+ ?entry :reference ?ref .
+ ?ref a :Publication.
+ ?ref :title ?tt .
+ ?ref :from ?xref .
+ ?xref :accession ?publiid .
+ ?xref :provenance db:PubMed .
 }
 group by ?publiid ?tt
 order by desc(?ecnt)

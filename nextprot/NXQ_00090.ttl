@@ -2,18 +2,23 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00090
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are linked to a disease and that do not have orthologs/paralogs in mouse''' ;
+ schema:keyword "disease";
+ schema:keyword "tutorial";
+ schema:keyword "ortholog";
+ schema:keyword "keyword";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
+ ?entry :isoform ?iso.
  {
- ?iso np:medical / rdf:type np:Disease.
+ ?iso :medical / rdf:type :Disease.
  } union {
- ?iso np:uniprotKeyword / np:term ?kw .
- ?kw np:termType \"Disease\"^^xsd:string
+ ?iso :uniprotKeyword / :term ?kw .
+ ?kw :termType \"Disease\"^^xsd:string
  filter (?kw != nextprot_cv:KW-0656)
  }
- FILTER NOT EXISTS { ?entry np:reference / np:provenance db:MGI . }
+ FILTER NOT EXISTS { ?entry :reference / :provenance db:MGI . }
 }'''
 .

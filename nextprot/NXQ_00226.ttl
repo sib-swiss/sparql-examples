@@ -2,9 +2,14 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00226
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with at least 2 validating peptides >=9aa found in blood plasma, urine or cerebrospinal fluid (criteria for biomarker)].''' ;
+ schema:keyword "peptide";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
   sh:select '''select distinct ?entry where { 
 values ?pepsources { 
  source:PeptideAtlas_human_Cerebrospinal_Fluid 
@@ -14,12 +19,12 @@ values ?pepsources {
  source:MassIVE_human_Blood_Plasma 
  source:MassIVE_human_Urine 
  } 
- ?entry np:isoform ?iso. 
- ?iso np:peptideMapping ?pm . 
- ?pm np:peptideName ?pepid .
- ?pm np:evidence / np:assignedBy ?pepsources . 
- ?pm np:proteotypic true . 
- ?pm np:start ?p1 ; np:end ?p2 . 
+ ?entry :isoform ?iso. 
+ ?iso :peptideMapping ?pm . 
+ ?pm :peptideName ?pepid .
+ ?pm :evidence / :assignedBy ?pepsources . 
+ ?pm :proteotypic true . 
+ ?pm :start ?p1 ; :end ?p2 . 
  filter(?p2-?p1 >= 8) # peptide length >= 9 
 } 
 group by ?entry having(count (distinct ?pepid) > 1) # at least two such peptides'''

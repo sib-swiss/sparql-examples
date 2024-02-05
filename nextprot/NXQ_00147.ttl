@@ -2,15 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00147
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a variant having an impact on the nucleus localization at level GOLD''' ;
+ schema:keyword "phenotype";
+ schema:keyword "variant";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
+ schema:keyword "quality";
   sh:select '''select distinct ?entry 
 where {
  values ?ioTerm {nextprot_cv:GO_0005634} . # nucleus
- ?entry np:isoform / np:proteoform / np:phenotypicVariation ?phvar .
- ?phvar np:term / np:childOf nextprot_cv:ME_0000002 . # children of impact
- ?phvar np:evidence / np:quality np:GOLD .
- ?phvar np:impactedObject / np:term ?ioTerm .
+ ?entry :isoform / :proteoform / :phenotypicVariation ?phvar .
+ ?phvar :term / :childOf nextprot_cv:ME_0000002 . # children of impact
+ ?phvar :evidence / :quality :GOLD .
+ ?phvar :impactedObject / :term ?ioTerm .
 }'''
 .

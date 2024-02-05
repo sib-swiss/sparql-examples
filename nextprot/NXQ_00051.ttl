@@ -2,13 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00051
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that have at least one 3D structure solved by NMR''' ;
+ schema:keyword "method";
+ schema:keyword "3D structure";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:pdbMapping ?map.
- ?map np:method ?meth
+ ?entry :isoform ?iso.
+ ?iso :pdbMapping ?map.
+ ?map :method ?meth
  filter (contains(?meth,'NMR'))
 }'''
 .

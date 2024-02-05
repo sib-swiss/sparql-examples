@@ -2,19 +2,23 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00283
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with no reported mitochondrial localization but interacting with 20 or more mitochondrial proteins ('gold' quality) ''' ;
+ schema:keyword "PPI";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
   sh:select '''select distinct ?entry (str(?gen) as ?gene) (count(distinct ?mitopartner) as ?mitcnt) (count(distinct ?partner) as ?itcnt) where {
 values ?mitloc {nextprot_cv:GO_0005739 nextprot_cv:SL-0173} # GO and SL values for mitochondrion
- ?entry np:isoform ?iso.
- ?entry np:gene / np:recommendedName / rdfs:label ?gen.
- filter not exists { ?iso np:cellularComponent /np:term / np:childOf ?mitloc }
- ?iso np:binaryInteraction ?it, ?it2.
- ?it np:interactant ?mitopartner; np:quality np:GOLD .
- ?mitopartner np:isoform / np:cellularComponent ?loc .
- ?loc np:quality np:GOLD; np:term / np:childOf ?mitloc .
- ?it2 np:interactant ?partner; np:quality np:GOLD .
+ ?entry :isoform ?iso.
+ ?entry :gene / :recommendedName / rdfs:label ?gen.
+ filter not exists { ?iso :cellularComponent /:term / :childOf ?mitloc }
+ ?iso :binaryInteraction ?it, ?it2.
+ ?it :interactant ?mitopartner; :quality :GOLD .
+ ?mitopartner :isoform / :cellularComponent ?loc .
+ ?loc :quality :GOLD; :term / :childOf ?mitloc .
+ ?it2 :interactant ?partner; :quality :GOLD .
 } group by ?entry ?gen ?mitcnt having (count(distinct ?mitopartner) >= 20)
 order by desc(?mitcnt)'''
 .

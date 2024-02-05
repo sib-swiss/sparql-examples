@@ -2,9 +2,13 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00254
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with associated pathways in WikiPathways''' ;
+ schema:keyword "pathway";
+ schema:keyword "federated query";
+ schema:keyword "tutorial";
   sh:select '''PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -26,8 +30,8 @@ select distinct ?entry ?gen ?pathwayname where {
  filter(contains(str(?organism),\"9606\")) # Human proteins
  ?pathway dc:title ?pathwayname .
  }
- ?entry a np:Entry .
- ?entry np:gene / np:recommendedName / rdfs:label ?gen .
+ ?entry a :Entry .
+ ?entry :gene / :recommendedName / rdfs:label ?gen .
 }
 order by ?pathwayname'''
 .

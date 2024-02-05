@@ -2,14 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00240
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Gold binary interactions with other human proteins ''' ;
+ schema:keyword "PPI";
+ schema:keyword "tutorial";
+ schema:keyword "quality";
   sh:select '''select distinct ?entry ?interactant where {
- ?entry np:isoform ?iso.
- ?entry np:isoform/np:binaryInteraction ?interaction.
- ?interaction np:interactant ?interactant; np:quality np:GOLD.
- filter not exists { ?interactant a np:Xref . }
+ ?entry :isoform ?iso.
+ ?entry :isoform/:binaryInteraction ?interaction.
+ ?interaction :interactant ?interactant; :quality :GOLD.
+ filter not exists { ?interactant a :Xref . }
  filter(?interactant != ?entry) # remove self-interacting proteins
 }
 order by ?entry'''

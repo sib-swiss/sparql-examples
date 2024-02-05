@@ -2,15 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00077
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are expressed in liver according to IHC data but not found in HUPO liver proteome set''' ;
+ schema:keyword "expression";
+ schema:keyword "tutorial";
+ schema:keyword "method";
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform /np:expression ?s1.
- ?s1 np:evidence ?evi; np:term/np:childOf nextprot_cv:TS-0564. #Liver
- ?evi np:evidenceCode nextprot_cv:ECO_0001055; np:observedExpression ?level .
+ ?entry :isoform /:expression ?s1.
+ ?s1 :evidence ?evi;:term/:childOf nextprot_cv:TS-0564. #Liver
+ ?evi :evidenceCode nextprot_cv:ECO_0001055; :observedExpression ?level .
  filter (?level not in (:Negative))
- filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:PeptideAtlas_human_Liver . }
- filter not exists { ?entry np:isoform / np:peptideMapping / np:evidence / np:assignedBy source:MassIVE_human_Liver . }
+ filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:PeptideAtlas_human_Liver . }
+ filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:MassIVE_human_Liver . }
 }'''
 .

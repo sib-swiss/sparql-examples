@@ -2,9 +2,15 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00253
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Human pathways in which at least one protein is mitochondrial GOLD''' ;
+ schema:keyword "pathway";
+ schema:keyword "federated query";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
+ schema:keyword "quality";
   sh:select '''PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
@@ -24,13 +30,13 @@ select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) whe
  ?pathway dc:title ?pathwayname .
  }
 
- ?entry a np:Entry .
- ?entry np:gene / np:recommendedName / rdfs:label ?gen .
- ?entry np:isoform / np:cellularComponent ?loc .
+ ?entry a :Entry .
+ ?entry :gene / :recommendedName / rdfs:label ?gen .
+ ?entry :isoform / :cellularComponent ?loc .
  values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739 } # SL and GO values for mitochondrion
- ?loc np:term / np:childOf ?mitoloc. # mitochondrion
- ?loc np:evidence / np:quality np:GOLD .
- filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence
+ ?loc :term / :childOf ?mitoloc. # mitochondrion
+ ?loc :evidence / :quality :GOLD .
+ filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
 }
 group by ?pathwayname
 order by ?pathwayname'''

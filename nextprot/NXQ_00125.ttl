@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00125
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Domains that are entirely covered by 3D structures''' ;
+ schema:keyword "3D structure";
+ schema:keyword "tutorial";
+ schema:keyword "region";
+ schema:keyword "domain";
   sh:select '''select distinct ?domlabel where {
- ?entry np:isoform ?isoform.
- ?isoform np:pdbMapping ?struc.
- ?struc np:start ?s1 ; np:end ?s2.
- ?isoform np:domain ?dom.
- ?dom np:start ?d1 ; np:end ?d2.
- ?dom np:term/rdfs:label ?domlabel
+ ?entry :isoform ?isoform.
+ ?isoform :pdbMapping ?struc.
+ ?struc :start ?s1 ; :end ?s2.
+ ?isoform :domain ?dom.
+ ?dom :start ?d1 ; :end ?d2.
+ ?dom :term/rdfs:label ?domlabel
  filter ((?s1 <= ?d1) && (?s2 >= ?d2))
 }'''
 .

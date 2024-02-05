@@ -2,20 +2,27 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00084
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose genes are on chromosome 18 and that are experimentally (cv:ECO_0000269) known to be glycosylated or phosphorylated or acetylated''' ;
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword " chromosomal location";
+ schema:keyword "tutorial";
+ schema:keyword "method";
+ schema:keyword "phosphorylation";
   sh:select '''select distinct ?entry {
- ?entry np:gene / np:chromosome \"18\"^^xsd:string.
- ?entry np:isoform ?iso.
+ ?entry :gene / :chromosome \"18\"^^xsd:string.
+ ?entry :isoform ?iso.
  {
- ?iso np:glycosylationSite ?ptm1.
- ?ptm1 np:evidence /np:evidenceCode / np:childOf nextprot_cv:ECO_0000269
+ ?iso :glycosylationSite ?ptm1.
+ ?ptm1 :evidence /:evidenceCode / :childOf nextprot_cv:ECO_0000269
  } 
  union {
- ?iso np:modifiedResidue ?ptm2.
+ ?iso :modifiedResidue ?ptm2.
  ?ptm2 rdfs:comment ?com.
- ?ptm2 np:evidence / np:evidenceCode / np:childOf nextprot_cv:ECO_0000269
+ ?ptm2 :evidence / :evidenceCode / :childOf nextprot_cv:ECO_0000269
  filter (regex(?com, '^phospho|acetyl','i'))
  }
 }'''

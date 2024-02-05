@@ -2,24 +2,30 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00209
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Glycosylation sites and cross links positions on SwissProt canonical isoforms''' ;
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword "isoforms";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry ?iso ?ptmtype ?pos ?modres where {
-?entry np:isoform ?iso.
-?iso np:swissprotDisplayed true .
-?iso np:sequence / np:chain ?seq .
-?iso np:ptm ?ptm.
-?ptm np:term ?modterm.
-?ptm np:start ?pos.
+?entry :isoform ?iso.
+?iso :swissprotDisplayed true .
+?iso :sequence / :chain ?seq .
+?iso :ptm ?ptm.
+?ptm :term ?modterm.
+?ptm :start ?pos.
 bind (substr(?seq,?pos,1) as ?modres)	.
 {
-?ptm a np:GlycosylationSite .
+?ptm a :GlycosylationSite .
 bind(\"glyco\" as ?ptmtype)
 }
 union
 {
-?ptm a np:CrossLink .
+?ptm a :CrossLink .
 bind(\"cross-link\" as ?ptmtype)
 }
 }

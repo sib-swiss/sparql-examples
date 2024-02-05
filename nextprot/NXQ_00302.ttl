@@ -2,12 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00302
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''PE1 entries that do not comply with HPP guidelines (at least 2 non overlapping peptides of at least 9aa from a single data source)''' ;
+ schema:keyword "protein existence";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "keyword";
   sh:select '''select distinct ?entry where {
- ?entry np:existence np:Evidence_at_protein_level .
- ?entry np:isoform ?iso.
- filter not exists { ?iso np:uniprotKeyword / np:term nextprot_cv:KW-1267.}
+ ?entry :existence :Evidence_at_protein_level .
+ ?entry :isoform ?iso.
+ filter not exists { ?iso :uniprotKeyword / :term nextprot_cv:KW-1267.}
 }'''
 .

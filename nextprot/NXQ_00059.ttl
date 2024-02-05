@@ -2,21 +2,29 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00059
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins that are glycosylated and phosphorylated on an extracellular topological domain''' ;
+ schema:keyword "topology";
+ schema:keyword "domain";
+ schema:keyword "PTM";
+ schema:keyword "glycosylation";
+ schema:keyword "tutorial";
+ schema:keyword "region";
+ schema:keyword "phosphorylation";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:topologicalDomain ?topodom.
- ?topodom np:term nextprot_cv:CVTO_0002.
- ?topodom np:start ?topostart ; np:end ?topoend.
- ?iso np:positionalAnnotation ?annot,?annot2.
- ?annot a np:ModifiedResidue.
- ?annot np:term ?ptmtype.
+ ?entry :isoform ?iso.
+ ?iso :topologicalDomain ?topodom.
+ ?topodom :term nextprot_cv:CVTO_0002.
+ ?topodom :start ?topostart ; :end ?topoend.
+ ?iso :positionalAnnotation ?annot,?annot2.
+ ?annot a :ModifiedResidue.
+ ?annot :term ?ptmtype.
  filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255)) 
- ?annot2 a np:GlycosylationSite.
- ?annot np:start ?ptmpos.
- ?annot2 np:start ?glypos.
+ ?annot2 a :GlycosylationSite.
+ ?annot :start ?ptmpos.
+ ?annot2 :start ?glypos.
  filter ((?ptmpos >= ?topostart) && (?ptmpos <= ?topoend))
  filter ((?glypos >= ?topostart) && (?glypos <= ?topoend))
 }'''

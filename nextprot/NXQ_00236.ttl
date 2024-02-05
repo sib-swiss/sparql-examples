@@ -2,17 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00236
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with subcellular location gold and list of all these locations''' ;
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
+ schema:keyword "quality";
   sh:select '''select distinct ?entry (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {
- ?entry np:isoform ?iso.
- ?iso np:cellularComponent ?locannot .
- ?locannot np:term ?locterm .
+ ?entry :isoform ?iso.
+ ?iso :cellularComponent ?locannot .
+ ?locannot :term ?locterm .
  ?locterm rdfs:label ?loclab .
- ?locannot np:evidence ?locev .
- ?locev np:quality np:GOLD .
- filter not exists {?locannot np:negativeEvidence ?locev .}
+ ?locannot :evidence ?locev .
+ ?locev :quality :GOLD .
+ filter not exists {?locannot :negativeEvidence ?locev .}
 }
 GROUP BY ?entry'''
 .

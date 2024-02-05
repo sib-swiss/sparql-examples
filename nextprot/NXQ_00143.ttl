@@ -2,13 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00143
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins for which none of the reported proteotypic peptides is from PeptideAtlas nor MassIVE''' ;
+ schema:keyword "peptide";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
+ schema:keyword "dataset";
   sh:select '''select ?entry where {
- ?entry np:isoform / np:peptideMapping ?pm.
- ?pm np:proteotypic true .
- ?pm np:peptideSource ?src .
+ ?entry :isoform / :peptideMapping ?pm.
+ ?pm :proteotypic true .
+ ?pm :peptideSource ?src .
  bind (?src = source:MassIVE as ?massive)	 
  bind (?src = source:PeptideAtlas as ?pa)	 
  bind (?src != source:MassIVE && ?src != source:PeptideAtlas as ?other)

@@ -2,18 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00255
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Variants identified in exome datasets with a frequency of >0.1''' ;
+ schema:keyword "variant";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry ?varpos ?freq where
 {
- ?entry np:isoform ?iso . 
- ?iso np:swissprotDisplayed true .
- ?iso np:variant ?var . 
- ?var np:start ?varpos . 
- ?var np:evidence ?ev .
- ?ev np:alleleNumber ?anb .
- ?ev np:alleleFrequency ?freq . 
+ ?entry :isoform ?iso . 
+ ?iso :swissprotDisplayed true .
+ ?iso :variant ?var . 
+ ?var :start ?varpos . 
+ ?var :evidence ?ev .
+ ?ev :alleleNumber ?anb .
+ ?ev :alleleFrequency ?freq . 
  filter(?freq > 0.1 && ?anb > 100000) 
  } order by desc(?freq)'''
 .

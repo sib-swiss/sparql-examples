@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00235
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with at least two antibodies available from Human Protein Atlas that have associated tissue expression annotations from immunohistochemistry studies ''' ;
+ schema:keyword "antibody";
+ schema:keyword "expression";
+ schema:keyword "tutorial";
+ schema:keyword "method";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:antibodyMapping ?abmap.
- ?abmap np:evidence / np:reference / np:accession ?aid .
- ?iso np:expressionProfile / np:evidence ?ev .
- ?ev np:evidenceCode nextprot_cv:ECO_0001055.
-# ?ev np:quality np:GOLD .
+ ?entry :isoform ?iso.
+ ?iso :antibodyMapping ?abmap.
+ ?abmap :evidence / :reference / :accession ?aid .
+ ?iso :expressionProfile / :evidence ?ev .
+ ?ev :evidenceCode nextprot_cv:ECO_0001055.
+# ?ev :quality :GOLD .
 }
 group by ?entry having(count(distinct ?aid) > 1)
 order by ?entry'''

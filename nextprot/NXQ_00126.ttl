@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00126
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Peptides that are potential neo N-termini from undescribed isoforms''' ;
+ schema:keyword "isoforms";
+ schema:keyword "peptide";
+ schema:keyword "tutorial";
+ schema:keyword "proteomics";
   sh:select '''select distinct ?entry ?pep where {
- ?entry np:isoform ?iso .
- ?iso np:peptideMapping ?pm.
- ?pm np:start ?p1 ; np:end ?p2 .
- ?pm np:proteotypic true .
+ ?entry :isoform ?iso .
+ ?iso :peptideMapping ?pm.
+ ?pm :start ?p1 ; :end ?p2 .
+ ?pm :proteotypic true .
  filter(?p1 > 2). # must not be already N-terminal
- ?iso np:sequence / np:chain ?chain.
+ ?iso :sequence / :chain ?chain.
  bind (substr(?chain, ?p1, ?p2 - ?p1 + 1) as ?pep) .
  bind (substr(?chain, ?p1-1, 1) as ?prevAA) .
  bind (substr(?chain, ?p1, 1) as ?firstAA) .
@@ -21,9 +26,9 @@ ex:NXQ_00126
  filter(!regex (?firstAA,'[DEFIKLRY]')) #plausible 2nd AA
  filter(regex (?lastAA,'[KR]')) # must be tryptic in C-ter
  filter not exists { # The candidate peptide must not already exist as N-ter in a described isoform
- ?entry np:isoform ?iso2.
- ?iso2 np:sequence / np:chain ?chain2.
- ?iso2 np:matureProtein [ np:start ?mstart ; np:end ?mend]
+ ?entry :isoform ?iso2.
+ ?iso2 :sequence / :chain ?chain2.
+ ?iso2 :matureProtein [ :start ?mstart ; :end ?mend]
  bind (substr(?chain2, ?mstart, ?mend - ?mstart + 1) as ?mat2) .
  filter(strlen(?mat2) > 30).
  bind (substr(?mat2, 2, strlen(?mat2) - 1) as ?mat22) .

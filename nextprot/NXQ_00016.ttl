@@ -2,24 +2,29 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00016
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain''' ;
+ schema:keyword "processing";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
   sh:select '''select distinct ?entry where {
  values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
- ?entry np:isoform ?iso.
- ?iso np:cellularComponent ?anno .
- ?anno np:term /np:childOf ?sloc .
- filter not exists { ?anno np:negativeEvidence ?_ }
+ ?entry :isoform ?iso.
+ ?iso :cellularComponent ?anno .
+ ?anno :term /:childOf ?sloc .
+ filter not exists { ?anno :negativeEvidence ?_ }
  #
- # filter not exists {?iso np:cellularComponent /np:term nextprot_cv:GO_0070062 .
- # filter not exists {?iso np:cellularComponent /np:term /np:childOf nextprot_cv:SL-0243 .}
+ # filter not exists {?iso :cellularComponent /:term nextprot_cv:GO_0070062 .
+ # filter not exists {?iso :cellularComponent /:term /:childOf nextprot_cv:SL-0243 .}
  # } 
  # you can uncomment this to filters out extracellular exosome only location (2240 entries), 
  # most of them evidenced only by large-scale proteomic analysis 
  #
- ?iso np:sequence / np:chain ?seq. 
- ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]
+ ?iso :sequence / :chain ?seq. 
+ ?iso :matureProtein [ :start ?mstart ; :end ?mend]
  filter ((?mend-?mstart > 0) && (?mend-?mstart < 1000))	 
  bind (?mend - ?mstart + 1 as ?mlen)	 
  bind (substr(?seq, ?mstart, ?mlen) as ?mseq)	 

@@ -2,14 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00237
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order''' ;
+ schema:keyword "transmembrane";
+ schema:keyword "topology";
+ schema:keyword "domain";
+ schema:keyword "isoforms";
+ schema:keyword "tutorial";
+ schema:keyword "region";
   sh:select '''select ?entry (count(distinct(?statement)) as ?tmcnt) where {
- ?entry np:isoform ?iso.
- ?iso np:swissprotDisplayed true .
- ?iso np:topology ?statement.
- ?statement a np:TransmembraneRegion.
+ ?entry :isoform ?iso.
+ ?iso :swissprotDisplayed true .
+ ?iso :topology ?statement.
+ ?statement a :TransmembraneRegion.
 } 
 group by ?entry
 order by desc(?tmcnt)'''

@@ -2,14 +2,18 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00067
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with alternative acetylation or Ubl conjugation (SUMO or Ubiquitin) at the same positions''' ;
+ schema:keyword "PTM";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
- ?entry np:isoform ?iso.
- ?iso np:crossLink /np:start ?ptmpos.
- ?iso np:modifiedResidue ?ptm.
- ?ptm np:start ?ptmpos.
+ ?entry :isoform ?iso.
+ ?iso :crossLink /:start ?ptmpos.
+ ?iso :modifiedResidue ?ptm.
+ ?ptm :start ?ptmpos.
  ?ptm rdfs:comment ?comment.
  # We use this filter to select acetylations
  filter regex(?comment, \"acetyl\",\"i\")

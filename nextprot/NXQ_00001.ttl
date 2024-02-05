@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00001
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins phosphorylated and located in the cytoplasm''' ;
+ schema:keyword "PTM";
+ schema:keyword "tutorial";
+ schema:keyword "subcellular location";
+ schema:keyword "phosphorylation";
   sh:select '''select distinct ?entry where {
  values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
- ?entry np:isoform ?iso.
- ?iso np:uniprotKeyword / np:term nextprot_cv:KW-0597. # Phosphorylated
- ?iso np:cellularComponent ?loc .
- ?loc np:term /np:childOf ?cytoloc.
- filter not exists {?loc np:negativeEvidence ?negev} # No negative localization evidence
+ ?entry :isoform ?iso.
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0597. # Phosphorylated
+ ?iso :cellularComponent ?loc .
+ ?loc :term /:childOf ?cytoloc.
+ filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
 }
 
 # Assign values to the variable ?cytoloc 
@@ -25,7 +30,7 @@ ex:NXQ_00001
 # Phosphorylated proteins are retrieved using a keyword:
 # KW-0597 is the UniProt keyword for phosphorylated
 #
-# Use np:childOf to include children of a term.
+# Use :childOf to include children of a term.
 # Cytosol (SL-0091), the child term of cytoplasm, will thus be included.
 #
 # Exclude negative locatization evidences.

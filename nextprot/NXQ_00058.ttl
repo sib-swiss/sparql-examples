@@ -2,19 +2,23 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00058
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are located on the genome next to a protein which is involved in spermatogenesis''' ;
+ schema:keyword "chromosomal location";
+ schema:keyword "function";
+ schema:keyword "tutorial";
   sh:select '''select distinct (?neighbour as ?entry) (str(?gen) as ?spergen) where {
  {
  select distinct ?chr ?gen ?sperstart (MAX(?ldist) as ?lmin) (MIN(?rdist) as ?rmin) where {
- ?entryx np:isoform / np:function ?func .
-	 ?func np:term / np:childOf nextprot_cv:GO_0007283 . # Involvment in spermatogenesis
-	 filter not exists {?func np:negativeEvidence ?negev}
- ?entryx np:gene ?gene.
- ?gene np:begin ?sperstart; np:end ?e; np:chromosome ?chr; np:recommendedName / rdfs:label ?gen.
- ?ngen np:chromosome ?chr. 
- ?ngen np:begin ?n_begin; np:end ?n_end .
+ ?entryx :isoform / :function ?func .
+	 ?func :term / :childOf nextprot_cv:GO_0007283 . # Involvment in spermatogenesis
+	 filter not exists {?func :negativeEvidence ?negev}
+ ?entryx :gene ?gene.
+ ?gene :begin ?sperstart; :end ?e; :chromosome ?chr; :recommendedName / rdfs:label ?gen.
+ ?ngen :chromosome ?chr. 
+ ?ngen :begin ?n_begin; :end ?n_end .
  filter ( ?n_end > (?sperstart - 1000000) && ?n_begin <= (?sperstart + 1000000) && ?ngen != ?gene)
  bind(?sperstart - ?n_begin as ?dist)
  bind(if(?dist<0,?dist,-1000000) as ?ldist)
@@ -22,11 +26,11 @@ ex:NXQ_00058
  } group by ?chr ?gen ?sperstart
  }
  bind(?sperstart - ?lmin as ?lchrpos)
- ?lgene np:begin ?lchrpos; np:chromosome ?chr.
+ ?lgene :begin ?lchrpos; :chromosome ?chr.
  bind(?sperstart - ?rmin as ?rchrpos)
- ?rgene np:begin ?rchrpos; np:chromosome ?chr.
- { ?neighbour np:gene ?lgene. } # left gene
+ ?rgene :begin ?rchrpos; :chromosome ?chr.
+ { ?neighbour :gene ?lgene. } # left gene
 	 union
- { ?neighbour np:gene ?rgene. } # right gene
+ { ?neighbour :gene ?rgene. } # right gene
 } order by ?gen'''
 .

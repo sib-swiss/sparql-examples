@@ -2,16 +2,21 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00145
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which include a mature chain of less or equal to 50 amino acid residues whose C-terminus is amidated''' ;
+ schema:keyword "PTM";
+ schema:keyword "processing";
+ schema:keyword "sequence";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
-?entry np:isoform ?isoform.
-?isoform np:ptm ?ptm.
+?entry :isoform ?isoform.
+?isoform :ptm ?ptm.
 ?ptm rdfs:comment ?comment.
 filter regex(?comment, \"amid\",\"i\")
-?ptm np:start ?ptmpos .
-?isoform np:matureProtein [ np:start ?mstart ; np:end ?mend]
+?ptm :start ?ptmpos .
+?isoform :matureProtein [ :start ?mstart ; :end ?mend]
 filter ((?mend = ?ptmpos) && (?mend-?mstart < 50))
 }'''
 .

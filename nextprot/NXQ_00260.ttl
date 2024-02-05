@@ -2,9 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00260
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with high-frequency missense variants involved in bacterial infection, with dbSNP identifiers and position on the canonical isoform''' ;
+ schema:keyword "sequence";
+ schema:keyword "disease";
+ schema:keyword "federated query";
+ schema:keyword "variant";
+ schema:keyword "isoforms";
+ schema:keyword "tutorial";
   sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
@@ -28,13 +35,13 @@ select distinct ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?o
  }
 
  BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
- ?entry np:swissprotPage ?unipage .
- ?entry np:isoform ?iso .
- ?iso np:swissprotDisplayed true .
- ?iso np:variant ?var .
- ?var np:evidence /np:reference ?xref .
- ?xref np:provenance db:dbSNP; np:accession ?snpac .
- ?var np:start ?pos ; np:original ?orgaa; np:variation ?varaa .
+ ?entry :swissprotPage ?unipage .
+ ?entry :isoform ?iso .
+ ?iso :swissprotDisplayed true .
+ ?iso :variant ?var .
+ ?var :evidence /:reference ?xref .
+ ?xref :provenance db:dbSNP; :accession ?snpac .
+ ?var :start ?pos ; :original ?orgaa; :variation ?varaa .
  filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned
 } order by ?entry'''
 .

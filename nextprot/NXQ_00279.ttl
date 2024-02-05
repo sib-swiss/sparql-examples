@@ -2,13 +2,16 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00279
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins for which an interaction mapping region is described for both interactants ''' ;
+ schema:keyword "PPI";
+ schema:keyword "tutorial";
   sh:select '''select distinct ?entry (str(?gen) AS ?gene) ?entry2 (str(?gen2) AS ?gene2) where {
- ?entry np:isoform ?iso; np:gene / np:recommendedName / rdfs:label ?gen .
- ?iso np:interactionMapping / np:interactant ?entry2.
- ?entry2 np:gene / np:recommendedName / rdfs:label ?gen2 .
- filter exists { ?entry2 np:isoform / np:interactionMapping / np:interactant ?entry.}
+ ?entry :isoform ?iso; :gene / :recommendedName / rdfs:label ?gen .
+ ?iso :interactionMapping / :interactant ?entry2.
+ ?entry2 :gene / :recommendedName / rdfs:label ?gen2 .
+ filter exists { ?entry2 :isoform / :interactionMapping / :interactant ?entry.}
 } order by ?entry'''
 .

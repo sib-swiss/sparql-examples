@@ -2,17 +2,22 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<http://schema.org/>
 ex:NXQ_00297
  sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''PDB structures spanning the complete sequence of the mature protein''' ;
+ schema:keyword "processing";
+ schema:keyword "sequence";
+ schema:keyword "3D structure";
+ schema:keyword "tutorial";
   sh:select '''select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = \",\") as ?pdbacs) where { 
- ?entry np:isoform ?iso.
- ?iso np:pdbMapping ?pdbmap.
- ?pdbmap np:evidence /np:reference ?ref.
- ?ref np:provenance db:PDB.
- ?ref np:accession ?pdbac.
- ?pdbmap np:start ?pdbstart ; np:end ?pdbend.
- ?iso np:matureProtein [ np:start ?mstart ; np:end ?mend]
+ ?entry :isoform ?iso.
+ ?iso :pdbMapping ?pdbmap.
+ ?pdbmap :evidence /:reference ?ref.
+ ?ref :provenance db:PDB.
+ ?ref :accession ?pdbac.
+ ?pdbmap :start ?pdbstart ; :end ?pdbend.
+ ?iso :matureProtein [ :start ?mstart ; :end ?mend]
  filter (?mend-?mstart > 0)	 
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
 } group by ?entry'''
