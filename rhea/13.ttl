@@ -23,11 +23,13 @@ ex:13
 SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
-    ?uniprot up:reviewed true . 
-    ?uniprot up:mnemonic ?mnemo . 
-    ?uniprot up:organism ?taxid .
     VALUES (?taxid) { (taxon:83333) }
-    ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
+    GRAPH <http://sparql.uniprot.org/uniprot> {
+      ?uniprot up:reviewed true . 
+      ?uniprot up:mnemonic ?mnemo . 
+      ?uniprot up:organism ?taxid .
+      ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
+    }
   }
   ?rhea rh:accession ?accession .
   ?rhea rh:equation ?equation .
