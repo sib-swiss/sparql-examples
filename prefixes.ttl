@@ -150,7 +150,7 @@ ex:prefix-slm
   sh:namespace "https://swisslipids.org/rdf/SLM_"^^xsd:anyURI .
 ex:prefix-codao
   sh:prefix "codoa" ;
-  sh:namesapce "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
+  sh:namespace "http://purl.glycoinfo.org/ontology/codao#"^^xsd:anyURI .
 ex:prefix-glycan
   sh:prefix "glycan" ;
   sh:namespace "http://purl.jp/bio/12/glyco/glycan#"^^xsd:anyURI .
