@@ -9,7 +9,7 @@ ex:NXQ_00290
  schema:keyword "enzyme";
  schema:keyword "small molecule interaction";
  schema:keyword "tutorial";
-  sh:select '''select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ec) where
+  sh:select '''select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
 
 { ?entry :recommendedName ?name_entity . 
  ?name_entity a :ProteinName; rdfs:label ?name. 

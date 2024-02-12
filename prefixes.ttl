@@ -214,12 +214,12 @@ _:prefix_mnx
   sh:prefix "mnx" ;
   sh:namespace "https://rdf.metanetx.org/schema/"^^xsd:anyURI .
 
-_:prefix_sp sh:declare   _:prefix_sp .
+_:sparql_examples_prefixes sh:declare   _:prefix_sp .
 _:prefix_sp
   sh:prefix "sp" ;
   sh:namespace "http://spinrdf.org/sp#"^^xsd:anyURI .
 
-_:prefix_eunis_species sh:declare   _:prefix_eunis_species .
+_:sparql_examples_prefixes sh:declare   _:prefix_eunis_species .
 _:prefix_eunis_species
   sh:prefix "eunisSpecies" ;
   sh:namespace "http://eunis.eea.europa.eu/rdf/species-schema.rdf#"^^xsd:anyURI .
@@ -274,7 +274,7 @@ _:prefix_nextprot
   sh:prefix "nextprot" ;
   sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
 
-_:sparql_examples_prefixes sh:declare _:prefix_nextprot_schema .
+_:sparql_examples_prefixes sh:declare _:prefix_nextprot_cv .
 _:prefix_nextprot_cv
   sh:prefix "nextprot_cv" ;
   sh:namespace "http://nextprot.org/rdf/terminology/"^^xsd:anyURI .

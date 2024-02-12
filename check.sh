@@ -35,6 +35,10 @@ done
 
 for p in $(ls -d $project);
 do
+	if [ -f $p ]
+	then
+		break
+	fi
 	project_prefixes=""
 	if [ -f $p/prefixes.ttl ]
 	then

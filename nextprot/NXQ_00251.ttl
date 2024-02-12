@@ -19,8 +19,8 @@ ex:NXQ_00251
  ?pm :proteotypic true.
  ?pm :start ?pos ; :end ?pos2 .
  filter(?pos2 - ?pos >= 8) # peptide length >= 9
- bind(strafter(str(?isononcano),\"-\") as ?isostr)
- bind(concat(concat(?isostr,\"-\"),?pos) as ?isopos)
+ bind(strafter(str(?isononcano),"-") as ?isostr)
+ bind(concat(concat(?isostr,"-"),?pos) as ?isopos)
  filter not exists {?iso1 :peptideMapping/ :peptideName ?pepname.}
  }
 group by ?entry'''

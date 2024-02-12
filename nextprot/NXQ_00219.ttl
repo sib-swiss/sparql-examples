@@ -10,8 +10,8 @@ ex:NXQ_00219
  schema:keyword "tutorial";
   sh:select '''select distinct ?entry where {
  values ?gene
- {\"UBA6\" \"PXDNL\" \"CNOT1\" \"TCAF2\" \"ARHGAP32\" \"HACD1\" \"AKR1B15\" \"SGK1\" \"MYO1C\" \"LGALS9\"
- \"PIK3CD\" \"PDE2A\" \"DNM1L\"} # space or nl-separated
+ {"UBA6" "PXDNL" "CNOT1" "TCAF2" "ARHGAP32" "HACD1" "AKR1B15" "SGK1" "MYO1C" "LGALS9"
+ "PIK3CD" "PDE2A" "DNM1L"} # space or nl-separated
  
  bind (STRDT (?gene,xsd:string) as ?genename ) . # converts raw string to ^^xsd:string
  ?entry :gene / :recommendedName / rdfs:label ?genename .

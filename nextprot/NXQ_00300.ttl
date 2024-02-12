@@ -41,5 +41,5 @@ service <http://sparql.orthodb.org/sparql>
 ?ortholog odb:name ?fly_name; up:organism/a/up:scientificName 'Drosophila melanogaster'.
 filter (?clade='Metazoa') }
 }
-} group by ?entry str(?name)'''
+} group by ?entry ?name'''
 .
