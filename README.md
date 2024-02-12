@@ -39,3 +39,20 @@ provide the project name with a `-p` parameter
 # e.g. make file examples_uniprot.ttl
 ./convertIntoOneTrutle.sh -p uniprot
 ```
+
+
+# Querying for queryies
+
+As the SPARQL examples are in RDF once loaded in a SPARQL endpoint they can be queried for.
+```sparql
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+SELECT *
+WHERE {
+  ?ex sh:select|sh:ask|sh:construct|sh:describe ?query .
+}
+```
+
+
+# Labeling queries
+
+If you want to add a label to a query please use [schema.org keyword](https://schema.org/keywords)
