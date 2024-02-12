@@ -8,7 +8,7 @@ prefix uniprotkb:<http://purl.uniprot.org/uniprot/>
  
 ex:35
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluser identity""" ;
     sh:select """SELECT 
     ?similar ?identity

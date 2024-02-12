@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:52
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with Rhea and ChEMBL via IDSM/Elixir czech republic).""" ;
     sh:select """SELECT
         DISTINCT  

@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:4
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Potential lipid structures for lipid classes" ;
     rdfs:comment """For a given (list of) lipid classes (e.g. SWISSLIPID:000399814 (Ceramide) SWISSLIPID:000000007 (Sphingomyelin (iso-d17:1(4E))), return a list of the corresponding Isomeric subspecies. 
 The query should return the lipid recommended names (?name) as well as identifiers (?id).

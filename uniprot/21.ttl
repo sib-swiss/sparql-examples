@@ -7,7 +7,7 @@ prefix skos:<http://www.w3.org/2004/02/skos/core#>
 prefix schema:<http://schema.org/>
 ex:21
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find where disease related proteins are known to be located in the cell""";
     sh:select """
 SELECT 

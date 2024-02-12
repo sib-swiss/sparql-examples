@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:38
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Published lipids with the same components, positions" ;
     rdfs:comment """Returns the list of isomeric subspecies that contain the same fatty acid component(s) at the same position(s) as a user-defined lipid, but limits the output to published lipids linked to a PMID.
 Output should include the corresponding SwissLipids ID(s) and name(s) and the PMID(s) for each.

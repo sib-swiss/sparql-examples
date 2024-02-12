@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:28
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Get the list of uniprot entries for the chromosome of proteome <a href="https://www.uniprot.org/proteomes/UP000000625">UP000000625</a>"""^^rdf:HTML ;
     sh:select """SELECT 
   ?protein

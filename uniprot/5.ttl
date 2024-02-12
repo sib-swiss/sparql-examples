@@ -6,7 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Select a mapping of UniProt to PDB entries using the UniProt cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database""";
     sh:select """SELECT ?protein ?db
 WHERE

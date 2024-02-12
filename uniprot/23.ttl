@@ -8,7 +8,7 @@ prefix GO:<http://purl.obolibrary.org/obo/GO_>
 prefix taxon:<http://purl.uniprot.org/taxonomy/>
 ex:23
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Number of reviewed entries (Swiss-Prot) that are related to <a href="http://amigo.geneontology.org/amigo/term/GO:0016301">kinase activity</a>""" ;
     sh:select """SELECT
     (COUNT(DISTINCT(?protein)) AS ?pc)

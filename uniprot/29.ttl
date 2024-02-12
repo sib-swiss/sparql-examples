@@ -7,7 +7,7 @@ prefix allie: <http://allie.dbcls.jp/>
 prefix schema:<http://schema.org/>
 ex:29
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Use <a href="http://allie.dbcls.jp/">ALLIE</a> a service for Abbreviation / Long Form in Japanese and English to search in UniProt using Japanese."""^^rdf:HTML ;
     sh:select """SELECT
     ?protein ?englishLabelStr

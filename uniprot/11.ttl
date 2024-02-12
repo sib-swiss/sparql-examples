@@ -7,7 +7,7 @@ prefix faldo:<http://biohackathon.org/resource/faldo#>
 prefix schema:<http://schema.org/>
 ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence""" ;
     sh:select """SELECT ?protein ?begin ?end
 WHERE 

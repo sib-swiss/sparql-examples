@@ -7,7 +7,7 @@ prefix taxon: <http://purl.uniprot.org/taxonomy/>
 prefix schema:<http://schema.org/>
 ex:37
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine""" ;
     sh:select """SELECT 
   ?protein 

@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:46
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Retrieve images of 'Anas' (Ducks) from the European Environmental Agency databases (federated query).""" ;
     sh:select """SELECT 
     ?taxon

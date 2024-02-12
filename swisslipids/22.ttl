@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:22
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Possible lipid structure composition of tissues – limited to published lipid structures" ;
     rdfs:comment """￼Returns the list of possible lipid structures for a list of tissues (UBERON lipid identifiers), but considers only those lipids associated with one or more publications.
 Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the tissues. 

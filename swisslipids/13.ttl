@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:13
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Mapping ChEBI to SwissLipids" ;
     rdfs:comment """For a given list of ChEBI identifiers return the list of corresponding SwissLipids identifiers.
 Output should include SwissLipids identifier and name plus the HMDB identifier. 

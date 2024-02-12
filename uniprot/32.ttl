@@ -7,7 +7,7 @@ prefix taxon:<http://purl.uniprot.org/taxonomy/>
 prefix schema:<http://schema.org/>
 ex:32    
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find UniProtKB entries with more than 1 <a href="https://www.uniprot.org/help/topo_dom">Topological domain annotation</a>"""^^rdf:HTML ;
     sh:select """SELECT 
     ?protein 

@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:2
     a sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Show the triples about <a href="https://hamap.expasy.org/rule/">MF_00001</a>"""^^rdf:HTML ;
     sh:describe """DESCRIBE <http://purl.uniprot.org/hamap/MF_00001>""" .
 

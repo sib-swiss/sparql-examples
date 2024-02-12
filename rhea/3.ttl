@@ -8,7 +8,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:3
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Select the specific form of <a href="https://www.rhea-db.org/rhea/11628">RHEA:11628</a>, a reaction that deals with general chemical classes (i.e. select the equivalent reactions involving instances of the chemical classes in <a href="https://www.rhea-db.org/rhea/11628">RHEA:11628</a>"""^^rdf:HTML ;
     sh:select """# Query 3
 # Select the specific form of RHEA:11628.

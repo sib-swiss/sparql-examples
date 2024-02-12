@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:16
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Mapping LipidX lipids to LIPID MAPS " ;
     rdfs:comment """For a given list of LipidX lipid identifiers return the list of corresponding LIPID MAPS IDs.
 Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the LIPID MAPS ID. 

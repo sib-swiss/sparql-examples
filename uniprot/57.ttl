@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:57
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Map PDB identifiers plus chains to UniProt""" ;
     sh:select """SELECT
   ?pdbId ?chain ?pdbChain ?uniprot

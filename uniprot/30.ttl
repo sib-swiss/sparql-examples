@@ -7,7 +7,7 @@ prefix taxon:<http://purl.uniprot.org/taxonomy/>
 prefix schema:<http://schema.org/>
 ex:30
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>"""^^rdf:HTML ;
     sh:select """SELECT
   ?protein 

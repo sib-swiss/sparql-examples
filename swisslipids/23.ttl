@@ -5,7 +5,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:23
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Lipid analyte composition of cellular compartments" ;
     rdfs:comment """Returns the list of lipid analytes associated with a list of one or more subcellular locations (GO cellular components).
 Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the cellular components. """^^rdf:HTML ;

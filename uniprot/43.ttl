@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:43
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Connect patents cited in UniProtKB with those in the patent database at EPO via publication number, whose grant date is more than twenty years in the past.""" ;
     sh:select """
 PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> 

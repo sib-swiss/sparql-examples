@@ -7,7 +7,7 @@ prefix taxon:<http://purl.uniprot.org/taxonomy/>
 prefix schema:<http://schema.org/>
 ex:31
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Find UniParc records whose sequence point to the most database entries""" ;
     sh:select """SELECT ?sequence ?entries
 WHERE

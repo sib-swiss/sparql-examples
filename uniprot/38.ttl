@@ -7,7 +7,7 @@ prefix taxon: <http://purl.uniprot.org/taxonomy/>
 prefix schema:<http://schema.org/>
 ex:38
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData""" ;
     sh:select """
 SELECT 

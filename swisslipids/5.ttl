@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:5
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:label "Lipid reactions" ;
     rdfs:comment """For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
 This query does consider the hierarchy: it looks for reactions involving the specified lipid and/or its more specific forms."""^^rdf:HTML ;

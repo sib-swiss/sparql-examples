@@ -7,7 +7,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:10
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes ;
     rdfs:comment """Select all human UniProt entries with a sequence variant that leads to a tyrosine to phenylalanine substitution""" ;
     sh:select """SELECT ?protein ?annotation ?begin ?text
 WHERE
