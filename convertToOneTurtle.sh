@@ -41,8 +41,7 @@ echo "# prefix: ex" >> examples_${project}.ttl
 
 if which riot
 then
-  riot --formatted=turtle prefixes.ttl  > examples_${project}.ttl
-  riot --formatted=turtle $project/*.ttl  >> examples_${project}.ttl
+  cat prefixes.ttl $project/*.ttl | riot --syntax=turtle --formatted=turtle > examples_${project}.ttl
 else
   rapper -q -i turtle <(cat ${project}/[1-9]*.ttl prefixes.ttl) -o turtle  > examples_${project}.ttl
 fi
