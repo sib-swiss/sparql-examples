@@ -29,3 +29,13 @@ WHERE
 
 There is a script `check.sh` that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org).
 This is a bit slow because of all stopping and starting of jena, making it faster is possible :) but has not been critical yet.
+
+# Conversion
+
+To load the examples into a sparql endpoint they should be concatanated into one example file. Use the script `convertIntoOneTurtle.sh`
+provide the project name with a `-p` parameter
+
+```bash
+# e.g. make file examples_uniprot.ttl
+./convertIntoOneTrutle.sh -p uniprot
+```
