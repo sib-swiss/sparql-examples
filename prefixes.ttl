@@ -333,3 +333,9 @@ _:sparql_examples_prefixes sh:declare _:prefix_busco .
 _:prefix_busco
     sh:prefix "busco" ;
     sh:namespace "http://busco.ezlab.org/schema#"^^xsd:anyURI .
+
+
+_:sparql_examples_prefixes sh:declare _:prefix_oboInOwl .
+_:prefix_oboInOwl
+    sh:prefix "oboInOwl" ;
+    sh:namespace "http://www.geneontology.org/formats/oboInOwl#"^^xsd:anyURI .
