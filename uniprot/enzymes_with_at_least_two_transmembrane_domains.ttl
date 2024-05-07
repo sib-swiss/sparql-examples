@@ -8,7 +8,7 @@ prefix schema:<http://schema.org/>
 ex:enzymes_with_at_least_two_transmembrane_domains
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find Enzymes that have at least two transmembrane domains""" ;
+    rdfs:comment """Find Hydrolases (enzymes that catalyse the hydrolysis of various bonds) that have at least two transmembrane domains""" ;
     sh:select """SELECT 
   WHERE {
  ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzyme ;
