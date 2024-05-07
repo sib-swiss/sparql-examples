@@ -5,15 +5,16 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix faldo:<http://biohackathon.org/resource/faldo#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
-ex:enzymes_with_at_least_two_transmembrane_domains
+ex:diseases_involving_enzymes.ttl
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find Hydrolases (enzymes that catalyse the hydrolysis of various bonds) that have at least two transmembrane domains""" ;
-    sh:select """SELECT 
-  ?protein
-WHERE {
+    rdfs:comment """Find Diseases that are thought to be related to Enzymes""" ;
+    sh:select """SELECT
+?disease ?diseaseLabel
+WHERE { 
  ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzyme ;
-                   up:annotation ?transMemAnnotation .
- ?enzyme rdfs:subClassOf <http://purl.uniprot.org/enzyme/3.-.-.-> .
- ?transMemAnnotation a up:Transmembrane_Annotation .
-} GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMemAnnotation) >= 2)""" .
+                   up:annotation ?diseaseAnnotation .
+ ?diseaseAnnotation a up:Disease_Annotation ;
+                    up:disease ?disease .
+ ?disease skos:prefLabel ?diseaseLabel .
+}""" .
