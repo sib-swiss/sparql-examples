@@ -12,8 +12,8 @@ ex:enzymes_with_at_least_two_transmembrane_domains
     sh:select """SELECT 
   ?protein
 WHERE {
- ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzyme ;
-                   up:annotation ?transMemAnnotation .
- ?enzyme rdfs:subClassOf <http://purl.uniprot.org/enzyme/3.-.-.-> .
- ?transMemAnnotation a up:Transmembrane_Annotation .
-} GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMemAnnotation) >= 2)""" .
+ ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzymeClass ;
+                   up:annotation ?transMembraneAnnotation .
+ ?enzymeClass rdfs:subClassOf <http://purl.uniprot.org/enzyme/3.-.-.-> .
+ ?transMembraneAnnotation a up:Transmembrane_Annotation .
+} GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMembraneAnnotation) >= 2)""" .
