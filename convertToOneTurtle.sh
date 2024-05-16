@@ -13,7 +13,8 @@ while getopts nuhrsgmcp: option; do
         g) project="glyconnect";;
         m) project="metanetx";;
         c) project="covid";;
-	n) project="nextprot";;
+        n) project="nextprot";;
+        b) project="bgee";;
         h) help; exit 0;;
         *) help; exit 1;;
     esac

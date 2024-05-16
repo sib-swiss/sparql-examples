@@ -1,0 +1,38 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:8-b a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
+PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+
+SELECT DISTINCT ?anat ?anatName ?score  {
+    ?seq a orth:Gene ;
+        lscr:xrefEnsemblGene ensembl:ENSG00000130208 .
+    ?expression a genex:Expression ;
+        genex:hasExpressionCondition ?condition ;
+        genex:hasExpressionLevel ?score ;
+        genex:hasSequenceUnit ?seq .
+    ?condition a genex:ExpressionCondition ;
+        genex:hasAnatomicalEntity ?anat ;
+        genex:hasDevelopmentalStage obo:UBERON_0000113 ;
+        genex:hasSex "any" ;
+        genex:hasStrain ?strain .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label ?anatName .
+    ?strain a efo:EFO_0005135 ;
+        rdfs:label "wild-type" .
+    FILTER (?anat !=  obo:GO_0005575)
+} ORDER BY DESC(?score)
+""" .
+

@@ -16,7 +16,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 ex:1  # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declerations. Note the blank node
+    sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
     rdfs:comment """A comment <em>May have HTML in them</em>"""^^rdf:HTML ;
     sh:select """SELECT ?s
 WHERE
@@ -37,11 +37,11 @@ provide the project name with a `-p` parameter
 
 ```bash
 # e.g. make file examples_uniprot.ttl
-./convertIntoOneTrutle.sh -p uniprot
+./convertToOneTurtle.sh -p uniprot
 ```
 
 
-# Querying for queryies
+# Querying for queries
 
 As the SPARQL examples are in RDF once loaded in a SPARQL endpoint they can be queried for.
 ```sparql
