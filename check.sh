@@ -27,7 +27,8 @@ while getopts nuhrsgmcp: option; do
         g) project="glyconnect";;
         m) project="metanetx";;
         c) project="covid";;
-	n) project="nextprot";;
+        n) project="nextprot";;
+        b) project="bgee";;
         h) help; exit 0;;
         *) help; exit 1;;
     esac
@@ -46,13 +47,13 @@ do
 		echo "Found project specific prefixes"
 	fi
 	for i in $(ls -t $p/*.ttl);
-	do	
+	do
 		if [[ "$i" != "$p/prefixes.ttl" ]]
 		then
 		echo "Checking $i"
-		f=$(echo $i | cut -f 2 -d '/' )	
+		f=$(echo $i | cut -f 2 -d '/' )
 		if [ $(grep -c "ex:${f:0:${#f}-4}" $i) -lt 1 ];
-		then 
+		then
         		echo "$i is NOT ok"
 			exit 4;
 		fi;
@@ -60,7 +61,7 @@ do
 		then
 			echo "$i is NOT ok"
 			exit 2;
-		fi 
+		fi
 		q=$(sparql --results=TSV --data=$i "PREFIX sh:<http://www.w3.org/ns/shacl#> SELECT ?qs WHERE {?q sh:select|sh:describe|sh:construct|sh:ask ?qs}"|grep -vP "^\?qs$");
 		pq="${q:1:${#q}-2}";
 		if [[ ! -z "$pq" ]]

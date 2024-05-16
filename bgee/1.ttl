@@ -1,0 +1,16 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "What are the species present in Bgee?" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?species WHERE {
+    ?species a up:Taxon .
+}
+""" .
+
