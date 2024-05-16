@@ -3,7 +3,7 @@
 
 
 project="uniprot"
-while getopts nuhrsgmcp: option; do
+while getopts nuhrsgmcpb: option; do
     case "$option" in
         p) project="$OPTARG";;
         u) project="uniprot";;

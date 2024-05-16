@@ -17,7 +17,7 @@ prefixes=$(sparql --results=TSV --data=prefixes.ttl "PREFIX sh:<http://www.w3.or
 echo "Prefixes found"
 
 project="*"
-while getopts nuhrsgmcp: option; do
+while getopts nuhrsgmcpb: option; do
     case "$option" in
         p) project="$OPTARG";;
         u) project="uniprot";;
