@@ -1,6 +1,7 @@
 @prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix schema:<https://schema.org/> .
 
 ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
