@@ -16,13 +16,4 @@ jobs:
         java-version: '21'
 
     - name: Install and run checks
-      run: |
-        sudo apt-get install -y libraptor2-0 raptor2-utils
-        export JENA_VERSION=5.0.0
-        curl -LO https://dlcdn.apache.org/jena/binaries/apache-jena-$JENA_VERSION.zip
-        unzip apache-jena-$JENA_VERSION.zip
-        mv apache-jena-$JENA_VERSION ../
-        rm apache-jena-$JENA_VERSION.zip
-        export JENA_HOME=$PWD/../apache-jena-$JENA_VERSION
-        export PATH=$JENA_HOME/bin:$PATH
-        ./check.sh
+      run: mvn test
