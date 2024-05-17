@@ -55,6 +55,15 @@ WHERE {
 }
 ```
 
+# Testing your queries
+
+The queries are parsed and validated but not executed with junit/maven
+
+```bash
+mvn test
+```
+should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
+
 
 # Labeling queries
 
