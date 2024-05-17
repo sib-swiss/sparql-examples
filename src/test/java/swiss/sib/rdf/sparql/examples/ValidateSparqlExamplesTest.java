@@ -50,6 +50,13 @@ public class ValidateSparqlExamplesTest {
 				projectPrefixes) -> () -> CreateTestWithRDF4jMethods.testQueryValid(p, projectPrefixes);
 		return testAll(tester);
 	}
+	
+	@TestFactory
+	public Stream<DynamicTest> testPrefixDeclarations() throws URISyntaxException, IOException {
+		URL baseDir = getClass().getResource("/");
+		Path basePath = Paths.get(baseDir.toURI());
+		return Files.walk(basePath, 5).filter(this::isTurtleAndPrefixFile).flatMap(this::testPrefixes);
+	}
 
 	private Stream<DynamicTest> testAll(BiFunction<Path, String, Executable> tester)
 			throws URISyntaxException, IOException {
@@ -58,9 +65,8 @@ public class ValidateSparqlExamplesTest {
 		String commonPrefixes = extractPrefixes(Paths.get(getClass().getResource("/prefixes.ttl").toURI()));
 		return Files.list(basePath).flatMap(path -> {
 			try {
-				Stream<DynamicTest> testForEachExample = Files.walk(path, 5).filter(this::isTurtleButNotPrefixFile)
+				return Files.walk(path, 5).filter(this::isTurtleButNotPrefixFile)
 						.map(p -> createTest(tester, path, extractProjectPrefixes(commonPrefixes, path), p));
-				return Stream.concat(testPrefixes(path), testForEachExample);
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
@@ -83,8 +89,7 @@ public class ValidateSparqlExamplesTest {
 		return projectPrefixes;
 	}
 
-	private Stream<DynamicTest> testPrefixes(Path path) {
-		Path prefixes = Paths.get(path.toString(), "prefixes.ttl");
+	private Stream<DynamicTest> testPrefixes(Path prefixes) {
 		if (Files.exists(prefixes)) {
 			return Stream
 					.of(DynamicTest.dynamicTest(prefixes.getParent().getFileName().toString() + ":prefixes.ttl", () -> {
@@ -108,7 +113,7 @@ public class ValidateSparqlExamplesTest {
 		ResultSet rs = qe.execSelect();
 		while (rs.hasNext()) {
 			QuerySolution next = rs.next();
-			prefixesSB.append(next.getLiteral("s").getValue());
+			prefixesSB.append(next.getLiteral("s").getValue()).append('\n');
 		}
 		rs.close();
 		qe.close();
@@ -117,6 +122,11 @@ public class ValidateSparqlExamplesTest {
 
 	private boolean isTurtleButNotPrefixFile(Path p) {
 		return Files.exists(p) && p.toUri().getPath().endsWith(".ttl") && !p.toUri().getPath().endsWith("prefixes.ttl")
+				&& Files.isRegularFile(p);
+	}
+	
+	private boolean isTurtleAndPrefixFile(Path p) {
+		return Files.exists(p) && p.toUri().getPath().endsWith("prefixes.ttl")
 				&& Files.isRegularFile(p);
 	}
 }

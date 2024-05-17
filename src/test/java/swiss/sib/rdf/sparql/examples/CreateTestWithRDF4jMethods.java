@@ -15,6 +15,7 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.query.parser.QueryParser;
 import org.eclipse.rdf4j.query.parser.sparql.SPARQLParserFactory;
@@ -41,7 +42,7 @@ public class CreateTestWithRDF4jMethods {
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		Stream.of("ask", "select", "concat", "describe")
 				.map(s -> model.getStatements(null,
-						SimpleValueFactory.getInstance().createIRI("http://www.w3.org/ns/shacl#", s), null))
+						SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, s), null))
 				.map(Iterable::iterator).forEach(i -> {
 					while (i.hasNext()) {
 						Value obj = i.next().getObject();

@@ -17,6 +17,7 @@ import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.riot.RDFDataMgr;
+import org.eclipse.rdf4j.model.vocabulary.SHACL;
 
 public class CreateTestWithJenaMethods {
 
@@ -25,7 +26,7 @@ public class CreateTestWithJenaMethods {
 		Model model = RDFDataMgr.loadModel(p.toUri().toString());
 		assertFalse(model.isEmpty());
 		Stream.of("ask", "select", "concat", "describe")
-				.map(s -> model.listObjectsOfProperty(model.createProperty("http://www.w3.org/ns/shacl#", s)))
+				.map(s -> model.listObjectsOfProperty(model.createProperty(SHACL.NAMESPACE, s)))
 				.map(NodeIterator::toList).flatMap(List::stream).forEach(n -> {
 					assertNotNull(n);
 					Literal ql = n.asLiteral();
