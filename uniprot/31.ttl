@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:31
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find UniParc records whose sequence point to the most database entries""" ;
     sh:select """SELECT ?sequence ?entries
 WHERE

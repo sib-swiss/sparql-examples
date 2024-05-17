@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:61
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select the Gene Protein Reaction sets for Human (Ensembl Gene, Human UniProtKB, Catalyzed Rhea reactions)""" ;
     sh:select """SELECT
 ?ensemblGene ?protein ?rhea

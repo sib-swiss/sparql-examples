@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:30
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>"""^^rdf:HTML ;
     sh:select """SELECT
   ?protein 

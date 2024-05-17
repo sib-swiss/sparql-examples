@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:58
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Map UniProt to HGNC identifiers and Symbols""" ;
     sh:select """SELECT
   ?uniprot

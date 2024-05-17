@@ -5,6 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:3
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.swisslipids.org/sparql/> ;
     rdfs:label "Published lipid structures for lipid analytes" ;
     rdfs:comment """For a given (list of) lipid Species identifiers (e.g. SWISSLIPID:000056493, Phosphatidylcholine (32:0)), return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies (if any) which are associated with at least one citation (PMID: PubMed id).
 The query should return the lipid identifiers (?id), recommended names (?name), and PMIDs (?citation). 

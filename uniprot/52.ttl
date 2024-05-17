@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:52
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with Rhea and ChEMBL via IDSM/Elixir czech republic).""" ;
     sh:select """SELECT
         DISTINCT  

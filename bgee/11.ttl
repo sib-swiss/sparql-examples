@@ -6,6 +6,7 @@ ex:11 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the developmental stages present in Bgee?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> ;
     sh:select """
 SELECT DISTINCT ?stage ?stageName ?stageDescription WHERE {
     ?stage a efo:EFO_0000399 ;

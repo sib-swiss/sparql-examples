@@ -6,6 +6,7 @@ ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed in the post-juvenile stage?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> ;
     sh:select """
 SELECT DISTINCT ?anat ?anatName ?stage WHERE {
     ?seq a orth:Gene ;

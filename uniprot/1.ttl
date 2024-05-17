@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select all taxa from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>"""^^rdf:HTML ;
     sh:select """SELECT ?taxon
 FROM <http://sparql.uniprot.org/taxonomy>

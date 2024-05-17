@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:44
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find the Rhea and Interpro combinations in UniProtKB entries.""" ;
     sh:select """SELECT 
     ?interpro

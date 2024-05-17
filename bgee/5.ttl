@@ -6,6 +6,7 @@ ex:5 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the anatomical entities where the APOC1 gene is expressed independently of the developmental stage, sex, strain and cell type?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> ;
     sh:select """
 SELECT DISTINCT ?anat ?anatName {
     ?seq a orth:Gene ;

@@ -9,6 +9,7 @@ prefix taxon:<http://purl.uniprot.org/taxonomy/>
 ex:23
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Number of reviewed entries (Swiss-Prot) that are related to <a href="http://amigo.geneontology.org/amigo/term/GO:0016301">kinase activity</a>""" ;
     sh:select """SELECT
     (COUNT(DISTINCT(?protein)) AS ?pc)

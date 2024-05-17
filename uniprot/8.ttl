@@ -7,6 +7,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:8
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease""" ;
     sh:select """SELECT ?name ?text
 WHERE

@@ -6,6 +6,7 @@ ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the anatomical entities where the APOC1 Homo sapiens gene is expressed?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> ;
     sh:select """
 SELECT DISTINCT ?anat ?anatName WHERE {
     ?seq a orth:Gene ;

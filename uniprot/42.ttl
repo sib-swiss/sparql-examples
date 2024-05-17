@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:42
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Connect patents cited in UniProtKB with those in the patent database at EPO via publication number.""" ;
     sh:select """
 SELECT ?citation ?patent ?application ?applicationNo

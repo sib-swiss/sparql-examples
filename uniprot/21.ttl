@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:21
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find where disease related proteins are known to be located in the cell""";
     sh:select """
 SELECT 

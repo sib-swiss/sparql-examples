@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:3
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select all UniProt entries, and their organism and amino acid sequences (including isoforms), for <a href="http://purl.uniprot.org/taxonomy/83333"><i>E. coli K12</i> and all its strains</a>"""^^rdfs:HTML ;
     sh:select """SELECT ?protein ?organism ?isoform ?sequence
 WHERE

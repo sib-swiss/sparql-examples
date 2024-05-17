@@ -6,6 +6,7 @@ ex:2 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the species present in Bgee and their scientific and common names?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> ;
     sh:select """
 SELECT ?species ?sci_name ?common_name WHERE {
     ?species a up:Taxon ;

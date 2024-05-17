@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:55
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Number of proteins with annotated binding sites for metals or metal sulfur clusters (and experimental evidence for the binding)""" ;
     sh:select """SELECT
   ?ligand

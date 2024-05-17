@@ -6,6 +6,7 @@ ex:1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the species present in Bgee?" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://www.bgee.org/sparql/> , <https://sparql.uniprot.org/sparql/> ;
     sh:select """
 SELECT ?species WHERE {
     ?species a up:Taxon .

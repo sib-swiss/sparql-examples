@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:13
     a sh:SPARQLAskExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Was any UniProt entry integrated on the 9th of January 2013""" ;
     sh:ask """ASK
 WHERE

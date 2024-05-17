@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence""" ;
     sh:select """SELECT ?protein ?begin ?end
 WHERE 

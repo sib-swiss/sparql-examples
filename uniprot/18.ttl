@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:18
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Select the number of UniProt entries for each of the EC (Enzyme Commission) top level categories""";
     sh:select """SELECT ?ecClass (COUNT(?protein) as ?size)
 WHERE

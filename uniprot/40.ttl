@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:40
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Retrieve human enzymes that metabolize sphingolipids and are annotated in ChEMBL""" ;
     sh:select """
 SELECT DISTINCT 

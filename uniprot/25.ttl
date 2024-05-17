@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:25
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find any uniprot entry which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'""" ;
     sh:select """SELECT ?protein ?anyKindOfName
 WHERE

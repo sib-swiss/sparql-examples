@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:54
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Proteins with annotated binding sites for ligands similar to heme""" ;
     sh:select """SELECT 
   ?protein

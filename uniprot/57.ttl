@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:57
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Map PDB identifiers plus chains to UniProt""" ;
     sh:select """SELECT
   ?pdbId ?chain ?pdbChain ?uniprot

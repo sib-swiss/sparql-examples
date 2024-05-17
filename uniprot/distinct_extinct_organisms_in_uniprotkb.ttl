@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:distinct_extinct_organisms_in_uniprotkb
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """How many distinct extinct organisms are represented in UniProtKB""" ;
     sh:select """SELECT 
   ?taxon

@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:41
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Retrieve entries with sequences that are composed of fragments""" ;
     sh:select """
 SELECT DISTINCT 

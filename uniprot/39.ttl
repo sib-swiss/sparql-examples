@@ -8,6 +8,7 @@ prefix schema: <http://schema.org/>
 ex:39
  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Retrieve entries and Catalytic activities in the reviewed (Swiss-Prot) section that have experimental evidences,""" ;
     sh:select """SELECT  
   ?protein

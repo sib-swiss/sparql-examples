@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:51
  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:label """Find all proteins linked to arachidonate (CHEBI:32395)""" ;
     sh:select """
 SELECT 

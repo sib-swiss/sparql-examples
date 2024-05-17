@@ -8,6 +8,7 @@ prefix schema:<http://schema.org/>
 ex:37
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine""" ;
     sh:select """SELECT 
   ?protein 

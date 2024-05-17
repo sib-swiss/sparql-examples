@@ -6,6 +6,7 @@ prefix schema:<http://schema.org/>
 ex:60
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:comment """Find Human proteins that catalyze reactions where substrates or product have a <a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35516">Cholestane skeleton</a>"""^^rdf:HTML ;
     sh:select """SELECT
   DISTINCT

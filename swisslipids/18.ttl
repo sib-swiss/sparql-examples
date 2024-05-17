@@ -6,6 +6,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:18
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.swisslipids.org/sparql/> ;
     rdfs:label "Mapping LipidX lipids to ChEBI" ;
     rdfs:comment """For a given list of LipidX lipid identifiers return the list of corresponding ChEBI IDs.
 Output should include LipidX ID, the corresponding SwissLipids ID and name, plus the HMDB ID. 
