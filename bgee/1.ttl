@@ -7,8 +7,6 @@ ex:1 a sh:SPARQLExecutable,
     rdfs:comment "What are the species present in Bgee?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX up: <http://purl.uniprot.org/core/>
-
 SELECT ?species WHERE {
     ?species a up:Taxon .
 }

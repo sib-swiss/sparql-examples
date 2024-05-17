@@ -12,9 +12,8 @@ ex:NXQ_00139
  schema:keyword "drug";
  schema:keyword "function";
  schema:keyword "quality";
-  sh:select '''PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
-
-select distinct ?entry (str(?gen) as ?gene) where {
+  sh:select '''
+SELECT DISTINCT ?entry (str(?gen) as ?gene) WHERE {
  SERVICE<https://idsm.elixir-czech.cz/sparql/endpoint/idsm>{
  SELECT distinct ?protein WHERE {
  		?target cco:hasTargetComponent ?tarComp . 

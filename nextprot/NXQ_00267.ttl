@@ -11,22 +11,18 @@ ex:NXQ_00267
  schema:keyword "tutorial";
  schema:keyword "similarity";
  schema:keyword "function";
-  sh:select '''PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
-PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
-PREFIX chembl: <http://rdf.ebi.ac.uk/terms/chembl#>
-
-SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
+  sh:select '''SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
  		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {
  		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chembl> {
  		?compound sachem:similarCompoundSearch [ sachem:query \"CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O\" ] . # smiles chain for estradiol
 		 }
-		 		?ACTIVITY rdf:type chembl:Activity;
-		chembl:hasMolecule ?compound;
- chembl:hasAssay ?ASSAY.
-		 ?ASSAY chembl:hasTarget ?TARGET.
-		 ?TARGET chembl:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target
-		 ?TARGET chembl:hasTargetComponent ?COMPONENT.
-		 ?COMPONENT chembl:targetCmptXref ?UNIPROT.
+		 		?ACTIVITY rdf:type cco:Activity;
+		cco:hasMolecule ?compound;
+ cco:hasAssay ?ASSAY.
+		 ?ASSAY cco:hasTarget ?TARGET.
+		 ?TARGET cco:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target
+		 ?TARGET cco:hasTargetComponent ?COMPONENT.
+		 ?COMPONENT cco:targetCmptXref ?UNIPROT.
 		 filter(contains(str(?UNIPROT),\"uniprot\"))
 		 }
 	?entry skos:exactMatch ?UNIPROT.

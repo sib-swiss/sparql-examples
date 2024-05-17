@@ -10,9 +10,7 @@ ex:NXQ_00246
  schema:keyword "federated query";
  schema:keyword "tutorial";
  schema:keyword "function";
-  sh:select '''PREFIX rh:<http://rdf.rhea-db.org/>
-PREFIX ch:<http://purl.obolibrary.org/obo/>
-
+  sh:select '''
 select distinct ?entry where {
 #select distinct ?entry str(?xlab) where {
  service <https://sparql.rhea-db.org/sparql> {
@@ -23,7 +21,7 @@ select distinct ?entry where {
  ?reactionSide rh:contains ?participant .
  ?participant rh:compound ?compound .
  ?compound rh:chebi ?chebi .
- ?chebi rdfs:subClassOf+ ch:CHEBI_18059 .
+ ?chebi rdfs:subClassOf+ CHEBI:18059 .
  } 
  } 
  ?entry :isoform / :smallMoleculeInteraction / :interactant ?x .

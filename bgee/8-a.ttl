@@ -7,15 +7,6 @@ ex:8-a a sh:SPARQLExecutable,
     rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX up: <http://purl.uniprot.org/core/>
-PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
-PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
-PREFIX lscr: <http://purl.org/lscr#>
-PREFIX efo: <http://www.ebi.ac.uk/efo/>
-
 SELECT DISTINCT ?anat ?anatName ?score WHERE {
     ?seq a orth:Gene .
     ?expression a genex:Expression ;
@@ -33,7 +24,7 @@ SELECT DISTINCT ?anat ?anatName ?score WHERE {
     ?strain a efo:EFO_0005135 ;
         rdfs:label "wild-type" .
     ?seq orth:organism ?organism .
-    ?organism obo:RO_0002162  up-taxon:9606 .
+    ?organism obo:RO_0002162  taxon:9606 .
     FILTER (?anat !=  obo:GO_0005575)
 } ORDER BY DESC(?score)
 """ .

@@ -7,15 +7,6 @@ ex:12-a a sh:SPARQLExecutable,
     rdfs:comment "What are the anatomical entities where the eel gene apoc1 is expressed along with its expression score independently of the strain, sex, and cell type?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX up: <http://purl.uniprot.org/core/>
-PREFIX up-taxon:<http://purl.uniprot.org/taxonomy/>
-PREFIX lscr: <http://purl.org/lscr#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX efo: <http://www.ebi.ac.uk/efo/>
-
 SELECT DISTINCT ?anat ?anatName ?stageIRI ?score WHERE {
     ?seq a orth:Gene ;
         dcterms:identifier "118230125" .

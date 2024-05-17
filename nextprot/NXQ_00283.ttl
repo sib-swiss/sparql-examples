@@ -19,6 +19,6 @@ values ?mitloc {nextprot_cv:GO_0005739 nextprot_cv:SL-0173} # GO and SL values f
  ?mitopartner :isoform / :cellularComponent ?loc .
  ?loc :quality :GOLD; :term / :childOf ?mitloc .
  ?it2 :interactant ?partner; :quality :GOLD .
-} group by ?entry ?gen ?mitcnt having (count(distinct ?mitopartner) >= 20)
-order by desc(?mitcnt)'''
+} group by ?entry ?gen having (count(distinct ?mitopartner) >= 20)
+order by desc(count(distinct ?mitopartner))'''
 .
