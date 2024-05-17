@@ -7,10 +7,6 @@ ex:14 a sh:SPARQLExecutable,
     rdfs:comment "What is all the metadata related to the ENSG00000130208 gene, where ENSG00000130208 is the identifier of the APOC1 human gene." ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX lscr: <http://purl.org/lscr#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-
 SELECT DISTINCT ?symbol ?description ?id
 ?links ?organism ?uniprot ?ensembl ?ncbi WHERE {
     ?seq a orth:Gene ;

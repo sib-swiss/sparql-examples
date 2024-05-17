@@ -7,10 +7,6 @@ ex:3 a sh:SPARQLExecutable,
     rdfs:comment "What are the anatomical entities where the APOC1 gene is expressed?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-
 SELECT DISTINCT ?anat ?anatName WHERE {
     ?seq a orth:Gene ;
         genex:isExpressedIn ?anat ;

@@ -11,12 +11,7 @@ ex:NXQ_00258
  schema:keyword "federated query";
  schema:keyword "tutorial";
  schema:keyword "publication";
-  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX sio: <http://semanticscience.org/resource/>
-PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
-PREFIX so:<http://purl.obolibrary.org/obo/SO_>
-
-select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
+  sh:select '''select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
  service <http://rdf.disgenet.org/sparql/> {
  select distinct ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) where {
  ?vda sio:SIO_000628 ?variant,?disease .
@@ -25,7 +20,7 @@ select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
  ?variant a so:0001627 ; dcterms:title ?variantTitle . # intron variant
  ?variant so:associated_with ?gene .
  ?gene a ncit:C16612; sio:SIO_010078 ?protein .
- } group by ?protein ?diseaseTitle ?sampleArticle
+ } group by ?protein ?diseaseTitle
  }
  BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
  ?entry :swissprotPage ?unipage .

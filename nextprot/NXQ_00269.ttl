@@ -9,10 +9,7 @@ ex:NXQ_00269
  schema:keyword "pathway";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-
+  sh:select '''
 select distinct ?entry (str(?gen) as ?gene) ?pathwayname where {
  service <http://sparql.wikipathways.org/sparql> {
  {?geneProduct a wp:Protein}

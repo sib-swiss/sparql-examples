@@ -74,3 +74,15 @@ _:prefix_proteoform sh:prefix "proteoform" ;
 _:nextprot_sparql_examples_prefixes sh:declare _:prefix_drugbankdrugs .
 _:prefix_drugbankdrugs sh:prefix "drugbankdrugs" ;
   sh:namespace "http://wifo5-04.informatik.uni-mannheim.de/drugbank/resource/drugs/"^^xsd:anyURI .
+
+_:nextprot_sparql_examples_prefixes sh:declare _:prefix_wikipathway .
+_:prefix_wikipathway sh:prefix "wp" ;
+  sh:namespace "http://vocabularies.wikipathways.org/wp#"^^xsd:anyURI .
+
+_:nextprot_sparql_examples_prefixes sh:declare _:prefix_ncit .
+_:prefix_ncit sh:prefix "ncit" ;
+  sh:namespace "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#"^^xsd:anyURI .
+
+_:nextprot_sparql_examples_prefixes sh:declare _:prefix_so .
+_:prefix_so sh:prefix "so" ;
+  sh:namespace "http://purl.obolibrary.org/obo/SO_"^^xsd:anyURI .

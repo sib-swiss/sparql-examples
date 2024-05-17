@@ -12,12 +12,7 @@ ex:NXQ_00260
  schema:keyword "variant";
  schema:keyword "isoforms";
  schema:keyword "tutorial";
-  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX sio: <http://semanticscience.org/resource/>
-PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
-PREFIX so:<http://purl.obolibrary.org/obo/SO_>
-
-select distinct ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) where {
+  sh:select '''select distinct ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) where {
  service <http://rdf.disgenet.org/sparql/> {
  SELECT DISTINCT ?protein ?variantTitle ?umlsTerm
  WHERE {

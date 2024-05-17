@@ -7,8 +7,6 @@ ex:2 a sh:SPARQLExecutable,
     rdfs:comment "What are the species present in Bgee and their scientific and common names?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX up: <http://purl.uniprot.org/core/>
-
 SELECT ?species ?sci_name ?common_name WHERE {
     ?species a up:Taxon ;
         up:scientificName ?sci_name ;

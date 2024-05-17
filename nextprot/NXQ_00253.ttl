@@ -11,10 +11,7 @@ ex:NXQ_00253
  schema:keyword "tutorial";
  schema:keyword "subcellular location";
  schema:keyword "quality";
-  sh:select '''PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-
-select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) where {
+  sh:select '''select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) where {
  service <http://sparql.wikipathways.org/sparql> {
 
  { ?geneProduct a wp:GeneProduct . }

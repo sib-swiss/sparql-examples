@@ -9,11 +9,7 @@ ex:NXQ_00259
  schema:keyword "disease";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX sio: <http://semanticscience.org/resource/>
-PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
-
-select distinct ?entry (str(?gen) as ?genx) ?umlsTerm where {
+  sh:select '''select distinct ?entry (str(?gen) as ?genx) ?umlsTerm where {
  service <http://rdf.disgenet.org/sparql/> {
  select distinct ?protein ?umlsTerm where {
  ?gda sio:SIO_000628 ?gene,?disease .

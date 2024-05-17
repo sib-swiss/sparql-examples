@@ -7,11 +7,6 @@ ex:15 a sh:SPARQLExecutable,
     rdfs:comment "What are the anatomical entities where the APOC1 Homo sapiens gene is not expressed, that is where is APOC1 absent?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX orth: <http://purl.org/net/orth#>
-PREFIX genex: <http://purl.org/genex#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
-PREFIX up: <http://purl.uniprot.org/core/>
-
 SELECT DISTINCT ?anat ?anatName WHERE {
     ?seq a orth:Gene ;
         rdfs:label "APOC1" ;

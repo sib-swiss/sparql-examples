@@ -23,5 +23,5 @@ ex:NXQ_00248
  ?pdbmap rdfs:comment ?pdbac.
  ?pdbmap :start ?pdbstart ; :end ?pdbend.
  filter(?pdbstart <= ?vstart && ?pdbend >= ?vend ) 
-} group by ?entry ?pfname ?pdbsample'''
+} group by ?entry ?pfname'''
 .

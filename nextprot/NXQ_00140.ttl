@@ -9,9 +9,7 @@ ex:NXQ_00140
  schema:keyword "PPI";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''PREFIX up:<http://purl.uniprot.org/core/>
-PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
-
+  sh:select '''
 select distinct ?entry where {
  ?entry :isoform ?iso.
  optional {?iso :interactionInfo ?itinfo .}
