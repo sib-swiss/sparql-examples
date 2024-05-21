@@ -3,7 +3,7 @@
 
 
 project="uniprot"
-while getopts nuhrsgmcbp: option; do
+while getopts nuhrsgmcbop: option; do
     case "$option" in
         p) project="$OPTARG";;
         u) project="uniprot";;
@@ -15,6 +15,7 @@ while getopts nuhrsgmcbp: option; do
         c) project="covid";;
         n) project="nextprot";;
         b) project="bgee";;
+        o) project="oma";;
         h) help; exit 0;;
         *) help; exit 1;;
     esac
