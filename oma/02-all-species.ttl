@@ -1,0 +1,16 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:1
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Which species are available on OMA database and their scientific names?""" ;
+    sh:select """SELECT ?species ?sciname WHERE
+{
+    ?species a up:Taxon.
+    ?species up:scientificName ?sciname.
+    ?species up:rank up:Species.
+}""" .
+

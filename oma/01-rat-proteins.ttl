@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:1
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Find all Rattus norvegicus' proteins present in OMA RDF database.""" ;
+    sh:select """SELECT ?protein ?OMA_link
+WHERE
+{
+    ?protein a orth:Protein.
+    ?protein  orth:organism ?organism.
+    ?inTaxon rdfs:label 'in taxon'@en.
+    ?organism ?inTaxon ?taxon.
+    ?taxon  up:scientificName 'Rattus norvegicus'.
+    ?protein rdfs:seeAlso ?OMA_link.
+}""" .
+
