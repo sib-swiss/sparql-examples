@@ -3,12 +3,11 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix schema:<https://schema.org/>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix schema:<http://schema.org/>
 ex:50
  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:label """Where are the human genes encoding enzymes metabolizing N-acyl
+    rdfs:comment """Where are the human genes encoding enzymes metabolizing N-acyl
 sphingosines expressed in the human body (federated query, with Rhea and Bgee)""" ;
     sh:select """SELECT
   DISTINCT
