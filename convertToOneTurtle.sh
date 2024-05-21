@@ -3,7 +3,7 @@
 
 
 project="uniprot"
-while getopts nuhrsgmcpb: option; do
+while getopts nuhrsgmcbp: option; do
     case "$option" in
         p) project="$OPTARG";;
         u) project="uniprot";;
@@ -19,7 +19,6 @@ while getopts nuhrsgmcpb: option; do
         *) help; exit 1;;
     esac
 done
-
 case "$project" in
     trembl)
         ;&
