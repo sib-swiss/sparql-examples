@@ -2,7 +2,7 @@ prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
 prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<https://schema.org/>
-ex:1
+ex:2
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.omabrowser.org/sparql/> ;
