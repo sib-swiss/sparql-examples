@@ -22,6 +22,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RiotException;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
@@ -51,11 +52,21 @@ public class ValidateSparqlExamplesTest {
 		return testAll(tester);
 	}
 	
+	@Test
+	public void testUniqueIdentifierPerQueries() throws URISyntaxException, IOException {
+		CreateTestWithRDF4jMethods.testShaclContsraints(Files.walk(getBasePath(), 5).filter(this::isTurtleButNotPrefixFile));
+	}
+	
 	@TestFactory
 	public Stream<DynamicTest> testPrefixDeclarations() throws URISyntaxException, IOException {
+		Path basePath = getBasePath();
+		return Files.walk(basePath, 5).filter(this::isTurtleAndPrefixFile).flatMap(this::testPrefixes);
+	}
+
+	private Path getBasePath() throws URISyntaxException {
 		URL baseDir = getClass().getResource("/");
 		Path basePath = Paths.get(baseDir.toURI());
-		return Files.walk(basePath, 5).filter(this::isTurtleAndPrefixFile).flatMap(this::testPrefixes);
+		return basePath;
 	}
 
 	private Stream<DynamicTest> testAll(BiFunction<Path, String, Executable> tester)

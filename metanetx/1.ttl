@@ -2,9 +2,12 @@ prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix schema: <https://schema.org/>
+
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
+    schema:target <https://rdf.metanetx.org/sparql/> ;
     rdfs:comment """Retrieve the MNXref metabolite with name *N,N-dimethyl-beta-alanine*, together with molecular information.""" ;
     sh:select """SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
 WHERE {

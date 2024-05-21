@@ -2,11 +2,13 @@ prefix ex: <https://glyconnect.expasy.org/sparql>
 prefix up: <http://purl.uniprot.org/core/> 
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix schema: <https://schema.org/>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
 
 ex:3
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes ex: ;
+    schema:target <https://glyconnect.expasy.org/sparql> ;
     rdfs:comment """Select all glycosylations (glycan, protein, position) with their reference articles""" ;
     sh:select """SELECT distinct ?glycoprotein ?isoform ?position ?structure ?image  ?citation ?pmid
 where {

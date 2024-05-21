@@ -5,7 +5,6 @@ prefix schema:<https://schema.org/>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix faldo:<http://biohackathon.org/resource/faldo#> 
-prefix schema:<http://schema.org/>
 ex:11
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
