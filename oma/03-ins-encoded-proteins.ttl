@@ -1,0 +1,21 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:3
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all proteins in OMA that is encoded by the INS gene and their mnemonics and evidence types from Uniprot database (federated query).""" ;
+    sh:select """SELECT DISTINCT ?proteinOMA ?species  ?mnemonic  ?evidenceType ?UniProt_URI
+WHERE {
+    ?proteinOMA a orth:Protein;
+    orth:organism/obo:RO_0002162/up:scientificName ?species;
+    rdfs:label 'INS'.
+    ?proteinOMA lscr:xrefUniprot ?UniProt_URI.
+    #Search the INS gene mnemonics and evidence types from Uniprot database.
+    service <http://sparql.uniprot.org/sparql> { 
+    ?UniProt_URI up:mnemonic ?mnemonic;
+    up:existence/rdfs:label ?evidenceType. }
+}""" .
+

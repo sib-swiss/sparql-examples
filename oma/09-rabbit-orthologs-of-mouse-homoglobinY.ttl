@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:9
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all Rabbit's proteins encoded by genes that are orthologous to Mouses's hemoglobin Y gene and their cross-reference links to Uniprot.""" ;
+    sh:select """select distinct ?MOUSE_PROTEIN ?RABIT_PROTEIN ?MOUSE_UNIPROT_XREF ?RABIT_UNIPROT_XREF 
+where {
+    ?cluster a orth:OrthologsCluster.
+    ?cluster orth:hasHomologousMember ?node1.
+    ?cluster orth:hasHomologousMember ?node2. 
+    ?node2 orth:hasHomologousMember* ?RABIT_PROTEIN. 
+    ?node1 orth:hasHomologousMember* ?MOUSE_PROTEIN.
+    ?MOUSE_PROTEIN a orth:Protein.
+    ?MOUSE_PROTEIN  orth:organism/obo:RO_0002162/up:scientificName 'Mus musculus';
+    rdfs:label 'HBB-Y';
+    lscr:xrefUniprot ?MOUSE_UNIPROT_XREF.
+    ?RABIT_PROTEIN a orth:Protein.
+    ?RABIT_PROTEIN orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .
+    ?RABIT_PROTEIN lscr:xrefUniprot ?RABIT_UNIPROT_XREF.
+    filter(?node1 != ?node2)
+}""" .
