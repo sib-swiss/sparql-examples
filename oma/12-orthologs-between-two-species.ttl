@@ -1,0 +1,22 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:12
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all orthologs between mouse and rabbit, together with their HOG id""" ;
+    sh:select """select distinct ?MOUSE_PROTEIN ?RABIT_PROTEIN ?HOG
+where {
+?HOG a orth:OrthologsCluster ;
+ orth:hasHomologousMember ?node1 ;
+ orth:hasHomologousMember ?node2 . 
+?node2 orth:hasHomologousMember* ?RABIT_PROTEIN. 
+?node1 orth:hasHomologousMember* ?MOUSE_PROTEIN.
+?MOUSE_PROTEIN a orth:Protein ;
+ orth:organism/obo:RO_0002162/up:scientificName 'Mus musculus'.
+?RABIT_PROTEIN a orth:Protein ;
+ orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .  
+filter(?node1 != ?node2)
+}""" .

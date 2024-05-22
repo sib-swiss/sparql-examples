@@ -1,0 +1,23 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:7
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all genes that are orthologous to HUMAN22169 OMA protein (identifier) and their cross-reference links to OMA and Uniprot.""" ;
+    sh:select """select ?protein2 ?Uniprot_link
+where {
+    ?cluster a orth:OrthologsCluster.
+    ?cluster orth:hasHomologousMember ?node1.
+    ?cluster orth:hasHomologousMember ?node2.
+    ?node2 orth:hasHomologousMember* ?protein2.
+    ?node1 orth:hasHomologousMember* ?protein1.
+    ?protein1 a orth:Protein.
+    ?protein1 dc:identifier 'HUMAN22169'.
+    ?protein2 a orth:Protein. 
+    ?protein2  lscr:xrefUniprot ?Uniprot_link. 
+    filter(?node1 != ?node2)
+}""" .
+

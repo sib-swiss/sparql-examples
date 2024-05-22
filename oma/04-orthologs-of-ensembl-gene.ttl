@@ -1,0 +1,31 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:4
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all genes that are orthologous to ENSLACG00000002497 Ensembl gene (identifier)""" ;
+    sh:select """select ?protein2 ?OMA_LINK 
+where {
+    #The three that contains Orthologs. The leafs are proteins.
+    #This graph pattern defines the relationship protein1 is Orthologs to protein2
+    ?cluster a orth:OrthologsCluster.
+    ?cluster orth:hasHomologousMember ?node1.
+    ?cluster orth:hasHomologousMember ?node2. 
+    ?node2 orth:hasHomologousMember* ?protein2. 
+    ?node1 orth:hasHomologousMember* ?protein1.
+    ########
+     
+    #Specify the protein to look for its orthologs
+    ?protein1 sio:SIO_010079/lscr:xrefEnsemblGene  ensembl:ENSLACG00000002497.
+    ########
+     
+    #The OMA link to the second protein
+    ?protein2 rdfs:seeAlso ?OMA_LINK. 
+    ########
+     
+    filter(?node1 != ?node2) 
+}""" .
+

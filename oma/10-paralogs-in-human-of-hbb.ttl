@@ -1,0 +1,26 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:10
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all human proteins that are paralogous to the HBB gene and their UniProt cross-references.""" ;
+    sh:select """select distinct ?PROTEIN_HBB ?IS_PARALOGOUS_TO_PROTEIN ?PARALOG_GENE_LABEL ?HBB_UNIPROT_XREF ?PARALOG_UNIPROT_XREF 
+where {
+    ?cluster a orth:OrthologsCluster.
+    ?cluster orth:hasHomologousMember ?node1.
+    ?cluster orth:hasHomologousMember ?node2. 
+    ?node2 orth:hasHomologousMember* ?PROTEIN_HBB. 
+    ?node1 orth:hasHomologousMember* ?IS_PARALOGOUS_TO_PROTEIN.
+    ?PROTEIN_HBB a orth:Protein ;
+     orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens';
+     rdfs:label 'HBB';
+     lscr:xrefUniprot ?MOUSE_UNIPROT_XREF .
+    ?IS_PARALOGOUS_TO_PROTEIN a orth:Protein;
+     orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens' ;
+     lscr:xrefUniprot ?RABIT_UNIPROT_XREF ;
+     rdfs:label ?PARALOG_GENE_LABEL .
+    filter(?node1 != ?node2)
+}""" .

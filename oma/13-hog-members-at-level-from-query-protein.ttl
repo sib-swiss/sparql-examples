@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema:<https://schema.org/>
+ex:13
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.omabrowser.org/sparql/> ;
+    rdfs:comment """Retrieve all proteins belongong to the Hierarchical Orthologous Group (HOG) at the level 'Vertebrata' to which humans' CDIN1 gene belong, together with their gene name symbol if available.""" ;
+    sh:select """select distinct ?HOG ?MEMBER ?GENE_LABEL
+where {
+    ?HOG a orth:OrthologsCluster ;
+      orth:hasHomologousMember ?node1 ;
+      orth:hasTaxonomicRange ?taxRange .
+    ?taxRange orth:taxRange 'Vertebrata' .
+    ?node1 orth:hasHomologousMember* ?query ;
+      orth:hasHomologousMember* ?MEMBER .
+    ?MEMBER a orth:Protein .
+    OPTIONAL {
+        ?MEMBER rdfs:label ?GENE_LABEL .
+    }
+    ?query a orth:Protein ;
+      orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens';
+      rdfs:label 'CDIN1'.
+}""" .
