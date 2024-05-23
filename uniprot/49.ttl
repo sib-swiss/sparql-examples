@@ -1,29 +1,23 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
 prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:49
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     rdfs:label """Where are the human genes encoding enzymes metabolizing cholesterol expressed? (double federated query)""" ;
     rdfs:comment """Retrieve the UniProt proteins, their catalyzed Rhea reactions, their encoding genes (Ensembl) and the anatomic entities where the genes are expressed (UBERON anatomic entites from Bgee expression data resource).""" ;
-    sh:select """SELECT
-        DISTINCT 
-            ?protein
-            ?ensemblGene
-            ?reaction
-            ?anatomicEntityLabel
-            ?anatomicEntity
+    sh:select """SELECT DISTINCT ?protein ?ensemblGene ?reaction ?anatomicEntityLabel ?anatomicEntity
 WHERE {
   # federated query to Rhea enadpoint
   {
     SELECT DISTINCT ?reaction WHERE {
       SERVICE <https://sparql.rhea-db.org/sparql> {
-        ?reaction rdfs:subClassOf rh:Reaction .
-        ?reaction rh:equation ?reactionEquation .
-        ?reaction rh:side ?reactionSide .
+        ?reaction rdfs:subClassOf rh:Reaction ;
+          rh:equation ?reactionEquation ;
+          rh:side ?reactionSide .
         ?reactionSide rh:contains ?participant .
         ?participant rh:compound ?compound .
         # compound constraint (CHEBI:16113 == cholesterol)
@@ -32,17 +26,17 @@ WHERE {
     }
   }
   # taxonomy constraint (taxon:9606 == Homo sapiens)
-  ?protein up:organism taxon:9606 .
-  ?protein up:annotation ?a .
-  ?a a up:Catalytic_Activity_Annotation .
-  ?a up:catalyticActivity ?ca .
+  ?protein up:organism taxon:9606 ;
+    up:annotation ?a .
+  ?a a up:Catalytic_Activity_Annotation ;
+    up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
   ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
-
   # federated query to Bgee (expression data)
-  SERVICE <http://biosoda.expasy.org/rdf4j-server/repositories/bgeelight> {
-    ?gene genex:isExpressedIn ?anatomicEntity .
-    ?gene lscr:xrefEnsemblGene ?ensemblGene .
+  BIND(IRI(REPLACE(STR(?ensemblGene), "\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
+  SERVICE <https://bgee.org/sparql/> {
+    ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
+      genex:isExpressedIn ?anatomicEntity .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" .
