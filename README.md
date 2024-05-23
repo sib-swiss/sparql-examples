@@ -27,9 +27,8 @@ WHERE
 
 # QA.
 
-There is a script `check.sh` that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org).
-This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"
-Check.sh is a bit slow because of all stopping and starting of jena, making it faster is possible :) but has not been critical yet.
+There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org). and
+[eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above
 
 # Conversion
 
