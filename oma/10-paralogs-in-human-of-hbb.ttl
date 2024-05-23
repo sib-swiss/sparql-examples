@@ -17,10 +17,10 @@ where {
     ?PROTEIN_HBB a orth:Protein ;
      orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens';
      rdfs:label 'HBB';
-     lscr:xrefUniprot ?MOUSE_UNIPROT_XREF .
+     lscr:xrefUniprot ?HBB_UNIPROT_XREF .
     ?IS_PARALOGOUS_TO_PROTEIN a orth:Protein;
      orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens' ;
-     lscr:xrefUniprot ?RABIT_UNIPROT_XREF ;
+     lscr:xrefUniprot ?PARALOG_UNIPROT_XREF ;
      rdfs:label ?PARALOG_GENE_LABEL .
     filter(?node1 != ?node2)
 }""" .
