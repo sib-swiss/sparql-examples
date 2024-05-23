@@ -8,9 +8,18 @@ ex:27
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.swisslipids.org/sparql/> ;
-    rdfs:label "Possible lipid structure composition of organisms" ;
-    rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more organisms (NCBI taxonomic IDs).
-Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the organisms.
-This query first identifies SwissLipids identifiers for a given list of NCBI taxonomic IDs. It then retrieves the corresponding Isomeric subspecies and returns those.
-Extends ex:26"""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .
+    rdfs:comment """Find the list of SwissLipids for all organisms and their Isomeric subspecies"""^^rdf:HTML ;
+    sh:select """SELECT ?swisslipid  ?organism {
+  ?swisslipid owl:equivalentClass ?chebi .
+  SERVICE <https://sparql.rhea-db.org/sparql/> {
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite .
+  }
+  SERVICE <https://sparql.uniprot.org/sparql/> {
+    ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .
+    ?protein up:annotation ?catalyticActivityAnnotation ;
+             up:organism ?organism .
+  }
+  ?swisslipidIsomericSubpecies rdfs:subClassOf ?swisslipid ;
+        SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies .
+}""" .
