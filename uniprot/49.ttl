@@ -27,11 +27,11 @@ WHERE {
   }
   # taxonomy constraint (taxon:9606 == Homo sapiens)
   ?protein up:organism taxon:9606 ;
-    up:annotation ?a .
+    up:annotation ?a ;
+    rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
   ?a a up:Catalytic_Activity_Annotation ;
     up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
-  ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
   # federated query to Bgee (expression data)
   BIND(IRI(REPLACE(STR(?ensemblGene), "\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
   SERVICE <https://bgee.org/sparql/> {
