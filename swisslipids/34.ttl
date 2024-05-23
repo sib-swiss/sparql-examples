@@ -8,8 +8,16 @@ ex:34
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.swisslipids.org/sparql/> ;
-    rdfs:label "Possible LIPID MAPS lipid structure composition of organisms" ;
-    rdfs:comment """Returns the list of possible lipid structures associated with a list of one or more organisms (NCBI taxonomic IDs) but considers only those lipids associated with LIPID MAPS identifers.
-Output should include the corresponding SwissLipids ID(s) and name(s), LIPID MAPS identifiers, and the name(s) and NCBI taxonomic ID(s) of the organisms.
-This query first retrieves SwissLipids identifiers for a given list of organisms (NCBI taxonomic IDs). It then retrieves the corresponding Isomeric subspecies and returns those that are linked to LIPID MAPS."""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .
+    rdfs:comment "Lipids affected by human enzymes" ;
+    sh:select """SELECT ?swisslipid  {
+  ?swisslipid owl:equivalentClass ?chebi .
+  SERVICE <https://sparql.rhea-db.org/sparql/> {
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+	?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite . 
+  }
+  SERVICE <https://sparql.uniprot.org/sparql/> {
+    ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .
+    ?protein up:annotation ?catalyticActivityAnnotation ;
+             up:organism taxon:9606 .
+  }
+}""" .

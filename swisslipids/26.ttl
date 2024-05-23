@@ -8,7 +8,16 @@ ex:26
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.swisslipids.org/sparql/> ;
-    rdfs:label "Lipid analyte composition of organisms" ;
-    rdfs:comment """Returns the list of lipid analytes associated with a list of one or more organisms (NCBI taxonomic IDs).
-Output should include the corresponding SwissLipids ID(s) and name(s), and the name(s) and ID(s) of the organisms."""^^rdf:HTML ;
-    sh:select """SELECT ?TODO WHERE {?TODO a ?TODO} """ .
+    rdfs:comment "Lipids produced in different organisms" ;
+    sh:select """SELECT ?swisslipid  ?organism {
+  ?swisslipid owl:equivalentClass ?chebi .
+  SERVICE <https://sparql.rhea-db.org/sparql/> {
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite .
+  }
+  SERVICE <https://sparql.uniprot.org/sparql/> {
+    ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .
+    ?protein up:annotation ?catalyticActivityAnnotation ;
+             up:organism ?organism .
+  }
+}""" .
