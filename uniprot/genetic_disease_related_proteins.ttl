@@ -1,0 +1,31 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:genetic_disease_related_proteins
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """List all UniProt proteins annotated to be related to a genetic disease.""" ;
+    sh:select """SELECT
+  ?uniprot ?disease ?diseaseComment ?mim
+WHERE
+{
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?uniprot a up:Protein ;
+       up:annotation ?diseaseAnnotation .
+    ?diseaseAnnotation up:disease ?disease .
+  }
+  GRAPH <http://sparql.uniprot.org/diseases> {
+    ?disease a up:Disease ;
+             rdfs:comment ?diseaseComment .
+    OPTIONAL {
+      ?disease rdfs:seeAlso ?mim .
+       ?mim up:database <http://purl.uniprot.org/database/MIM> .
+    }
+  }
+}""" .
