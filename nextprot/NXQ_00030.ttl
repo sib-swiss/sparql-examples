@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:NXQ_00030
- sh:prefixes _:sparql_examples_prefixes ;
+  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome''' ;
  schema:keyword "family";
  schema:keyword "chromosomal location";

@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:NXQ_00251
- sh:prefixes _:sparql_examples_prefixes ;
+  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Proteins with at least one proteotypic peptide 9aa+ not mapping on canonical isoform''' ;
  schema:keyword "isoforms";
  schema:keyword "peptide";

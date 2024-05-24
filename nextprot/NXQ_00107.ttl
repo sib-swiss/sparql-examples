@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:NXQ_00107
- sh:prefixes _:sparql_examples_prefixes ;
+  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Proteins with a protein existence not \"At protein level\" (PE=1) and with a HGNC approved gene name that contains \"orf\"''' ;
  schema:keyword "gene";
  schema:keyword "protein existence";

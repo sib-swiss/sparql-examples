@@ -4,7 +4,7 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<http://schema.org/>
 ex:NXQ_00278
- sh:prefixes _:sparql_examples_prefixes ;
+  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Authors who have reported more than 25000 human protein-protein interactions ''' ;
  schema:keyword "PPI";
  schema:keyword "tutorial";
