@@ -1,0 +1,20 @@
+prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema: <https://schema.org/>
+ex:2
+a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
+    schema:target <https://rdf.metanetx.org/sparql/> ;
+    rdfs:comment '''Retrieve the identifiers for N,N-dimethyl-beta-alanine in external databases. This crosslinking of external identifiers is the core of MNXref.''' ; 
+  sh:select '''# Retrieve the identifiers for *N,N-dimethyl-beta-alanine* in 
+# external databases. This crosslinking of external 
+# identifiers is the core of MNXref. 
+
+SELECT ?metabolite ?xref
+WHERE {
+    ?metabolite a mnx:CHEM .
+    ?metabolite rdfs:comment \'N-nitrosomethanamine\' .
+    ?metabolite mnx:chemXref ?xref
+}'''.

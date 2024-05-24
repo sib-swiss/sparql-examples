@@ -6,9 +6,9 @@ prefix schema: <https://schema.org/>
 
 ex:1
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes ex: ;
+    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
     schema:target <https://rdf.metanetx.org/sparql/> ;
-    rdfs:comment """Retrieve the MNXref metabolite with name *N,N-dimethyl-beta-alanine*, together with molecular information.""" ;
+    rdfs:comment """Retrieve the MNXref metabolite with name <em>N,N-dimethyl-beta-alanine</em>, together with molecular information."""^^rdf:HTML ;
     sh:select """SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
 WHERE {
     ?metabolite a mnx:CHEM .

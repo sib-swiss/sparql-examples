@@ -1,0 +1,29 @@
+prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+prefix schema: <https://schema.org/>
+ex:9
+a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
+    schema:target <https://rdf.metanetx.org/sparql/> ;
+    rdfs:comment '''List all GEMs currently in the MetaNetX repository, with their numbers of reactions, chemical, compartments and genes/proteins.''' ; 
+  sh:select '''# List all GEMs currently in the MetaNetX repository, with 
+# their numbers of reactions, chemical, compartments and 
+# genes/proteins. 
+
+SELECT ?mnet ?taxon
+    (COUNT( DISTINCT ?reac) AS ?count_reac)
+    (COUNT( DISTINCT ?chem) AS ?count_chem)
+    (COUNT( DISTINCT ?comp) AS ?count_comp)
+    (COUNT( DISTINCT ?pept) AS ?count_pept)
+WHERE{
+    ?mnet a mnx:MNET .
+    ?mnet mnx:gpr  ?gpr .
+    ?gpr  mnx:reac ?reac .
+    ?reac mnx:left|mnx:right ?part .
+    ?part mnx:chem ?chem;
+          mnx:comp ?comp.
+    ?gpr mnx:cata/mnx:pept ?pept .
+    OPTIONAL{ ?mnet mnx:taxid ?taxon }
+} GROUP BY ?mnet ?taxon'''.
