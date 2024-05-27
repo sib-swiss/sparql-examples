@@ -12,7 +12,7 @@ ex:NXQ_00253
  schema:keyword "subcellular location";
  schema:keyword "quality";
   sh:select '''select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) where {
- service <http://sparql.wikipathways.org/sparql> {
+ service <https://sparql.wikipathways.org/sparql> {
 
  { ?geneProduct a wp:GeneProduct . }
  union

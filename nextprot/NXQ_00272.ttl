@@ -11,7 +11,7 @@ ex:NXQ_00272
  schema:keyword "federated query";
  schema:keyword "tutorial";
   sh:select '''select distinct ?entry (str(?gen) AS ?gene) ?pathwayname (str(?discom) AS ?discom1) ?medsource where {
- service <http://sparql.wikipathways.org/sparql> {
+ service <https://sparql.wikipathways.org/sparql> {
  {?geneProduct a wp:Protein}
  union
  {?geneProduct a wp:GeneProduct}

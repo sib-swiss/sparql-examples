@@ -21,7 +21,7 @@ UNION
  { ?iso :uniprotKeyword / :term nextprot_cv:KW-0945.} # host-virus interaction keyword
 UNION
  {
- SERVICE <http://sparql.uniprot.org/sparql> {
+ SERVICE <https://sparql.uniprot.org/sparql> {
  SELECT distinct ?viralinteractor WHERE # get viral proteins with an IntAct xref
  {
 	?viralinteractor a up:Protein .
@@ -38,7 +38,7 @@ UNION
  } 
 UNION
  {
- SERVICE <http://sparql.uniprot.org/sparql> {
+ SERVICE <https://sparql.uniprot.org/sparql> {
  SELECT distinct ?humprotein WHERE # get human proteins that share a PDB xref with a viral protein (same PDB id)
  {
 	?humprotein a up:Protein .

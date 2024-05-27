@@ -14,7 +14,7 @@ ex:NXQ_00270
   sh:select '''
 
 select ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {
- service <http://sparql.wikipathways.org/sparql> {
+ service <https://sparql.wikipathways.org/sparql> {
 
  {?geneProduct a wp:Protein}
  union

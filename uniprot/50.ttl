@@ -33,7 +33,7 @@ WHERE {
   ?ca up:catalyzedReaction ?reaction .
   ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
 
-  SERVICE  <https://bgee.org/sparql/> {
+  SERVICE  <https://www.bgee.org/sparql/> {
     ?gene genex:isExpressedIn ?anatomicEntity .
     ?gene lscr:xrefEnsemblGene ?ensemblGene .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .

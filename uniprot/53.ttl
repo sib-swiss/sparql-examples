@@ -29,7 +29,7 @@ WHERE {
   ?a up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
 
-  SERVICE  <https://sparql.omabrowser.org/sparql> {
+  SERVICE  <https://sparql.omabrowser.org/sparql/> {
     ?cluster a orth:ParalogsCluster .
     ?cluster orth:hasHomologousMember ?node1 , ?node2 .
     ?node1 orth:hasHomologousMember* ?orthoProtein1 .

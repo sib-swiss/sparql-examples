@@ -28,7 +28,7 @@ WHERE
      ?functionAnnotation a up:Function_Annotation ;
                          rdfs:comment ?functionComment .
   }
-  SERVICE<http://sparql.orthodb.org/sparql>{
+  SERVICE<https://sparql.orthodb.org/sparql>{
     ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
     ?orthoGroup orthodb:hasMember ?xref .
     ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .

@@ -11,7 +11,7 @@ ex:NXQ_00269
  schema:keyword "tutorial";
   sh:select '''
 select distinct ?entry (str(?gen) as ?gene) ?pathwayname where {
- service <http://sparql.wikipathways.org/sparql> {
+ service <https://sparql.wikipathways.org/sparql> {
  {?geneProduct a wp:Protein}
  union
  {?geneProduct a wp:GeneProduct}

@@ -17,7 +17,7 @@ WHERE{
   ?annotation a up:Catalytic_Activity_Annotation .
   ?protein up:sequence ?isoform .
    
-  SERVICE <http://sparql.glyconnect.org/sparql> {
+  SERVICE <https://glyconnect.expasy.org/sparql> {
     ?glycosite faldo:reference ?isoform .
     ?glycosite faldo:position ?position .
     ?specificglycosite faldo:location ?glycosite .
