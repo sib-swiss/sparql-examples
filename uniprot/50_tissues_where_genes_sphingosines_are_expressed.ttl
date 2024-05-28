@@ -7,6 +7,7 @@ ex:50
  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "tissue" ;
     rdfs:comment """Where are the human genes encoding enzymes metabolizing N-acyl
 sphingosines expressed in the human body (federated query, with Rhea and Bgee)""" ;
     sh:select """SELECT

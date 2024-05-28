@@ -10,6 +10,7 @@ ex:diseases_involving_enzymes.ttl
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme" ;
     rdfs:comment """Find Diseases that are thought to be related to Enzymes""" ;
     sh:select """SELECT
 ?disease ?diseaseLabel

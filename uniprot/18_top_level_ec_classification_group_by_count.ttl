@@ -8,6 +8,7 @@ ex:18
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "ec" ;
     rdfs:comment """Select the number of UniProt entries for each of the EC (Enzyme Commission) top level categories""";
     sh:select """SELECT ?ecClass (COUNT(?protein) as ?size)
 WHERE
