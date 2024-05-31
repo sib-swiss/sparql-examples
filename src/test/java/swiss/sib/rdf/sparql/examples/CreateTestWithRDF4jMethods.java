@@ -7,18 +7,16 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
@@ -37,6 +35,7 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 public class CreateTestWithRDF4jMethods {
+	private static final IRI DESCRIBE = SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, "describe");
 
 	static void testQueryValid(Path p, String projectPrefixes) {
 		assertTrue(Files.exists(p));
@@ -50,22 +49,10 @@ public class CreateTestWithRDF4jMethods {
 		}
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		Stream.of("ask", "select", "concat", "describe").map(
-				s -> model.getStatements(null, SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, s), null))
-				.map(Iterable::iterator).forEach(i -> {
-					while (i.hasNext()) {
-						Value obj = i.next().getObject();
-						assertNotNull(obj);
-						assertTrue(obj.isLiteral());
-						String queryStr = projectPrefixes + obj.stringValue();
-
-						try {
-							parser.parseQuery(queryStr, "https://example.org/");
-						} catch (MalformedQueryException qe) {
-							fail(qe.getMessage() + "\n" + queryStr, qe);
-						}
-					}
-				});
+		Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, DESCRIBE)
+			.map(s -> model.getStatements(null, s, null))
+			.map(Iterable::iterator)
+			.forEach(i -> testAllQueryStringsInModel(projectPrefixes, parser, i));
 
 	}
 
@@ -82,32 +69,56 @@ public class CreateTestWithRDF4jMethods {
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		
-		return Stream.of("ask", "select", "concat", "describe").map(
-				s -> model.getStatements(null, SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, s), null))
+		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, DESCRIBE).map(
+				s -> model.getStatements(null, s, null))
 				.map(Iterable::iterator).map(i -> {
-					Set<String> serviceIris = new HashSet<>();
-					while (i.hasNext()) {
-						Value obj = i.next().getObject();
-						String queryStr = projectPrefixes + obj.stringValue();
-
-						try {
-							ParsedQuery query = parser.parseQuery(queryStr, "https://example.org/");
-							query.getTupleExpr().visit(new AbstractQueryModelVisitor<RuntimeException>() {
-
-								@Override
-								public void meet(Service node) throws RuntimeException {
-									serviceIris.add(node.getServiceRef().getValue().stringValue());
-									super.meet(node);
-								}
-
-							});
-						} catch (MalformedQueryException qe) {
-							//Ignore as tested by above;
-						}
-					}
-					return serviceIris;
+					return collectServiceIrisInFromOneExample(projectPrefixes, parser, i);
 				}).flatMap(Set::stream);
+	}
 
+	private static Set<String> collectServiceIrisInFromOneExample(String projectPrefixes, QueryParser parser,
+			Iterator<Statement> i) {
+		Set<String> serviceIris = new HashSet<>();
+		while (i.hasNext()) {
+			Value obj = i.next().getObject();
+			String queryStr = projectPrefixes + obj.stringValue();
+
+			try {
+				ParsedQuery query = parser.parseQuery(queryStr, "https://example.org/");
+				query.getTupleExpr().visit(new AbstractQueryModelVisitor<RuntimeException>() {
+
+					@Override
+					public void meet(Service node) throws RuntimeException {
+						serviceIris.add(node.getServiceRef().getValue().stringValue());
+						super.meet(node);
+					}
+
+				});
+			} catch (MalformedQueryException qe) {
+				//Ignore as tested by above;
+			}
+		}
+		return serviceIris;
+	}
+
+	private static void testAllQueryStringsInModel(String projectPrefixes, QueryParser parser, Iterator<Statement> i) {
+		while (i.hasNext()) {
+			Statement next = i.next();
+			testQueryStringInValue(projectPrefixes, parser, next);
+		}
+	}
+
+	private static void testQueryStringInValue(String projectPrefixes, QueryParser parser, Statement next) {
+		Value obj = next.getObject();
+		assertNotNull(obj);
+		assertTrue(obj.isLiteral());
+		String queryStr = projectPrefixes + obj.stringValue();
+
+		try {
+			parser.parseQuery(queryStr, "https://example.org/");
+		} catch (MalformedQueryException qe) {
+			fail(qe.getMessage() + "\n" + queryStr, qe);
+		}
 	}
 
 }
