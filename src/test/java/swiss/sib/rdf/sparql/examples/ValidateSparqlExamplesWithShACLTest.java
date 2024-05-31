@@ -8,17 +8,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.common.exception.ValidationException;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.vocabulary.RDF4J;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
@@ -26,7 +22,7 @@ import org.eclipse.rdf4j.repository.RepositoryException;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParseException;
-import org.eclipse.rdf4j.rio.turtle.TurtleWriter;
+import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
 import org.eclipse.rdf4j.sail.shacl.ShaclSail;
 import org.junit.jupiter.api.AfterAll;
@@ -94,9 +90,7 @@ public class ValidateSparqlExamplesWithShACLTest {
 	 */
 	@TestFactory
 	public Stream<DynamicTest> testShaclConstraints() throws URISyntaxException, IOException {
-		URL baseDir = getClass().getResource("/");
-		Path basePath = Paths.get(baseDir.toURI());
-		Stream<Path> paths = Files.walk(basePath).filter(this::isTurtleButNotPrefixFile);
+		Stream<Path> paths = FindFiles.sparqlExamples();
 		return paths.map(p -> DynamicTest.dynamicTest(
 				"Shacl testing: " + p.getParent().getFileName() + '/' + p.getFileName(), () -> testValidatingAFile(p)));
 	}
@@ -122,19 +116,8 @@ public class ValidateSparqlExamplesWithShACLTest {
 	private static String validationReportAsString(ValidationException ve) {
 		Model vem = ve.validationReportAsModel();
 		var boas = new ByteArrayOutputStream();
-		TurtleWriter tw = new TurtleWriter(boas);
-		tw.startRDF();
-		Iterator<Statement> iterator = vem.iterator();
-		while (iterator.hasNext()) {
-			tw.handleStatement(iterator.next());
-		}
-		tw.endRDF();
+		Rio.write(vem, boas, RDFFormat.TURTLE);
 		String report = boas.toString();
 		return report;
-	}
-
-	private boolean isTurtleButNotPrefixFile(Path p) {
-		return Files.exists(p) && p.toUri().getPath().endsWith(".ttl") && !p.toUri().getPath().endsWith("prefixes.ttl")
-				&& Files.isRegularFile(p);
 	}
 }

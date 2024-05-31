@@ -61,29 +61,27 @@ public class ValidateSparqlExamplesTest {
 				projectPrefixes) -> () -> CreateTestWithRDF4jMethods.testQueryValid(p, projectPrefixes);
 		return testAll(tester);
 	}
-	
+
 	@Disabled
 	@TestFactory
 	public Stream<DynamicTest> testAllService() throws URISyntaxException, IOException {
-		BiFunction<Path, String, Stream<String>> tester = (p,
-				projectPrefixes) -> CreateTestWithRDF4jMethods.extractServiceEndpoints(p, projectPrefixes);
+		BiFunction<Path, String, Stream<String>> tester = (p, projectPrefixes) -> CreateTestWithRDF4jMethods
+				.extractServiceEndpoints(p, projectPrefixes);
 		Consumer<String> consumer = s -> {
-		try (HttpClient client = HttpClient.newHttpClient()){
+			try (HttpClient client = HttpClient.newHttpClient()) {
 				HttpRequest askAnything = HttpRequest.newBuilder()
-						.uri(new URI(s +"?query=ASK%20%7B%3Fs%20%3Fp%20%3Fo%7D"))
+						.uri(new URI(s + "?query=ASK%20%7B%3Fs%20%3Fp%20%3Fo%7D"))
 						.setHeader("accept", "application/sparql-results+xml,application/sparql-results+json")
-						.setHeader("user-agent", "sib-sparql-examples-bot")
-						.GET()
-						.build();
+						.setHeader("user-agent", "sib-sparql-examples-bot").GET().build();
 				HttpResponse<String> response = client.send(askAnything, HttpResponse.BodyHandlers.ofString());
 				String body = response.body();
 				if (response.statusCode() != 200) {
 					Map<String, List<String>> map = response.headers().map();
-					if(map.containsKey("location")) {
-						fail("Endpoint moved to "+map.get("location"));
+					if (map.containsKey("location")) {
+						fail("Endpoint moved to " + map.get("location"));
 					} else {
-						fail(response.statusCode()+' '+ map.entrySet().stream().map((e)->{
-							return e.getKey()+":"+e.getValue();
+						fail(response.statusCode() + ' ' + map.entrySet().stream().map((e) -> {
+							return e.getKey() + ":" + e.getValue();
 						}).collect(Collectors.joining(" ")));
 					}
 				}
@@ -92,16 +90,15 @@ public class ValidateSparqlExamplesTest {
 				fail(s, e);
 			}
 		};
-		Function<Stream<String>, Stream<DynamicTest>> test= iris -> {
-			return iris.distinct().map(s->DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
+		Function<Stream<String>, Stream<DynamicTest>> test = iris -> {
+			return iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
 		};
 		return testAllAsOne(tester, test);
 	}
-	
+
 	@TestFactory
 	public Stream<DynamicTest> testPrefixDeclarations() throws URISyntaxException, IOException {
-		Path basePath = getBasePath();
-		return Files.walk(basePath, 5).filter(this::isTurtleAndPrefixFile).flatMap(this::testPrefixes);
+		return FindFiles.allPrefixFiles().flatMap(this::testPrefixes);
 	}
 
 	private Path getBasePath() throws URISyntaxException {
@@ -112,40 +109,41 @@ public class ValidateSparqlExamplesTest {
 
 	private Stream<DynamicTest> testAll(BiFunction<Path, String, Executable> tester)
 			throws URISyntaxException, IOException {
-		URL baseDir = getClass().getResource("/");
-		Path basePath = Paths.get(baseDir.toURI());
-		String commonPrefixes = extractPrefixes(Paths.get(getClass().getResource("/prefixes.ttl").toURI()));
-		return Files.list(basePath).flatMap(path -> {
+		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
+		return Files.list(getBasePath()).flatMap(projectPath -> {
 			try {
-				return Files.walk(path, 5).filter(this::isTurtleButNotPrefixFile)
-						.map(p -> createTest(tester, path, extractProjectPrefixes(commonPrefixes, path), p));
+				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
+				return FindFiles.sparqlExamples(projectPath)
+						.map(p -> createTest(tester, projectPath, projectPrefixes, p));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});
 	}
-	
-	private <T> Stream<DynamicTest> testAllAsOne(BiFunction<Path, String, Stream<T>> tester, Function<Stream<T>, Stream<DynamicTest>> test)
-			throws URISyntaxException, IOException {
-		URL baseDir = getClass().getResource("/");
-		Path basePath = Paths.get(baseDir.toURI());
-		String commonPrefixes = extractPrefixes(Paths.get(getClass().getResource("/prefixes.ttl").toURI()));
-		return test.apply(Files.list(basePath).flatMap(path -> {
+
+	private <T> Stream<DynamicTest> testAllAsOne(BiFunction<Path, String, Stream<T>> tester,
+			Function<Stream<T>, Stream<DynamicTest>> test) throws URISyntaxException, IOException {
+		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
+		return test.apply(Files.list(getBasePath()).flatMap(projectPath -> {
 			try {
-				Stream<T> map = Files.walk(path, 5).filter(this::isTurtleButNotPrefixFile)
-						.flatMap(p -> tester.apply(p, extractProjectPrefixes(commonPrefixes, path)));
-				return map;
+				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
+				return FindFiles.sparqlExamples(projectPath).flatMap(p -> tester.apply(p, projectPrefixes));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}));
 	}
-	
-	private DynamicTest createTest(BiFunction<Path, String, Executable> tester, Path path, String projectPrefixes,
-			Path p) {
-		String testName = path.getFileName().toString() + ':' + p.getFileName().toString();
-		Executable apply = tester.apply(p, projectPrefixes);
+
+	private DynamicTest createTest(BiFunction<Path, String, Executable> tester, Path projectPath,
+			String projectPrefixes, Path specificExamplePath) {
+		String testName = pathToTestName(specificExamplePath);
+		Executable apply = tester.apply(specificExamplePath, projectPrefixes);
 		return DynamicTest.dynamicTest(testName, apply);
+	}
+
+	private String pathToTestName(Path specificExamplePath) {
+		return specificExamplePath.getParent().getFileName().toString() + '/'
+				+ specificExamplePath.getFileName().toString();
 	}
 
 	String extractProjectPrefixes(String commonPrefixes, Path path) {
@@ -159,15 +157,14 @@ public class ValidateSparqlExamplesTest {
 
 	private Stream<DynamicTest> testPrefixes(Path prefixes) {
 		if (Files.exists(prefixes)) {
-			return Stream
-					.of(DynamicTest.dynamicTest(prefixes.getParent().getFileName().toString() + ":prefixes.ttl", () -> {
-						try {
-							Model model = RDFDataMgr.loadModel(prefixes.toUri().toString());
-							assertFalse(model.isEmpty());
-						} catch (RiotException e) {
-							fail(e);
-						}
-					}));
+			return Stream.of(DynamicTest.dynamicTest(pathToTestName(prefixes), () -> {
+				try {
+					Model model = RDFDataMgr.loadModel(prefixes.toUri().toString());
+					assertFalse(model.isEmpty());
+				} catch (RiotException e) {
+					fail(e);
+				}
+			}));
 		} else {
 			return Stream.empty();
 		}
@@ -186,15 +183,5 @@ public class ValidateSparqlExamplesTest {
 		rs.close();
 		qe.close();
 		return prefixesSB.toString();
-	}
-
-	private boolean isTurtleButNotPrefixFile(Path p) {
-		return Files.exists(p) && p.toUri().getPath().endsWith(".ttl") && !p.toUri().getPath().endsWith("prefixes.ttl")
-				&& Files.isRegularFile(p);
-	}
-	
-	private boolean isTurtleAndPrefixFile(Path p) {
-		return Files.exists(p) && p.toUri().getPath().endsWith("prefixes.ttl")
-				&& Files.isRegularFile(p);
 	}
 }
