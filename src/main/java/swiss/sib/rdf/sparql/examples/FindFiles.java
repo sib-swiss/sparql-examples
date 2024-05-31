@@ -28,10 +28,9 @@ public class FindFiles {
 		return Files.walk(path).filter(FindFiles::isTurtleButNotPrefixFile);
 	}
 
-	private static Path getBasePath() throws URISyntaxException {
+	public static Path getBasePath() throws URISyntaxException {
 		URL baseDir = FindFiles.class.getResource("/");
-		Path basePath = Paths.get(baseDir.toURI());
-		return basePath;
+		return Paths.get(baseDir.toURI());
 	}
 
 	public static Stream<Path> allPrefixFiles() throws IOException, URISyntaxException{

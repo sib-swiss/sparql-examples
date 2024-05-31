@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -90,9 +89,7 @@ public class ValidateSparqlExamplesTest {
 				fail(s, e);
 			}
 		};
-		Function<Stream<String>, Stream<DynamicTest>> test = iris -> {
-			return iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
-		};
+		Function<Stream<String>, Stream<DynamicTest>> test = iris ->  iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
 		return testAllAsOne(tester, test);
 	}
 
@@ -101,16 +98,10 @@ public class ValidateSparqlExamplesTest {
 		return FindFiles.allPrefixFiles().flatMap(this::testPrefixes);
 	}
 
-	private Path getBasePath() throws URISyntaxException {
-		URL baseDir = getClass().getResource("/");
-		Path basePath = Paths.get(baseDir.toURI());
-		return basePath;
-	}
-
 	private Stream<DynamicTest> testAll(BiFunction<Path, String, Executable> tester)
 			throws URISyntaxException, IOException {
 		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
-		return Files.list(getBasePath()).flatMap(projectPath -> {
+		return Files.list(FindFiles.getBasePath()).flatMap(projectPath -> {
 			try {
 				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
 				return FindFiles.sparqlExamples(projectPath)
@@ -124,7 +115,7 @@ public class ValidateSparqlExamplesTest {
 	private <T> Stream<DynamicTest> testAllAsOne(BiFunction<Path, String, Stream<T>> tester,
 			Function<Stream<T>, Stream<DynamicTest>> test) throws URISyntaxException, IOException {
 		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
-		return test.apply(Files.list(getBasePath()).flatMap(projectPath -> {
+		return test.apply(Files.list(FindFiles.getBasePath()).flatMap(projectPath -> {
 			try {
 				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
 				return FindFiles.sparqlExamples(projectPath).flatMap(p -> tester.apply(p, projectPrefixes));
@@ -146,13 +137,14 @@ public class ValidateSparqlExamplesTest {
 				+ specificExamplePath.getFileName().toString();
 	}
 
-	String extractProjectPrefixes(String commonPrefixes, Path path) {
+	private String extractProjectPrefixes(String commonPrefixes, Path path) {
 		String projectPrefixes = commonPrefixes;
 		Path projectPrefixesPath = Paths.get(path.toString(), "prefixes.ttl");
 		if (Files.exists(projectPrefixesPath)) {
-			projectPrefixes = commonPrefixes + extractPrefixes(projectPrefixesPath);
+			return commonPrefixes + extractPrefixes(projectPrefixesPath);
+		} else {
+			return projectPrefixes;
 		}
-		return projectPrefixes;
 	}
 
 	private Stream<DynamicTest> testPrefixes(Path prefixes) {

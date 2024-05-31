@@ -117,7 +117,6 @@ public class ValidateSparqlExamplesWithShACLTest {
 		Model vem = ve.validationReportAsModel();
 		var boas = new ByteArrayOutputStream();
 		Rio.write(vem, boas, RDFFormat.TURTLE);
-		String report = boas.toString();
-		return report;
+		return boas.toString();
 	}
 }
