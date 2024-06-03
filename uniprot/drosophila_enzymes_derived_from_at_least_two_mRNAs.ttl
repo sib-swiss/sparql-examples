@@ -1,0 +1,28 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:drosophila_proteins_derived_from_at_least_two_mRNAs
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "transcript" , "mRNA" ;
+    rdfs:comment """Find Drosophila enzymes, that depend on more than one transcript (Requires cross-references to Ensembl family of resources).""" ;
+    sh:select """SELECT
+  ?protein
+WHERE {
+  ?protein up:organism taxon:7227 ;
+    a up:Protein ;
+    up:reviewed true ;
+    rdfs:seeAlso ?transcript .
+  { 
+    ?protein up:annotation/a up:Catalytic_Activity_Annotation ;
+  } UNION {
+    ?protein up:enzyme ?enzyme .
+  }
+  ?transcript  a up:Transcript_Resource .
+} GROUP BY ?protein HAVING(COUNT(?transcript) >= 2)""" .
