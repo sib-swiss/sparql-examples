@@ -1,0 +1,26 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:enzyme_with_threonine_as_active_site
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "active site" ;
+    rdfs:comment """Find enzymes with a Tyrosine (Y) as an active site""" ;
+    sh:select """SELECT 
+  ?protein
+WHERE {
+  ?protein up:annotation ?activeSiteAnnotation .
+  ?activeSiteAnnotation a up:Active_Site_Annotation ;
+    up:range ?range .
+  ?range faldo:begin ?begin .
+  ?begin faldo:position ?beginPosition ;
+    faldo:reference ?sequence .
+  ?sequence rdf:value ?sequenceVal . 
+  FILTER(SUBSTR(?sequenceVal, ?beginPosition, 1) = 'Y')
+}""" .
