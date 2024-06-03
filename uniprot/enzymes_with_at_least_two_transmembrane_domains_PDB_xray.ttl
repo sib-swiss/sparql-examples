@@ -1,0 +1,29 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:enzymes_with_at_least_two_transmembrane_domains_PDB_xray
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "membrane", "PDB", "3D" ;
+    rdfs:comment """Find enzymes that have at least two transmembrane domains, whose structure is elucidated through X-Ray analysis""" ;
+    sh:select """SELECT 
+  ?protein
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?transmembrane_annotation ;
+    rdfs:seeAlso ?wwPDB .
+  {
+    ?protein up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:annotation/a up:Catalytic_Activity_Annotation .
+  }
+  ?wwPDB up:database <http://purl.uniprot.org/database/PDB> ;
+    up:method up:X-Ray_Crystallography .
+  ?transmembrane_annotation a up:Transmembrane_Annotation .
+} GROUP BY ?protein HAVING(COUNT(DISTINCT ?transmembrane_annotation ) >= 2)""" .
