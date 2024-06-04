@@ -1,0 +1,25 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
+prefix up: <http://purl.uniprot.org/core/>
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+ex:enzymes_mapping_to_PDB
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """Select a mapping of UniProt Enzymes to PDB entries using the UniProt cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database""";
+    sh:select """SELECT
+  ?protein
+  ?db
+WHERE
+{
+  ?protein a up:Protein .
+  ?protein rdfs:seeAlso ?db .
+  ?db up:database <http://purl.uniprot.org/database/PDB> .
+  {
+    ?protein up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:annotation/rdf:type up:Catalytic_Activity_Annotation .
+  }
+}"""  .

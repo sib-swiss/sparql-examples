@@ -1,0 +1,32 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:enzymes_interacting_with_molecules_similar_to_dopamine
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:keyword "enzyme", "dopamine", "chemical similarity", "sachem", "idsm", "rhea";
+    rdfs:comment """Look for enzymes catalyzing reactions with molecules similar to dopamine.""";
+    sh:select """SELECT
+  ?protein
+  ?rhea 
+  ?chebi
+WHERE {
+  # Use the smiles of dopamine CHEBI:18243
+  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chebi>{
+    ?chebi sachem:similarCompoundSearch [
+      sachem:query "NCCc1ccc(O)c(O)c1" ] .
+  }
+  GRAPH<https://sparql.rhea-db.org/rhea>{
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  }
+  ?protein up:reviewed true ;
+    up:annotation ?caa .
+  ?caa up:catalyticActivity/up:catalyzedReaction ?rhea .
+}""" .
