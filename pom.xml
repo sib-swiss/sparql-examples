@@ -26,7 +26,16 @@
 		<rdf4j.version>4.3.11</rdf4j.version>
 		<jena.version>5.0.0</jena.version>
 		<junit.version>5.9.3</junit.version>
+    		<project.tests.exclude>SlowTest</project.tests.exclude>
 	</properties>
+	<profiles>
+	    <profile>
+        	<id>allTests</id>
+	        <properties>
+        	    <project.tests.exclude></project.tests.exclude>
+	        </properties>
+	    </profile>
+	</profiles>
 
 	<dependencyManagement>
 		<dependencies>
@@ -119,6 +128,9 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M6</version>
+				<configuration>
+					<excludedGroups>${project.tests.exclude}</excludedGroups>
+			    	</configuration>
 			</plugin>
 		</plugins>
 		<testResources>

@@ -67,3 +67,14 @@ should return no test failures. RDF4j and Jena are both a lot stricter than virt
 # Labeling queries
 
 If you want to add a label to a query please use [schema.org keyword](https://schema.org/keywords)
+
+# Testing the queries actually work
+
+The queries can be executed automatically on all endpoints they apply to using
+
+```
+mvn test -PallTests
+```
+
+This does change the queries to add a LIMIT 1 if no limit was set in the query. Then
+if there is a result it is fetched.

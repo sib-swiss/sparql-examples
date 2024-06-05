@@ -30,8 +30,8 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RiotException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
@@ -61,7 +61,7 @@ public class ValidateSparqlExamplesTest {
 		return testAll(tester);
 	}
 
-	@Disabled
+	@Tag("SlowTest")
 	@TestFactory
 	public Stream<DynamicTest> testAllService() throws URISyntaxException, IOException {
 		BiFunction<Path, String, Stream<String>> tester = (p, projectPrefixes) -> CreateTestWithRDF4jMethods
@@ -91,6 +91,14 @@ public class ValidateSparqlExamplesTest {
 		};
 		Function<Stream<String>, Stream<DynamicTest>> test = iris ->  iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
 		return testAllAsOne(tester, test);
+	}
+	
+	@TestFactory
+	@Tag("SlowTest")
+	public Stream<DynamicTest> testAllQueriesRun() throws URISyntaxException, IOException {
+		BiFunction<Path, String, Executable> tester = (p, projectPrefixes) -> () -> CreateTestWithRDF4jMethods
+				.testQueryRuns(p, projectPrefixes);
+		return testAll(tester);
 	}
 
 	@TestFactory
