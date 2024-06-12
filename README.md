@@ -42,6 +42,12 @@ This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$J
 ./convertToOneTurtle.sh -p uniprot
 ```
 
+An other option is to build the inbuild converter and use that.
+
+```bash
+mvn package
+java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -f jsonld
+```
 
 # Querying for queries
 

@@ -40,4 +40,8 @@ public class FindFiles {
 	public static Path commonPrefixes() throws URISyntaxException {
 		return Paths.get(FindFiles.class.getResource("/prefixes.ttl").toURI());
 	}
+
+	public static Stream<Path> prefixFile(Path p) {
+		return Stream.of(p.resolve("prefixes.ttl"));
+	}
 }
