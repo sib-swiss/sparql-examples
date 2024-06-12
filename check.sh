@@ -13,7 +13,7 @@ failure() {
 }
 trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
-prefixes=$(sparql --results=TSV --data=prefixes.ttl "PREFIX sh:<http://www.w3.org/ns/shacl#> SELECT ?s WHERE {?pn sh:prefix ?prefix ; sh:namespace ?namespaceI . BIND(CONCAT('PREFIX ',?prefix, ':<',(STR(?namespaceI)),'>') AS ?s)}"|grep -v "^\?s$" |tr -d '"')
+prefixes=$(sparql --results=TSV --data=examples/prefixes.ttl "PREFIX sh:<http://www.w3.org/ns/shacl#> SELECT ?s WHERE {?pn sh:prefix ?prefix ; sh:namespace ?namespaceI . BIND(CONCAT('PREFIX ',?prefix, ':<',(STR(?namespaceI)),'>') AS ?s)}"|grep -v "^\?s$" |tr -d '"')
 echo "Prefixes found"
 
 project="*"
@@ -35,7 +35,7 @@ while getopts nuhrsgmcbop: option; do
     esac
 done
 
-for p in $(ls -d $project);
+for p in $(ls -d examples/$project);
 do
 	if [ ! -f "$p" ]
 	then

@@ -35,14 +35,10 @@ if [ -f examples_${project}.ttl ]
 then
     rm examples_${project}.ttl
 fi
-echo "# baseURI: http://sparql.${project}.org/.well-known/sparql-examples#" > examples_${project}.ttl
-echo "# imports: http://purl.uniprot.org/core/ " >> examples_${project}.ttl
-echo "# prefix: ex" >> examples_${project}.ttl
-
 
 if which riot
 then
-  cat prefixes.ttl $project/*.ttl | riot --syntax=turtle --formatted=turtle > examples_${project}.ttl
+  cat examples/prefixes.ttl examples/$project/*.ttl | riot --syntax=turtle --formatted=turtle > examples_${project}.ttl
 else
-  rapper -q -i turtle <(cat ${project}/[1-9]*.ttl prefixes.ttl) -o turtle  > examples_${project}.ttl
+  rapper -q -i turtle <(cat examples/prefixes.ttl examples/${project}/*.ttl) -o turtle  > examples_${project}.ttl
 fi
