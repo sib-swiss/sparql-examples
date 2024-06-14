@@ -78,7 +78,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SHACL_DESCRIBE)
+		Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 			.map(s -> model.getStatements(null, s, null))
 			.map(Iterable::iterator)
 			.forEach(i -> testAllQueryStringsInModel(projectPrefixes, parser, i));
@@ -98,7 +98,7 @@ public class CreateTestWithRDF4jMethods {
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		
-		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SHACL_DESCRIBE).map(
+		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).map(
 				s -> model.getStatements(null, s, null))
 				.map(Iterable::iterator).map(i -> {
 					return collectServiceIrisInFromOneExample(projectPrefixes, parser, i);
