@@ -49,6 +49,15 @@ mvn package
 java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -f jsonld
 ```
 
+## Conversion to RQ files
+
+For easier use by other tools we can also generate [rq]() files. Following the 
+syntax of [ ]() allowing to use these queries as APIs.
+```bash
+mvn package
+java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -r
+```
+
 # Querying for queries
 
 As the SPARQL examples are in RDF once loaded in a SPARQL endpoint they can be queried for.
