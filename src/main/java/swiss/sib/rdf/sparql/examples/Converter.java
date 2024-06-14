@@ -3,29 +3,17 @@ package swiss.sib.rdf.sparql.examples;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
-import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.Resource;
-import org.eclipse.rdf4j.model.Statement;
-import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
-import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
-import org.eclipse.rdf4j.model.vocabulary.RDF;
-import org.eclipse.rdf4j.model.vocabulary.RDFS;
-import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParseException;
@@ -65,6 +53,11 @@ public class Converter {
 	@Option(names = { "-r",
 			"--rq" }, paramLabel = "output example files as rq files next to the exiting turtle", description = "output example files as rq files next to the exiting turtle", defaultValue = "false")
 	private boolean outputRq;
+	
+    @Option(names = { "-m",
+			"--markdown" }, paramLabel = "output example files as markdown files next to the exiting turtle", description = "output example files as markdown files next to the exiting turtle", defaultValue = "false")
+	private boolean outputMd;
+
 
 	@Option(names = { "-i",
 			"--input-directory" }, paramLabel = "directory containing example files to convert", description = "The root directory where the examples and their prefixes can be found.", required = true)
@@ -87,8 +80,10 @@ public class Converter {
 			commandLine.printVersionHelp(System.out);
 			return;
 		} else {
-			if (converter.outputRq) {
-				converter.convertToRQs();
+            if (converter.outputMd) {
+				converter.convertPerSingle("md", SparqlInRdfToMd::asRq);
+            } else if (converter.outputRq) {
+				converter.convertPerSingle("rq", SparqlInRdfToRq::asRq);
 			} else {
 				converter.convertToRdf();
 			}
@@ -113,22 +108,21 @@ public class Converter {
 		print(model);
 	}
 
-	private void convertToRQs() {
-
+	private void convertPerSingle(String extension, Function<Model, List<String>> converter){
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
-				convertProjectsToRq(list);
+				convertProjectsPerSingle(list, extension, converter);
 			} catch (IOException e) {
 				Failure.CANT_READ_INPUT_DIRECTORY.exit(e);
 			}
 		} else {
 			try (Stream<Path> list = COMMA.splitAsStream(projects).map(inputDirectory::resolve)) {
-				convertProjectsToRq(list);
+				convertProjectsPerSingle(list, extension, converter);
 			}
 		}
 	}
 
-	private void convertProjectsToRq(Stream<Path> list) {
+	private void convertProjectsPerSingle(Stream<Path> list, String extension, Function<Model, List<String>> converter) {
 		Optional<Path> findCommonPrefixes = FindFiles.prefixFile(inputDirectory).findFirst();
 		Model commonPrefixes = prefixModel(findCommonPrefixes);
 		list.forEach(pro -> {
@@ -140,10 +134,10 @@ public class Converter {
 					ex.addAll(commonPrefixes);
 					ex.addAll(projectPrefixes);
 					String pfn = p.getFileName().toString();
-					String prqfn = pfn.substring(0, pfn.indexOf('.')) + ".rq";
+					String prqfn = pfn.substring(0, pfn.indexOf('.')) + "."+extension;
 					Path prq = p.getParent().resolve(prqfn);
 					try {
-						List<String> rq = SparqlInRdfToRq.asRq(ex);
+						List<String> rq = converter.apply(ex);
 						Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 					} catch (IOException e) {
 						Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
