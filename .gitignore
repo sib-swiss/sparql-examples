@@ -1,3 +1,4 @@
 /target/
 /examples_*.ttl
 /examples/**/*.rq
+/examples/**/*.md

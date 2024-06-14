@@ -38,15 +38,16 @@ public class SparqlInRdfToRq {
 					}
 					Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
-							.map(o -> o.stringValue()).map(q -> addPrefixes(q, ex)).forEach(rq::add);
+							.map(o -> o.stringValue()).forEach(q -> addPrefixes(q, ex, rq));
 				});
 		return rq;
 	}
 
 	/**
      * Add prefixes to the raw SPARQL query string
+	 * @param rq 
      **/
-	public static String addPrefixes(String query, Model ex) {
+	public static void addPrefixes(String query, Model ex, List<String> rq) {
 		Iterator<Statement> iterator = streamOf(ex, null, SHACL.PREFIX_PROP, null).iterator();
 		List<String> prefixes = new ArrayList<>();
 		
@@ -55,13 +56,27 @@ public class SparqlInRdfToRq {
 			Resource ns = n.getSubject();
 			String nos = n.getObject().stringValue() + ':';
 			
-			if (query.contains(nos)) {
+			if (queryContainsPrefix(query, nos)) {
 				prefixes.add(streamOf(ex, ns, SHACL.NAMESPACE_PROP, null).map(Statement::getObject)
 						.map(Value::stringValue).map(s -> "PREFIX "+nos+'<'+s+'>').collect(Collectors.joining()));
 			}
 		}
 		prefixes.sort(String::compareTo);
-		return prefixes.stream().collect(Collectors.joining("\n")) + '\n' + query;
+		rq.addAll(prefixes);
+		rq.add(query);
+	}
+
+	static boolean queryContainsPrefix(String query, String prefix) {
+		int indexOf = query.indexOf(prefix);
+		if (indexOf == 0) {
+			return true;
+		} else if (indexOf >= 0) {
+			//Make sure that the prefix is complete to avoid matching p: when prefix is actually up:
+			//so the character should be a tab, space, forward slash, closing bracket or pipe
+			char cb = query.charAt(indexOf - 1);
+			return cb == '\t' || cb == ' ' || cb == '/' || cb == ')' || cb == '|';
+		}
+		return false;
 	}
 
 	private static Stream<Statement> streamOf(Model ex, Resource s, IRI p, Value o) {
