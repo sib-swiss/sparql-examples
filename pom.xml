@@ -8,7 +8,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Test and package the sparql examples</name>
-	<description>An simple package to help with managing the sparql examples</description>
+	<description>An simple package to help with managing the sparql examples, provided by SIB</description>
 	<url>https://www.gitub.org/sib-swiss/sparql-examples</url>
 	<inceptionYear>2023</inceptionYear>
 	<organization>
