@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:uniprot_created_modified_updated
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """List the created, last modified, and last sequence update dates for UniProtKB proteins.""" ;
+    sh:select """SELECT
+  ?protein 
+  ?created
+  ?modified
+  ?version
+WHERE {
+  ?protein a up:Protein ;
+           up:created ?created ;
+           up:modified ?modified ;
+           up:version ?version .
+}""" .

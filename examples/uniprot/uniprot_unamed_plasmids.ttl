@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:uniprot_unamed_plasmids
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """Sometimes it is known that a gene encoding a protein UniProtKB is located on a plasmid, but the name of the plasmid is unknown.""" ;
+    sh:select """SELECT 
+    ?protein 
+    ?plasmidOrOrganelle
+    ?label
+WHERE {
+    ?protein a up:Protein ;
+      up:encodedIn ?plasmidOrOrganelle .
+    OPTIONAL {
+        ?plasmidOrOrganelle rdfs:label ?label .
+    }
+}""" .

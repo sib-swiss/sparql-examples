@@ -1,0 +1,34 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:taxonomy_with_at_least_one_swissprot
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """Find taxon records for which one reviewed UniProtKB (Swiss-Prot) entry exists"""^^rdf:HTML ;
+    sh:select """
+SELECT
+    DISTINCT
+         ?taxid
+         ?scientificName
+         ?domain
+         ?domainName
+WHERE {
+  ?uniprot a up:Protein .
+  # reviewed entries
+  ?uniprot up:reviewed true .
+  ?uniprot up:organism ?taxid . 
+  ?taxid up:scientificName ?scientificName .
+    
+  VALUES ?domain { taxon:2 # bacteria
+                   taxon:2157 # archaea
+                   taxon:2759 # eukaryota
+                   taxon:10239 #viruses
+                 } .
+  ?taxid rdfs:subClassOf ?domain .
+}""" .

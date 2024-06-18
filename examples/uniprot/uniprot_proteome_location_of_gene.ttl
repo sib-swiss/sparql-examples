@@ -1,0 +1,27 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:uniprot_proteome_location_of_gene
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """List UniProt proteins with genetic replicon that they are encoded on using the Proteome data.""" ;
+    sh:select """SELECT
+  DISTINCT
+    ?proteomeData
+    ?replicon
+    ?proteome  
+WHERE {
+  # reviewed entries (UniProtKB/Swiss-Prot)
+  ?protein up:reviewed true . 
+  # restricted to Human taxid
+  ?uniprot up:organism taxon:9606 . 
+  ?uniprot up:proteome ?proteomeData .
+  BIND( strbefore( str(?proteomeData), "#" ) as ?proteome )
+  BIND( strafter( str(?proteomeData), "#" ) as ?replicon )
+}""" .
