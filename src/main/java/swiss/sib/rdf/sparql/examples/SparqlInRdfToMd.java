@@ -36,7 +36,7 @@ public class SparqlInRdfToMd {
 		});
 
 		rq.add("```mermaid");
-		SparqlInRdfToMermaid.asMermaid(ex);
+		rq.add(SparqlInRdfToMermaid.asMermaid(ex));
 		rq.add("```");
 		return rq;
 	}
