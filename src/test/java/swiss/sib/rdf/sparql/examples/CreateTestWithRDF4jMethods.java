@@ -21,7 +21,6 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
-import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.BooleanQuery;
 import org.eclipse.rdf4j.query.GraphQuery;
@@ -46,14 +45,16 @@ import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
+import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
+import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
+
 public class CreateTestWithRDF4jMethods {
-	private static final IRI SHACL_DESCRIBE = SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, "describe");
-	private static final IRI SCHEMA_TARGET = SimpleValueFactory.getInstance().createIRI("https://schema.org/","target");
+
 
 	private enum QueryTypes {
 		ASK(SHACL.ASK, (rc, q) -> rc.prepareBooleanQuery(q)),
 		SELECT(SHACL.SELECT, (rc, q) -> rc.prepareTupleQuery(q)),
-		DESCRIBE(SHACL_DESCRIBE, (rc, q) -> rc.prepareGraphQuery(q)),
+		DESCRIBE(SIB.DESCRIBE, (rc, q) -> rc.prepareGraphQuery(q)),
 		CONSTRUCT(SHACL.CONSTRUCT, (rc, q) -> rc.prepareGraphQuery(q));
 
 		
@@ -174,7 +175,7 @@ public class CreateTestWithRDF4jMethods {
 		Iterator<Statement> i = m.getStatements(null, qt.iri, null).iterator();
 		while (i.hasNext()) {
 			Statement next = i.next();
-			Iterator<Statement> targets = m.getStatements(next.getSubject(), SCHEMA_TARGET, null).iterator();
+			Iterator<Statement> targets = m.getStatements(next.getSubject(), SchemaDotOrg.TARGET, null).iterator();
 			while(targets.hasNext()) {
 				Statement targetStatement = targets.next();
 				executeQueryStringInValue(projectPrefixes, parser, next.getObject(), targetStatement.getObject(), qt);

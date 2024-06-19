@@ -81,7 +81,7 @@ public class Converter {
 			return;
 		} else {
             if (converter.outputMd) {
-				converter.convertPerSingle("md", SparqlInRdfToMd::asRq);
+				converter.convertPerSingle("md", SparqlInRdfToMd::asMD);
             } else if (converter.outputRq) {
 				converter.convertPerSingle("rq", SparqlInRdfToRq::asRq);
 			} else {

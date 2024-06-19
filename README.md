@@ -51,8 +51,8 @@ java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p al
 
 ## Conversion to RQ files
 
-For easier use by other tools we can also generate [rq]() files. Following the 
-syntax of [ ]() allowing to use these queries as APIs.
+For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the 
+syntax of [grlc]()https://grlc.io/ allowing to use these queries as APIs.
 ```bash
 mvn package
 java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -r

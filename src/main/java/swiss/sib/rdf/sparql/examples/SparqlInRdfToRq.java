@@ -12,30 +12,37 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
-import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 
-public class SparqlInRdfToRq {
-	private static final IRI KEYWORD = SimpleValueFactory.getInstance().createIRI("https://schema.org/keyword");
-	
+import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
+import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
+public class SparqlInRdfToRq {
+	/**
+	 * {@link https://grlc.io/}
+	 * @param ex the model containing all prefixes and query
+	 * @return a rq formatted list of strings that should be concatenated later.
+	 */
 	public static List<String> asRq(Model ex) {
 		List<String> rq = new ArrayList<>();
 
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct()
 				.peek(s -> rq.add("#+ id:" + s.stringValue())).forEach(s -> {
 					streamOf(ex, s, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
-							.map(o -> "#+ summary:" + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
+							.map(o -> "#+ description:" + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
 					rq.add("\n");
-					String keywords = streamOf(ex, s, KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
+					String keywords = streamOf(ex, s, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
 							.collect(Collectors.joining("\n#+  -"));
 					if (!keywords.isEmpty()) {
 						rq.add("#+ tags:");
 						rq.add("#+   -");
 						rq.add(keywords);
 					}
+					// Pick the first target only
+					streamOf(ex, s, SchemaDotOrg.TARGET, null).map(Statement::getObject).map(Value::stringValue)
+						.map(o -> "#+ endpoint:" + o).findFirst().ifPresent(rq::add);
 					Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
 							.map(o -> o.stringValue()).forEach(q -> addPrefixes(q, ex, rq));
@@ -62,6 +69,10 @@ public class SparqlInRdfToRq {
 			}
 		}
 		prefixes.sort(String::compareTo);
+		//We hack in here that for small queries we want GET for cache performance
+		if (prefixes.stream().mapToInt(String::length).sum() + query.length() < 600) {
+			rq.add("#+ method: GET");
+		}
 		rq.addAll(prefixes);
 		rq.add(query);
 	}
