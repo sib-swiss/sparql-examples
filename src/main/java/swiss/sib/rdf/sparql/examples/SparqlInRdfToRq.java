@@ -84,13 +84,22 @@ public class SparqlInRdfToRq {
 		} else if (indexOf >= 0) {
 			//Make sure that the prefix is complete to avoid matching p: when prefix is actually up:
 			//so the character should be a tab, space, forward slash, closing bracket or pipe
-			char cb = query.charAt(indexOf - 1);
-			return cb == '\t' || cb == ' ' || cb == '/' || cb == ')' || cb == '|';
+			while(indexOf >= 0 ) {
+				if (isPrefixInUse(query, indexOf))
+					return true;
+				indexOf = query.indexOf(prefix, indexOf+1);
+			}
+			return false;
 		}
 		return false;
 	}
 
-	private static Stream<Statement> streamOf(Model ex, Resource s, IRI p, Value o) {
+	private static boolean isPrefixInUse(String query, int indexOf) {
+		char cb = query.charAt(indexOf - 1);
+		return cb == '\t' || cb == ' ' || cb == '/' || cb == ')' || cb == '|' || cb == '(' || cb == '=' || cb == '^';
+	}
+
+	static Stream<Statement> streamOf(Model ex, Resource s, IRI p, Value o) {
 		return StreamSupport.stream(ex.getStatements(s, p, o).spliterator(), false);
 	}
 }

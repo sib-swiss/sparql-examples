@@ -94,22 +94,18 @@
 		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>
 			<artifactId>rdf4j-sail-model</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>
 			<artifactId>rdf4j-sail-memory</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>
 			<artifactId>rdf4j-repository-api</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>
 			<artifactId>rdf4j-repository-sail</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.rdf4j</groupId>

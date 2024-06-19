@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParseException;
@@ -26,7 +27,7 @@ import picocli.CommandLine.Option;
 
 public class Converter {
 
-	private static enum Failure {
+	public static enum Failure {
 		CANT_READ_INPUT_DIRECTORY(1), CANT_PARSE_EXAMPLE(2), CANT_READ_EXAMPLE(3), CANT_WRITE_EXAMPLE_RQ(4);
 
 		private final int exitCode;
@@ -39,6 +40,13 @@ public class Converter {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			System.exit(exitCode);
+		}
+
+		void exit(String queryS, MalformedQueryException e) {
+			System.err.println(queryS+"." + e.getMessage());
+			e.printStackTrace();
+			System.exit(exitCode);
+			
 		}
 
 	}
