@@ -95,6 +95,7 @@ public class SparqlInRdfToMermaidTest {
 			  BIND(strafter(str(?ec),str(ec:)) as ?ecNumber)
 			  ?rhea rh:isTransport ?isTransport .
 			  ?rhea rh:equation [] .
+			  FILTER(?isTransport = true)
 			}''' . """;
 	
 	String simple = """
