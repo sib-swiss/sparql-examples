@@ -1,0 +1,39 @@
+prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
+prefix up: <http://purl.uniprot.org/core/> 
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix schema:<https://schema.org/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix faldo:<http://biohackathon.org/resource/faldo#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+ex:rhea_reactions_annotated_as_experimental_and_only_small_molecules
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    rdfs:comment """Find all rhea (only small molecule) that are used in UniProt where the annotation has a paper and is tagged having experimental evidence."""^^rdf:HTML ;
+    sh:select """SELECT
+  ?rhea 
+  ?catalyzedReaction 
+  ?source
+WHERE {
+  {  
+    SELECT 
+      DISTINCT 
+        ?rhea
+      WHERE {
+        GRAPh<https://sparql.rhea-db.org/rhea> {
+          ?rhea rdfs:subClassOf rh:Reaction .
+          ?rhea rh:side/rh:contains/rh:compound ?compound2 . 
+          ?uc rdfs:subClassOf rh:Compound .
+        }
+        ?compound2 rdfs:subClassOf ?uc . 
+    	BIND(IF(?uc = rh:SmallMolecule, 0, 1) AS ?c)  
+     } GROUP BY ?rhea  HAVING (SUM(?c) = 0)
+  }
+  ?catalyzedReaction up:catalyzedReaction ?rhea .
+  ?reif rdf:object ?catalyzedReaction ;
+        up:attribution ?attr .
+  ?attr up:evidence ECO:0000269 ;
+        up:source ?source .
+  ?source a up:Citation .
+}""" .
