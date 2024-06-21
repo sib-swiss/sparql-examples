@@ -35,5 +35,4 @@ public final class NameVariablesAndConstants extends AbstractQueryModelVisitor<R
 			constantKeys.put(node.getValue(), nextId);
 		}
 	}
-
 }

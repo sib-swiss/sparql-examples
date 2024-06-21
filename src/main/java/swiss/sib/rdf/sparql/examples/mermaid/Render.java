@@ -20,10 +20,15 @@ import org.eclipse.rdf4j.query.algebra.Exists;
 import org.eclipse.rdf4j.query.algebra.Filter;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
 import org.eclipse.rdf4j.query.algebra.Not;
+import org.eclipse.rdf4j.query.algebra.Projection;
+import org.eclipse.rdf4j.query.algebra.ProjectionElem;
+import org.eclipse.rdf4j.query.algebra.ProjectionElemList;
 import org.eclipse.rdf4j.query.algebra.SameTerm;
 import org.eclipse.rdf4j.query.algebra.Service;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
+import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.algebra.Union;
+import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
@@ -39,7 +44,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		public void meet(Var node) throws RuntimeException {
 			rq.add(indent() + filterId + " .-> " + asString(node));
 		}
-		
+
 		@Override
 		public void meet(SameTerm node) throws RuntimeException {
 			rq.add(indent() + filterId + "{{ sameTerm }}");
@@ -51,7 +56,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			rq.add(indent() + filterId + "{{ Not }}");
 			super.meet(node);
 		}
-		
+
 		@Override
 		public void meet(Exists node) throws RuntimeException {
 			rq.add(indent() + "subgraph " + filterId + "{{ Exists }}");
@@ -59,28 +64,23 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			Map<String, String> variableKeys = new HashMap<>();
 			Map<String, String> anonymousKeys = new HashMap<>();
 			Set<Value> usedAsNode = new HashSet<>();
-			
+
 			node.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys));
 			node.visit(new FindWhichConstantsAreNotOnlyUsedAsPredicates(usedAsNode));
-			node.visit(new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq));
-			
+			node.visit(new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq,
+					node.getSubQuery()));
+
 		}
-		
+
 		@Override
 		public void meet(Compare node) throws RuntimeException {
-			switch(node.getOperator()) {
-				case EQ ->
-					rq.add(indent() + filterId + "{{ = }}");
-				case NE ->
-					rq.add(indent() + filterId + "{{ != }}");
-				case LT ->
-					rq.add(indent() + filterId + "{{ < }}");
-				case GT ->
-					rq.add(indent() + filterId + "{{ > }}");
-				case LE ->
-					rq.add(indent() + filterId + "{{ <= }}");
-				case GE ->
-					rq.add(indent() + filterId + "{{ >= }}");
+			switch (node.getOperator()) {
+			case EQ -> rq.add(indent() + filterId + "{{ = }}");
+			case NE -> rq.add(indent() + filterId + "{{ != }}");
+			case LT -> rq.add(indent() + filterId + "{{ < }}");
+			case GT -> rq.add(indent() + filterId + "{{ > }}");
+			case LE -> rq.add(indent() + filterId + "{{ <= }}");
+			case GE -> rq.add(indent() + filterId + "{{ >= }}");
 			}
 			super.meet(node);
 		}
@@ -100,24 +100,33 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	private int filterCount;
 
 	public Render(Map<String, String> variableKeys, Map<String, String> iriPrefixes, Map<Value, String> constantKeys,
-			Set<Value> usedAsNode, Map<String, String> anonymousKeys, List<String> rq) {
+			Set<Value> usedAsNode, Map<String, String> anonymousKeys, List<String> rq, TupleExpr te) {
 		this.variableKeys = variableKeys;
 		this.iriPrefixes = iriPrefixes;
 		this.constantKeys = constantKeys;
 		this.usedAsNode = usedAsNode;
 		this.anonymousKeys = anonymousKeys;
 		this.rq = rq;
+
+		FindProjectedVariables findProjectedVariables = new FindProjectedVariables();
+		te.visit(findProjectedVariables);
+		Set<Value> pv = findProjectedVariables.variables;
+		Set<String> pnv = findProjectedVariables.namedVariables;
 		addWithLeadingWhiteSpace(variableKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
-				.map(en -> en.getValue() + "(\"?" + en.getKey() + "\")"), rq);
-		addWithLeadingWhiteSpace(anonymousKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
-				.map(en -> en.getValue() + "((\"_:" + en.getValue() + "\"))"), rq);
-		addWithLeadingWhiteSpace(constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey()))
-				.map(en -> en.getValue() + "([" + prefix(en.getKey(), iriPrefixes) + "])"), rq);
+				.map(en -> en.getValue() + "(\"?" + en.getKey() + "\")" + addProjectedClass(en.getKey(), pnv)), rq);
+		addWithLeadingWhiteSpace(
+				anonymousKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey)).map(
+						en -> en.getValue() + "((\"_:" + en.getValue() + "\"))" + addProjectedClass(en.getKey(), pnv)),
+				rq);
+		addWithLeadingWhiteSpace(
+				constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey())).map(en -> en.getValue()
+						+ "([" + prefix(en.getKey(), iriPrefixes) + "])" + addProjectedClass(en.getKey(), pv)),
+				rq);
 		addStyles(rq);
 	}
 
 	private void addStyles(List<String> rq2) {
-//		rq2.add("classdef service fill:#f96");
+		rq2.add("classDef projected fill:lightgreen;");
 	}
 
 	private static void addWithLeadingWhiteSpace(Stream<String> map, List<String> rq) {
@@ -151,39 +160,39 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	@Override
 	public void meet(Filter f) throws RuntimeException {
-		String filterId = "f"+filterCount++;
-		
+		String filterId = "f" + filterCount++;
+
 		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId);
 		f.getCondition().visit(visitor);
 		super.meet(f);
 	}
-	
+
 	@Override
 	public void meet(Union u) throws RuntimeException {
 		rq.add(indent() + "%%or");
-		rq.add(indent() + "subgraph union" + unionCount+"l[\" \"]");
+		rq.add(indent() + "subgraph union" + unionCount + "l[\" \"]");
 		indent += 2;
 		rq.add(indent() + "style union" + unionCount + "l fill:#abf,stroke-dasharray: 3 3;");
 		u.getRightArg().visit(this);
 		indent -= 2;
 		rq.add(indent() + "end");
 
-		rq.add(indent() + "subgraph union" + unionCount+"r[\" \"]");
+		rq.add(indent() + "subgraph union" + unionCount + "r[\" \"]");
 		indent += 2;
 		rq.add(indent() + "style union" + unionCount + "r fill:#abf,stroke-dasharray: 3 3;");
 		u.getLeftArg().visit(this);
 		indent -= 2;
 		rq.add(indent() + "end");
-		rq.add(indent() + "union"+unionCount+"r <== or ==> union" + unionCount+"l");
+		rq.add(indent() + "union" + unionCount + "r <== or ==> union" + unionCount + "l");
 		unionCount++;
 	}
-	
+
 	@Override
 	public void meet(LeftJoin s) throws RuntimeException {
 		s.getLeftArg().visit(this);
 		optional = true;
 		rq.add(indent() + "%%optional");
-		rq.add(indent() + "subgraph optional" + optionalCount+"[\"(optional)\"]");
+		rq.add(indent() + "subgraph optional" + optionalCount + "[\"(optional)\"]");
 		rq.add(indent() + "style optional" + optionalCount++ + " fill:#bbf,stroke-dasharray: 5 5;");
 		indent += 2;
 		s.getRightArg().visit(this);
@@ -257,5 +266,48 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				return '"' + l.stringValue() + "^^geo:" + cd.getIri().getLocalName() + '"';
 		}
 		return '"' + l.stringValue() + "^^<" + l.getDatatype() + ">\"";
+	}
+
+	private static String addProjectedClass(Value v, Set<Value> variables) {
+		if (variables.contains(v)) {
+			return ":::projected ";
+		}
+		return "";
+	}
+
+	private static String addProjectedClass(String name, Set<String> variables) {
+		if (variables.contains(name)) {
+			return ":::projected ";
+		}
+		return "";
+	}
+
+	private class FindProjectedVariables extends AbstractQueryModelVisitor<RuntimeException> {
+
+		private Set<String> namedVariables = new HashSet<>();
+		private Set<Value> variables = new HashSet<>();
+
+		@Override
+		public void meet(Projection node) throws RuntimeException {
+			ProjectionElemList projectionElemList = node.getProjectionElemList();
+			for (ProjectionElem element : projectionElemList.getElements()) {
+				if (element.getSourceExpression() != null) {
+					ValueExpr expr = element.getSourceExpression().getExpr();
+					expr.visit(this);
+				} else {
+					namedVariables.add(element.getName());
+				}
+			}
+		}
+
+		@Override
+		public void meet(Var node) throws RuntimeException {
+			super.meet(node);
+			if (node.isConstant() && !node.isAnonymous()) {
+				variables.add(node.getValue());
+			} else {
+				namedVariables.add(node.getName());
+			}
+		}
 	}
 }

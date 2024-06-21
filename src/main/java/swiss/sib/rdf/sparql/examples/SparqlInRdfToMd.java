@@ -21,20 +21,25 @@ public class SparqlInRdfToMd {
 	public static List<String> asMD(Model ex) {
 		List<String> rq = new ArrayList<>();
 
-		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(s -> {
-			rq.add("# " + s.stringValue() + "\n");
-			streamOf(ex, s, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
+		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> {
+			rq.add("# " + queryId.stringValue() + "\n");
+			streamOf(ex, queryId, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
-			streamOf(ex, s, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue).forEach(rq::add);
-			rq.add("\n");
+			streamOf(ex, queryId, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue).forEach(rq::add);
+			
+			rq.add("");
+			rq.add("## Use at ");
+			streamOf(ex, queryId, SchemaDotOrg.TARGET, null).map(Statement::getObject).map(Value::stringValue).map(v -> " * " +v).forEach(rq::add);
+			
+			rq.add("");
 			rq.add("```sparql");
-			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).flatMap(qt -> streamOf(ex, s, qt, null))
+			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).flatMap(qt -> streamOf(ex, queryId, qt, null))
 					.map(Statement::getObject).map(o -> o.stringValue())
 					.forEach(q -> SparqlInRdfToRq.addPrefixes(q, ex, rq));
 			rq.add("```");
 
 		});
-
+		rq.add("");
 		rq.add("```mermaid");
 		rq.add(SparqlInRdfToMermaid.asMermaid(ex));
 		rq.add("```");

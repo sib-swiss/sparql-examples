@@ -85,7 +85,7 @@ public class SparqlInRdfToMermaid {
 
 			
 			tq.visit(
-					new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq));
+					new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq, tq));
 
 		} catch (MalformedQueryException e) {
 			String queryS = queryId.getSubject().stringValue();
