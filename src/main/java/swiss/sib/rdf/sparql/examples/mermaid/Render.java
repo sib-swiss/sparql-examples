@@ -116,7 +116,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				.map(en -> en.getValue() + "(\"?" + en.getKey() + "\")" + addProjectedClass(en.getKey(), pnv)), rq);
 		addWithLeadingWhiteSpace(
 				anonymousKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey)).map(
-						en -> en.getValue() + "((\"_:" + en.getValue() + "\"))" + addProjectedClass(en.getKey(), pnv)),
+						en -> en.getValue() + "((\" \"))" + addProjectedClass(en.getKey(), pnv)),
 				rq);
 		addWithLeadingWhiteSpace(
 				constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey())).map(en -> en.getValue()
