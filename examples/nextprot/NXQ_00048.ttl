@@ -2,9 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00048
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins with at least one variant of the type \"C->X\" (Cys to anything else) that are linked to one or more diseases''' ;
  schema:keyword "variant";
  schema:keyword "disease";

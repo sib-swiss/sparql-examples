@@ -2,9 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00300
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins with protein existence \"At protein level\" (PE=1) that have no function annotated, are highly expressed in brain and have homologs in Drosophila melanogaster according to OrthoDB''' ;
  schema:keyword "protein existence";
  schema:keyword "federated query";
@@ -27,7 +29,7 @@ filter not exists { ?iso :function / :term ?fterm . filter(?fterm != nextprot_cv
 ?iso :expression ?e1.
 ?e1 :term/:childOf nextprot_cv:TS-0095;:evidence/:observedExpression :High.
 {
-service <https://sparql.orthodb.org/sparql>
+service <http://sparql.orthodb.org/sparql>
 {?gene rdfs:seeAlso ?entry; orthodb:memberOf ?og.
 ?og orthodb:ogBuiltAt [up:scientificName ?clade]
 ; orthodb:hasMember ?ortholog.

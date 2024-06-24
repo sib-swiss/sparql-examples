@@ -14,6 +14,7 @@ do
 	echo "prefix schema:<http://schema.org/>"  >> $filename
 	echo "ex:${id:1:-1}" >> $filename
 	echo " sh:prefixes _:sparql_examples_prefixes ;" >> $filename
+    echo "  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;" >> $filename
 	echo -e "  rdfs:comment '''${title:1:-1}''' ;"  >> $filename
 	while read t;
 	do 

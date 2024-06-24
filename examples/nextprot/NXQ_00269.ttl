@@ -2,26 +2,27 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00269
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins with associated cancer pathways in WikiPathways (via Disease Ontology classification)''' ;
  schema:keyword "pathway";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''
-select distinct ?entry (str(?gen) as ?gene) ?pathwayname where {
- service <https://sparql.wikipathways.org/sparql> {
+  sh:select '''select distinct ?entry (str(?gen) as ?gene) ?pathwayname where {
+ service <http://sparql.wikipathways.org/sparql> {
  {?geneProduct a wp:Protein}
  union
  {?geneProduct a wp:GeneProduct}
  ?geneProduct rdfs:label ?genraw .
- bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).
- filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching
+ bind (concat( ""^^xsd:string, ?genraw) as ?gen).
+ filter(!regex(?gen,"[ a-z-]")). # ensures official gene names for subsequent neXtprot matching
  ?geneProduct dcterms:isPartOf ?pathway .
  ?pathway a wp:Pathway .
  ?pathway wp:organism ?organism .
- filter(contains(str(?organism),\"9606\")) # Human proteins
+ filter(contains(str(?organism),"9606")) # Human proteins
  ?pathway dc:title ?pathwayname .
  ?pathway wp:ontologyTag <http://purl.obolibrary.org/obo/DOID_162> . # Parent id for all cancers
  }

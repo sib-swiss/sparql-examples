@@ -2,19 +2,22 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00267
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins binding estradiol and/or similar molecules (similarity search with SMILES), and their associated GO_MF terms''' ;
  schema:keyword "small molecule interaction";
  schema:keyword "federated query";
  schema:keyword "tutorial";
  schema:keyword "similarity";
  schema:keyword "function";
-  sh:select '''SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
+  sh:select '''
+SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
  		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {
- 		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chembl> {
- 		?compound sachem:similarCompoundSearch [ sachem:query \"CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O\" ] . # smiles chain for estradiol
+ 		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/cco> {
+ 		?compound sachem:similarCompoundSearch [ sachem:query "CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O" ] . # smiles chain for estradiol
 		 }
 		 		?ACTIVITY rdf:type cco:Activity;
 		cco:hasMolecule ?compound;
@@ -23,7 +26,7 @@ ex:NXQ_00267
 		 ?TARGET cco:taxonomy <http://identifiers.org/taxonomy/9606> . # human protein target
 		 ?TARGET cco:hasTargetComponent ?COMPONENT.
 		 ?COMPONENT cco:targetCmptXref ?UNIPROT.
-		 filter(contains(str(?UNIPROT),\"uniprot\"))
+		 filter(contains(str(?UNIPROT),"uniprot"))
 		 }
 	?entry skos:exactMatch ?UNIPROT.
 	?entry :isoform ?iso.

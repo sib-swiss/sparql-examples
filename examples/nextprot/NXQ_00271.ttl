@@ -2,9 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00271
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM...''' ;
  schema:keyword "variant";
  schema:keyword "tutorial";

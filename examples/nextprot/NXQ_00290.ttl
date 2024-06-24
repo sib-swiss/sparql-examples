@@ -2,9 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00290
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site''' ;
  schema:keyword "enzyme";
  schema:keyword "small molecule interaction";
@@ -17,7 +19,7 @@ ex:NXQ_00290
  ?iso :enzymeClassification /rdfs:comment ?ec. 
  ?iso :cofactor /:interactant /skos:exactMatch CHEBI:29108. # Ca(2+) cofactor 
  ?iso :bindingSite /:interactant ?inter.
- ?inter :accession \"CHEBI:29108\"^^xsd:string # binding site interactant Ca(2+)
+ ?inter :accession "CHEBI:29108"^^xsd:string # binding site interactant Ca(2+)
 }
 order by asc(?ec)'''
 .

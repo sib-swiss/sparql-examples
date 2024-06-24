@@ -2,34 +2,34 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00270
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins belonging to Rett syndrome pathways, and their subcellular locations (GOLD)''' ;
  schema:keyword "pathway";
  schema:keyword "disease";
  schema:keyword "federated query";
  schema:keyword "tutorial";
  schema:keyword "subcellular location";
-  sh:select '''
-
-select ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {
- service <https://sparql.wikipathways.org/sparql> {
+  sh:select '''select ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {
+ service <http://sparql.wikipathways.org/sparql> {
 
  {?geneProduct a wp:Protein}
  union
  {?geneProduct a wp:GeneProduct}
  
  ?geneProduct rdfs:label ?genraw .
- bind (concat( \"\"^^xsd:string, ?genraw) as ?gen).
+ bind (concat( ""^^xsd:string, ?genraw) as ?gen).
 
- filter(!regex(?gen,\"[ a-z-]\")). # ensures official gene names for subsequent neXtprot matching
+ filter(!regex(?gen,"[ a-z-]")). # ensures official gene names for subsequent neXtprot matching
  ?geneProduct dcterms:isPartOf ?pathway .
  ?pathway a wp:Pathway .
  ?pathway wp:organism ?organism .
- filter(contains(str(?organism),\"9606\"))
+ filter(contains(str(?organism),"9606"))
  ?pathway dc:title ?pathwayname .
- filter(regex(?pathwayname,\"rett\",\"i\")).
+ filter(regex(?pathwayname,"rett","i")).
  }
  ?entry a :Entry .
  ?entry :gene / :recommendedName / rdfs:label ?gen .

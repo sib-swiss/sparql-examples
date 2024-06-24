@@ -2,16 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00276
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Diseases/phenotypes associated with coding variants and associated publications for a given gene''' ;
  schema:keyword "variant";
  schema:keyword "disease";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''
-select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {
+  sh:select '''select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {
  service <http://rdf.disgenet.org/sparql/> {
  ?vda sio:SIO_000628 ?umls, ?variant .
  ?vda sio:SIO_000772 ?article .
@@ -23,10 +24,10 @@ select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) 
  ?variant so:associated_with ?gene .
  ?gene a ncit:C16612; sio:SIO_010078 ?protein .
  ?gene sio:SIO_000205 ?gname.
- filter(contains(str(?gname),\"HBB\")) # Hemoglobin gene (NX_P68871)
+ filter(contains(str(?gname),"HBB")) # Hemoglobin gene (NX_P68871)
  }
 
- BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ BIND(IRI(replace(str(?protein),"purl","www")) AS ?unipage) .
  ?entry :swissprotPage ?unipage .
  ?entry :isoform ?iso .
  ?iso :swissprotDisplayed true .

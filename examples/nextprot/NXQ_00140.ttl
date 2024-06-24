@@ -2,26 +2,27 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00140
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins that interact with viral proteins''' ;
  schema:keyword "PPI";
  schema:keyword "federated query";
  schema:keyword "tutorial";
-  sh:select '''
-select distinct ?entry where {
+  sh:select '''select distinct ?entry where {
  ?entry :isoform ?iso.
  optional {?iso :interactionInfo ?itinfo .}
  {
  ?itinfo rdfs:comment ?txt.
- filter(contains(?txt,\"viral\") || contains(?txt,\"virus\")).
+ filter(contains(?txt,"viral") || contains(?txt,"virus")).
  } # refers to a virus in the free-text interactionInfo topic
 UNION
  { ?iso :uniprotKeyword / :term nextprot_cv:KW-0945.} # host-virus interaction keyword
 UNION
  {
- SERVICE <https://sparql.uniprot.org/sparql> {
+ SERVICE <http://sparql.uniprot.org/sparql> {
  SELECT distinct ?viralinteractor WHERE # get viral proteins with an IntAct xref
  {
 	?viralinteractor a up:Protein .
@@ -29,7 +30,7 @@ UNION
 	?db up:database <http://purl.uniprot.org/database/IntAct> .
  	?viralinteractor up:organism ?tax .
 	?tax up:scientificName ?orgname.
-	filter(contains(?orgname,\"virus\"))
+	filter(contains(?orgname,"virus"))
  }
  }
  ?entry :isoform / :binaryInteraction ?it .
@@ -38,7 +39,7 @@ UNION
  } 
 UNION
  {
- SERVICE <https://sparql.uniprot.org/sparql> {
+ SERVICE <http://sparql.uniprot.org/sparql> {
  SELECT distinct ?humprotein WHERE # get human proteins that share a PDB xref with a viral protein (same PDB id)
  {
 	?humprotein a up:Protein .
@@ -49,7 +50,7 @@ UNION
 	?viralprotein rdfs:seeAlso ?db .
  ?viralprotein up:organism ?tax .
 	?tax up:scientificName ?orgname.
-	filter(contains(?orgname,\"virus\"))
+	filter(contains(?orgname,"virus"))
  }
  }
  ?entry skos:exactMatch ?humprotein .	

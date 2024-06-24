@@ -2,15 +2,17 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00248
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Variants with phenotype annotation that map to a 3D structure''' ;
  schema:keyword "phenotype";
  schema:keyword "variant";
  schema:keyword "3D structure";
  schema:keyword "tutorial";
-  sh:select '''select distinct ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),\"...\") as ?pdbsample) where {
+  sh:select '''select distinct ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),"...") as ?pdbsample) where {
  ?entry :gene / :name / rdfs:label ?gen .
  ?entry :isoform ?iso.
  ?iso :proteoform ?pf .

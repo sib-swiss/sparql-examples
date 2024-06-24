@@ -2,9 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00259
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
+  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
   rdfs:comment '''Proteins involved in diseases with clinical manifestations that include long organs ''' ;
  schema:keyword "disease";
  schema:keyword "federated query";
@@ -15,11 +17,11 @@ ex:NXQ_00259
  ?gda sio:SIO_000628 ?gene,?disease .
  ?disease a sio:SIO_010056 . # traits or phenotypes
  ?disease dcterms:title ?umlsTerm .
- filter(contains(str(?umlsTerm),\"Long \"))
+ filter(contains(str(?umlsTerm),"Long "))
  ?gene a ncit:C16612; sio:SIO_010078 ?protein .
  } 
  }
- BIND(IRI(replace(str(?protein),\"purl\",\"www\")) AS ?unipage) .
+ BIND(IRI(replace(str(?protein),"purl","www")) AS ?unipage) .
  ?entry :swissprotPage ?unipage .
  ?entry :gene / :recommendedName / rdfs:label ?gen .
 } order by ?entry'''

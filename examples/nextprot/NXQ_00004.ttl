@@ -2,10 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00004
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
   a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Proteins expressed in brain with observed IHC expression \"high\" but not expressed in testis''' ;
  schema:keyword "expression";
  schema:keyword "tutorial";
@@ -18,11 +19,9 @@ ex:NXQ_00004
  # not expressed in testis
  ?iso :undetectedExpression ?e2.
  ?e2 :term nextprot_cv:TS-1030.
- filter not exists { ?iso :detectedExpression / :term / :childOf nextprot_cv:TS-1030 }
-}
-
 # Use the semicolon ';' to refer to the previous subject (?e1)
-# Only IHC data has observed expression \"High\" so ECO is not specified.
+# Only IHC data has observed expression "High" so ECO is not specified.
 #
-# Note that we also exclude expression detected in testis.'''
-.
+# Note that we also exclude expression detected in testis.
+ filter not exists { ?iso :detectedExpression / :term / :childOf nextprot_cv:TS-1030 }
+}''' .

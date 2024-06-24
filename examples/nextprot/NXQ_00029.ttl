@@ -2,10 +2,11 @@ prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
 prefix sh: <http://www.w3.org/ns/shacl#> 
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<http://schema.org/>
+prefix schema:<https://schema.org/>
 ex:NXQ_00029
+schema:target <https://sparql.nexprot.org/sparql> ;
+ sh:prefixes _:sparql_examples_prefixes ;
   a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  sh:prefixes _:sparql_examples_prefixes, _:nextprot_sparql_examples_prefixes ;
   rdfs:comment '''Proteins anchored to the membrane via a GPI-anchor''' ;
  schema:keyword "PTM";
  schema:keyword "subcellular location";
@@ -13,6 +14,6 @@ ex:NXQ_00029
   sh:select '''select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :lipidationSite / rdfs:comment ?mod.
- filter(contains(?mod,\"GPI-anchor\")).
+ filter(contains(?mod,"GPI-anchor")).
 }'''
 .
