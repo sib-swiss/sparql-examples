@@ -5,7 +5,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 prefix schema:<https://schema.org/>
 ex:NXQ_00302
   a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  schema:target <https://sparql.nexprot.org/sparql> ;
+  schema:target <https://sparql.nextprot.org/sparql> ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''PE1 entries that do not comply with HPP guidelines (at least 2 non overlapping peptides of at least 9aa from a single data source)''' ;
   schema:keyword "protein existence";
