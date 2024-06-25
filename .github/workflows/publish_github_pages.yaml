@@ -37,6 +37,10 @@ jobs:
     - name: generate markdown
       run: java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m 
 
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v3
+
     - name: Build with Jekyll
       uses: actions/jekyll-build-pages@v1
       with:
