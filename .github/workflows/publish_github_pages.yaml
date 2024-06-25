@@ -1,5 +1,5 @@
 # Publishes the Markdown pages.
-name: CI
+name: Publish to github-pages
 
 on:
   push:
@@ -36,6 +36,9 @@ jobs:
 
     - name: generate markdown
       run: java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m 
+
+    - name: generate indexes
+      run: for d in $(ls examples/);do if [[ -d examples/"$d" ]];then cd examples/"$d";for e in $(ls *.md);do echo "[${e:0:-3}](./${e:0:-3})";done> index.md;cd ../../;fi;done
 
     - name: Setup Pages
       id: pages
