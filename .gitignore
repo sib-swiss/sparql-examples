@@ -2,3 +2,4 @@
 /examples_*.ttl
 /examples/**/*.rq
 /examples/**/*.md
+/_site/
