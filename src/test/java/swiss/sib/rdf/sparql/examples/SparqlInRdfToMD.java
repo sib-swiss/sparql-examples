@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
@@ -18,25 +19,26 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 import org.junit.jupiter.api.Test;
 
-public class SparqlInRdfToMermaidTest {
+public class SparqlInRdfToMD {
 
 	@Test
 	public void simple() {
 		Model model = parse(ExamplesUsedInTest.simple);
-		assertTrue(SparqlInRdfToMermaid.asMermaid(model).contains("SWISSLIPID:"));
+		String res = SparqlInRdfToMd.asMD(model).stream().collect(Collectors.joining());
+		assertTrue(res.contains("SWISSLIPID:"));
 	}
 
 	@Test
 	public void rhea9() {
 		Model model = parse(ExamplesUsedInTest.rhea9);
-		String res = SparqlInRdfToMermaid.asMermaid(model);
+		String res = SparqlInRdfToMd.asMD(model).stream().collect(Collectors.joining());
 		assertTrue(res.contains("rh:ec"));
 	}
 	
 	@Test
 	public void rhea9Anon() {
 		Model model = parse(ExamplesUsedInTest.rhea9Anon);
-		String res = SparqlInRdfToMermaid.asMermaid(model);
+		String res = SparqlInRdfToMd.asMD(model).stream().collect(Collectors.joining());
 		assertTrue(res.contains("rh:ec"));
 	}
 

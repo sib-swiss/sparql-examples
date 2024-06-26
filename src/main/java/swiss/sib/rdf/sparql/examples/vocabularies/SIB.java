@@ -6,7 +6,10 @@ import org.eclipse.rdf4j.model.vocabulary.SHACL;
 
 public class SIB {
 	public static final IRI DESCRIBE = SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, "describe");
-
+	
+	public static final IRI FILE_NAME = SimpleValueFactory.getInstance().createIRI("http://example.org/", "file_name");
+	public static final IRI PROJECT = SimpleValueFactory.getInstance().createIRI("http://example.org/", "project");
+	
 	private SIB() {
 		
 	}

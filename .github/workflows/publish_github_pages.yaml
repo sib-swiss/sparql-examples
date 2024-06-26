@@ -40,9 +40,6 @@ jobs:
     - name: generate rq files
       run: java -jar target/sparql-examples-util-*-uber.jar -i examples/ -r
 
-    - name: generate indexes per project in markdown
-      run: for d in $(ls examples/);do if [[ -d examples/"$d" ]];then cd examples/"$d";echo "# $d" > index.md;for e in $(ls *.md);do echo " * [${e:0:-3}](./${e:0:-3})";done>> index.md;cd ../../;fi;done
-
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v5

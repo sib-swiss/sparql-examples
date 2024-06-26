@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,7 +14,12 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
@@ -24,8 +30,11 @@ import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
+import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 
 public class Converter {
+
+	private static final SimpleValueFactory VF = SimpleValueFactory.getInstance();
 
 	public static enum Failure {
 		CANT_READ_INPUT_DIRECTORY(1), CANT_PARSE_EXAMPLE(2), CANT_READ_EXAMPLE(3), CANT_WRITE_EXAMPLE_RQ(4);
@@ -89,9 +98,9 @@ public class Converter {
 			return;
 		} else {
             if (converter.outputMd) {
-				converter.convertPerSingle("md", SparqlInRdfToMd::asMD);
+				converter.convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
             } else if (converter.outputRq) {
-				converter.convertPerSingle("rq", SparqlInRdfToRq::asRq);
+				converter.convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
 			} else {
 				converter.convertToRdf();
 			}
@@ -116,47 +125,78 @@ public class Converter {
 		print(model);
 	}
 
-	private void convertPerSingle(String extension, Function<Model, List<String>> converter){
+	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject){
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
-				convertProjectsPerSingle(list, extension, converter);
+				convertProjectsPerSingle(list, extension, converter, converterPerProject);
 			} catch (IOException e) {
 				Failure.CANT_READ_INPUT_DIRECTORY.exit(e);
 			}
 		} else {
 			try (Stream<Path> list = COMMA.splitAsStream(projects).map(inputDirectory::resolve)) {
-				convertProjectsPerSingle(list, extension, converter);
+				convertProjectsPerSingle(list, extension, converter, converterPerProject);
 			}
 		}
 	}
 
-	private void convertProjectsPerSingle(Stream<Path> list, String extension, Function<Model, List<String>> converter) {
+	private void convertProjectsPerSingle(Stream<Path> list, String extension, Function<Model, List<String>> converter, Function<Model, List<String>> convertPerProject) {
 		Optional<Path> findCommonPrefixes = FindFiles.prefixFile(inputDirectory).findFirst();
 		Model commonPrefixes = prefixModel(findCommonPrefixes);
-		list.forEach(pro -> {
+		list.filter(Files::isDirectory).forEach(pro -> {
 			try {
 				Optional<Path> findProjectPrefixes = FindFiles.prefixFile(pro).findFirst();
 				Model projectPrefixes = prefixModel(findProjectPrefixes);
-				FindFiles.sparqlExamples(pro).forEach((p) -> {
-					Model ex = parseSingle(p);
-					ex.addAll(commonPrefixes);
-					ex.addAll(projectPrefixes);
-					String pfn = p.getFileName().toString();
-					String prqfn = pfn.substring(0, pfn.indexOf('.')) + "."+extension;
-					Path prq = p.getParent().resolve(prqfn);
-					try {
-						List<String> rq = converter.apply(ex);
-						Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-					} catch (IOException e) {
-						Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
-						throw new RuntimeException(e);
-					}
-				});
+				Model allForProject = new LinkedHashModel();
+				allForProject.addAll(commonPrefixes);
+				allForProject.addAll(projectPrefixes);
+				FindFiles.sparqlExamples(pro).forEach((p) -> parseAndRenderSingleExample(extension, converter,
+						commonPrefixes, projectPrefixes, allForProject, p));
+				if (convertPerProject != null) {
+					renderAllExamplesInAProject(extension, convertPerProject, pro, allForProject);
+				}
 			} catch (IOException e) {
 				Failure.CANT_PARSE_EXAMPLE.exit(e);
 				throw new RuntimeException(e);
 			}
 		});
+	}
+
+	private void renderAllExamplesInAProject(String extension, Function<Model, List<String>> convertPerProject,
+			Path pro, Model allForProject) {
+		String prqfn = "index."+extension;
+		Path prq = pro.resolve(prqfn);
+		try {
+			List<String> rq = convertPerProject.apply(allForProject);
+			Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void parseAndRenderSingleExample(String extension, Function<Model, List<String>> converter,
+			Model commonPrefixes, Model projectPrefixes, Model allForProject, Path p) {
+		Model ex = parseSingle(p);
+		ex.addAll(commonPrefixes);
+		ex.addAll(projectPrefixes);
+		allForProject.addAll(ex);
+		Iterator<Statement> iterator = ex.getStatements(null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).iterator();
+		if (iterator.hasNext()) {
+			Resource subject = iterator.next().getSubject();
+			allForProject.add(VF.createStatement(subject, SIB.FILE_NAME, VF.createLiteral(p.getFileName().toString())));
+			allForProject.add(VF.createStatement(subject, SIB.PROJECT, VF.createLiteral(p.getParent().getFileName().toString())));
+		}
+	
+		String pfn = p.getFileName().toString();
+		String prqfn = pfn.substring(0, pfn.indexOf('.')) + "."+extension;
+		Path prq = p.getParent().resolve(prqfn);
+		try {
+			List<String> rq = converter.apply(ex);
+			Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Model prefixModel(Optional<Path> findFirst) {

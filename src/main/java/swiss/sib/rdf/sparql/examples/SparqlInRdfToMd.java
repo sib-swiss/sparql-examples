@@ -45,4 +45,19 @@ public class SparqlInRdfToMd {
 		rq.add("```");
 		return rq;
 	}
+	
+	public static List<String> asIndexMD(Model ex) {
+		List<String> rq = new ArrayList<>();
+		streamOf(ex, null, SIB.PROJECT, null).map(Statement::getObject).distinct()
+				.forEach(o -> rq.add("# " + o.stringValue()));
+		rq.add("");
+		streamOf(ex, null, SIB.FILE_NAME, null).forEach(s -> {
+
+			String fileName = s.getObject().stringValue();
+			streamOf(ex, s.getSubject(), RDFS.COMMENT, null).map(Statement::getObject)
+					.map(v -> " - [" + v.stringValue() + "](./" + fileName + ".md)").forEach(rq::add);
+		});
+		
+		return rq;
+	}
 }
