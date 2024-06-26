@@ -19,7 +19,7 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 import org.junit.jupiter.api.Test;
 
-public class SparqlInRdfToMD {
+public class SparqlInRdfToMdTest {
 
 	@Test
 	public void simple() {
