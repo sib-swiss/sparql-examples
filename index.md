@@ -4,7 +4,6 @@ We collect the SPARQL examples in different formats.
 
 In this github pages we have a HTML rendering of them.
 
- * [UniProt](./examples/uniprot/) 
  * [Bgee](./examples/bgee/)
  * [GlyConnect](./examples/glyconnect/)
  * [HAMAP](./examples/hamap/)
