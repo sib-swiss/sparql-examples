@@ -201,21 +201,22 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	@Override
 	public void meet(Union u) throws RuntimeException {
 		rq.add(indent() + "%%or");
-		rq.add(indent() + "subgraph union" + unionCount + "l[\" \"]");
+		int thisUnionId = unionCount++; 
+		rq.add(indent() + "subgraph union" + thisUnionId + "l[\" \"]");
 		indent += 2;
-		rq.add(indent() + "style union" + unionCount + "l fill:#abf,stroke-dasharray: 3 3;");
+		rq.add(indent() + "style union" + thisUnionId + "l fill:#abf,stroke-dasharray: 3 3;");
 		u.getRightArg().visit(this);
 		indent -= 2;
 		rq.add(indent() + "end");
 
-		rq.add(indent() + "subgraph union" + unionCount + "r[\" \"]");
+		rq.add(indent() + "subgraph union" + thisUnionId + "r[\" \"]");
 		indent += 2;
-		rq.add(indent() + "style union" + unionCount + "r fill:#abf,stroke-dasharray: 3 3;");
+		rq.add(indent() + "style union" + thisUnionId + "r fill:#abf,stroke-dasharray: 3 3;");
 		u.getLeftArg().visit(this);
 		indent -= 2;
 		rq.add(indent() + "end");
-		rq.add(indent() + "union" + unionCount + "r <== or ==> union" + unionCount + "l");
-		unionCount++;
+		rq.add(indent() + "union" + thisUnionId + "r <== or ==> union" + thisUnionId + "l");
+		
 	}
 
 	@Override
