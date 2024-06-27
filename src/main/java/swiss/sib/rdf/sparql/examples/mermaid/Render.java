@@ -3,6 +3,7 @@ package swiss.sib.rdf.sparql.examples.mermaid;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,9 +16,13 @@ import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.base.CoreDatatype;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.rdf4j.query.algebra.BindingSetAssignment;
 import org.eclipse.rdf4j.query.algebra.Compare;
+import org.eclipse.rdf4j.query.algebra.Count;
 import org.eclipse.rdf4j.query.algebra.Exists;
+import org.eclipse.rdf4j.query.algebra.ExtensionElem;
 import org.eclipse.rdf4j.query.algebra.Filter;
+import org.eclipse.rdf4j.query.algebra.FunctionCall;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
 import org.eclipse.rdf4j.query.algebra.Not;
 import org.eclipse.rdf4j.query.algebra.Projection;
@@ -26,10 +31,12 @@ import org.eclipse.rdf4j.query.algebra.ProjectionElemList;
 import org.eclipse.rdf4j.query.algebra.SameTerm;
 import org.eclipse.rdf4j.query.algebra.Service;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
+import org.eclipse.rdf4j.query.algebra.Str;
 import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.algebra.Union;
 import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
+import org.eclipse.rdf4j.query.algebra.evaluation.function.string.StrBefore;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
 public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
@@ -114,10 +121,8 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		Set<String> pnv = findProjectedVariables.namedVariables;
 		addWithLeadingWhiteSpace(variableKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
 				.map(en -> en.getValue() + "(\"?" + en.getKey() + "\")" + addProjectedClass(en.getKey(), pnv)), rq);
-		addWithLeadingWhiteSpace(
-				anonymousKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey)).map(
-						en -> en.getValue() + "((\" \"))" + addProjectedClass(en.getKey(), pnv)),
-				rq);
+		addWithLeadingWhiteSpace(anonymousKeys.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getKey))
+				.map(en -> en.getValue() + "((\" \"))" + addProjectedClass(en.getKey(), pnv)), rq);
 		addWithLeadingWhiteSpace(
 				constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey())).map(en -> en.getValue()
 						+ "([" + prefix(en.getKey(), iriPrefixes) + "])" + addProjectedClass(en.getKey(), pv)),
@@ -165,6 +170,32 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId);
 		f.getCondition().visit(visitor);
 		super.meet(f);
+	}
+
+	@Override
+	public void meet(BindingSetAssignment b) throws RuntimeException {
+//		String bindId = "bind" + filterCount++;
+//		rq.add(indent() + bindId);
+//		b.getBindingNames();
+//		rq.add(indent() + bindId + "-->" + );
+		super.meet(b);
+	}
+
+	@Override
+	public void meet(ExtensionElem node) throws RuntimeException {
+		super.meet(node);
+		// TODO Auto-generated method stub
+		String bindId = "bind" + filterCount++;
+		{
+			ValueExprAsString visitor = new ValueExprAsString();
+			node.visitChildren(visitor);
+			rq.add(indent() + bindId + "{\"" + visitor.sb.toString() + "\"}");
+		}
+		FindValues visitor = new FindValues();
+		node.visitChildren(visitor);
+		for (Var v : visitor.variables) {
+			rq.add(indent() + bindId + "-->" + asString(v));
+		}
 	}
 
 	@Override
@@ -308,6 +339,96 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			} else {
 				namedVariables.add(node.getName());
 			}
+		}
+	}
+
+	private class FindValues extends AbstractQueryModelVisitor<RuntimeException> {
+
+		private Set<Var> variables = new HashSet<>();
+
+		@Override
+		public void meet(Var node) throws RuntimeException {
+			super.meet(node);
+			variables.add(node);
+		}
+	}
+
+	private class ValueExprAsString extends AbstractQueryModelVisitor<RuntimeException> {
+		StringBuilder sb = new StringBuilder();
+
+		@Override
+		public void meet(Var node) throws RuntimeException {
+			if (! node.isAnonymous() && ! node.isConstant()) {
+				sb.append("?"+node.getName());
+			} else if (node.isAnonymous() && node.isConstant()) {
+				sb.append(" [] ");
+			} else if (node.isConstant()) {
+				prefix(node.getValue(), iriPrefixes);
+			}
+		}
+
+		@Override
+		public void meet(SameTerm node) throws RuntimeException {
+			sb.append("sameTerm(");
+			super.meet(node);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(Not node) throws RuntimeException {
+			sb.append("NOT ");
+			super.meet(node);
+		}
+
+		@Override
+		public void meet(Exists node) throws RuntimeException {
+
+		}
+
+		@Override
+		public void meet(Compare node) throws RuntimeException {
+
+			switch (node.getOperator()) {
+			case EQ -> sb.append(" = ");
+			case NE -> sb.append(" != ");
+			case LT -> sb.append(" < ");
+			case GT -> sb.append(" > ");
+			case LE -> sb.append(" <= ");
+			case GE -> sb.append(" >= ");
+			}
+			super.meet(node);
+		}
+
+		@Override
+		public void meet(Str node) throws RuntimeException {
+			sb.append("Str(");
+			super.meet(node);
+			sb.append(")");
+		}
+		
+		@Override
+		public void meet(Count node) throws RuntimeException {
+			sb.append("Count(");
+			super.meet(node);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(FunctionCall node) throws RuntimeException {
+			if (node.getURI().startsWith("http://www.w3.org/2005/xpath-functions#")) {
+				sb.append(node.getURI().substring("http://www.w3.org/2005/xpath-functions#".length()));
+			} else {
+				sb.append(node.getURI());
+			}
+			sb.append("(");
+			for (Iterator<ValueExpr> iterator = node.getArgs().iterator(); iterator.hasNext();) {
+				var arg = iterator.next();
+				arg.visit(this);
+				if (iterator.hasNext()) {
+					sb.append(",");
+				}
+			}
+			sb.append(")");
 		}
 	}
 }
