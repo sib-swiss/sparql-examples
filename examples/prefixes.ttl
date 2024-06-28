@@ -2,7 +2,7 @@ prefix sh: <http://www.w3.org/ns/shacl#>
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix up: <http://purl.uniprot.org/core/> 
+prefix up: <http://purl.uniprot.org/core/>
 prefix faldo: <http://biohackathon.org/resource/faldo#>
 _:sparql_examples_prefixes
   a owl:Ontology ;
@@ -106,32 +106,32 @@ _:prefix_identifiers
 
 _:sparql_examples_prefixes sh:declare _:prefix_ensembl .
 _:prefix_ensembl
-  sh:prefix "ensembl" ; 
+  sh:prefix "ensembl" ;
   sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_ensembltranscript .
 _:prefix_ensembltranscript
-  sh:prefix "ensembltranscript" ; 
+  sh:prefix "ensembltranscript" ;
   sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.transcript/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_ensemblexon .
 _:prefix_ensemblexon
-  sh:prefix "ensemblexon" ; 
+  sh:prefix "ensemblexon" ;
   sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.exon/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_ensemblprotein .
 _:prefix_ensemblprotein
-  sh:prefix "ensemblprotein" ; 
+  sh:prefix "ensemblprotein" ;
   sh:namespace "http://rdf.ebi.ac.uk/resource/ensembl.protein/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_ensemblterms .
-_:prefix_ensemblterms 
-  sh:prefix "ensemblterms" ; 
+_:prefix_ensemblterms
+  sh:prefix "ensemblterms" ;
   sh:namespace "http://rdf.ebi.ac.uk/terms/ensembl/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_schema .
-_:prefix_schema 
-  sh:prefix "schema" ; 
+_:prefix_schema
+  sh:prefix "schema" ;
   sh:namespace "http://schema.org/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_chembl .
@@ -250,17 +250,17 @@ _:prefix_obo
   sh:namespace "http://purl.obolibrary.org/obo/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare   _:prefix_orth .
-_:prefix_orth 
+_:prefix_orth
   sh:prefix "orth" ;
   sh:namespace "http://purl.org/net/orth#"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare   _:prefix_insdc .
-_:prefix_insdc 
+_:prefix_insdc
   sh:prefix "insdc" ;
   sh:namespace "http://identifiers.org/insdc/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare   _:prefix_insdcschema .
-_:prefix_insdcschema 
+_:prefix_insdcschema
   sh:prefix "insdcschema" ;
   sh:namespace "http://ddbj.nig.ac.jp/ontologies/nucleotide/"^^xsd:anyURI .
 
@@ -280,37 +280,37 @@ _:prefix_nextprot_cv
   sh:namespace "http://nextprot.org/rdf/terminology/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_wd .
-_:prefix_wd 
-    sh:prefix "wd" ; 
+_:prefix_wd
+    sh:prefix "wd" ;
     sh:namespace "http://www.wikidata.org/entity/"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare _:prefix_wdt .
-_:prefix_wdt 
-    sh:prefix "wdt" ; 
+_:prefix_wdt
+    sh:prefix "wdt" ;
     sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare
-_:prefix_wikibase . 
-    _:prefix_wikibase sh:prefix "wikibase" ; 
+_:prefix_wikibase .
+    _:prefix_wikibase sh:prefix "wikibase" ;
     sh:namespace "http://wikiba.se/ontology#"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare _:prefix_p .
-_:prefix_p 
-    sh:prefix "p" ; 
+_:prefix_p
+    sh:prefix "p" ;
     sh:namespace "http://www.wikidata.org/prop/"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare _:prefix_ps .
-_:prefix_ps 
-    sh:prefix "ps" ; 
+_:prefix_ps
+    sh:prefix "ps" ;
     sh:namespace "http://www.wikidata.org/prop/statement/"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare _:prefix_pq .
-_:prefix_pq 
-    sh:prefix "pq" ; 
+_:prefix_pq
+    sh:prefix "pq" ;
     sh:namespace "http://www.wikidata.org/prop/qualifier/"^^xsd:anyURI  .
 
 _:sparql_examples_prefixes sh:declare _:prefix_sachem .
-_:prefix_sachem 
+_:prefix_sachem
     sh:prefix "sachem" ;
     sh:namespace "http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#"^^xsd:anyURI  .
 
@@ -343,3 +343,9 @@ _:sparql_examples_prefixes sh:declare _:prefix_sparql_service_description .
 _:prefix_sparql_service_description
     sh:prefix "sd" ;
     sh:namespace "http://www.w3.org/ns/sparql-service-description#"^^xsd:anyURI .
+
+
+_:sparql_examples_prefixes sh:declare _:prefix_efo .
+_:prefix_efo
+    sh:prefix "efo" ;
+    sh:namespace "http://www.ebi.ac.uk/efo/"^^xsd:anyURI .
