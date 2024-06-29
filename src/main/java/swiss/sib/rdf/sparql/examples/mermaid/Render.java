@@ -23,6 +23,7 @@ import org.eclipse.rdf4j.query.algebra.Exists;
 import org.eclipse.rdf4j.query.algebra.ExtensionElem;
 import org.eclipse.rdf4j.query.algebra.Filter;
 import org.eclipse.rdf4j.query.algebra.FunctionCall;
+import org.eclipse.rdf4j.query.algebra.If;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
 import org.eclipse.rdf4j.query.algebra.Not;
 import org.eclipse.rdf4j.query.algebra.Projection;
@@ -36,7 +37,6 @@ import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.algebra.Union;
 import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
-import org.eclipse.rdf4j.query.algebra.evaluation.function.string.StrBefore;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
 public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
@@ -189,7 +189,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		{
 			ValueExprAsString visitor = new ValueExprAsString();
 			node.visitChildren(visitor);
-			rq.add(indent() + bindId + "{\"" + visitor.sb.toString() + "\"}");
+			rq.add(indent() + bindId + "[/\"" + visitor.sb.toString() + "\"/]");
 		}
 		FindValues visitor = new FindValues();
 		node.visitChildren(visitor);
@@ -202,6 +202,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	public void meet(Union u) throws RuntimeException {
 		rq.add(indent() + "%%or");
 		int thisUnionId = unionCount++; 
+		rq.add(indent() + "subgraph union" + thisUnionId + "[\" Union \"]");
 		rq.add(indent() + "subgraph union" + thisUnionId + "l[\" \"]");
 		indent += 2;
 		rq.add(indent() + "style union" + thisUnionId + "l fill:#abf,stroke-dasharray: 3 3;");
@@ -216,6 +217,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		indent -= 2;
 		rq.add(indent() + "end");
 		rq.add(indent() + "union" + thisUnionId + "r <== or ==> union" + thisUnionId + "l");
+		rq.add(indent() + "end");
 		
 	}
 
@@ -403,6 +405,13 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		@Override
 		public void meet(Str node) throws RuntimeException {
 			sb.append("Str(");
+			super.meet(node);
+			sb.append(")");
+		}
+		
+		@Override
+		public void meet(If node) throws RuntimeException {
+			sb.append("IF(");
 			super.meet(node);
 			sb.append(")");
 		}
