@@ -427,7 +427,8 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			sb.append("regex (");
 			node.getLeftArg().visit(this);
 			sb.append(",");
-			node.getRightArg().visit(this);
+			//TODO escape a regex properly so that it does not kill mermaid or jekyll
+//			node.getRightArg().visit(this);
 			if (node.getFlagsArg() != null) {
 				sb.append(",");
 				node.getFlagsArg().visit(this);
