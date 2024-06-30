@@ -78,6 +78,7 @@ public class ExamplesUsedInTest {
 	  ?rhea rh:isTransport ?isTransport .
 	  ?rhea rh:equation [] .
 	  FILTER(?isTransport = true)
+	  FILTER(contains(?isTransport, "true"))
 	}''' . """;
 	static String simple = """
 				prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/>

@@ -25,16 +25,20 @@ import org.eclipse.rdf4j.query.algebra.Filter;
 import org.eclipse.rdf4j.query.algebra.FunctionCall;
 import org.eclipse.rdf4j.query.algebra.If;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
+import org.eclipse.rdf4j.query.algebra.MathExpr;
 import org.eclipse.rdf4j.query.algebra.Not;
+import org.eclipse.rdf4j.query.algebra.Or;
 import org.eclipse.rdf4j.query.algebra.Projection;
 import org.eclipse.rdf4j.query.algebra.ProjectionElem;
 import org.eclipse.rdf4j.query.algebra.ProjectionElemList;
+import org.eclipse.rdf4j.query.algebra.Regex;
 import org.eclipse.rdf4j.query.algebra.SameTerm;
 import org.eclipse.rdf4j.query.algebra.Service;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.query.algebra.Str;
 import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.algebra.Union;
+import org.eclipse.rdf4j.query.algebra.ValueConstant;
 import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
@@ -53,18 +57,6 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		}
 
 		@Override
-		public void meet(SameTerm node) throws RuntimeException {
-			rq.add(indent() + filterId + "{{ sameTerm }}");
-			super.meet(node);
-		}
-
-		@Override
-		public void meet(Not node) throws RuntimeException {
-			rq.add(indent() + filterId + "{{ Not }}");
-			super.meet(node);
-		}
-
-		@Override
 		public void meet(Exists node) throws RuntimeException {
 			rq.add(indent() + "subgraph " + filterId + "{{ Exists }}");
 			Map<Value, String> constantKeys = new HashMap<>();
@@ -77,19 +69,6 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			node.visit(new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq,
 					node.getSubQuery()));
 
-		}
-
-		@Override
-		public void meet(Compare node) throws RuntimeException {
-			switch (node.getOperator()) {
-			case EQ -> rq.add(indent() + filterId + "{{ = }}");
-			case NE -> rq.add(indent() + filterId + "{{ != }}");
-			case LT -> rq.add(indent() + filterId + "{{ < }}");
-			case GT -> rq.add(indent() + filterId + "{{ > }}");
-			case LE -> rq.add(indent() + filterId + "{{ <= }}");
-			case GE -> rq.add(indent() + filterId + "{{ >= }}");
-			}
-			super.meet(node);
 		}
 	}
 
@@ -125,7 +104,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				.map(en -> en.getValue() + "((\" \"))" + addProjectedClass(en.getKey(), pnv)), rq);
 		addWithLeadingWhiteSpace(
 				constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey())).map(en -> en.getValue()
-						+ "([" + prefix(en.getKey(), iriPrefixes) + "])" + addProjectedClass(en.getKey(), pv)),
+						+ "([" + prefix(en.getKey(), iriPrefixes, '"') + "])" + addProjectedClass(en.getKey(), pv)),
 				rq);
 		addStyles(rq);
 	}
@@ -143,7 +122,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		String subj = asString(node.getSubjectVar());
 		String obj = asString(node.getObjectVar());
 		if (node.getPredicateVar().isConstant() && !usedAsNode.contains(node.getPredicateVar().getValue())) {
-			String pred = prefix(node.getPredicateVar().getValue(), iriPrefixes);
+			String pred = prefix(node.getPredicateVar().getValue(), iriPrefixes, '"');
 			rq.add(print(subj, obj, pred));
 		} else {
 			String pred = asString(node.getPredicateVar());
@@ -153,11 +132,11 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	}
 
 	private String print(String subj, String obj, String pred) {
-		String arrB = "--";
-		String arrE = "-->";
+		String arrB = " --";
+		String arrE = "--> ";
 		if (optional) {
-			arrB = "-.";
-			arrE = ".->";
+			arrB = " -.";
+			arrE = ".-> ";
 			optional = false; // Afterwards they should be solid again
 		}
 		return indent() + subj + arrB + pred + arrE + " " + obj;
@@ -165,8 +144,11 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	@Override
 	public void meet(Filter f) throws RuntimeException {
-		String filterId = "f" + filterCount++;
+		ValueExprAsString visitor2 = new ValueExprAsString();
+		f.getCondition().visit(visitor2);
 
+		String filterId = "f" + filterCount++;
+		rq.add(indent() + filterId + "{{\"" + visitor2.sb.toString() + "\"}}");
 		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId);
 		f.getCondition().visit(visitor);
 		super.meet(f);
@@ -194,14 +176,15 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		FindValues visitor = new FindValues();
 		node.visitChildren(visitor);
 		for (Var v : visitor.variables) {
-			rq.add(indent() + bindId + "-->" + asString(v));
+			rq.add(indent() + asString(v) + " --o " + bindId);
 		}
+		rq.add(indent() + bindId + " --as--o " + variableKeys.get(node.getName()));
 	}
 
 	@Override
 	public void meet(Union u) throws RuntimeException {
 		rq.add(indent() + "%%or");
-		int thisUnionId = unionCount++; 
+		int thisUnionId = unionCount++;
 		rq.add(indent() + "subgraph union" + thisUnionId + "[\" Union \"]");
 		rq.add(indent() + "subgraph union" + thisUnionId + "l[\" \"]");
 		indent += 2;
@@ -218,7 +201,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		rq.add(indent() + "end");
 		rq.add(indent() + "union" + thisUnionId + "r <== or ==> union" + thisUnionId + "l");
 		rq.add(indent() + "end");
-		
+
 	}
 
 	@Override
@@ -261,45 +244,45 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		}
 	}
 
-	private static String prefix(Value v, Map<String, String> iriPrefixes) {
+	private static String prefix(Value v, Map<String, String> iriPrefixes, char s) {
 		if (v instanceof IRI i)
-			return prefix(i, iriPrefixes);
+			return prefix(i, iriPrefixes, s);
 		else if (v instanceof Literal l)
-			return prefix(l, iriPrefixes);
+			return prefix(l, iriPrefixes, s);
 		else
 			return v.stringValue();
 	}
 
-	private static String prefix(String stringValue, Map<String, String> iriPrefixes) {
+	private static String prefix(String stringValue, Map<String, String> iriPrefixes, char s) {
 		for (Map.Entry<String, String> en : iriPrefixes.entrySet()) {
 			if (stringValue.startsWith(en.getKey())) {
-				return '"' + en.getValue() + stringValue.substring(en.getKey().length()) + '"';
+				return s + en.getValue() + stringValue.substring(en.getKey().length()) + s;
 			}
 		}
 		return stringValue;
 	}
 
-	private static String prefix(IRI stringValue, Map<String, String> iriPrefixes) {
+	private static String prefix(IRI stringValue, Map<String, String> iriPrefixes, char s) {
 		if (RDF.TYPE.equals(stringValue)) {
 			return "\"a\"";
 		} else {
-			return prefix(stringValue.stringValue(), iriPrefixes);
+			return prefix(stringValue.stringValue(), iriPrefixes, s);
 		}
 	}
 
-	private static String prefix(Literal l, Map<String, String> iriPrefixes) {
+	private static String prefix(Literal l, Map<String, String> iriPrefixes, char s) {
 		CoreDatatype cd = l.getCoreDatatype();
 		if (cd.isXSDDatatype()) {
 			if (CoreDatatype.XSD.STRING.equals(cd))
-				return '"' + l.stringValue() + '"';
+				return s + l.stringValue() + s;
 			else if (cd.isXSDDatatype())
-				return '"' + l.stringValue() + "^^xsd:" + cd.getIri().getLocalName() + '"';
+				return s + l.stringValue() + "^^xsd:" + cd.getIri().getLocalName() + s;
 			else if (cd.isRDFDatatype())
-				return '"' + l.stringValue() + "^^rdf:" + cd.getIri().getLocalName() + '"';
+				return s + l.stringValue() + "^^rdf:" + cd.getIri().getLocalName() + s;
 			else if (cd.isGEODatatype())
-				return '"' + l.stringValue() + "^^geo:" + cd.getIri().getLocalName() + '"';
+				return s + l.stringValue() + "^^geo:" + cd.getIri().getLocalName() + s;
 		}
-		return '"' + l.stringValue() + "^^<" + l.getDatatype() + ">\"";
+		return 's' + l.stringValue() + "^^<" + l.getDatatype() + ">" + s;
 	}
 
 	private static String addProjectedClass(Value v, Set<Value> variables) {
@@ -361,19 +344,21 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Var node) throws RuntimeException {
-			if (! node.isAnonymous() && ! node.isConstant()) {
-				sb.append("?"+node.getName());
+			if (!node.isAnonymous() && !node.isConstant()) {
+				sb.append("?" + node.getName());
 			} else if (node.isAnonymous() && node.isConstant()) {
 				sb.append(" [] ");
 			} else if (node.isConstant()) {
-				prefix(node.getValue(), iriPrefixes);
+				prefix(node.getValue(), iriPrefixes, '\'');
 			}
 		}
 
 		@Override
 		public void meet(SameTerm node) throws RuntimeException {
 			sb.append("sameTerm(");
-			super.meet(node);
+			node.getLeftArg().visit(this);
+			sb.append(",");
+			node.getRightArg().visit(this);
 			sb.append(")");
 		}
 
@@ -391,6 +376,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		@Override
 		public void meet(Compare node) throws RuntimeException {
 
+			node.getLeftArg().visit(this);
 			switch (node.getOperator()) {
 			case EQ -> sb.append(" = ");
 			case NE -> sb.append(" != ");
@@ -399,28 +385,63 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			case LE -> sb.append(" <= ");
 			case GE -> sb.append(" >= ");
 			}
-			super.meet(node);
+			node.getRightArg().visit(this);
 		}
 
 		@Override
 		public void meet(Str node) throws RuntimeException {
 			sb.append("Str(");
-			super.meet(node);
+			node.getArg().visit(this);
 			sb.append(")");
 		}
-		
+
 		@Override
 		public void meet(If node) throws RuntimeException {
 			sb.append("IF(");
-			super.meet(node);
+			node.getCondition().visit(this);
+			sb.append(',');
+			node.getResult().visit(this);
+			sb.append(',');
+			node.getAlternative().visit(this);
 			sb.append(")");
 		}
-		
+
 		@Override
 		public void meet(Count node) throws RuntimeException {
 			sb.append("Count(");
-			super.meet(node);
+			node.getArg().visit(this);
 			sb.append(")");
+		}
+
+		@Override
+		public void meet(Or node) throws RuntimeException {
+			sb.append("(");
+			node.getLeftArg().visit(this);
+			sb.append(" || ");
+			node.getRightArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(Regex node) throws RuntimeException {
+			sb.append("regex (");
+			node.getLeftArg().visit(this);
+			sb.append(",");
+			node.getRightArg().visit(this);
+			if (node.getFlagsArg() != null) {
+				sb.append(",");
+				node.getFlagsArg().visit(this);
+			}
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(MathExpr node) throws RuntimeException {
+			node.getLeftArg().visit(this);
+			sb.append(" ");
+			sb.append(node.getOperator().getSymbol());
+			sb.append(" ");
+			node.getRightArg().visit(this);
 		}
 
 		@Override
@@ -439,6 +460,11 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				}
 			}
 			sb.append(")");
+		}
+
+		@Override
+		public void meet(ValueConstant node) throws RuntimeException {
+			sb.append(prefix(node.getValue(), iriPrefixes, '\''));
 		}
 	}
 }
