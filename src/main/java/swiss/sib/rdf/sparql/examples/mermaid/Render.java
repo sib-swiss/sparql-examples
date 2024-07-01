@@ -148,7 +148,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		f.getCondition().visit(visitor2);
 
 		String filterId = "f" + filterCount++;
-		rq.add(indent() + filterId + "{{\"" + visitor2.sb.toString() + "\"}}");
+		rq.add(indent() + filterId + "[[\"" + visitor2.sb.toString() + "\"]]");
 		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId);
 		f.getCondition().visit(visitor);
 		super.meet(f);
