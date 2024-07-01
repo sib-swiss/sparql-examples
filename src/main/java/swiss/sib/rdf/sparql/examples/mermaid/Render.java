@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -53,7 +54,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Var node) throws RuntimeException {
-			rq.add(indent() + filterId + " .-> " + asString(node));
+			rq.add(indent() + asString(node)+ " .-> " + filterId );
 		}
 
 		@Override
@@ -269,12 +270,19 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			return prefix(stringValue.stringValue(), iriPrefixes, s);
 		}
 	}
-
+	private static final Pattern LEFT_BRACKET = Pattern.compile("[", Pattern.LITERAL);
+	private static final Pattern RIGHT_BRACKET = Pattern.compile("]", Pattern.LITERAL);
+	
+	private static String escape(String in) {
+		String nol = LEFT_BRACKET.matcher(in).replaceAll("#91;");
+		String norl = RIGHT_BRACKET.matcher(nol).replaceAll("#93;");
+		return norl;
+	}
 	private static String prefix(Literal l, Map<String, String> iriPrefixes, char s) {
 		CoreDatatype cd = l.getCoreDatatype();
 		if (cd.isXSDDatatype()) {
 			if (CoreDatatype.XSD.STRING.equals(cd))
-				return s + l.stringValue() + s;
+				return s + escape(l.stringValue()) + s;
 			else if (cd.isXSDDatatype())
 				return s + l.stringValue() + "^^xsd:" + cd.getIri().getLocalName() + s;
 			else if (cd.isRDFDatatype())
@@ -282,7 +290,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			else if (cd.isGEODatatype())
 				return s + l.stringValue() + "^^geo:" + cd.getIri().getLocalName() + s;
 		}
-		return 's' + l.stringValue() + "^^<" + l.getDatatype() + ">" + s;
+		return 's' + escape(l.stringValue()) + "^^<" + l.getDatatype() + ">" + s;
 	}
 
 	private static String addProjectedClass(Value v, Set<Value> variables) {
@@ -428,7 +436,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			node.getLeftArg().visit(this);
 			sb.append(",");
 			//TODO escape a regex properly so that it does not kill mermaid or jekyll
-//			node.getRightArg().visit(this);
+			node.getRightArg().visit(this);
 			if (node.getFlagsArg() != null) {
 				sb.append(",");
 				node.getFlagsArg().visit(this);
