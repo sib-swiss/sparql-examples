@@ -45,7 +45,17 @@ public class SparqlInRdfToRq {
 						.map(o -> "#+ endpoint:" + o).findFirst().ifPresent(rq::add);
 					Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
-							.map(o -> o.stringValue()).forEach(q -> addPrefixes(q, ex, rq));
+							.map(o -> o.stringValue()).map(q -> {
+								ArrayList<String> l = new ArrayList<>();
+								addPrefixes(q, ex, l);
+								return l.stream().collect(Collectors.joining("\n"));
+							}).forEach(q -> {
+								if (q.length() > 600) {
+									//We hack in here that for small queries we want GET for cache performance
+									rq.add("#+ method: GET");
+								}
+								rq.add(q);
+							});
 				});
 		return rq;
 	}
@@ -69,10 +79,8 @@ public class SparqlInRdfToRq {
 			}
 		}
 		prefixes.sort(String::compareTo);
-		//We hack in here that for small queries we want GET for cache performance
-		if (prefixes.stream().mapToInt(String::length).sum() + query.length() < 600) {
-			rq.add("#+ method: GET");
-		}
+
+		
 		rq.addAll(prefixes);
 		rq.add(query);
 	}
