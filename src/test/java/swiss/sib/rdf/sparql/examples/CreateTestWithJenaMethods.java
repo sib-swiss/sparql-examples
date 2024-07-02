@@ -23,7 +23,7 @@ import org.eclipse.rdf4j.model.vocabulary.SHACL;
 
 public class CreateTestWithJenaMethods {
 
-	static void testQueryValid(Path p, String projectPrefixes) {
+	static void testQueryValid(Path p) {
 		assertTrue(Files.exists(p));
 		Model model = RDFDataMgr.loadModel(p.toUri().toString());
 		assertFalse(model.isEmpty());
@@ -31,15 +31,15 @@ public class CreateTestWithJenaMethods {
 				.map(s -> model.listObjectsOfProperty(model.createProperty(SHACL.NAMESPACE, s)))
 				.map(NodeIterator::toList)
 				.filter(Predicate.not(List::isEmpty))
-				.flatMap(List::stream).forEach(n -> testQueryStringInRDFNode(projectPrefixes, n));
+				.flatMap(List::stream).forEach(n -> testQueryStringInRDFNode(n));
 
 	}
 
-	private static void testQueryStringInRDFNode(String projectPrefixes, RDFNode n) {
+	private static void testQueryStringInRDFNode(RDFNode n) {
 		assertNotNull(n);
 		Literal ql = n.asLiteral();
 		try {
-			Query qry = QueryFactory.create(projectPrefixes + ql.getString());
+			Query qry = QueryFactory.create(ql.getString());
 			Query q = QueryFactory.create(qry);
 			assertNotNull(q);
 		} catch (QueryException qe) {

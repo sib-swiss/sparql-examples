@@ -38,7 +38,7 @@ public class SparqlInRdfToMermaid {
 
 	/**
 	 * {@link https://mermaid.js.org}
-	 * 
+	 *
 	 * @param ex the model containing all prefixes and query
 	 * @return a a mermaid string
 	 */
@@ -54,9 +54,7 @@ public class SparqlInRdfToMermaid {
 	}
 
 	/**
-	 * Add prefixes to the raw SPARQL query string
-	 * 
-	 * @param rq
+	 * Draw mermaid graph
 	 **/
 	public static void draw(Statement queryId, Model ex, List<String> rq) {
 		String query = queryId.getObject().stringValue();
@@ -72,7 +70,7 @@ public class SparqlInRdfToMermaid {
 
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		try {
-			ParsedQuery pq = parser.parseQuery(prefixes.toString(), base);
+			ParsedQuery pq = parser.parseQuery(query, base);
 			TupleExpr tq = pq.getTupleExpr();
 
 			Map<Value, String> constantKeys = new HashMap<>();
@@ -83,7 +81,7 @@ public class SparqlInRdfToMermaid {
 			tq.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys));
 			tq.visit(new FindWhichConstantsAreNotOnlyUsedAsPredicates(usedAsNode));
 
-			
+
 			Render visitor = new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq, tq);
 			visitor.addStyles();
 			visitor.renderVariables();

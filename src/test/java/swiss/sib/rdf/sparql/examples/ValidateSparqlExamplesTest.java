@@ -49,23 +49,20 @@ public class ValidateSparqlExamplesTest {
 
 	@TestFactory
 	public Stream<DynamicTest> testAllWithJena() throws URISyntaxException, IOException {
-		BiFunction<Path, String, Executable> tester = (p,
-				projectPrefixes) -> () -> CreateTestWithJenaMethods.testQueryValid(p, projectPrefixes);
+		Function<Path, Executable> tester = (p) -> () -> CreateTestWithJenaMethods.testQueryValid(p);
 		return testAll(tester);
 	}
 
 	@TestFactory
 	public Stream<DynamicTest> testAllWithRDF4j() throws URISyntaxException, IOException {
-		BiFunction<Path, String, Executable> tester = (p,
-				projectPrefixes) -> () -> CreateTestWithRDF4jMethods.testQueryValid(p, projectPrefixes);
+		Function<Path, Executable> tester = (p) -> () -> CreateTestWithRDF4jMethods.testQueryValid(p);
 		return testAll(tester);
 	}
 
 	@Tag("SlowTest")
 	@TestFactory
 	public Stream<DynamicTest> testAllService() throws URISyntaxException, IOException {
-		BiFunction<Path, String, Stream<String>> tester = (p, projectPrefixes) -> CreateTestWithRDF4jMethods
-				.extractServiceEndpoints(p, projectPrefixes);
+		Function<Path, Stream<String>> tester = (p) -> CreateTestWithRDF4jMethods.extractServiceEndpoints(p);
 		Consumer<String> consumer = s -> {
 			try (HttpClient client = HttpClient.newHttpClient()) {
 				HttpRequest askAnything = HttpRequest.newBuilder()
@@ -92,12 +89,11 @@ public class ValidateSparqlExamplesTest {
 		Function<Stream<String>, Stream<DynamicTest>> test = iris ->  iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
 		return testAllAsOne(tester, test);
 	}
-	
+
 	@TestFactory
 	@Tag("SlowTest")
 	public Stream<DynamicTest> testAllQueriesRun() throws URISyntaxException, IOException {
-		BiFunction<Path, String, Executable> tester = (p, projectPrefixes) -> () -> CreateTestWithRDF4jMethods
-				.testQueryRuns(p, projectPrefixes);
+		Function<Path, Executable> tester = (p) -> () -> CreateTestWithRDF4jMethods.testQueryRuns(p);
 		return testAll(tester);
 	}
 
@@ -106,53 +102,38 @@ public class ValidateSparqlExamplesTest {
 		return FindFiles.allPrefixFiles().flatMap(this::testPrefixes);
 	}
 
-	private Stream<DynamicTest> testAll(BiFunction<Path, String, Executable> tester)
+	private Stream<DynamicTest> testAll(Function<Path, Executable> tester)
 			throws URISyntaxException, IOException {
-		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
 		return Files.list(FindFiles.getBasePath()).flatMap(projectPath -> {
 			try {
-				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
 				return FindFiles.sparqlExamples(projectPath)
-						.map(p -> createTest(tester, projectPath, projectPrefixes, p));
+						.map(p -> createTest(tester, projectPath, p));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});
 	}
 
-	private <T> Stream<DynamicTest> testAllAsOne(BiFunction<Path, String, Stream<T>> tester,
+	private <T> Stream<DynamicTest> testAllAsOne(Function<Path, Stream<T>> tester,
 			Function<Stream<T>, Stream<DynamicTest>> test) throws URISyntaxException, IOException {
-		String commonPrefixes = extractPrefixes(FindFiles.commonPrefixes());
 		return test.apply(Files.list(FindFiles.getBasePath()).flatMap(projectPath -> {
 			try {
-				String projectPrefixes = extractProjectPrefixes(commonPrefixes, projectPath);
-				return FindFiles.sparqlExamples(projectPath).flatMap(p -> tester.apply(p, projectPrefixes));
+				return FindFiles.sparqlExamples(projectPath).flatMap(p -> tester.apply(p));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}));
 	}
 
-	private DynamicTest createTest(BiFunction<Path, String, Executable> tester, Path projectPath,
-			String projectPrefixes, Path specificExamplePath) {
+	private DynamicTest createTest(Function<Path, Executable> tester, Path projectPath, Path specificExamplePath) {
 		String testName = pathToTestName(specificExamplePath);
-		Executable apply = tester.apply(specificExamplePath, projectPrefixes);
+		Executable apply = tester.apply(specificExamplePath);
 		return DynamicTest.dynamicTest(testName, apply);
 	}
 
 	private String pathToTestName(Path specificExamplePath) {
 		return specificExamplePath.getParent().getFileName().toString() + '/'
 				+ specificExamplePath.getFileName().toString();
-	}
-
-	private String extractProjectPrefixes(String commonPrefixes, Path path) {
-		String projectPrefixes = commonPrefixes;
-		Path projectPrefixesPath = Paths.get(path.toString(), "prefixes.ttl");
-		if (Files.exists(projectPrefixesPath)) {
-			return commonPrefixes + extractPrefixes(projectPrefixesPath);
-		} else {
-			return projectPrefixes;
-		}
 	}
 
 	private Stream<DynamicTest> testPrefixes(Path prefixes) {

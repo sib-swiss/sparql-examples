@@ -39,7 +39,7 @@ public class SparqlInRdfToMd {
 			rq.add("```sparql");
 			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 					.flatMap(qt -> streamOf(ex, queryId, qt, null)).map(Statement::getObject).map(o -> o.stringValue())
-					.forEach(q -> SparqlInRdfToRq.addPrefixes(q, ex, rq));
+					.forEach(q -> rq.add(q));
 			rq.add("```");
 
 		});
@@ -70,7 +70,7 @@ public class SparqlInRdfToMd {
 	private static Function<Value, String> asNiceLink(String fileName) {
 		return v -> {
 			String comment = Jsoup.parse(v.stringValue()).text();
-			
+
 			String fileNameOfMdFile = fileName.substring(0, fileName.length() - 4) + ".md)";
 			return " - [" + comment + "](./" + fileNameOfMdFile;
 		};

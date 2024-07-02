@@ -46,7 +46,7 @@ public class SparqlInRdfToRq {
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
 							.map(o -> o.stringValue()).map(q -> {
 								ArrayList<String> l = new ArrayList<>();
-								addPrefixes(q, ex, l);
+								l.add(q);
 								return l.stream().collect(Collectors.joining("\n"));
 							}).forEach(q -> {
 								if (q.length() > 600) {
@@ -60,7 +60,7 @@ public class SparqlInRdfToRq {
 	}
 
 	/**
-     * Add prefixes to the raw SPARQL query string
+     * Add prefixes to a raw SPARQL query string
 	 * @param rq
      **/
 	public static void addPrefixes(String query, Model ex, List<String> rq) {

@@ -10,6 +10,7 @@ public class SparqlInRdfToRqTest {
 	@Test
 	public void prefixInQuery() {
 		String q ="""
+				PREFIX up: <http://purl.uniprot.org/core/>
 				SELECT ?taxon
 				FROM <http://sparql.uniprot.org/taxonomy>
 				WHERE

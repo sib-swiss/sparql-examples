@@ -32,7 +32,7 @@ public class SparqlInRdfToMermaidTest {
 		String res = SparqlInRdfToMermaid.asMermaid(model);
 		assertTrue(res.contains("rh:ec"));
 	}
-	
+
 	@Test
 	public void rhea9Anon() {
 		Model model = parse(ExamplesUsedInTest.rhea9Anon);
