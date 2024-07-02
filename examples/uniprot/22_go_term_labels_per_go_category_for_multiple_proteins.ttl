@@ -24,17 +24,17 @@ WHERE
     ?protein up:classifiedWith ?goTerm .
     #Determine if the type is biological_process
     OPTIONAL {
-        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0008150>.
+        ?goTerm rdfs:subClassOf GO:0008150 .
         ?goTerm rdfs:label ?biotype .
     }
     #Determine if the type is cellular_component
     OPTIONAL {
-        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0005575>.
+        ?goTerm rdfs:subClassOf GO:0005575 .
         ?goTerm rdfs:label ?celtype .
     }
     #Determine if the type is molecular_function
     OPTIONAL {
-        ?goTerm rdfs:subClassOf <http://purl.obolibrary.org/obo/GO_0003674> .
+        ?goTerm rdfs:subClassOf GO:0003674 .
         ?goTerm rdfs:label ?moltype .
     }
     #Filter out the uniprot keywords
