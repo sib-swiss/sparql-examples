@@ -1,17 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00236
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with subcellular location gold and list of all these locations''' ;
- schema:keyword "tutorial";
- schema:keyword "subcellular location";
- schema:keyword "quality";
-  sh:select '''select distinct ?entry (group_concat(distinct str(?loclab); SEPARATOR = \",\") as ?locs) where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00236 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with subcellular location gold and list of all these locations" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?entry (group_concat(distinct str(?loclab); SEPARATOR = ",") as ?locs) where {
  ?entry :isoform ?iso.
  ?iso :cellularComponent ?locannot .
  ?locannot :term ?locterm .
@@ -20,5 +19,9 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?locev :quality :GOLD .
  filter not exists {?locannot :negativeEvidence ?locev .}
 }
-GROUP BY ?entry'''
-.
+GROUP BY ?entry""" ;
+    schema:keyword "quality",
+        "subcellular location",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

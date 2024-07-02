@@ -1,18 +1,18 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:enzymes_interacting_with_molecules_similar_to_dopamine
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:enzymes_interacting_with_molecules_similar_to_dopamine a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Look for enzymes catalyzing reactions with molecules similar to dopamine." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:keyword "enzyme", "dopamine", "chemical similarity", "sachem", "idsm", "rhea";
-    rdfs:comment """Look for enzymes catalyzing reactions with molecules similar to dopamine.""";
-    sh:select """SELECT
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
   ?protein
   ?rhea 
   ?chebi
@@ -29,4 +29,12 @@ WHERE {
   ?protein up:reviewed true ;
     up:annotation ?caa .
   ?caa up:catalyticActivity/up:catalyzedReaction ?rhea .
-}""" .
+}""" ;
+    schema:keyword "chemical similarity",
+        "dopamine",
+        "enzyme",
+        "idsm",
+        "rhea",
+        "sachem" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

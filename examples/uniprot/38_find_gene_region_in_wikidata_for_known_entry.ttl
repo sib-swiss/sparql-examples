@@ -1,15 +1,20 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-ex:38
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:38 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData""" ;
-    sh:select """
+    sh:select """PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+
 SELECT 
 	?protein 
 	?begin
@@ -34,5 +39,6 @@ WHERE {
           pq:P659/rdfs:label ?assembly .
         FILTER(lang(?assembly) = "en")
   } 
-}
-"""  .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

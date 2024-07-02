@@ -1,20 +1,21 @@
-# Select all Rhea reactions that involve a lipid, i.e a children of CHEBI:18059 in the ChEBI hierarchy.
-# 
-# This query corresponds to the Rhea website query:
-# https://www.rhea-db.org/rhea?query=chebi:18059
-#
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:17
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:17 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy."^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy."""^^rdf:html ;
-    sh:select """# Query 17
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+# Query 17
 # Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy.
 # 
 # This query corresponds to the Rhea website query:
@@ -42,5 +43,6 @@ WHERE {
     ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
   }
   ?chebi up:name ?name .
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

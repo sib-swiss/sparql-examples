@@ -1,19 +1,24 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:2
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all bacterial taxa and their scientific name from the <a href=\"https://www.uniprot.org/taxonomy/\">UniProt taxonomy</a>"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Select all bacterial taxa and their scientific name from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>"""^^rdf:HTML ;
-    sh:select """SELECT ?taxon ?name
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?taxon ?name
 WHERE
 {
     ?taxon a up:Taxon .
     ?taxon up:scientificName ?name .
     # Taxon subclasses are materialized, do not use rdfs:subClassOf+
     ?taxon rdfs:subClassOf taxon:2 .
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

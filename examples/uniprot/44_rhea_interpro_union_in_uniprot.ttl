@@ -1,14 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:44
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:44 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the Rhea and Interpro combinations in UniProtKB entries." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find the Rhea and Interpro combinations in UniProtKB entries.""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
     ?interpro
 	?rhea
 FROM <http://sparql.uniprot.org/uniprot>
@@ -19,4 +21,6 @@ WHERE
   ?annotation up:catalyticActivity ?rhea .
   ?protein rdfs:seeAlso ?interpro .
   ?interpro up:database <http://purl.uniprot.org/database/InterPro> .
-} ORDER BY ?rhea""" .
+} ORDER BY ?rhea""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

@@ -1,19 +1,22 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00250
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that act as transporters and their TCDB numbers''' ;
- schema:keyword "tutorial";
- schema:keyword "cross-reference";
- schema:keyword "function";
-  sh:select '''select distinct ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00250 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that act as transporters and their TCDB numbers" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {
  ?entry :isoform/ :transportActivity ?tr.
  ?tr rdfs:comment ?trcom; :evidence / :reference ?ref.
  ?ref a :Xref; :accession ?acc .
-} order by ?acc'''
-.
+} order by ?acc""" ;
+    schema:keyword "cross-reference",
+        "function",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

@@ -1,18 +1,17 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00286
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Protein domains or regions that frequently occur in interaction mappings''' ;
- schema:keyword "PPI";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "domain";
-  sh:select '''select distinct (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00286 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Protein domains or regions that frequently occur in interaction mappings" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) where {
  ?entry :isoform ?iso; :gene / :name / rdfs:label ?gen .
  ?iso :swissprotDisplayed true; :interactionMapping ?itmap .
  ?itmap :entryAnnotationId ?itid; :start ?its; :end ?ite .
@@ -24,5 +23,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  filter (?rs >= ?its - 15 && ?re <= ?ite + 15)
  filter(xsd:float(?itlen) / xsd:float(?rlen) < 2.0)
 } group by ?rlab having(count(distinct ?itid) >= 10)
-order by desc(?itcnt)'''
-.
+order by desc(?itcnt)""" ;
+    schema:keyword "PPI",
+        "domain",
+        "region",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

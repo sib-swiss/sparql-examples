@@ -1,17 +1,20 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:13
-    a sh:SPARQLAskExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Was any UniProt entry integrated on the 9th of January 2013""" ;
-    sh:ask """ASK
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:13 a sh:SPARQLAskExecutable,
+        sh:SPARQLExecutable ;
+    rdfs:comment "Was any UniProt entry integrated on the 9th of January 2013" ;
+    sh:ask """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+ASK
 WHERE
 {
 	?protein a up:Protein .
 	?protein up:created '2013-01-09'^^xsd:date
-}""" .
+}""" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

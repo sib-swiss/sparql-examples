@@ -1,17 +1,18 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00265
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Retrieve all positional annotations at a given position on a neXtProt isoform''' ;
- schema:keyword "isoforms";
- schema:keyword "sequence";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00265 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all positional annotations at a given position on a neXtProt isoform" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX isoform: <http://nextprot.org/rdf/isoform/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
 { 
  values ?iso { isoform:NX_Q99728-1 }
  values ?poi {107} # position of interest
@@ -31,8 +32,12 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?phvar :term ?phtype; :impactedObject /:term /rdfs:label ?ioTermlab .
  ?phvar a ?annot_type .
  ?phtype :childOf nextprot_cv:ME_0000002; rdfs:label ?effect . # children of impact 
- bind (concat(CONCAT(?effect,\" \"),?ioTermlab) as ?txt) }
+ bind (concat(CONCAT(?effect," "),?ioTermlab) as ?txt) }
 
  filter((?spos <= ?poi) && (?epos >= ?poi)) # select annotations encompassing the position of interest
-} order by ?spos'''
-.
+} order by ?spos""" ;
+    schema:keyword "isoforms",
+        "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

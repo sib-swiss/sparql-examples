@@ -1,17 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00033
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least one phosphotyrosine but no phosphoserine or phosphothreonine''' ;
- schema:keyword "PTM";
- schema:keyword "phosphorylation";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00033 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least one phosphotyrosine but no phosphoserine or phosphothreonine" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  select ?entry ?iso (count(?ptm) as ?ptmCnt) where {
  ?entry :isoform ?iso.
  ?iso :modifiedResidue ?ptm.
@@ -22,5 +21,9 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  not exists { ?iso :modifiedResidue / :term nextprot_cv:PTM-0254. } #phosphothreonine
  )
  } group by ?entry ?iso having ( count(?ptm) >= 1 )
-}'''
-.
+}""" ;
+    schema:keyword "PTM",
+        "phosphorylation",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

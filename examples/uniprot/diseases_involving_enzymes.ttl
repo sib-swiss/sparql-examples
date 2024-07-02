@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:diseases_involving_enzymes
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:diseases_involving_enzymes a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find Diseases that are thought to be related to Enzymes" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:keyword "enzyme" ;
-    rdfs:comment """Find Diseases that are thought to be related to Enzymes""" ;
-    sh:select """SELECT
+    sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
 ?disease ?diseaseLabel
 WHERE { 
  ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzyme ;
@@ -20,4 +18,7 @@ WHERE {
  ?diseaseAnnotation a up:Disease_Annotation ;
                     up:disease ?disease .
  ?disease skos:prefLabel ?diseaseLabel .
-}""" .
+}""" ;
+    schema:keyword "enzyme" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

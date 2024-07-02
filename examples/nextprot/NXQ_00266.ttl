@@ -1,20 +1,20 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00266
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins binding estradiol and/or similar molecules (substructure search with SMILES) and their associated GO_MF terms''' ;
- schema:target <https://sparql.nextprot.org/sparql> ;
- schema:keyword "small molecule interaction";
- schema:keyword "federated query";
- schema:keyword "tutorial";
- schema:keyword "similarity";
- schema:keyword "function";
-  sh:select '''SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = \",\") as ?gomfx) WHERE {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00266 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins binding estradiol and/or similar molecules (substructure search with SMILES) and their associated GO_MF terms" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = ",") as ?gomfx) WHERE {
 	SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {
 		SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/cco> {
 		 ?compound sachem:substructureSearch [ sachem:query "CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O" ] . # smiles chain for estradiol
@@ -36,5 +36,11 @@ schema:target <https://sparql.nextprot.org/sparql> ;
 	?gomf rdfs:label ?gomflab .
 }
 
-GROUP BY ?entry'''
-.
+GROUP BY ?entry""" ;
+    schema:keyword "federated query",
+        "function",
+        "similarity",
+        "small molecule interaction",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

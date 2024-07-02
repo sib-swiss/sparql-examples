@@ -1,15 +1,18 @@
-prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix schema: <https://schema.org/>
+@prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:1
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
-    schema:target <https://rdf.metanetx.org/sparql/> ;
-    rdfs:comment """Retrieve the MNXref metabolite with name <em>N,N-dimethyl-beta-alanine</em>, together with molecular information."""^^rdf:HTML ;
-    sh:select """SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve the MNXref metabolite with name <em>N,N-dimethyl-beta-alanine</em>, together with molecular information."^^rdf:HTML ;
+    sh:prefixes [ ],
+        [ ] ;
+    sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
 WHERE {
     ?metabolite a mnx:CHEM .
     ?metabolite rdfs:label ?label .
@@ -20,4 +23,6 @@ WHERE {
     OPTIONAL { ?metabolite mnx:inchi    ?inchi }
     OPTIONAL { ?metabolite mnx:inchikey ?inchikey }
     OPTIONAL { ?metabolite mnx:smiles   ?smiles }
-}""" .
+}""" ;
+    schema:target <https://rdf.metanetx.org/sparql/> .
+

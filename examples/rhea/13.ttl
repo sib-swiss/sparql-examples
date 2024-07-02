@@ -1,21 +1,18 @@
-# Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot
-# return the number of UniProtKB entries
-# 
-# Federated query using a service to UniProt SPARQL endpoint
-#
-# This query cannot be performed using the Rhea search website
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:13
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:13 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions used in UniProtKB/Swiss-Prot for a given organism (NCBI taxonomy ID)."^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions used in UniProtKB/Swiss-Prot for a given organism (NCBI taxonomy ID)."""^^rdf:html ;
-    sh:select """# Query 13
+    sh:select """PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+# Query 13
 # Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot
 # return the number of UniProtKB entries
 # 
@@ -35,5 +32,6 @@ WHERE {
   }
   ?rhea rh:accession ?accession .
   ?rhea rh:equation ?equation .
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

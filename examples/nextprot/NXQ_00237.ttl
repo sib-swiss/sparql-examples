@@ -1,25 +1,27 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00237
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order''' ;
- schema:keyword "transmembrane";
- schema:keyword "topology";
- schema:keyword "domain";
- schema:keyword "isoforms";
- schema:keyword "tutorial";
- schema:keyword "region";
-  sh:select '''select ?entry (count(distinct(?statement)) as ?tmcnt) where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00237 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select ?entry (count(distinct(?statement)) as ?tmcnt) where {
  ?entry :isoform ?iso.
  ?iso :swissprotDisplayed true .
  ?iso :topology ?statement.
  ?statement a :TransmembraneRegion.
 } 
 group by ?entry
-order by desc(?tmcnt)'''
-.
+order by desc(?tmcnt)""" ;
+    schema:keyword "domain",
+        "isoforms",
+        "region",
+        "topology",
+        "transmembrane",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

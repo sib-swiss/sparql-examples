@@ -1,22 +1,18 @@
-# Select all Rhea reactions mapped to 
-# 
-# This query corresponds to the Rhea website query:
-# https://www.rhea-db.org/rhea?query=ec:1.*
-# https://www.rhea-db.org/rhea?query=ec:1.1.*
-# https://www.rhea-db.org/rhea?query=ec:1.1.1.*
-#
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:10
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:10 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions linked to an enzyme classification (sub)-class"^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions linked to an enzyme classification (sub)-class"""^^rdf:html ;
-    sh:select """# Query 10
+    sh:select """PREFIX ec: <http://purl.uniprot.org/enzyme/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 10
 # Select all Rhea reactions mapped to 
 # 
 # This query corresponds to the Rhea website query:
@@ -37,4 +33,6 @@ WHERE {
   # sub-sub-class (e.g EC 1.1.1.-)
   #FILTER (regex(?ecNumber,'^1\\\\.1\\\\.1\\\\.')) 
   ?rhea rh:equation ?equation .
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
+

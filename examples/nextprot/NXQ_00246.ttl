@@ -1,18 +1,19 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00246
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins which are enzymes catalyzing a reaction involving lipids''' ;
- schema:keyword "enzyme";
- schema:keyword "federated query";
- schema:keyword "tutorial";
- schema:keyword "function";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00246 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins which are enzymes catalyzing a reaction involving lipids" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+select distinct ?entry where {
 #select distinct ?entry str(?xlab) where {
  service <https://sparql.rhea-db.org/sparql> {
  SELECT distinct ?chebi WHERE {
@@ -28,5 +29,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?entry :isoform / :smallMoleculeInteraction / :interactant ?x .
  ?x rdfs:label ?xlab .
  ?x skos:exactMatch ?chebi .
-} order by ?entry'''
-.
+} order by ?entry""" ;
+    schema:keyword "enzyme",
+        "federated query",
+        "function",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

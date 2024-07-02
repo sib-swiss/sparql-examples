@@ -1,13 +1,17 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:7
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:7 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all genes that are orthologous to HUMAN22169 OMA protein (identifier) and their cross-reference links to OMA and Uniprot." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Retrieve all genes that are orthologous to HUMAN22169 OMA protein (identifier) and their cross-reference links to OMA and Uniprot.""" ;
-    sh:select """select ?protein2 ?Uniprot_link
+    sh:select """PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX orth: <http://purl.org/net/orth#>
+
+select ?protein2 ?Uniprot_link
 where {
     ?cluster a orth:OrthologsCluster.
     ?cluster orth:hasHomologousMember ?node1.
@@ -19,5 +23,6 @@ where {
     ?protein2 a orth:Protein. 
     ?protein2  lscr:xrefUniprot ?Uniprot_link. 
     filter(?node1 != ?node2)
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
 

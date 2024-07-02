@@ -1,18 +1,17 @@
-# Select all Rhea reactions mapped to KEGG reactions
-# KEGG reactions are mapped to Rhea bidirectional reactions
-# Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*
-#
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:5
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:5 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions mapped to KEGG reactions"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-   rdfs:comment """Select all Rhea reactions mapped to KEGG reactions"""^^rdf:HTML ;
-    sh:select """# Query 5 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 5 
 # Select all Rhea reactions mapped to KEGG reactions
 # KEGG reactions are mapped to Rhea bidirectional reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*
@@ -23,4 +22,6 @@ WHERE {
   ?rhea rh:bidirectionalReaction ?rheaDir .
   ?rheaDir rdfs:seeAlso ?kegg .
   FILTER (regex(str(?kegg),'kegg'))
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
+

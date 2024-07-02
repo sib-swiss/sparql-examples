@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00226
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least 2 validating peptides >=9aa found in blood plasma, urine or cerebrospinal fluid (criteria for biomarker)].''' ;
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
- schema:keyword "dataset";
-  sh:select '''select distinct ?entry where { 
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00226 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least 2 validating peptides >=9aa found in blood plasma, urine or cerebrospinal fluid (criteria for biomarker)]." ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where { 
 values ?pepsources { 
  source:PeptideAtlas_human_Cerebrospinal_Fluid 
  source:PeptideAtlas_human_Blood_Plasma 
@@ -29,5 +27,10 @@ values ?pepsources {
  ?pm :start ?p1 ; :end ?p2 . 
  filter(?p2-?p1 >= 8) # peptide length >= 9 
 } 
-group by ?entry having(count (distinct ?pepid) > 1) # at least two such peptides'''
-.
+group by ?entry having(count (distinct ?pepid) > 1) # at least two such peptides""" ;
+    schema:keyword "dataset",
+        "peptide",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

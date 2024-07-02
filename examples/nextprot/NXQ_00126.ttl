@@ -1,18 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00126
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Peptides that are potential neo N-termini from undescribed isoforms''' ;
- schema:keyword "isoforms";
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
-  sh:select '''select distinct ?entry ?pep where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00126 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Peptides that are potential neo N-termini from undescribed isoforms" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry ?pep where {
  ?entry :isoform ?iso .
  ?iso :peptideMapping ?pm.
  ?pm :start ?p1 ; :end ?p2 .
@@ -34,12 +31,17 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  bind (substr(?chain2, ?mstart, ?mend - ?mstart + 1) as ?mat2) .
  filter(strlen(?mat2) > 30).
  bind (substr(?mat2, 2, strlen(?mat2) - 1) as ?mat22) .
- filter(regex(?mat2,concat(\"^\", ?pep)) || regex(?mat22,concat(\"^\", ?pep))).
+ filter(regex(?mat2,concat("^", ?pep)) || regex(?mat22,concat("^", ?pep))).
  }
 } 
 order by ?pep
 
 # overestimated, need additional filter(s)
 # but for instance AELEEVTLDGKPLQALR, AELEEVTLDGKPLQALRVTDLKAALEQR and AELEEVTLDGKPLQALRVTDLKAALEQR in Q9UKV3
-# are N-acetylated and good markers for an additional iso starting at M-59'''
-.
+# are N-acetylated and good markers for an additional iso starting at M-59""" ;
+    schema:keyword "isoforms",
+        "peptide",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

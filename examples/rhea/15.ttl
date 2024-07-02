@@ -1,18 +1,18 @@
-# Select all ChEBI compounds used in Rhea as reaction participant
-# 
-# This query can not be expressed in the Rhea website
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:15
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:15 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all ChEBI compounds used in Rhea as reaction participant"^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all ChEBI compounds used in Rhea as reaction participant"""^^rdf:html ;
-    sh:select """# Query 15
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+# Query 15
 # Select all ChEBI compounds used in Rhea as reaction participant
 # 
 # This query can not be expressed in the Rhea website
@@ -27,5 +27,6 @@ WHERE {
   ?chebi up:name ?name .
 }
 GROUP BY ?chebi ?name
-ORDER BY DESC(?countRhea)""" .
+ORDER BY DESC(?countRhea)""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

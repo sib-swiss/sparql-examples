@@ -1,17 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00146
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa''' ;
- schema:keyword "proteomics";
- schema:keyword "peptide";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00146 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
 ?entry :isoform / :peptideMapping ?pm.
 ?pm :proteotypic true .
 ?pm :peptideName ?pepid .
@@ -24,5 +22,9 @@ filter not exists {
  filter((?p2 - ?p1 + 1) >= 9)
  }
 }
-group by ?entry having(count (distinct ?pepid) >= 2)'''
-.
+group by ?entry having(count (distinct ?pepid) >= 2)""" ;
+    schema:keyword "peptide",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

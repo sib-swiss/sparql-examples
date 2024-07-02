@@ -1,24 +1,27 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00225
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with high proline content''' ;
- schema:keyword "sequence";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry ?AAcnt ?seqlen ?AAdensity where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00225 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with high proline content" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct ?entry ?AAcnt ?seqlen ?AAdensity where {
  ?entry :isoform ?iso.
  ?iso :swissprotDisplayed true .
  ?iso :sequence / :chain ?seq .
  ?iso :sequence / :length ?seqlen .
- bind( strlen( replace( str(?seq), \"[^P]\", \"\")) as ?AAcnt) # replace all non-Proline by empty string
+ bind( strlen( replace( str(?seq), "[^P]", "")) as ?AAcnt) # replace all non-Proline by empty string
  bind(xsd:float(?AAcnt)/xsd:float(?seqlen) as ?AAdensity)
  filter(?AAcnt > 10)
 }
 order by desc(?AAdensity)
-limit 100 # will bring-up the 100 most relevant cases'''
-.
+limit 100 # will bring-up the 100 most relevant cases""" ;
+    schema:keyword "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

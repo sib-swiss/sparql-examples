@@ -1,20 +1,18 @@
-# Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side
-# Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
-# and CHEBI:58359 (L-glutamine) in the other side
-#
-# This query cannot be expressed in the Rhea website
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:16
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:16 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side"^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side"""^^rdf:html ;
-    sh:select """# Query 16
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+# Query 16
 # Select all Rhea reactions that have a pair of ChEBI IDs as reaction participant and in opposite side
 # Return Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant in one side
 # and CHEBI:58359 (L-glutamine) in the other side
@@ -36,5 +34,6 @@ WHERE {
   ?reactionSide1 rh:transformableTo ?reactionSide2 .
   
   ?rhea rh:equation ?equation .
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00108
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that have a 3D structure in PDB that overlap by at least 50 amino acids with a SH3 domain''' ;
- schema:keyword "3D structure";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "domain";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00108 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that have a 3D structure in PDB that overlap by at least 50 amino acids with a SH3 domain" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?isoform.
  ?isoform :pdbMapping ?struc.
  ?struc :start ?s1 ; :end ?s2.
@@ -20,5 +18,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?dom :term nextprot_cv:DO-00615 ; :start ?d1 ; :end ?d2.
  bind ( if(?d2<?s2, ?d2, ?s2) - if(?d1>?s1, ?d1, ?s1) as ?overlap) .
  filter (?overlap>50)
-}'''
-.
+}""" ;
+    schema:keyword "3D structure",
+        "domain",
+        "region",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

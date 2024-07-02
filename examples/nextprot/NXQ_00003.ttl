@@ -1,19 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00003
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with 7 transmembrane regions''' ;
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "transmembrane";
- schema:keyword "topology";
- schema:keyword "domain";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00003 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with 7 transmembrane regions" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :topology ?statement.
  ?statement a :TransmembraneRegion.
@@ -25,5 +21,11 @@ schema:target <https://sparql.nextprot.org/sparql> ;
 # Apply the grouping criterion (group by) for the results.
 # This groups entries with isoforms having 7 transmembrane regions.
 # Apply the aggregate function (count) to the variable ?statement.
-# This counts the number of transmembrane region statements for each isoform.'''
-.
+# This counts the number of transmembrane region statements for each isoform.""" ;
+    schema:keyword "domain",
+        "region",
+        "topology",
+        "transmembrane",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

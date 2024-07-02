@@ -1,17 +1,20 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:4
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:4 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:label "Potential lipid structures for lipid classes" ;
     rdfs:comment """For a given (list of) lipid classes (e.g. SWISSLIPID:000399814 (Ceramide) SWISSLIPID:000000007 (Sphingomyelin (iso-d17:1(4E))), return a list of the corresponding Isomeric subspecies. 
 The query should return the lipid recommended names (?name) as well as identifiers (?id).
 Recapitulates the “browse lipid classes” function of the website (in batch)."""^^rdf:HTML ;
-    sh:select """# Example 4
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 4
 SELECT ?startId ?startName ?id ?name
 WHERE
 {
@@ -22,5 +25,6 @@ WHERE
   ?id SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies ;
 	  rdfs:label ?name .    
 } 
-ORDER BY ?startId
-""" .
+ORDER BY ?startId""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

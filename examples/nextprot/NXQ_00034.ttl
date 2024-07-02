@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00034
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least one homeobox domain and with at least one variant in the homeobox domain(s)''' ;
- schema:keyword "variant";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "domain";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00034 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least one homeobox domain and with at least one variant in the homeobox domain(s)" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  # with >=1 homeobox domain
  ?iso :region ?st1.
@@ -22,5 +20,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?var :start ?varpos.
  # one variant in the homeobox domain
  filter (?varpos >=?start && ?varpos <=?end)
-}'''
-.
+}""" ;
+    schema:keyword "domain",
+        "region",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

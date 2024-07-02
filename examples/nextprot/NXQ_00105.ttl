@@ -1,19 +1,22 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00105
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least one cross-reference to SMR (Swiss Model Repository) but no cross-references to PDB''' ;
- schema:keyword "cross-reference";
- schema:keyword "3D structure";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00105 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least one cross-reference to SMR (Swiss Model Repository) but no cross-references to PDB" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select distinct ?entry where {
  ?entry a :Entry.
  ?entry :reference / :provenance db:SMR.
  filter not exists { ?entry :reference / :provenance db:PDB }
-}'''
-.
+}""" ;
+    schema:keyword "3D structure",
+        "cross-reference",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

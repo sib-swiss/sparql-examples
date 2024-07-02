@@ -1,20 +1,21 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix taxon:<http://purl.uniprot.org/taxonomy/> 
-ex:33
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:33 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find longest comment text associated with a UniProtKB Natural Variant Annotation" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find longest comment text associated with a UniProtKB Natural Variant Annotation""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
     ?annotation ?comment
 WHERE {
     ?annotation a up:Natural_Variant_Annotation ;
         rdfs:comment ?comment . 
 } 
-ORDER BY DESC(STRLEN(?comment))
-""" .
+ORDER BY DESC(STRLEN(?comment))""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

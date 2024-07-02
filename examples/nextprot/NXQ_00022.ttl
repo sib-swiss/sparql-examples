@@ -1,16 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00022
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with no function annotated''' ;
- schema:keyword "function";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00022 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with no function annotated" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  filter not exists { ?iso :functionInfo ?_. }
  filter not exists { ?iso :catalyticActivity ?_ .} 
@@ -24,5 +24,8 @@ schema:target <https://sparql.nextprot.org/sparql> ;
 					 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)
  }
  filter not exists { ?entry :existence :Uncertain } # Remove PE5 proteins
-}'''
-.
+}""" ;
+    schema:keyword "function",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

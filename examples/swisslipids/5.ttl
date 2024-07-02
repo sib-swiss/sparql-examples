@@ -1,16 +1,21 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:5
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:5 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:label "Lipid reactions" ;
     rdfs:comment """For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
 This query does consider the hierarchy: it looks for reactions involving the specified lipid and/or its more specific forms."""^^rdf:HTML ;
-    sh:select """# Example 5
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Example 5
 SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation 
 WHERE
 {
@@ -29,7 +34,6 @@ WHERE
   	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
   }    
 } 
-ORDER BY  ?startId ?id
-""" .
-
+ORDER BY  ?startId ?id""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
 

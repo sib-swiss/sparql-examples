@@ -1,13 +1,17 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:12
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:12 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all orthologs between mouse and rabbit, together with their HOG id" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Retrieve all orthologs between mouse and rabbit, together with their HOG id""" ;
-    sh:select """select distinct ?MOUSE_PROTEIN ?RABIT_PROTEIN ?HOG
+    sh:select """PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+select distinct ?MOUSE_PROTEIN ?RABIT_PROTEIN ?HOG
 where {
 ?HOG a orth:OrthologsCluster ;
  orth:hasHomologousMember ?node1 ;
@@ -19,4 +23,6 @@ where {
 ?RABIT_PROTEIN a orth:Protein ;
  orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .  
 filter(?node1 != ?node2)
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
+

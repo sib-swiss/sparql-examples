@@ -1,18 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00109
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that have a MS-identified proteotypic peptide that maps partly or fully into a signal sequence''' ;
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
- schema:keyword "signal sequence";
-  sh:select '''select distinct ?entry ?overlap where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00109 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that have a MS-identified proteotypic peptide that maps partly or fully into a signal sequence" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry ?overlap where {
  ?entry :isoform ?iso.
  #get Signal position (start is always 1)
  ?iso :signalPeptide [:end ?s2] .
@@ -24,5 +21,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  filter ( ?p1 < ?s2 )
  bind ( if(?p2<?s2, ?p2, ?s2) - ?p1 as ?overlap) .
  filter(?overlap > 2)
-}'''
-.
+}""" ;
+    schema:keyword "peptide",
+        "proteomics",
+        "signal sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

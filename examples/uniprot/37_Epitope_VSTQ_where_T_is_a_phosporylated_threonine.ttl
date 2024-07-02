@@ -1,15 +1,19 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-ex:37
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:37 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
   ?protein 
   ?comment
   ?begin
@@ -29,5 +33,6 @@ WHERE
   ?sequence rdf:value ?aaSequence .
   FILTER (SUBSTR(?aaSequence, ?begin -2 , 4) = "VSTQ")     
   FILTER (CONTAINS(?comment, "Phosphothreonine"))
-}
-"""  .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

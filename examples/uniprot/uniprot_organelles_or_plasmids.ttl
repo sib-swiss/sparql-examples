@@ -1,17 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_organelles_or_plasmids
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:uniprot_organelles_or_plasmids a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "If a gene is located in an organelle other than the nucleus, or/and on a plasmid rather than a chromosome, the gene location is stored in encodedIn properties. Note that if a plasmid has several names, they are listed as multiple <em>rdfs:label</em> properties."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """If a gene is located in an organelle other than the nucleus, or/and on a plasmid rather than a chromosome, the gene location is stored in encodedIn properties. Note that if a plasmid has several names, they are listed as multiple <em>rdfs:label</em> properties."""^^rdf:HTML ;
-    sh:select """SELECT 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
     ?protein 
     ?plasmidOrOrganelle
     ?label
@@ -21,4 +21,6 @@ WHERE {
     OPTIONAL {
         ?plasmidOrOrganelle rdfs:label ?label .
     }
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

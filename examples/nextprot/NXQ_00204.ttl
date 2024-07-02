@@ -1,16 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00204
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with protein existence \"At transcript level\" (PE=2) or \"Inferred from homology\" (PE=3) or \"Predicted\" (PE=4)''' ;
- schema:keyword "protein existence";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00204 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with protein existence \"At transcript level\" (PE=2) or \"Inferred from homology\" (PE=3) or \"Predicted\" (PE=4)" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  values ?level {
 #	:Evidence_at_protein_level # PE=1 
  :Evidence_at_transcript_level # PE=2
@@ -20,5 +19,8 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  }
  ?entry a :Entry .
  ?entry :existence ?level .
-}'''
-.
+}""" ;
+    schema:keyword "protein existence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

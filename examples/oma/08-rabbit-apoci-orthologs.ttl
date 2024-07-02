@@ -1,13 +1,21 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:8
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:8 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all genes per species that are orthologous to Rabbit's APOCI or APOC1 gene and their cross-reference links to OMA and Uniprot including the corresponding Ensembl gene identifier." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Retrieve all genes per species that are orthologous to Rabbit's APOCI or APOC1 gene and their cross-reference links to OMA and Uniprot including the corresponding Ensembl gene identifier.""" ;
-    sh:select """select ?protein1    ?protein2  ?geneName2  ?species2 ?Prot2_uniprot ?prot2_ensemblGeneId  
+    sh:select """PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+select ?protein1    ?protein2  ?geneName2  ?species2 ?Prot2_uniprot ?prot2_ensemblGeneId  
 where {
     ?cluster a orth:OrthologsCluster.
     ?cluster orth:hasHomologousMember ?node1.
@@ -23,4 +31,6 @@ where {
     rdfs:label ?geneName2;
     orth:organism/obo:RO_0002162/up:scientificName ?species2.
     filter(?node1 != ?node2)
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
+

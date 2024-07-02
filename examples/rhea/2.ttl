@@ -1,17 +1,18 @@
-# Query 2 
-# Select all Rhea reactions annotated with a given Pubmed identifier (PMID = 29867142)
-#
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:2
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions annotated with a given Pubmed ID"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions annotated with a given Pubmed ID"""^^rdf:HTML ;
-    sh:select """# Query 2 
+    sh:select """PREFIX pubmed: <http://rdf.ncbi.nlm.nih.gov/pubmed/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 2 
 # Select all Rhea reactions annotated with a given Pubmed identifier (PMID = 29867142)
 #
 SELECT ?pubmed ?rhea ?accession ?isTransport  ?equation 
@@ -22,5 +23,6 @@ WHERE {
   VALUES (?pubmed) { (pubmed:29867142) }
   ?rhea rh:isTransport ?isTransport .
   ?rhea rh:equation ?equation .
-} ORDER BY ?rhea""" .
+} ORDER BY ?rhea""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

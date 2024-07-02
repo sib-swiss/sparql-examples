@@ -1,15 +1,17 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:35
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:35 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:comment "Lipids by fatty acid component (hexadecanoate) at position sn1" ;
-    sh:select """SELECT 
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT 
 ?swisslipid 
 WHERE {
   VALUES (?chebi) {
@@ -20,4 +22,6 @@ WHERE {
     SWISSLIPID:derived_from ?swisslipidHexadecanoate ;
     SWISSLIPID:position SWISSLIPID:sn1 
   ]
-} """.
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

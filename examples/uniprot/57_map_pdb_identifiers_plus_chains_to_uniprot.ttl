@@ -1,14 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:57
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:57 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Map PDB identifiers plus chains to UniProt" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Map PDB identifiers plus chains to UniProt""" ;
-    sh:select """SELECT
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
   ?pdbId ?chain ?pdbChain ?uniprot
 WHERE
 {
@@ -29,4 +31,6 @@ WHERE
 
   # Filter those that match.
   FILTER(CONTAINS(?chain, ?pdbChain))
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

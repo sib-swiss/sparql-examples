@@ -1,18 +1,21 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00030
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome''' ;
- schema:keyword "family";
- schema:keyword "chromosomal location";
- schema:keyword "tutorial";
-  sh:select '''select ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00030 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?entry where {
  ?entry :familyName / :term/^:term/^:familyName ?member.
- ?entry :gene / :chromosome \"2\"^^xsd:string .
-} group by ?entry having ( count(distinct ?member) >= 5 )'''
-.
+ ?entry :gene / :chromosome "2"^^xsd:string .
+} group by ?entry having ( count(distinct ?member) >= 5 )""" ;
+    schema:keyword "chromosomal location",
+        "family",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

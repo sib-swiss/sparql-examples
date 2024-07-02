@@ -1,23 +1,26 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00144
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that contains a sequence \"QHP\" where the Proline is amidated''' ;
- schema:keyword "PTM";
- schema:keyword "sequence";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00144 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that contains a sequence \"QHP\" where the Proline is amidated" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
 ?entry :isoform ?isoform.
 ?isoform :ptm ?ptm.
 ?ptm :term nextprot_cv:PTM-0257 . # Proline amide
 ?ptm :start ?ptmpos .
 ?isoform :sequence / :chain ?seq.
 bind(substr(?seq, ?ptmpos-2, 3) as ?modseq)
-filter ( regex(?modseq, \"QHP\") )
-}'''
-.
+filter ( regex(?modseq, "QHP") )
+}""" ;
+    schema:keyword "PTM",
+        "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

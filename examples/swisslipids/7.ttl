@@ -1,16 +1,22 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:7
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:7 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:label "Enzymes for lipid analytes" ;
     rdfs:comment """For a given list of lipid Species, return a list of the corresponding Isomeric subspecies for that particular lipid that are linked to an enzyme as annotated in UniProtKB (UniProt AC and recommended name).
 This question would allow a user with (a list of) very high level MS identifications to immediately narrow them to the most likely potential lipid structures and protein targets as in this example: SWISSLIPID:000056871 / PC(O-36:4) (target species of interest) -> SWISSLIPID:000028143 / PC(O-16:0/20:4(5Z,8Z,11Z,14Z)) -> LPCAT4, PLA2G4A, PLA2G4C, PLA2G4F (target proteins)"""^^rdf:HTML ;
-    sh:select """# Example 7
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+# Example 7
 SELECT ?startId ?startLabel ?id ?name 
 WHERE {
   # Queried lipid species
@@ -33,4 +39,6 @@ WHERE {
     ?uniprot up:recommendedName/up:fullName ?uniprotName .
     ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
   }
-}""" .
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

@@ -1,18 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:drosophila_enzymes_derived_from_at_least_two_mRNAs
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:drosophila_enzymes_derived_from_at_least_two_mRNAs a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find Drosophila proteins, that depend on more than one transcript (Requires cross-references to Ensembl family of resources)." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:keyword "fruit fly", "transcript" , "mRNA" ;
-    rdfs:comment """Find Drosophila proteins, that depend on more than one transcript (Requires cross-references to Ensembl family of resources).""" ;
-    sh:select """SELECT
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
   ?protein
 WHERE {
   ?protein up:organism taxon:7227 ;
@@ -20,4 +19,9 @@ WHERE {
     up:reviewed true ;
     rdfs:seeAlso ?transcript .
   ?transcript  a up:Transcript_Resource .
-} GROUP BY ?protein HAVING(COUNT(?transcript) >= 2)""" .
+} GROUP BY ?protein HAVING(COUNT(?transcript) >= 2)""" ;
+    schema:keyword "fruit fly",
+        "mRNA",
+        "transcript" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

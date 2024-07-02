@@ -1,18 +1,20 @@
-prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema: <https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+@prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:1
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Get all Glyconnect proteins their Uniprot reference isoform" ;
     sh:prefixes ex: ;
-    schema:target <https://glyconnect.expasy.org/sparql> ;
-    rdfs:comment """Get all Glyconnect proteins their Uniprot reference isoform""" ;
-    sh:select """SELECT distinct ?glycoprotein ?isoform
+    sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+
+SELECT distinct ?glycoprotein ?isoform
 where {
 ?glycosite faldo:reference ?isoform .
 ?specificglycosite faldo:location ?glycosite .
 ?glycoprotein glycan:glycosylated_at ?specificglycosite .
-}""" .
+}""" ;
+    schema:target <https://glyconnect.expasy.org/sparql> .
+

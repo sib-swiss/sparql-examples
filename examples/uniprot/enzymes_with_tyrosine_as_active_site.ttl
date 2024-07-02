@@ -1,18 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:enzyme_with_threonine_as_active_site
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:enzyme_with_threonine_as_active_site a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find enzymes with a Tyrosine (Y) as an active site" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:keyword "enzyme", "active site" ;
-    rdfs:comment """Find enzymes with a Tyrosine (Y) as an active site""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
   ?protein
 WHERE {
   ?protein up:annotation ?activeSiteAnnotation .
@@ -23,4 +22,8 @@ WHERE {
     faldo:reference ?sequence .
   ?sequence rdf:value ?sequenceVal . 
   FILTER(SUBSTR(?sequenceVal, ?beginPosition, 1) = 'Y')
-}""" .
+}""" ;
+    schema:keyword "active site",
+        "enzyme" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

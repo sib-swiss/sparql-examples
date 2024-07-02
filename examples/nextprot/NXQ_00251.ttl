@@ -1,18 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00251
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least one proteotypic peptide 9aa+ not mapping on canonical isoform''' ;
- schema:keyword "isoforms";
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
-  sh:select '''select ?entry (sample(?isopos) as ?samplematch) where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00251 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least one proteotypic peptide 9aa+ not mapping on canonical isoform" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select ?entry (sample(?isopos) as ?samplematch) where {
  ?entry :isoform ?iso1, ?isononcano.
  ?iso1 :swissprotDisplayed true .
  ?isononcano :swissprotDisplayed false .
@@ -21,9 +18,14 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?pm :proteotypic true.
  ?pm :start ?pos ; :end ?pos2 .
  filter(?pos2 - ?pos >= 8) # peptide length >= 9
- bind(strafter(str(?isononcano),\"-\") as ?isostr)
- bind(concat(concat(?isostr,\"-\"),?pos) as ?isopos)
+ bind(strafter(str(?isononcano),"-") as ?isostr)
+ bind(concat(concat(?isostr,"-"),?pos) as ?isopos)
  filter not exists {?iso1 :peptideMapping/ :peptideName ?pepname.}
  }
-group by ?entry'''
-.
+group by ?entry""" ;
+    schema:keyword "isoforms",
+        "peptide",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00125
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Domains that are entirely covered by 3D structures''' ;
- schema:keyword "3D structure";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "domain";
-  sh:select '''select distinct ?domlabel where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00125 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Domains that are entirely covered by 3D structures" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?domlabel where {
  ?entry :isoform ?isoform.
  ?isoform :pdbMapping ?struc.
  ?struc :start ?s1 ; :end ?s2.
@@ -20,5 +18,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?dom :start ?d1 ; :end ?d2.
  ?dom :term/rdfs:label ?domlabel
  filter ((?s1 <= ?d1) && (?s2 >= ?d2))
-}'''
-.
+}""" ;
+    schema:keyword "3D structure",
+        "domain",
+        "region",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

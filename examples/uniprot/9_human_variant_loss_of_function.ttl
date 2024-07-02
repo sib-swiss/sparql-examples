@@ -1,15 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:9
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:9 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all human UniProt entries with a sequence variant that leads to a 'loss of function'" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Select all human UniProt entries with a sequence variant that leads to a 'loss of function'""" ;
-    sh:select """SELECT ?protein ?text
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?text
 WHERE
 { 
         ?protein a up:Protein .
@@ -18,5 +20,8 @@ WHERE
         ?annotation a up:Natural_Variant_Annotation . 
         ?annotation rdfs:comment ?text .
         FILTER (CONTAINS(?text, 'loss of function'))
-}"""  ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+}""" ;
+    schema:potentialAction [ schema:description "UniProtKB rest search with sparql" ;
+            schema:target <https://www.uniprot.org/sparql/> ] ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

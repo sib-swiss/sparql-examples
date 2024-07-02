@@ -1,18 +1,16 @@
-# Query 1
-# Select all Rhea reactions (unspecified direction) 
-# and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
-#
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:1
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions""" ;
-    sh:select """# Query 1
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 1
 # Select all Rhea reactions (unspecified direction) 
 # and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
 #
@@ -24,5 +22,6 @@ WHERE {
   ?rhea rh:equation ?equation .
   ?rhea rh:isTransport ?isTransport .
   ?rhea rh:isChemicallyBalanced ?isChemicallyBalanced .
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

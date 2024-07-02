@@ -1,24 +1,28 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00097
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine''' ;
- schema:keyword "PTM";
- schema:keyword "variant";
- schema:keyword "chromosomal location";
- schema:keyword "tutorial";
- schema:keyword "phosphorylation";
-  sh:select '''select distinct ?entry where {
- ?entry :gene / :chromosome \"2\"^^xsd:string .
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00097 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct ?entry where {
+ ?entry :gene / :chromosome "2"^^xsd:string .
  ?entry :isoform ?iso.
  ?iso :variant /:start ?varpos.
  ?iso :modifiedResidue ?modres.
  ?modres :term nextprot_cv:PTM-0255.
  ?modres :start ?varpos.
-}'''
-.
+}""" ;
+    schema:keyword "PTM",
+        "chromosomal location",
+        "phosphorylation",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

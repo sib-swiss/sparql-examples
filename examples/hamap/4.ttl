@@ -1,15 +1,17 @@
-prefix ex: <https://sparql.hamap.expasy.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:4
-    a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+@prefix ex: <https://sparql.hamap.expasy.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:4 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all hamap rules that annotate a Rhea reaction with an EC enzyme class" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://hamap.expasy.org/sparql/> ;
-    rdfs:comment """Select all hamap rules that annotate a Rhea reaction with an EC enzyme class""" ;
-    sh:select """
+    sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT ?rule ?enzymeClass
 WHERE
 {
@@ -17,7 +19,6 @@ WHERE
      sp:templates/rdf:rest*/rdf:first ?annotationsToAdd .
  ?annotationsToAdd sp:predicate up:enzymeClass ;
                    sp:object ?enzymeClass .
-}
-""" .
-
+}""" ;
+    schema:target <https://hamap.expasy.org/sparql/> .
 

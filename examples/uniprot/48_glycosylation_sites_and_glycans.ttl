@@ -1,14 +1,19 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:48
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:48 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve glycosylation sites and glycans on human enzymes (federated with glyconnect)" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Retrieve glycosylation sites and glycans on human enzymes (federated with glyconnect)""" ;
-    sh:select """SELECT
+    sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
         DISTINCT
             ?protein ?glycosite ?glycostructure ?glycoimage
 WHERE{
@@ -25,4 +30,6 @@ WHERE{
     ?glycostructure glycan:glycosylates_at ?specificglycosite .
     ?glycostructure foaf:depiction ?glycoimage .
   }
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

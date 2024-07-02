@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00143
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins for which none of the reported proteotypic peptides is from PeptideAtlas nor MassIVE''' ;
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
- schema:keyword "dataset";
-  sh:select '''select ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00143 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins for which none of the reported proteotypic peptides is from PeptideAtlas nor MassIVE" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select ?entry where {
  ?entry :isoform / :peptideMapping ?pm.
  ?pm :proteotypic true .
  ?pm :peptideSource ?src .
@@ -21,5 +19,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  bind (?src != source:MassIVE && ?src != source:PeptideAtlas as ?other)
 } 
 group by ?entry
-having (sum(?massive)=0 && sum(?pa)=0 && sum(?other)>0)'''
-.
+having (sum(?massive)=0 && sum(?pa)=0 && sum(?other)>0)""" ;
+    schema:keyword "dataset",
+        "peptide",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

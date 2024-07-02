@@ -1,14 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:43
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:43 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Connect patents cited in UniProtKB with those in the patent database at EPO via publication number, whose grant date is more than twenty years in the past." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Connect patents cited in UniProtKB with those in the patent database at EPO via publication number, whose grant date is more than twenty years in the past.""" ;
-    sh:select """
+    sh:select """PREFIX patent: <http://data.epo.org/linked-data/def/patent/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT ?grantDate ?patent ?application ?applicationNo
 WHERE
 {
@@ -24,4 +27,6 @@ WHERE
   BIND((year(now()) - 20) AS ?thisYearMinusTwenty)
   BIND(year(?grantDate) AS ?grantYear)
   FILTER(?grantYear < ?thisYearMinusTwenty)
-} ORDER BY ?grantYear""" .
+} ORDER BY ?grantYear""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

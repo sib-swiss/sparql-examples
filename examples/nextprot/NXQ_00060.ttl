@@ -1,25 +1,27 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00060
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins which have one or more negatively charged residue in a transmembrane domain''' ;
- schema:keyword "sequence";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "transmembrane";
- schema:keyword "topology";
- schema:keyword "domain";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00060 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins which have one or more negatively charged residue in a transmembrane domain" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :transmembraneRegion ?tm.
  ?tm :start ?tmstart ; :end ?tmend.
  ?iso :sequence /:chain ?chain.
  bind (substr(?chain, ?tmstart, ?tmend - ?tmstart + 1) as ?tmseq)
  filter (regex(?tmseq, '([DE]+.*[^DE]){1,}')) # Change the 1 for the number of acidic residues required (5 seems to be the max)
-}'''
-.
+}""" ;
+    schema:keyword "domain",
+        "region",
+        "sequence",
+        "topology",
+        "transmembrane",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

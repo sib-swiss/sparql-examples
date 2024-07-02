@@ -1,18 +1,20 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00272
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins involved in coronaviruses/SARS-CoV-2 pathways with associated medical information''' ;
- schema:keyword "pathway";
- schema:keyword "disease";
- schema:keyword "federated query";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry (str(?gen) AS ?gene) ?pathwayname (str(?discom) AS ?discom1) ?medsource where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00272 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins involved in coronaviruses/SARS-CoV-2 pathways with associated medical information" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX dc: <http://purl.org/dc/terms/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct ?entry (str(?gen) AS ?gene) ?pathwayname (str(?discom) AS ?discom1) ?medsource where {
  service <http://sparql.wikipathways.org/sparql> {
  {?geneProduct a wp:Protein}
  union
@@ -38,5 +40,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?med rdfs:comment ?discom.
  ?med :evidence/:assignedBy ?medsource.
 }
-order by ?entry'''
-.
+order by ?entry""" ;
+    schema:keyword "disease",
+        "federated query",
+        "pathway",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

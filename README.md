@@ -1,7 +1,6 @@
 # SPARQL examples
 
-This is a collection of SPARQL examples useable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project
-specific repositories. 
+This is a collection of SPARQL examples useable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories. 
 
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
@@ -27,15 +26,13 @@ WHERE
 
 # QA.
 
-There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org). and
-[eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above
+There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org) and [eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above.
 
 # Conversion
 
-To load the examples into a sparql endpoint they should be concatanated into one example file. Use the script `convertIntoOneTurtle.sh`
-provide the project name with a `-p` parameter
+To load the examples into a SPARQL endpoint they should be concatenated into one example file. Use the script `convertIntoOneTurtle.sh` provide the project name with a `-p` parameter
 
-This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"
+This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"`
 
 ```bash
 # e.g. make file examples_uniprot.ttl
@@ -51,11 +48,18 @@ java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p al
 
 ## Conversion to RQ files
 
-For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the 
-syntax of [grlc]()https://grlc.io/ allowing to use these queries as APIs.
+For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
 ```bash
 mvn package
 java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -r
+```
+
+## Generate markdown file
+
+Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
+
+```bash
+java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m
 ```
 
 # Querying for queries
@@ -91,5 +95,4 @@ The queries can be executed automatically on all endpoints they apply to using
 mvn test -PallTests
 ```
 
-This does change the queries to add a LIMIT 1 if no limit was set in the query. Then
-if there is a result it is fetched.
+This does change the queries to add a LIMIT 1 if no limit was set in the query. Then if there is a result it is fetched.

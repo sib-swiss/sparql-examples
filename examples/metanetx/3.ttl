@@ -1,14 +1,18 @@
-prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema: <https://schema.org/>
-ex:3
-a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
-    schema:target <https://rdf.metanetx.org/sparql/> ;
-    rdfs:comment '''For the KEGG compound C01732, retrieve the MNXref identifier, name and reference''' ; 
-  sh:select '''# For the KEGG compound *C01732*, retrieve the MNXref 
+@prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:3 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For the KEGG compound C01732, retrieve the MNXref identifier, name and reference" ;
+    sh:prefixes [ ],
+        [ ] ;
+    sh:select """PREFIX keggC: <https://identifiers.org/kegg.compound:>
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# For the KEGG compound *C01732*, retrieve the MNXref 
 # identifier, name and reference. 
 
 SELECT ?metabolite ?reference ?name
@@ -17,5 +21,6 @@ WHERE {
     ?metabolite mnx:chemRefer ?reference .
     ?metabolite rdfs:comment ?name .
     ?metabolite mnx:chemXref keggC:C01732
-}
-'''.
+}""" ;
+    schema:target <https://rdf.metanetx.org/sparql/> .
+

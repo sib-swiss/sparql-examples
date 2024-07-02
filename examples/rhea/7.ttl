@@ -1,18 +1,16 @@
-# Select all Rhea reactions mapped to Reactome reactions
-# MetaCyc reactions are mapped to either undirected, left-to-right or right-to-left reactions
-# Rhea web query: https://www.rhea-db.org/rhea?query=reactome:*
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:7
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:7 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions mapped to Reactome reactions</a>" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions mapped to Reactome reactions</a>""" ;
-    sh:select """# Query 7 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 7 
 # Select all Rhea reactions mapped to Reactome reactions
 # MetaCyc reactions are mapped to either undirected, left-to-right or right-to-left reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=reactome:*
@@ -32,5 +30,6 @@ WHERE {
     FILTER CONTAINS(str(?reactome), "reactome") 
     BIND(?directionalReaction as ?rheaDir  )
   }
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix taxon:<http://purl.uniprot.org/taxonomy/>
-prefix uniprotkb:<http://purl.uniprot.org/uniprot/>
- 
-ex:35
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:35 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluster identity" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluster identity""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
     ?similar ?identity
 FROM <http://sparql.uniprot.org/uniref>
 FROM <http://sparql.uniprot.org/uniprot>
@@ -25,5 +23,6 @@ WHERE
     ?member up:sequenceFor ?similar .
     FILTER(!sameTerm(?similar, ?protein))
 } 
-ORDER BY DESC(?identity)
-""" .
+ORDER BY DESC(?identity)""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

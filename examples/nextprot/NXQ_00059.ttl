@@ -1,21 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00059
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that are glycosylated and phosphorylated on an extracellular topological domain''' ;
- schema:keyword "topology";
- schema:keyword "domain";
- schema:keyword "PTM";
- schema:keyword "glycosylation";
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "phosphorylation";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00059 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that are glycosylated and phosphorylated on an extracellular topological domain" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :topologicalDomain ?topodom.
  ?topodom :term nextprot_cv:CVTO_0002.
@@ -29,5 +24,13 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?annot2 :start ?glypos.
  filter ((?ptmpos >= ?topostart) && (?ptmpos <= ?topoend))
  filter ((?glypos >= ?topostart) && (?glypos <= ?topoend))
-}'''
-.
+}""" ;
+    schema:keyword "PTM",
+        "domain",
+        "glycosylation",
+        "phosphorylation",
+        "region",
+        "topology",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

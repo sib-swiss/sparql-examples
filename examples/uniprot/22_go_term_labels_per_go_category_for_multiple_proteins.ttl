@@ -1,16 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix skos:<http://www.w3.org/2004/02/skos/core#> 
-ex:22
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:22 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For two accessions find the GO term labels and group them into GO process,function and component" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """For two accessions find the GO term labels and group them into GO process,function and component""" ;
-    sh:select """
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT 
     (CONCAT(SUBSTR(STR(?protein), 33)) AS ?uniprot)
     (GROUP_CONCAT(?celtype; separator=";") AS ?celtypes)
@@ -39,5 +39,6 @@ WHERE
     }
     #Filter out the uniprot keywords
     FILTER(bound(?biotype) || bound(?celtype) || bound(?moltype))
-} GROUP BY ?protein
-""" .
+} GROUP BY ?protein""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

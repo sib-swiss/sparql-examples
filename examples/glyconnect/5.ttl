@@ -1,17 +1,19 @@
-prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples>
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix schema: <https://schema.org/>
+@prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:5
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    schema:target <https://glyconnect.expasy.org/sparql> ;
+ex:5 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Get all Glyconnect reference papers" ;
     sh:prefixes ex: ;
-    rdfs:comment """Get all Glyconnect reference papers""" ;
-    sh:select """SELECT distinct ?citation ?pmid
+    sh:select """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+
+SELECT distinct ?citation ?pmid
 where {
 ?refconjugate glycan:published_in ?citation. 
 ?citation foaf:primaryTopicOf ?pmid .  
-}""" .
+}""" ;
+    schema:target <https://glyconnect.expasy.org/sparql> .
+

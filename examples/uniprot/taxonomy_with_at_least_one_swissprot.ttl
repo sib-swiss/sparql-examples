@@ -1,17 +1,18 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:taxonomy_with_at_least_one_swissprot
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:taxonomy_with_at_least_one_swissprot a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find taxon records for which one reviewed UniProtKB (Swiss-Prot) entry exists"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find taxon records for which one reviewed UniProtKB (Swiss-Prot) entry exists"""^^rdf:HTML ;
-    sh:select """
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT
     DISTINCT
          ?taxid
@@ -31,4 +32,6 @@ WHERE {
                    taxon:10239 #viruses
                  } .
   ?taxid rdfs:subClassOf ?domain .
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

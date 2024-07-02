@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00297
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''PDB structures spanning the complete sequence of the mature protein''' ;
- schema:keyword "processing";
- schema:keyword "sequence";
- schema:keyword "3D structure";
- schema:keyword "tutorial";
-  sh:select '''select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = \",\") as ?pdbacs) where { 
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00297 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "PDB structures spanning the complete sequence of the mature protein" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = ",") as ?pdbacs) where { 
  ?entry :isoform ?iso.
  ?iso :pdbMapping ?pdbmap.
  ?pdbmap :evidence /:reference ?ref.
@@ -22,5 +20,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?iso :matureProtein [ :start ?mstart ; :end ?mend]
  filter (?mend-?mstart > 0)	 
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
-} group by ?entry'''
-.
+} group by ?entry""" ;
+    schema:keyword "3D structure",
+        "processing",
+        "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

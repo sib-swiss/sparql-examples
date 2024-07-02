@@ -1,16 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:28
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:28 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Get the list of uniprot entries for the chromosome of proteome <a href=\"https://www.uniprot.org/proteomes/UP000000625\">UP000000625</a>"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Get the list of uniprot entries for the chromosome of proteome <a href="https://www.uniprot.org/proteomes/UP000000625">UP000000625</a>"""^^rdf:HTML ;
-    sh:select """SELECT 
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
   ?protein
   ?proteome 
 WHERE
@@ -20,4 +20,7 @@ WHERE
            up:proteome ?proteome .
   VALUES (?proteome) {(<http://purl.uniprot.org/proteomes/UP000000625#Chromosome>)}
 }""" ;
-  schema:potentialAction [ schema:target <https://www.uniprot.org/sparql/> ; schema:description "UniProtKB rest search with sparql"] .
+    schema:potentialAction [ schema:description "UniProtKB rest search with sparql" ;
+            schema:target <https://www.uniprot.org/sparql/> ] ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

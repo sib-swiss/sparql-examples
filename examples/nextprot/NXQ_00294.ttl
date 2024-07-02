@@ -1,17 +1,17 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00294
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Variants in MECP2 causing Rett Syndrome''' ;
- schema:keyword "variant";
- schema:keyword "disease";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?start ?stop ?original ?modified where { 
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00294 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Variants in MECP2 causing Rett Syndrome" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?start ?stop ?original ?modified where { 
  nextprot:NX_P51608 :isoform ?iso. #MECP2 entry 
  ?iso :swissprotDisplayed true. #Swissprot canonical isoform 
  {
@@ -37,5 +37,9 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?v :variation ?modified.
  }
 }
-order by asc(?start)'''
-.
+order by asc(?start)""" ;
+    schema:keyword "disease",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

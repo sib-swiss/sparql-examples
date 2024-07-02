@@ -1,17 +1,16 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:rhea_reactions_not_associated_with_ec_in_uniprotkb
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:rhea_reactions_not_associated_with_ec_in_uniprotkb a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List <a href=\"https://www.rhea-db.org/\">Rhea</a> reactions thar are <em>not</em> associated with an <a href=\"https://iubmb.qmul.ac.uk/enzyme/index.html\">EC (enzyme classification)</a>."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """List <a href="https://www.rhea-db.org/">Rhea</a> reactions thar are <em>not</em> associated with an <a href="https://iubmb.qmul.ac.uk/enzyme/index.html">EC (enzyme classification)</a>."""^^rdf:HTML ;
-    sh:select """SELECT 
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
   ?rhea 
   ?EC 
 WHERE {
@@ -19,4 +18,6 @@ WHERE {
   MINUS {
     ?CatalyticActivity up:enzymeClass ?EC .
   }
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

@@ -1,18 +1,17 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00218
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins for which different splice isoforms have a different subcellular location or function''' ;
- schema:keyword "isoforms";
- schema:keyword "tutorial";
- schema:keyword "subcellular location";
- schema:keyword "function";
-  sh:select '''#A0A1B0GVQ0,A0AVT1 ,A0PJK1...
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00218 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins for which different splice isoforms have a different subcellular location or function" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+#A0A1B0GVQ0,A0AVT1 ,A0PJK1...
 
 
 
@@ -35,5 +34,10 @@ select distinct ?entry where {
  ?iso2 :cellularComponent / :term ?locterm .
  filter not exists {?iso1 :cellularComponent / :term ?locterm}
  }
-}'''
-.
+}""" ;
+    schema:keyword "function",
+        "isoforms",
+        "subcellular location",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

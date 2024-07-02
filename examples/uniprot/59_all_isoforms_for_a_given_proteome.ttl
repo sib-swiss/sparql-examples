@@ -1,14 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:59
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:59 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Count all isoforms for a given proteome" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Count all isoforms for a given proteome""" ;
-    sh:select """PREFIX proteome:<http://purl.uniprot.org/proteomes/>
+    sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+PREFIX proteome:<http://purl.uniprot.org/proteomes/>
 SELECT
   (COUNT(DISTINCT ?sequence) AS ?allIsoforms)
 WHERE
@@ -17,4 +20,6 @@ WHERE
   ?protein up:organism taxon:9606 .
   ?protein up:sequence ?sequence .
   ?protein up:proteome/^skos:narrower proteome:UP000005640 .
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

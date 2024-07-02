@@ -1,14 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:47
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:47 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find UniProt entries with a transmembrane region, with an Alanine in the 15 Aminoacid region preceding the transmembrane" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find UniProt entries with a transmembrane region, with an Alanine in the 15 Aminoacid region preceding the transmembrane""" ;
-    sh:select """
+    sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT ?protein ?from ?interestingRegion
 WHERE
 {
@@ -29,5 +32,6 @@ WHERE
   BIND(SUBSTR(?aas, ?from, 15) AS ?interestingRegion)
   # The interestingRegion needds to contain an Alanine
   FILTER(CONTAINS(?interestingRegion, 'A'))
-}
-""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

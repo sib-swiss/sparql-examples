@@ -1,16 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-prefix taxon:<http://purl.uniprot.org/taxonomy/> 
-ex:30
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:30 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find UniProt entries with merged loci in <a href=\"https://www.uniprot.org/taxonomy/360910\">Bordetella avium</a>"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find UniProt entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>"""^^rdf:HTML ;
-    sh:select """SELECT
+    sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
   ?protein 
   (GROUP_CONCAT(?locusName; separator=',') AS ?locusNames)
 WHERE 
@@ -21,5 +22,6 @@ WHERE
   ?gene up:locusName ?locusName .
 } 
 GROUP BY ?protein 
-HAVING (COUNT(?locusName) > 1)
-"""  .
+HAVING (COUNT(?locusName) > 1)""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

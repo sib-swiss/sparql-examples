@@ -1,17 +1,17 @@
-# Select all Rhea reactions mapped to MetaCyc reactions
-# MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions
-# Rhea web query: https://www.rhea-db.org/rhea?query=metacyc:*
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:6
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:6 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions mapped to MetaCyc reactions"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-   rdfs:comment """Select all Rhea reactions mapped to MetaCyc reactions"""^^rdf:HTML ;
-    sh:select """# Query 6 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 6 
 # Select all Rhea reactions mapped to MetaCyc reactions
 # MetaCyc reactions are mapped to either undirected, left-to-right, right-to-left or bidirectional reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=metacyc:*
@@ -38,4 +38,6 @@ WHERE {
     FILTER CONTAINS(str(?metacyc), "METACYC") 
     BIND(?bidirectionalReaction as ?rheaDir  )
   }
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
+

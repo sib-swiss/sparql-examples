@@ -1,21 +1,23 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00039
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with a mutagenesis in a position that correspond to an annotated active site''' ;
- schema:keyword "enzyme";
- schema:keyword "tutorial";
- schema:keyword "active site";
- schema:keyword "mutagenesis";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00039 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with a mutagenesis in a position that correspond to an annotated active site" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :mutagenesis /:start ?mutaPos.
  ?iso :activeSite /:start ?actsitePos.
  filter (?mutaPos=?actsitePos)
-}'''
-.
+}""" ;
+    schema:keyword "active site",
+        "enzyme",
+        "mutagenesis",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

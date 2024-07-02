@@ -1,16 +1,18 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix skos: <http://www.w3.org/2004/02/skos/core#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:8
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:8 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease""" ;
-    sh:select """SELECT ?name ?text
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?name ?text
 WHERE
 {
         ?protein a up:Protein . 
@@ -20,4 +22,6 @@ WHERE
         ?protein up:annotation ?annotation .
         ?annotation a up:Disease_Annotation .
         ?annotation rdfs:comment ?text
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

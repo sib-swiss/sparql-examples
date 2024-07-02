@@ -1,35 +1,38 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00131
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Terms of controlled vocabularies containing some word(s)''' ;
- schema:keyword "term";
- schema:keyword "tutorial";
-  sh:select '''select distinct * where { 
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00131 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Terms of controlled vocabularies containing some word(s)" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct * where { 
  ?term rdfs:label ?label ; a ?type .
  # ---------------------------
  # exact match
  # --------------------------- 
- filter(?label = \"peroxisome\"^^xsd:string)
+ filter(?label = "peroxisome"^^xsd:string)
  
  # ---------------------------
  # starting with peroxisome
  # --------------------------- 
- # filter(regex(?label,\"^peroxisome\"))
+ # filter(regex(?label,"^peroxisome"))
  
  # ---------------------------
  # containing peroxisome
  # ---------------------------
- # filter(regex(?label,\"peroxisome\"))
+ # filter(regex(?label,"peroxisome"))
  
  # ------------------------------------
  # containing peroxisome and receptor 
  # ------------------------------------
- # filter(regex(?label,\"peroxisome.*receptor\"))
-} limit 20'''
-.
+ # filter(regex(?label,"peroxisome.*receptor"))
+} limit 20""" ;
+    schema:keyword "term",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

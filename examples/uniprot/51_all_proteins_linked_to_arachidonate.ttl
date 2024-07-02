@@ -1,14 +1,18 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:51
- a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:51 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find all proteins linked to arachidonate (CHEBI:32395)" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find all proteins linked to arachidonate (CHEBI:32395)""" ;
-    sh:select """
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
 SELECT 
     DISTINCT
         ?uniprot
@@ -28,4 +32,6 @@ WHERE {
   ?uniprot up:mnemonic ?uniprotID .
   ?uniprot up:recommendedName/up:fullName ?recname .
   OPTIONAL {?uniprot up:encodedBy/skos:prefLabel ?gene .}
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

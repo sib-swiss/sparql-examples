@@ -1,18 +1,19 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix skos:<http://www.w3.org/2004/02/skos/core#> 
-prefix GO:<http://purl.obolibrary.org/obo/GO_>
-prefix taxon:<http://purl.uniprot.org/taxonomy/>
-ex:23
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:23 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Number of reviewed entries (Swiss-Prot) that are related to <a href=\"http://amigo.geneontology.org/amigo/term/GO:0016301\">kinase activity</a>" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Number of reviewed entries (Swiss-Prot) that are related to <a href="http://amigo.geneontology.org/amigo/term/GO:0016301">kinase activity</a>""" ;
-    sh:select """SELECT
+    sh:select """PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
     (COUNT(DISTINCT(?protein)) AS ?pc)
 WHERE
 {   
@@ -20,4 +21,6 @@ WHERE
         up:reviewed true  ;
         up:organism taxon:9606 ;
         up:classifiedWith|(up:classifiedWith/rdfs:subClassOf) GO:0016301 .
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

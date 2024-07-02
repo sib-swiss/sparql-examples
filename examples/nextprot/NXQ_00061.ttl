@@ -1,23 +1,25 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00061
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins which have at least one 3D structure that spans the complete sequence of the mature protein''' ;
- schema:keyword "processing";
- schema:keyword "sequence";
- schema:keyword "3D structure";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00061 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins which have at least one 3D structure that spans the complete sequence of the mature protein" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :pdbMapping ?pdbmap.
  ?pdbmap :start ?pdbstart ; :end ?pdbend.
  ?iso :matureProtein [ :start ?mstart ; :end ?mend]
  filter (?mend-?mstart > 0)	 
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
-}'''
-.
+}""" ;
+    schema:keyword "3D structure",
+        "processing",
+        "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

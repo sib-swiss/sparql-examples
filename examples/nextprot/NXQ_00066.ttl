@@ -1,20 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00066
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that are cytoplasmic with alternate O-glycosylation or phosphorylation at the same positions''' ;
- schema:keyword "PTM";
- schema:keyword "glycosylation";
- schema:keyword "sequence";
- schema:keyword "tutorial";
- schema:keyword "subcellular location";
- schema:keyword "phosphorylation";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00066 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that are cytoplasmic with alternate O-glycosylation or phosphorylation at the same positions" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
  
  ?entry :isoform ?iso.
@@ -25,5 +21,12 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?iso :modifiedResidue /:start ?ptmpos.
  filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255)) 
  ?iso :glycosylationSite /:start ?ptmpos.
-}'''
-.
+}""" ;
+    schema:keyword "PTM",
+        "glycosylation",
+        "phosphorylation",
+        "sequence",
+        "subcellular location",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

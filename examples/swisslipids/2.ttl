@@ -1,19 +1,21 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:2
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:label "Potential lipid structures for lipid analytes" ;
-rdfs:comment """For a given (list of) lipid Species identifier(s) (e.g. SWISSLIPID:000056420 (Phosphatidylcholine (20:2)) SWISSLIPID:000308470 (Triacylglycerol (64:6))), return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies.
+    rdfs:comment """For a given (list of) lipid Species identifier(s) (e.g. SWISSLIPID:000056420 (Phosphatidylcholine (20:2)) SWISSLIPID:000308470 (Triacylglycerol (64:6))), return a list of the corresponding Molecular subspecies (if any), Structural subspecies (if any), and Isomeric subspecies.
 The query should return the lipid recommended names as well as identifiers.
 The list should be sorted by level in the hierarchy (Isomeric subspecies last).
 Future versions of this query should be generic enough to work from any start point (Species, Molecular subspecies, Structural subspecies).
 Recapitulates the “browse lipid analytes” function of the website (in batch).""" ;
-    sh:select """# Example 2
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 2
 SELECT ?startId ?startName ?rank ?id ?name
 WHERE
 {
@@ -28,5 +30,6 @@ WHERE
   VALUES ?rank { SWISSLIPID:Isomeric_Subspecies SWISSLIPID:Molecular_Subspecies SWISSLIPID:Structural_Subspecies}
   ?id rdfs:label ?name .
 } 
-ORDER BY DESC(?rank) ?startId
-""" .
+ORDER BY DESC(?rank) ?startId""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

@@ -1,13 +1,19 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:4
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:4 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all genes that are orthologous to ENSLACG00000002497 Ensembl gene (identifier)" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Retrieve all genes that are orthologous to ENSLACG00000002497 Ensembl gene (identifier)""" ;
-    sh:select """select ?protein2 ?OMA_LINK 
+    sh:select """PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+select ?protein2 ?OMA_LINK 
 where {
     #The three that contains Orthologs. The leafs are proteins.
     #This graph pattern defines the relationship protein1 is Orthologs to protein2
@@ -27,5 +33,6 @@ where {
     ########
      
     filter(?node1 != ?node2) 
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
 

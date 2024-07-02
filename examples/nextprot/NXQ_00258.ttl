@@ -1,19 +1,20 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00258
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins involved in diseases due to intronic variants with one selected publication''' ;
- schema:keyword "variant";
- schema:keyword "disease";
- schema:keyword "federated query";
- schema:keyword "tutorial";
- schema:keyword "publication";
-  sh:select '''select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00258 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins involved in diseases due to intronic variants with one selected publication" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX so: <http://purl.obolibrary.org/obo/SO_>
+
+select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
  service <http://rdf.disgenet.org/sparql/> {
  select distinct ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) where {
  ?vda sio:SIO_000628 ?variant,?disease .
@@ -27,5 +28,11 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  BIND(IRI(replace(str(?protein),"purl","www")) AS ?unipage) .
  ?entry :swissprotPage ?unipage .
  ?entry :gene / :recommendedName / rdfs:label ?gen .
-} order by ?entry'''
-.
+} order by ?entry""" ;
+    schema:keyword "disease",
+        "federated query",
+        "publication",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

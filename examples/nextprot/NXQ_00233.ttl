@@ -1,19 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00233
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that are PE>1 with at least one proteotypic peptide of at least 9 amino-acids identified in a human sample ''' ;
- schema:keyword "protein existence";
- schema:keyword "peptide";
- schema:keyword "tutorial";
- schema:keyword "proteomics";
- schema:keyword "dataset";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00233 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that are PE>1 with at least one proteotypic peptide of at least 9 amino-acids identified in a human sample " ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  values ?level {
  	:Evidence_at_transcript_level # PE=2
  	:Inferred_from_homology 	# PE=3
@@ -26,5 +22,11 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?pm :proteotypic true .
  ?pm :start ?pos1 ; :end ?pos2 .
  filter((?pos2 - ?pos1 + 1) >= 9)
- }'''
-.
+ }""" ;
+    schema:keyword "dataset",
+        "peptide",
+        "protein existence",
+        "proteomics",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

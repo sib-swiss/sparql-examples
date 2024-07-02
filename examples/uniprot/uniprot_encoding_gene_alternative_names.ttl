@@ -1,20 +1,21 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix faldo:<http://biohackathon.org/resource/faldo#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_encoding_gene_name_alternative_name
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:uniprot_encoding_gene_name_alternative_name a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List UniProt proteins with their associated gene and the gene's names that are used in the field, but not recommeded for use by UniProt" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """List UniProt proteins with their associated gene and the gene's names that are used in the field, but not recommeded for use by UniProt""" ;
-    sh:select """SELECT ?protein
+    sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein
   ?gene ?altGeneName
 WHERE {
   ?protein a up:Protein ;
            up:encodedBy ?gene .
   ?gene skos:altLabel ?altGeneName .
-}""" .
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

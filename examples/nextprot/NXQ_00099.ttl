@@ -1,30 +1,33 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00099
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Secreted proteins that have at least one PTM in a position of a variant''' ;
- schema:keyword "PTM";
- schema:keyword "variant";
- schema:keyword "tutorial";
- schema:keyword "subcellular location";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00099 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Secreted proteins that have at least one PTM in a position of a variant" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
  ?entry :isoform ?iso .
  ?iso :swissprotDisplayed true . # restricted to main isoform due to computing time (> 98% of sites)
  ?iso :cellularComponent ?anno .
  ?anno :quality :GOLD; :term /:childOf ?sloc. # secreted
  filter not exists { ?anno :negativeEvidence ?_ }
- # excludes \"extracellular exosome\"-only location, most of them evidenced only by large-scale proteomic analysis
+ # excludes "extracellular exosome"-only location, most of them evidenced only by large-scale proteomic analysis
  filter not exists { 
 	 ?iso :cellularComponent /:term nextprot_cv:GO_0070062 . # extracellular exosome
  	 filter not exists { ?iso :cellularComponent /:term /:childOf nextprot_cv:SL-0243 .}
  	} 
  ?iso :variant /:start ?varpos.
  ?iso :ptm /:start ?varpos.
-}'''
-.
+}""" ;
+    schema:keyword "PTM",
+        "subcellular location",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

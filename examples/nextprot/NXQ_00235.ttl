@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00235
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least two antibodies available from Human Protein Atlas that have associated tissue expression annotations from immunohistochemistry studies ''' ;
- schema:keyword "antibody";
- schema:keyword "expression";
- schema:keyword "tutorial";
- schema:keyword "method";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00235 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least two antibodies available from Human Protein Atlas that have associated tissue expression annotations from immunohistochemistry studies " ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :antibodyMapping ?abmap.
  ?abmap :evidence / :reference / :accession ?aid .
@@ -21,5 +19,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
 # ?ev :quality :GOLD .
 }
 group by ?entry having(count(distinct ?aid) > 1)
-order by ?entry'''
-.
+order by ?entry""" ;
+    schema:keyword "antibody",
+        "expression",
+        "method",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

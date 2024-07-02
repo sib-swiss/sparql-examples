@@ -1,19 +1,18 @@
-# Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
-# 
-# This query corresponds to the Rhea website query:
-# https://www.rhea-db.org/rhea?query=chebi:29985
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:14
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:14 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Select all Rhea reactions that have a given ChEBI ID as reaction participant"^^rdf:html ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.rhea-db.org/sparql/> ;
-    rdfs:comment """Select all Rhea reactions that have a given ChEBI ID as reaction participant"""^^rdf:html ;
-    sh:select """# Query 14
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 14
 # Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
 # 
 # This query corresponds to the Rhea website query:
@@ -28,5 +27,6 @@ WHERE {
   #
   ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
   VALUES (?chebi) { (CHEBI:29985) }
-}""" .
+}""" ;
+    schema:target <https://sparql.rhea-db.org/sparql/> .
 

@@ -1,14 +1,17 @@
-prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema: <https://schema.org/>
-ex:4
-a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes, _:metanetx_sparql_examples_prefixes ;
-    schema:target <https://rdf.metanetx.org/sparql/> ;
-    rdfs:comment '''Retrieve the MNXref reaction identifier, that corresponds to the KEGG reaction R00703 (lactate dehydrogenase).''' ; 
-  sh:select '''# Retrieve the MNXref reaction identifier, that corresponds to 
+@prefix ex: <https://sparql.metanetx.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:4 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve the MNXref reaction identifier, that corresponds to the KEGG reaction R00703 (lactate dehydrogenase)." ;
+    sh:prefixes [ ],
+        [ ] ;
+    sh:select """PREFIX keggR: <https://identifiers.org/kegg.reaction:>
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+
+# Retrieve the MNXref reaction identifier, that corresponds to 
 # the KEGG reaction *R00703* (lactate dehydrogenase). 
 
 SELECT ?reaction ?reference
@@ -16,4 +19,6 @@ WHERE {
     ?reaction a mnx:REAC .
     ?reaction mnx:reacXref keggR:R00703 .
     ?reaction mnx:reacRefer ?reference
-}''' .
+}""" ;
+    schema:target <https://rdf.metanetx.org/sparql/> .
+

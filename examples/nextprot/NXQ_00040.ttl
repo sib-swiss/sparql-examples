@@ -1,21 +1,24 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00040
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that are enzymes and with at least one mutagenesis site that decrease or abolish activity''' ;
- schema:keyword "enzyme";
- schema:keyword "tutorial";
- schema:keyword "mutagenesis";
- schema:keyword "function";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00040 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that are enzymes and with at least one mutagenesis site that decrease or abolish activity" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?entry where {
  ?nextprot:isoform ?iso.
  ?iso :enzymeClassification ?_ .
  ?iso :mutagenesis/rdfs:comment ?comment
  filter regex(?comment, '(decrease|abolish).*activity','i')
-}'''
-.
+}""" ;
+    schema:keyword "enzyme",
+        "function",
+        "mutagenesis",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

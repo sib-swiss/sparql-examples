@@ -1,16 +1,17 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00271
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM...''' ;
- schema:keyword "variant";
- schema:keyword "tutorial";
-  sh:select '''select distinct (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00271 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM..." ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where
 {
  values ?entry {nextprot:NX_Q9BYF1 nextprot:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
  ?entry :gene /:recommendedName / rdfs:label ?gn.
@@ -34,5 +35,8 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  union
  {?annot :end ?pos. }
  }
- } order by ?entry ?pos'''
-.
+ } order by ?entry ?pos""" ;
+    schema:keyword "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

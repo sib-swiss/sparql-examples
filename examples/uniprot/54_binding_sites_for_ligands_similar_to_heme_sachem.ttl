@@ -1,14 +1,18 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-ex:54
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:54 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with annotated binding sites for ligands similar to heme" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Proteins with annotated binding sites for ligands similar to heme""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT 
   ?protein
   ?mnemonic
   ?proteinName
@@ -32,4 +36,6 @@ WHERE {
   ?annotation a up:Binding_Site_Annotation ;
       up:ligand/rdfs:subClassOf ?ligand .
 }
-ORDER BY DESC(?ligandSimilarityScore)""" .
+ORDER BY DESC(?ligandSimilarityScore)""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

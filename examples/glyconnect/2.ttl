@@ -1,17 +1,19 @@
-prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix schema: <https://schema.org/>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+@prefix ex: <https://glyconnect.expasy.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:2
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+ex:2 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Get all Glyconnect glycan with their graphical SNFG representation" ;
     sh:prefixes ex: ;
-    schema:target <https://glyconnect.expasy.org/sparql> ;
-    rdfs:comment """Get all Glyconnect glycan with their graphical SNFG representation""" ;
-    sh:select """SELECT distinct ?structure ?image 
+    sh:select """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+
+SELECT distinct ?structure ?image 
 where {
 ?structure glycan:glycosylates_at ?specificglycosite .
 ?structure foaf:depiction ?image  
-  }""" .
+  }""" ;
+    schema:target <https://glyconnect.expasy.org/sparql> .
+

@@ -1,19 +1,19 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:11
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:11 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
     rdfs:label "Mapping HMDB to SwissLipids" ;
     rdfs:comment """For a given list of HMDB identifiers return the list of corresponding SwissLipids identifiers.
 Output should include SwissLipids identifier and name plus the HMDB identifier. 
 This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
 Recapitulates one ID mapping function on the website.""" ;
-    sh:select """# Example 11
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 11
 prefix HMDB:<http://identifiers.org/hmdb/>
 SELECT ?hmdb ?slm ?slmName 
 WHERE {
@@ -22,5 +22,6 @@ WHERE {
   # Corresponding SwissLipids entries
   ?slm rdfs:seeAlso ?hmdb .
 }
-ORDER BY ?hmdb
-""" .
+ORDER BY ?hmdb""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

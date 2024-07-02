@@ -1,18 +1,20 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00276
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Diseases/phenotypes associated with coding variants and associated publications for a given gene''' ;
- schema:keyword "variant";
- schema:keyword "disease";
- schema:keyword "federated query";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00276 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Diseases/phenotypes associated with coding variants and associated publications for a given gene" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX so: <http://purl.obolibrary.org/obo/SO_>
+
+select distinct ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) ?article where {
  service <http://rdf.disgenet.org/sparql/> {
  ?vda sio:SIO_000628 ?umls, ?variant .
  ?vda sio:SIO_000772 ?article .
@@ -36,5 +38,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?xref :provenance db:dbSNP; :accession ?snpac .
  ?var :start ?pos ; :original ?orgaa; :variation ?varaa .
  filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned
-}'''
-.
+}""" ;
+    schema:keyword "disease",
+        "federated query",
+        "tutorial",
+        "variant" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

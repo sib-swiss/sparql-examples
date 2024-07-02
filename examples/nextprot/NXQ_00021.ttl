@@ -1,17 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00021
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with at least one HPA antibody that are located in the peroxisome''' ;
- schema:keyword "subcellular location";
- schema:keyword "antibody";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00021 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with at least one HPA antibody that are located in the peroxisome" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  values ?peroxiloc {nextprot_cv:GO_0005777 nextprot_cv:SL-0204} # GO and SL values for peroxisome
  
  ?entry :isoform ?iso. 
@@ -19,5 +18,9 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?iso :cellularComponent ?loc .
  ?loc :term /:childOf ?peroxiloc. # peroxisomal
  filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
-}'''
-.
+}""" ;
+    schema:keyword "antibody",
+        "subcellular location",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

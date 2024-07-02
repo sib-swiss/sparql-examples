@@ -1,15 +1,17 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:20
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:20 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find how often an article in pubmed was used in an evidence tag in a human protein (ordered by most used to least)" ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    rdfs:comment """Find how often an article in pubmed was used in an evidence tag in a human protein (ordered by most used to least)""";
-    sh:select """SELECT 
+    sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
     ?source 
     (COUNT(?attribution) AS ?attribitions)
 WHERE
@@ -21,5 +23,6 @@ WHERE
                         up:attribution ?attribution .
         ?attribution up:source ?source .
         ?source a up:Journal_Citation .
-} GROUP BY ?source ORDER BY DESC(COUNT(?attribution))
-""" .
+} GROUP BY ?source ORDER BY DESC(COUNT(?attribution))""" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

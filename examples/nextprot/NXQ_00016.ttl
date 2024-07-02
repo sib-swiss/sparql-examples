@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00016
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain''' ;
- schema:keyword "processing";
- schema:keyword "sequence";
- schema:keyword "tutorial";
- schema:keyword "subcellular location";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00016 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
  ?entry :isoform ?iso.
  ?iso :cellularComponent ?anno .
@@ -31,5 +29,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  bind (?mend - ?mstart + 1 as ?mlen)	 
  bind (substr(?seq, ?mstart, ?mlen) as ?mseq)	 
  filter (!regex (?mseq,'C'))
-}'''
-.
+}""" ;
+    schema:keyword "processing",
+        "sequence",
+        "subcellular location",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

@@ -1,17 +1,19 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00290
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site''' ;
- schema:keyword "enzyme";
- schema:keyword "small molecule interaction";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00290 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
 
 { ?entry :recommendedName ?name_entity . 
  ?name_entity a :ProteinName; rdfs:label ?name. 
@@ -21,5 +23,9 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?iso :bindingSite /:interactant ?inter.
  ?inter :accession "CHEBI:29108"^^xsd:string # binding site interactant Ca(2+)
 }
-order by asc(?ec)'''
-.
+order by asc(?ec)""" ;
+    schema:keyword "enzyme",
+        "small molecule interaction",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

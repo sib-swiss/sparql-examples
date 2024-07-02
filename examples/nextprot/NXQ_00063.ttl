@@ -1,24 +1,21 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00063
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins that have at least one RRM RNA-binding domain and either no GO \"RNA binding\" or a GO \"RNA binding\" with evidence cv:ECO_0000501 or cv:ECO_0000250''' ;
- schema:keyword "tutorial";
- schema:keyword "method";
- schema:keyword "region";
- schema:keyword "domain";
- schema:keyword "nucleotide binding";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00063 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins that have at least one RRM RNA-binding domain and either no GO \"RNA binding\" or a GO \"RNA binding\" with evidence cv:ECO_0000501 or cv:ECO_0000250" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  {
  ?entry :isoform ?iso.
  # >=1 RRM RNA-binding domain
  ?iso :region/:term nextprot_cv:DO-00581.
- # No GO \"RNA binding\" 
+ # No GO "RNA binding" 
  filter not exists {
  ?iso :function/:term /:childOf nextprot_cv:GO_0003723
  }
@@ -27,12 +24,18 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  ?entry :isoform ?iso.
  # >=1 RRM RNA-binding domain
  ?iso :region/:term nextprot_cv:DO-00581.
- # GO \"RNA binding\" with evidence IEA or ISS
+ # GO "RNA binding" with evidence IEA or ISS
  ?iso :function ?s1.
  ?s1 :term /:childOf nextprot_cv:GO_0003723.
  filter not exists { ?s1 :negativeEvidence ?negev. } # No negative function evidence
  ?s1 :evidence /:evidenceCode /:childOf ?pcode.
  values ?pcode { nextprot_cv:ECO_0000501 nextprot_cv:ECO_0000250 }
  }
-}'''
-.
+}""" ;
+    schema:keyword "domain",
+        "method",
+        "nucleotide binding",
+        "region",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

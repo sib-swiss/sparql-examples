@@ -1,15 +1,23 @@
-prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:45
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:45 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with WikiData and Rhea)." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:keyword "enzyme", "drug", "metabolite" ;
-    rdfs:comment """Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with WikiData and Rhea).""" ;
-    sh:select """SELECT 
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT 
     DISTINCT
         ?protein
         ?proteinFullName
@@ -59,4 +67,9 @@ WHERE
     FILTER(lang(?medicalConditionTreatedLabel) = 'en')
     FILTER(lang(?wikiChemicalLabel) = 'en')
   }
-}   """ .
+}""" ;
+    schema:keyword "drug",
+        "enzyme",
+        "metabolite" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+

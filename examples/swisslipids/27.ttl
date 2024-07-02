@@ -1,15 +1,20 @@
-prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> 
-prefix up: <http://purl.uniprot.org/core/> 
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix schema:<https://schema.org/>
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:27
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:27 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the list of SwissLipids for all organisms and their Isomeric subspecies"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.swisslipids.org/sparql/> ;
-    rdfs:comment """Find the list of SwissLipids for all organisms and their Isomeric subspecies"""^^rdf:HTML ;
-    sh:select """SELECT ?swisslipid  ?organism {
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?swisslipid  ?organism {
   ?swisslipid owl:equivalentClass ?chebi .
   SERVICE <https://sparql.rhea-db.org/sparql/> {
     ?rhea rh:side/rh:contains/rh:compound ?compound .
@@ -22,4 +27,6 @@ ex:27
   }
   ?swisslipidIsomericSubpecies rdfs:subClassOf ?swisslipid ;
         SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies .
-}""" .
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
+

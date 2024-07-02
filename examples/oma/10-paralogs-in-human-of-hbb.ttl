@@ -1,13 +1,19 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:10
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:10 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve all human proteins that are paralogous to the HBB gene and their UniProt cross-references." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Retrieve all human proteins that are paralogous to the HBB gene and their UniProt cross-references.""" ;
-    sh:select """select distinct ?PROTEIN_HBB ?IS_PARALOGOUS_TO_PROTEIN ?PARALOG_GENE_LABEL ?HBB_UNIPROT_XREF ?PARALOG_UNIPROT_XREF 
+    sh:select """PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+select distinct ?PROTEIN_HBB ?IS_PARALOGOUS_TO_PROTEIN ?PARALOG_GENE_LABEL ?HBB_UNIPROT_XREF ?PARALOG_UNIPROT_XREF 
 where {
     ?cluster a orth:OrthologsCluster.
     ?cluster orth:hasHomologousMember ?node1.
@@ -23,4 +29,6 @@ where {
      lscr:xrefUniprot ?PARALOG_UNIPROT_XREF ;
      rdfs:label ?PARALOG_GENE_LABEL .
     filter(?node1 != ?node2)
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
+

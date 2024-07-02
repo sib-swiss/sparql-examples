@@ -1,21 +1,24 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00054
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\"''' ;
- schema:keyword "keyword";
- schema:keyword "function";
- schema:keyword "tutorial";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00054 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\"" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :function ?statement.
  ?statement :term / :childOf nextprot_cv:GO_0005102.
  filter not exists { ?statement :negativeEvidence ?negev. } # No negative function evidence
  ?iso :uniprotKeyword/:term nextprot_cv:KW-0391.
-}'''
-.
+}""" ;
+    schema:keyword "function",
+        "keyword",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

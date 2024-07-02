@@ -1,19 +1,15 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00111
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with one transmembrane domain and no annotated topology''' ;
- schema:keyword "tutorial";
- schema:keyword "region";
- schema:keyword "transmembrane";
- schema:keyword "topology";
- schema:keyword "domain";
-  sh:select '''select distinct ?entry where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00111 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with one transmembrane domain and no annotated topology" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+
+select distinct ?entry where {
  ?entry :isoform ?iso.
  ?iso :swissprotDisplayed true .
  ?iso :topology ?tm.
@@ -21,5 +17,11 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  filter (not exists { ?iso :topology ?topodom.
  ?topodom a :TopologicalDomain.
  })
-} group by ?entry having (count( ?tm)=1)'''
-.
+} group by ?entry having (count( ?tm)=1)""" ;
+    schema:keyword "domain",
+        "region",
+        "topology",
+        "transmembrane",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+

@@ -1,13 +1,17 @@
-prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:1
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find all Rattus norvegicus' proteins present in OMA RDF database." ;
     sh:prefixes _:sparql_examples_prefixes ;
-    schema:target <https://sparql.omabrowser.org/sparql/> ;
-    rdfs:comment """Find all Rattus norvegicus' proteins present in OMA RDF database.""" ;
-    sh:select """SELECT ?protein ?OMA_link
+    sh:select """PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?OMA_link
 WHERE
 {
     ?protein a orth:Protein.
@@ -16,5 +20,6 @@ WHERE
     ?organism ?inTaxon ?taxon.
     ?taxon  up:scientificName 'Rattus norvegicus'.
     ?protein rdfs:seeAlso ?OMA_link.
-}""" .
+}""" ;
+    schema:target <https://sparql.omabrowser.org/sparql/> .
 

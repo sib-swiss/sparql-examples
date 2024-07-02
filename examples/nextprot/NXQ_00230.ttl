@@ -1,18 +1,16 @@
-prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
-prefix schema:<https://schema.org/>
-ex:NXQ_00230
-schema:target <https://sparql.nextprot.org/sparql> ;
- sh:prefixes _:sparql_examples_prefixes ;
-  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
-  rdfs:comment '''Proteins with experimentally determined lengthy alpha-helices (> 75 aa)''' ;
- schema:keyword "sequence";
- schema:keyword "3D structure";
- schema:keyword "tutorial";
- schema:keyword "method";
-  sh:select '''select distinct ?entry (str(?gen) as ?gene) ?hlen where {
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:NXQ_00230 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Proteins with experimentally determined lengthy alpha-helices (> 75 aa)" ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?entry (str(?gen) as ?gene) ?hlen where {
  ?entry :isoform ?iso.
  ?entry :gene / :recommendedName / rdfs:label ?gen.
  ?iso :helix ?hel .
@@ -20,5 +18,10 @@ schema:target <https://sparql.nextprot.org/sparql> ;
  bind((?e - ?s + 1) as ?hlen )
  filter(?hlen > 75)
 } 
-order by desc(?hlen)'''
-.
+order by desc(?hlen)""" ;
+    schema:keyword "3D structure",
+        "method",
+        "sequence",
+        "tutorial" ;
+    schema:target <https://sparql.nextprot.org/sparql> .
+
