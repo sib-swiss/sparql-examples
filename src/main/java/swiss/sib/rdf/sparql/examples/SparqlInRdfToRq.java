@@ -29,20 +29,19 @@ public class SparqlInRdfToRq {
 		List<String> rq = new ArrayList<>();
 
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct()
-				.peek(s -> rq.add("#+ id:" + s.stringValue())).forEach(s -> {
+				.peek(s -> rq.add("#+ id: " + s.stringValue())).forEach(s -> {
 					streamOf(ex, s, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
-							.map(o -> "#+ description:" + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
-					rq.add("\n");
+							.map(o -> "#+ description: " + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
+					// rq.add("\n");
 					String keywords = streamOf(ex, s, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
-							.collect(Collectors.joining("\n#+  -"));
+							.collect(Collectors.joining("\n#+   - "));
 					if (!keywords.isEmpty()) {
 						rq.add("#+ tags:");
-						rq.add("#+   -");
-						rq.add(keywords);
+						rq.add("#+   - " + keywords);
 					}
 					// Pick the first target only
 					streamOf(ex, s, SchemaDotOrg.TARGET, null).map(Statement::getObject).map(Value::stringValue)
-						.map(o -> "#+ endpoint:" + o).findFirst().ifPresent(rq::add);
+						.map(o -> "#+ endpoint: " + o).findFirst().ifPresent(rq::add);
 					Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
 							.map(o -> o.stringValue()).map(q -> {
@@ -62,26 +61,25 @@ public class SparqlInRdfToRq {
 
 	/**
      * Add prefixes to the raw SPARQL query string
-	 * @param rq 
+	 * @param rq
      **/
 	public static void addPrefixes(String query, Model ex, List<String> rq) {
 		Iterator<Statement> iterator = streamOf(ex, null, SHACL.PREFIX_PROP, null).iterator();
 		List<String> prefixes = new ArrayList<>();
-		
+
 		while (iterator.hasNext()) {
 			Statement n = iterator.next();
 			Resource ns = n.getSubject();
 			String nos = n.getObject().stringValue() + ':';
-			
+
 			if (queryContainsPrefix(query, nos)) {
 				prefixes.add(streamOf(ex, ns, SHACL.NAMESPACE_PROP, null).map(Statement::getObject)
-						.map(Value::stringValue).map(s -> "PREFIX "+nos+'<'+s+'>').collect(Collectors.joining()));
+						.map(Value::stringValue).map(s -> "PREFIX "+nos+" <"+s+'>').collect(Collectors.joining()));
 			}
 		}
 		prefixes.sort(String::compareTo);
-
-		
 		rq.addAll(prefixes);
+		rq.add("");
 		rq.add(query);
 	}
 
