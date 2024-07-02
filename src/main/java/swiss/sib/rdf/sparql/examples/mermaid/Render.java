@@ -24,6 +24,7 @@ import org.eclipse.rdf4j.query.algebra.Exists;
 import org.eclipse.rdf4j.query.algebra.ExtensionElem;
 import org.eclipse.rdf4j.query.algebra.Filter;
 import org.eclipse.rdf4j.query.algebra.FunctionCall;
+import org.eclipse.rdf4j.query.algebra.Group;
 import org.eclipse.rdf4j.query.algebra.If;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
 import org.eclipse.rdf4j.query.algebra.MathExpr;
@@ -47,29 +48,40 @@ import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	private final class FindNodesUsedInFilter extends AbstractQueryModelVisitor<RuntimeException> {
 		private final String filterId;
+		private final String prefix;
+		private int existCount = 0;
 
-		private FindNodesUsedInFilter(String filterId) {
+		private FindNodesUsedInFilter(String filterId, String prefix) {
 			this.filterId = filterId;
+			this.prefix = prefix;
 		}
 
 		@Override
 		public void meet(Var node) throws RuntimeException {
-			rq.add(indent() + asString(node)+ " .-> " + filterId );
+			rq.add(indent() + asString(node) + " .-> " + filterId);
 		}
 
 		@Override
 		public void meet(Exists node) throws RuntimeException {
-			rq.add(indent() + "subgraph " + filterId + "{{ Exists }}");
+			int id = existCount++;
+			String existId = prefix + "e" + id;
+			rq.add(indent() + "subgraph " + filterId + existId + "[Exists Clause]");
+			indent += 2;
 			Map<Value, String> constantKeys = new HashMap<>();
 			Map<String, String> variableKeys = new HashMap<>();
 			Map<String, String> anonymousKeys = new HashMap<>();
 			Set<Value> usedAsNode = new HashSet<>();
 
-			node.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys));
+			node.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys, existId));
 			node.visit(new FindWhichConstantsAreNotOnlyUsedAsPredicates(usedAsNode));
-			node.visit(new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq,
-					node.getSubQuery()));
-
+			Render visitor = new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq,
+					node.getSubQuery(), existId);
+			visitor.indent = indent;
+			node.visit(visitor);
+			visitor.renderVariables();
+			indent -= 2;
+			rq.add(indent() + "end");
+			rq.add(indent() + filterId + "--EXISTS--> " + filterId + existId);
 		}
 	}
 
@@ -80,21 +92,32 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	private final Map<Value, String> serviceKeys = new HashMap<>();
 	private final Map<String, String> anonymousKeys;
 	private final List<String> rq;
+	private final String prefix;
 	private int indent = 2;
 	private int optionalCount = 0;
 	private int unionCount = 0;
 	private boolean optional;
 	private int filterCount;
+	private final TupleExpr te;
 
 	public Render(Map<String, String> variableKeys, Map<String, String> iriPrefixes, Map<Value, String> constantKeys,
 			Set<Value> usedAsNode, Map<String, String> anonymousKeys, List<String> rq, TupleExpr te) {
+		this(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq, te, "");
+	}
+
+	public Render(Map<String, String> variableKeys, Map<String, String> iriPrefixes, Map<Value, String> constantKeys,
+			Set<Value> usedAsNode, Map<String, String> anonymousKeys, List<String> rq, TupleExpr te, String prefix) {
 		this.variableKeys = variableKeys;
 		this.iriPrefixes = iriPrefixes;
 		this.constantKeys = constantKeys;
 		this.usedAsNode = usedAsNode;
 		this.anonymousKeys = anonymousKeys;
 		this.rq = rq;
+		this.te = te;
+		this.prefix = prefix;	
+	}
 
+	public void renderVariables() {
 		FindProjectedVariables findProjectedVariables = new FindProjectedVariables();
 		te.visit(findProjectedVariables);
 		Set<Value> pv = findProjectedVariables.variables;
@@ -107,15 +130,14 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				constantKeys.entrySet().stream().filter(en -> usedAsNode.contains(en.getKey())).map(en -> en.getValue()
 						+ "([" + prefix(en.getKey(), iriPrefixes, '"') + "])" + addProjectedClass(en.getKey(), pv)),
 				rq);
-		addStyles(rq);
 	}
 
-	private void addStyles(List<String> rq2) {
-		rq2.add("classDef projected fill:lightgreen;");
+	public void addStyles() {
+		rq.add("classDef projected fill:lightgreen;");
 	}
 
-	private static void addWithLeadingWhiteSpace(Stream<String> map, List<String> rq) {
-		map.map(s -> "  " + s).forEach(rq::add);
+	private void addWithLeadingWhiteSpace(Stream<String> map, List<String> rq) {
+		map.map(s -> indent() + s).forEach(rq::add);
 	}
 
 	@Override
@@ -150,7 +172,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		String filterId = "f" + filterCount++;
 		rq.add(indent() + filterId + "[[\"" + visitor2.sb.toString() + "\"]]");
-		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId);
+		FindNodesUsedInFilter visitor = new FindNodesUsedInFilter(filterId, prefix);
 		f.getCondition().visit(visitor);
 		super.meet(f);
 	}
@@ -179,7 +201,9 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		for (Var v : visitor.variables) {
 			rq.add(indent() + asString(v) + " --o " + bindId);
 		}
-		rq.add(indent() + bindId + " --as--o " + variableKeys.get(node.getName()));
+		if (node.getName() != null && variableKeys.containsKey(node.getName())) {
+			rq.add(indent() + bindId + " --as--o " + variableKeys.get(node.getName()));
+		}
 	}
 
 	@Override
@@ -231,7 +255,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		rq.add(indent() + "end");
 	}
 
-	private String indent() {
+	private  String indent() {
 		return IntStream.range(0, indent).mapToObj(i -> " ").collect(Collectors.joining());
 	}
 
@@ -270,14 +294,24 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			return prefix(stringValue.stringValue(), iriPrefixes, s);
 		}
 	}
+
 	private static final Pattern LEFT_BRACKET = Pattern.compile("[", Pattern.LITERAL);
 	private static final Pattern RIGHT_BRACKET = Pattern.compile("]", Pattern.LITERAL);
-	
+
 	private static String escape(String in) {
 		String nol = LEFT_BRACKET.matcher(in).replaceAll("#91;");
 		String norl = RIGHT_BRACKET.matcher(nol).replaceAll("#93;");
 		return norl;
 	}
+
+	
+	
+	@Override
+	public void meet(Group node) throws RuntimeException {
+//		node.getGroupElements().
+		super.meet(node);
+	}
+
 	private static String prefix(Literal l, Map<String, String> iriPrefixes, char s) {
 		CoreDatatype cd = l.getCoreDatatype();
 		if (cd.isXSDDatatype()) {
@@ -435,7 +469,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			sb.append("regex (");
 			node.getLeftArg().visit(this);
 			sb.append(",");
-			//TODO escape a regex properly so that it does not kill mermaid or jekyll
+			// TODO escape a regex properly so that it does not kill mermaid or jekyll
 			node.getRightArg().visit(this);
 			if (node.getFlagsArg() != null) {
 				sb.append(",");
@@ -476,4 +510,6 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			sb.append(prefix(node.getValue(), iriPrefixes, '\''));
 		}
 	}
+	
+	
 }
