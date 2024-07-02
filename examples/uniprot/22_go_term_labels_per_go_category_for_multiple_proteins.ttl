@@ -9,7 +9,7 @@ ex:22 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
-
+PREFIX GO:<http://purl.obolibrary.org/obo/GO_>
 
 SELECT 
     (CONCAT(SUBSTR(STR(?protein), 33)) AS ?uniprot)
