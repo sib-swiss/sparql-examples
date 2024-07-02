@@ -7,7 +7,7 @@ In this github pages we have a HTML rendering of them.
  * [Bgee](./examples/bgee/)
  * [GlyConnect](./examples/glyconnect/)
  * [HAMAP](./examples/hamap/)
- * [Metanetx](./examples/metanetx/)
+ * [MetaNetX](./examples/metanetx/)
  * [NeXtProt](./examples/nextprot/)
  * [OMA](./examples/oma/)
  * [Rhea](./examples/rhea)
