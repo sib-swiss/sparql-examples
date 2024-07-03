@@ -12,12 +12,12 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :chromosome "13"^^xsd:string.
  ?entry :isoform ?iso.
  {
 	 ?iso :medical / rdf:type :Disease.
- } union { 
+ } union {
  ?iso :uniprotKeyword / :term ?kw .
 	 ?kw :termType "Disease"^^xsd:string
 	 filter (?kw != nextprot_cv:KW-0656)

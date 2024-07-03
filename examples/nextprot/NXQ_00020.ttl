@@ -11,8 +11,8 @@ ex:NXQ_00020 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?entry where {
- select distinct ?entry ?id where {
+select ?entry WHERE {
+ SELECT DISTINCT ?entry ?id WHERE {
  ?entry :gene / :chromosome "21"^^xsd:string .
  ?entry :isoform / :expressionProfile ?s1.
  ?s1 :term / :childOf nextprot_cv:TS-0445.
@@ -20,7 +20,7 @@ select ?entry where {
  ?evi :observedExpression :High.
  ?evi :evidenceCode nextprot_cv:ECO_0001055.
  ?entry :isoform / :antibodyMapping ?map.
-	 ?map :evidence / :reference / :accession ?id . 
+	 ?map :evidence / :reference / :accession ?id .
  }
 } group by ?entry having (count(?id)>=2)""" ;
     schema:keyword "antibody",

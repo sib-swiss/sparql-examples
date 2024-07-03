@@ -14,13 +14,13 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry ?gen ?pathwayname where {
- service <http://sparql.wikipathways.org/sparql> {
+SELECT DISTINCT ?entry ?gen ?pathwayname WHERE {
+ SERVICE <http://sparql.wikipathways.org/sparql> {
 
  {?geneProduct a wp:Protein}
  union
  {?geneProduct a wp:GeneProduct}
- 
+
  ?geneProduct rdfs:label ?genraw .
 	 bind (concat( ""^^xsd:string, ?genraw) as ?gen).
  filter(!regex(?gen,"[ a-z-]")). # ensures official gene names for subsequent neXtprot matching

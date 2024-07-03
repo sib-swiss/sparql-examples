@@ -10,7 +10,7 @@ ex:NXQ_00125 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?domlabel where {
+SELECT DISTINCT ?domlabel WHERE {
  ?entry :isoform ?isoform.
  ?isoform :pdbMapping ?struc.
  ?struc :start ?s1 ; :end ?s2.

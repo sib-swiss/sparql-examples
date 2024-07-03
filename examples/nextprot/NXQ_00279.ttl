@@ -10,7 +10,7 @@ ex:NXQ_00279 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry (str(?gen) AS ?gene) ?entry2 (str(?gen2) AS ?gene2) where {
+SELECT DISTINCT ?entry (str(?gen) AS ?gene) ?entry2 (str(?gen2) AS ?gene2) WHERE {
  ?entry :isoform ?iso; :gene / :recommendedName / rdfs:label ?gen .
  ?iso :interactionMapping / :interactant ?entry2.
  ?entry2 :gene / :recommendedName / rdfs:label ?gen2 .

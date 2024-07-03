@@ -11,11 +11,11 @@ ex:NXQ_00048 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  {
 	?entry :isoform ?iso.
 	?iso :variant ?var.
-	?var :disease ?_.	 
+	?var :disease ?_.
 	?var :original "C"^^xsd:string.
  } UNION {
  ?entry :isoform ?iso .
@@ -24,7 +24,7 @@ select distinct ?entry where {
 	?var :evidence / :negative false. # positive evidence
 	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # cause of disease
 	?var :original "C"^^xsd:string.
-	
+
  }
 }""" ;
     schema:keyword "disease",

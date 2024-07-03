@@ -13,13 +13,13 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
+SELECT DISTINCT ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
 
-{ ?entry :recommendedName ?name_entity . 
- ?name_entity a :ProteinName; rdfs:label ?name. 
- ?entry :isoform ?iso. 
- ?iso :enzymeClassification /rdfs:comment ?ec. 
- ?iso :cofactor /:interactant /skos:exactMatch CHEBI:29108. # Ca(2+) cofactor 
+{ ?entry :recommendedName ?name_entity .
+ ?name_entity a :ProteinName; rdfs:label ?name.
+ ?entry :isoform ?iso.
+ ?iso :enzymeClassification /rdfs:comment ?ec.
+ ?iso :cofactor /:interactant /skos:exactMatch CHEBI:29108. # Ca(2+) cofactor
  ?iso :bindingSite /:interactant ?inter.
  ?inter :accession "CHEBI:29108"^^xsd:string # binding site interactant Ca(2+)
 }

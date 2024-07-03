@@ -10,8 +10,8 @@ ex:NXQ_00241 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry (str(?txt) as ?itinfo) where {
- select distinct ?entry ?txt where {
+SELECT DISTINCT ?entry (str(?txt) as ?itinfo) WHERE {
+ SELECT DISTINCT ?entry ?txt WHERE {
  ?entry :isoform ?iso.
  ?iso :interactionInfo / rdfs:comment ?txt.
  } order by ?entry

@@ -11,7 +11,7 @@ ex:NXQ_00271 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where
+SELECT DISTINCT (str(?gn) as ?gene) ?pos (str(?snpac) as ?varid) (str(?orgaa) as ?orgAA) ?annot_type (str(?txt) as ?note) (str(?varaa) as ?varAA) ?freq where
 {
  values ?entry {nextprot:NX_Q9BYF1 nextprot:NX_O15393} # proteins of interest (ACE2, TMPRSS2)
  ?entry :gene /:recommendedName / rdfs:label ?gn.

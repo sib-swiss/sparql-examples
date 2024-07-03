@@ -19,14 +19,14 @@ select ?entry (str(?name) as ?human_name) (group_concat(distinct str(?fly_name);
 ?entry :gene / :recommendedName / rdfs:label ?name.
 ?entry :existence :Evidence_at_protein_level .
 filter not exists { ?iso :functionInfo ?_. }
-filter not exists { ?iso :catalyticActivity ?_ .} 
-filter not exists { ?iso :transportActivity ?_ .} 
+filter not exists { ?iso :catalyticActivity ?_ .}
+filter not exists { ?iso :transportActivity ?_ .}
 filter not exists { ?iso :pathway ?_. }
 filter not exists { ?iso :function / :term ?fterm . filter(?fterm != nextprot_cv:GO_0005524 && ?fterm != nextprot_cv:GO_0000287 && ?fterm != nextprot_cv:GO_0005515 && ?fterm != nextprot_cv:GO_0042802 && ?fterm != nextprot_cv:GO_0008270 && ?fterm != nextprot_cv:GO_0051260 && ?fterm != nextprot_cv:GO_0005509 && ?fterm != nextprot_cv:GO_0003676 && ?fterm != nextprot_cv:GO_0003824 && ?fterm != nextprot_cv:GO_0007165 && ?fterm != nextprot_cv:GO_0035556 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)}
 ?iso :expression ?e1.
 ?e1 :term/:childOf nextprot_cv:TS-0095;:evidence/:observedExpression :High.
 {
-service <http://sparql.orthodb.org/sparql>
+SERVICE <http://sparql.orthodb.org/sparql>
 {?gene rdfs:seeAlso ?entry; orthodb:memberOf ?og.
 ?og orthodb:ogBuiltAt [up:scientificName ?clade]
 ; orthodb:hasMember ?ortholog.

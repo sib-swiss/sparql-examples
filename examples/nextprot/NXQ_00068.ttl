@@ -9,7 +9,7 @@ ex:NXQ_00068 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :existence :Evidence_at_transcript_level
 }""" ;
     schema:keyword "protein existence",

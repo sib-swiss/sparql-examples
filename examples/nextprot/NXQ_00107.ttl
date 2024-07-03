@@ -10,7 +10,7 @@ ex:NXQ_00107 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :existence ?level.
  filter (?level != :Evidence_at_protein_level).
  ?entry :reference ?r.

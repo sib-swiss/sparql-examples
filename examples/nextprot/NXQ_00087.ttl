@@ -11,7 +11,7 @@ ex:NXQ_00087 a sh:SPARQLExecutable,
 PREFIX db: <http://nextprot.org/rdf/db/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :chromosome "X"^^xsd:string .
  filter not exists { ?entry :reference / :provenance db:MGI . }
 }""" ;

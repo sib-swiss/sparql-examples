@@ -15,7 +15,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso1, ?iso2.
  ?iso1 :swissprotDisplayed true .
  ?iso2 :swissprotDisplayed false .

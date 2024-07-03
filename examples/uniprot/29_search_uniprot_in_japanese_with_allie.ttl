@@ -11,13 +11,12 @@ ex:29 a sh:SPARQLExecutable,
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT
-    ?protein ?englishLabelStr
+SELECT ?protein ?englishLabelStr
 WHERE {
-    SERVICE<http://data.allie.dbcls.jp/sparql>{
-            ?x rdfs:label "アミロイド前駆体タンパク質"@ja ;
-                rdfs:label ?englishLabel .
-            FILTER(lang(?englishLabel) = "en")
+    SERVICE <http://data.allie.dbcls.jp/sparql>{
+        ?x rdfs:label "アミロイド前駆体タンパク質"@ja ;
+            rdfs:label ?englishLabel .
+        FILTER(lang(?englishLabel) = "en")
     }
     BIND (STR(?englishLabel) AS ?englishLabelStr)
     ?protein a up:Protein .
@@ -26,9 +25,9 @@ WHERE {
     }
     UNION
     {
-          VALUES(?partType){(up:domain) (up:component)}
-                  ?protein ?partType ?part .
-          ?part (up:recommendedName|up:alternativeName) ?structuredName .
+        VALUES(?partType){(up:domain) (up:component)}
+            ?protein ?partType ?part .
+        ?part (up:recommendedName|up:alternativeName) ?structuredName .
     }
     ?structuredName ?anyKindOfName  ?englishLabelStr .
     ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .

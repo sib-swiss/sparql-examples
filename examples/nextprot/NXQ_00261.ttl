@@ -11,11 +11,11 @@ ex:NXQ_00261 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct ?entry ?iso ?pos ?comment where {
+SELECT DISTINCT ?entry ?iso ?pos ?comment WHERE {
 ?entry :isoform ?iso.
 ?iso :swissprotDisplayed true .
 ?iso :glycosylationSite ?glyco.
-?glyco :evidence / :assignedBy source:GlyConnect. 
+?glyco :evidence / :assignedBy source:GlyConnect.
 ?glyco rdfs:comment ?comment.
 ?glyco :start ?pos.
 

@@ -10,7 +10,7 @@ ex:NXQ_00002 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?cytoloc {nextprot_cv:GO_0005737 nextprot_cv:SL-0086} # GO and SL values for cytoplasm
  values ?nucloc {nextprot_cv:GO_0005634 nextprot_cv:SL-0191} # GO and SL values for nucleus
  ?entry :isoform ?iso.

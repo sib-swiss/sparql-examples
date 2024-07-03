@@ -12,21 +12,21 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
- { 
+ {
 	 ?iso :medical / rdf:type :Disease.
- } union { 
+ } union {
  ?iso :uniprotKeyword / :term ?kw .
 	 ?kw :termType "Disease"^^xsd:string
 	 filter (?kw != nextprot_cv:KW-0656)
  }
  filter ( not exists { ?entry :isoform / :variant / :disease ?_ . } )
- filter ( not exists { 
+ filter ( not exists {
 	?entry :isoform / :proteoform ?pf.
 	?pf :difference / :evidence / :negative false. # positive evidence only
 	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # cause of disease
- } ) 
+ } )
 }""" ;
     schema:keyword "disease",
         "keyword",

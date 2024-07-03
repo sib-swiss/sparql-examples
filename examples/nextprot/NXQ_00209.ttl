@@ -9,7 +9,7 @@ ex:NXQ_00209 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry ?iso ?ptmtype ?pos ?modres where {
+SELECT DISTINCT ?entry ?iso ?ptmtype ?pos ?modres WHERE {
 ?entry :isoform ?iso.
 ?iso :swissprotDisplayed true .
 ?iso :sequence / :chain ?seq .

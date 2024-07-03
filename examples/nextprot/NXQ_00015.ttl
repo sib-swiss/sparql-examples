@@ -10,7 +10,7 @@ ex:NXQ_00015 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :region / :term nextprot_cv:DO-00477. #PDZ domain
  ?iso :binaryInteraction/:interactant/:isoform?/:detectedExpression/:term/:childOf nextprot_cv:TS-0095 #brain

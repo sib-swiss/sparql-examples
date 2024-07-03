@@ -9,16 +9,16 @@ ex:NXQ_00255 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry ?varpos ?freq where
+SELECT DISTINCT ?entry ?varpos ?freq where
 {
- ?entry :isoform ?iso . 
+ ?entry :isoform ?iso .
  ?iso :swissprotDisplayed true .
- ?iso :variant ?var . 
- ?var :start ?varpos . 
+ ?iso :variant ?var .
+ ?var :start ?varpos .
  ?var :evidence ?ev .
  ?ev :alleleNumber ?anb .
- ?ev :alleleFrequency ?freq . 
- filter(?freq > 0.1 && ?anb > 100000) 
+ ?ev :alleleFrequency ?freq .
+ filter(?freq > 0.1 && ?anb > 100000)
  } order by desc(?freq)""" ;
     schema:keyword "tutorial",
         "variant" ;

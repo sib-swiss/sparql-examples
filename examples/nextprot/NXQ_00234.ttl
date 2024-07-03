@@ -9,14 +9,14 @@ ex:NXQ_00234 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :srmPeptideMapping ?srm .
  ?srm :start ?ps; :end ?pe .
  filter(?pe - ?ps + 1 >= 9)
  ?srm :proteotypic true .
  ?srm :peptideName ?pepid .
-} 
+}
 group by ?entry having(count(distinct ?pepid) > 1)""" ;
     schema:keyword "dataset",
         "peptide",

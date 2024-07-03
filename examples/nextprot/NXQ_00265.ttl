@@ -12,26 +12,26 @@ PREFIX isoform: <http://nextprot.org/rdf/isoform/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
-{ 
+SELECT DISTINCT ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
+{
  values ?iso { isoform:NX_Q99728-1 }
  values ?poi {107} # position of interest
- 
-{ 
+
+{
  ?iso :positionalAnnotation ?statement . optional {?statement rdfs:comment ?txt .}
 
  ?statement a ?annot_type .
  ?statement :start ?spos; :end ?epos .
 }
  union
- 
-{ 
- ?iso :proteoform ?pf . 
- ?pf :difference ?varmut; :phenotypicVariation ?phvar . 
- ?varmut :start ?spos; :end ?epos. 
+
+{
+ ?iso :proteoform ?pf .
+ ?pf :difference ?varmut; :phenotypicVariation ?phvar .
+ ?varmut :start ?spos; :end ?epos.
  ?phvar :term ?phtype; :impactedObject /:term /rdfs:label ?ioTermlab .
  ?phvar a ?annot_type .
- ?phtype :childOf nextprot_cv:ME_0000002; rdfs:label ?effect . # children of impact 
+ ?phtype :childOf nextprot_cv:ME_0000002; rdfs:label ?effect . # children of impact
  bind (concat(CONCAT(?effect," "),?ioTermlab) as ?txt) }
 
  filter((?spos <= ?poi) && (?epos >= ?poi)) # select annotations encompassing the position of interest

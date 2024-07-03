@@ -10,7 +10,7 @@ ex:NXQ_00030 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select ?entry where {
+select ?entry WHERE {
  ?entry :familyName / :term/^:term/^:familyName ?member.
  ?entry :gene / :chromosome "2"^^xsd:string .
 } group by ?entry having ( count(distinct ?member) >= 5 )""" ;

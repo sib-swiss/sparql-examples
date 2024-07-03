@@ -9,7 +9,7 @@ ex:NXQ_00126 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry ?pep where {
+SELECT DISTINCT ?entry ?pep WHERE {
  ?entry :isoform ?iso .
  ?iso :peptideMapping ?pm.
  ?pm :start ?p1 ; :end ?p2 .
@@ -33,7 +33,7 @@ select distinct ?entry ?pep where {
  bind (substr(?mat2, 2, strlen(?mat2) - 1) as ?mat22) .
  filter(regex(?mat2,concat("^", ?pep)) || regex(?mat22,concat("^", ?pep))).
  }
-} 
+}
 order by ?pep
 
 # overestimated, need additional filter(s)

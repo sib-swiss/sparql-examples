@@ -11,7 +11,7 @@ ex:NXQ_00296 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?pathway where {
+SELECT DISTINCT ?pathway WHERE {
  nextprot:NX_P35498 :isoform /:binaryInteraction ?interaction.
  ?interaction :interactant ?entry; :quality :GOLD.
  ?entry a :Entry.

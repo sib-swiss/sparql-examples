@@ -9,15 +9,15 @@ ex:NXQ_00003 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :topology ?statement.
  ?statement a :TransmembraneRegion.
 } group by ?entry ?iso having(count( ?statement)=7)
 
-# 'a' can also be used instead of 'rdf:type' 
+# 'a' can also be used instead of 'rdf:type'
 # 'a' is a synonym of 'rdf:type'
-# 
+#
 # Apply the grouping criterion (group by) for the results.
 # This groups entries with isoforms having 7 transmembrane regions.
 # Apply the aggregate function (count) to the variable ?statement.

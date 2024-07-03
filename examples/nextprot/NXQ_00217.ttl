@@ -12,17 +12,17 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?isox.
  ?isox :enzymeClassification / :term / rdfs:label ?eclabel.
  filter regex(?eclabel, '-'^^xsd:string) # incomplete EC number
  ?isox :highExpression /:term /:childOf nextprot_cv:TS-0564. # highly expressed in liver
- { 
+ {
  ?isox :functionInfo / rdfs:comment ?functext .
- filter(strstarts(?functext,"Probable") || strstarts(?functext,"Putative")) 
+ filter(strstarts(?functext,"Probable") || strstarts(?functext,"Putative"))
  }
  UNION
- { 
+ {
  filter not exists {?isox :functionInfo ?_ } # entries with no function at all
  }
 }""" ;

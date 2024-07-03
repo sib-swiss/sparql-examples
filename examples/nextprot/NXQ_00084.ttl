@@ -12,13 +12,13 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry {
+SELECT DISTINCT ?entry {
  ?entry :gene / :chromosome "18"^^xsd:string.
  ?entry :isoform ?iso.
  {
  ?iso :glycosylationSite ?ptm1.
  ?ptm1 :evidence /:evidenceCode / :childOf nextprot_cv:ECO_0000269
- } 
+ }
  union {
  ?iso :modifiedResidue ?ptm2.
  ?ptm2 rdfs:comment ?com.

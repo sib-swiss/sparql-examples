@@ -10,10 +10,10 @@ ex:NXQ_00112 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select ?entry where {
+select ?entry WHERE {
  {
  select ?entry (count(?loc) as ?anyLoc) (sum(?inNucleus) as ?nucleusLoc)
- where {
+ WHERE {
  ?entry :isoform / :cellularComponent ?loc .
  ?loc :evidence / :negative false .
  ?loc :term ?locterm.

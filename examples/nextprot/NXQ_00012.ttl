@@ -11,7 +11,7 @@ ex:NXQ_00012 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  nextprot:NX_Q96I25 :isoform / :interaction / :interactant ?entry.
  ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-0508
 }""" ;

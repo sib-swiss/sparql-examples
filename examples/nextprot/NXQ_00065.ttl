@@ -9,9 +9,9 @@ ex:NXQ_00065 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :enzymeClassification / :term ?ec .
-} 
+}
 group by ?entry having (count(distinct ?ec)>1)""" ;
     schema:keyword "enzyme",
         "function",

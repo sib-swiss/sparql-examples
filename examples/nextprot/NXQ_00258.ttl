@@ -14,9 +14,9 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX so: <http://purl.obolibrary.org/obo/SO_>
 
-select distinct ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle where {
- service <http://rdf.disgenet.org/sparql/> {
- select distinct ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) where {
+SELECT DISTINCT ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle WHERE {
+ SERVICE <http://rdf.disgenet.org/sparql/> {
+ SELECT DISTINCT ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) WHERE {
  ?vda sio:SIO_000628 ?variant,?disease .
 	?vda sio:SIO_000772 ?article .
  ?disease a sio:SIO_010299 ; dcterms:title ?diseaseTitle . # true disease, use ncit:C7057 for traits

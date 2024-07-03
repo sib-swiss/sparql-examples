@@ -12,9 +12,9 @@ PREFIX db: <http://nextprot.org/rdf/db/>
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct (str(?publiid) as ?PMID) ?title where {
+SELECT DISTINCT (str(?publiid) as ?PMID) ?title WHERE {
  nextprot:NX_P35498 :isoform ?iso. #SCN1A entry
- ?iso :swissprotDisplayed true. #Swissprot canonical isoform 
+ ?iso :swissprotDisplayed true. #Swissprot canonical isoform
  {
  ?iso :variant ?v.
  ?v :disease nextprot_cv:DI-01023. #UniProtKB term for Dravet syndrome

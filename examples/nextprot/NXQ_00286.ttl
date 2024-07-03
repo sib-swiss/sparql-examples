@@ -11,7 +11,7 @@ ex:NXQ_00286 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) where {
+SELECT DISTINCT (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) WHERE {
  ?entry :isoform ?iso; :gene / :name / rdfs:label ?gen .
  ?iso :swissprotDisplayed true; :interactionMapping ?itmap .
  ?itmap :entryAnnotationId ?itid; :start ?its; :end ?ite .

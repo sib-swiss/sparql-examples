@@ -12,7 +12,7 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partnergene) where {
+SELECT DISTINCT ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partnergene) WHERE {
  ?entry :isoform ?iso; :gene / :recommendedName / rdfs:label ?gen .
  ?iso :swissprotDisplayed true; :interactionMapping ?itmap .
  ?itmap :interactant ?entry2; :start ?its; :end ?ite .
@@ -21,7 +21,7 @@ select distinct ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partn
  ?iso2 :swissprotDisplayed true.
  {?iso :coiledCoilRegion ?coil . }
  union
- {?iso :region ?coil . 
+ {?iso :region ?coil .
  ?coil :term nextprot_cv:DO-00078 # bzip
  }
  ?coil :start ?cs; :end ?ce .

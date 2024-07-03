@@ -11,7 +11,6 @@ ex:42 a sh:SPARQLExecutable,
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-
 SELECT ?citation ?patent ?application ?applicationNo
 WHERE
 {
@@ -19,7 +18,7 @@ WHERE
     skos:exactMatch ?patent .
   FILTER(CONTAINS(STR(?patent), 'EP'))
   BIND(SUBSTR(STR(?patent), 35) AS ?applicationNo)
-  SERVICE<https://data.epo.org/linked-data/query>{
+  SERVICE <https://data.epo.org/linked-data/query>{
     ?application patent:publicationNumber ?applicationNo
   }
 }""" ;

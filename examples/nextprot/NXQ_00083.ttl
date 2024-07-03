@@ -10,7 +10,7 @@ ex:NXQ_00083 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-Select distinct ?entry where {
+Select distinct ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :detectedExpression /:term ?tiss, ?tiss2.
  ?tiss2 :childOf nextprot_cv:TS-0564. # Liver

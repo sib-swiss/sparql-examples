@@ -11,7 +11,7 @@ ex:NXQ_00064 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform/ :enzymeClassification ?ec.
  ?ec :term / rdfs:label ?eclabel.
  filter regex(?eclabel, '-'^^xsd:string)

@@ -11,7 +11,7 @@ ex:NXQ_00057 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
 
  ?entry :isoform ?iso.

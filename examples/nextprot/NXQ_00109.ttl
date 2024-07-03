@@ -9,7 +9,7 @@ ex:NXQ_00109 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct ?entry ?overlap where {
+SELECT DISTINCT ?entry ?overlap WHERE {
  ?entry :isoform ?iso.
  #get Signal position (start is always 1)
  ?iso :signalPeptide [:end ?s2] .

@@ -11,9 +11,9 @@ ex:NXQ_00294 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?start ?stop ?original ?modified where { 
- nextprot:NX_P51608 :isoform ?iso. #MECP2 entry 
- ?iso :swissprotDisplayed true. #Swissprot canonical isoform 
+SELECT DISTINCT ?start ?stop ?original ?modified WHERE {
+ nextprot:NX_P51608 :isoform ?iso. #MECP2 entry
+ ?iso :swissprotDisplayed true. #Swissprot canonical isoform
  {
  ?iso :variant ?v.
  ?v :disease nextprot_cv:DI-00999. #UniProtKB term for Rett Syndrome

@@ -15,12 +15,12 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
-  ?protein 
+SELECT
+  ?protein
   ?orthoGroup
-  ?scientificName 
-  ?functionComment 
-  ?prefferedGeneName 
+  ?scientificName
+  ?functionComment
+  ?prefferedGeneName
   ((STRLEN(?value) - ?medianLength) as ?deviationFromMedianLength)
 WHERE
 {
@@ -28,13 +28,13 @@ WHERE
         up:organism/up:scientificName ?scientificName ;
         rdfs:seeAlso ?orthoGroup ;
         up:encodedBy/skos:prefLabel ?prefferedGeneName ;
-             up:sequence/rdf:value ?value .
+          up:sequence/rdf:value ?value .
   OPTIONAL {
-     ?protein up:annotation ?functionAnnotation .
-     ?functionAnnotation a up:Function_Annotation ;
-                         rdfs:comment ?functionComment .
+    ?protein up:annotation ?functionAnnotation .
+    ?functionAnnotation a up:Function_Annotation ;
+      rdfs:comment ?functionComment .
   }
-  SERVICE<https://sparql.orthodb.org/sparql>{
+  SERVICE <https://sparql.orthodb.org/sparql>{
     ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
     ?orthoGroup orthodb:hasMember ?xref .
     ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .

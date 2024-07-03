@@ -11,7 +11,7 @@ ex:NXQ_00077 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform /:expression ?s1.
  ?s1 :evidence ?evi;:term/:childOf nextprot_cv:TS-0564. #Liver
  ?evi :evidenceCode nextprot_cv:ECO_0001055; :observedExpression ?level .

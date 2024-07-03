@@ -9,7 +9,7 @@ ex:NXQ_00278 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
-select distinct (str(?auth) AS ?auth1) (count (distinct ?itid) as ?itcnt) where {
+SELECT DISTINCT (str(?auth) AS ?auth1) (count (distinct ?itid) as ?itcnt) WHERE {
  ?entry :isoform / :binaryInteraction ?interaction.
  ?interaction :evidence / :reference ?publi .
  ?publi :author / :name ?auth .

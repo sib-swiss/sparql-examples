@@ -10,7 +10,7 @@ ex:NXQ_00053 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform/:function ?statement.
  ?statement :term / :childOf nextprot_cv:GO_0007155.
  filter not exists { ?statement :negativeEvidence ?negev. } # No negative function evidence

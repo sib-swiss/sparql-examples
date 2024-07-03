@@ -11,7 +11,6 @@ ex:43 a sh:SPARQLExecutable,
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-
 SELECT ?grantDate ?patent ?application ?applicationNo
 WHERE
 {
@@ -19,9 +18,9 @@ WHERE
   skos:exactMatch ?patent .
   BIND(SUBSTR(STR(?patent), 35) AS ?applicationNo)
   BIND(SUBSTR(STR(?patent), 33, 2) AS ?countryCode)
-  SERVICE<https://data.epo.org/linked-data/query>{
+  SERVICE <https://data.epo.org/linked-data/query>{
     ?publication patent:publicationNumber ?applicationNo ;
-                 patent:application ?application . 
+      patent:application ?application .
     ?application patent:grantDate ?grantDate .
   }
   BIND((year(now()) - 20) AS ?thisYearMinusTwenty)

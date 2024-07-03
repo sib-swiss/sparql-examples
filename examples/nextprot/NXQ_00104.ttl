@@ -12,10 +12,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX source: <http://nextprot.org/rdf/source/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry (str(?disname) as ?disease) where {
+SELECT DISTINCT ?entry (str(?disname) as ?disease) WHERE {
  ?entry :isoform ?iso; :gene / :chromosome "21"^^xsd:string .
  ?iso :disease ?medannot .
- ?medannot rdfs:comment ?disname; :evidence / :assignedBy source:Orphanet.	 
+ ?medannot rdfs:comment ?disname; :evidence / :assignedBy source:Orphanet.
 }""" ;
     schema:keyword "chromosomal location",
         "disease",

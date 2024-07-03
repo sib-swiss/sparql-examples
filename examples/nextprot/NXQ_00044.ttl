@@ -11,7 +11,7 @@ ex:NXQ_00044 a sh:SPARQLExecutable,
 PREFIX db: <http://nextprot.org/rdf/db/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :pathway ?p.
  ?p :evidence /:reference ?xref.
  ?xref :provenance db:Reactome; :accession "R-HSA-611105"^^xsd:string.

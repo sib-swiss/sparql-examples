@@ -11,7 +11,7 @@ ex:NXQ_00027 a sh:SPARQLExecutable,
 PREFIX db: <http://nextprot.org/rdf/db/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry ?publications where {
+SELECT DISTINCT ?entry ?publications WHERE {
  values ?pmid {"20570859"^^xsd:string "14760718"^^xsd:string}
  # get all assertions from the publications
  ?entry :isoform/:glycosylationSite ?statement.

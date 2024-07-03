@@ -11,7 +11,7 @@ ex:NXQ_00097 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :chromosome "2"^^xsd:string .
  ?entry :isoform ?iso.
  ?iso :variant /:start ?varpos.

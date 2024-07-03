@@ -11,7 +11,7 @@ ex:NXQ_00283 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry (str(?gen) as ?gene) (count(distinct ?mitopartner) as ?mitcount) (count(distinct ?partner) as ?itcount) where {
+SELECT DISTINCT ?entry (str(?gen) as ?gene) (count(distinct ?mitopartner) as ?mitcount) (count(distinct ?partner) as ?itcount) WHERE {
 values ?mitloc {nextprot_cv:GO_0005739 nextprot_cv:SL-0173} # GO and SL values for mitochondrion
  ?entry :isoform ?iso.
  ?entry :gene / :recommendedName / rdfs:label ?gen.

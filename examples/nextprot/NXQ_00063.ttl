@@ -10,12 +10,12 @@ ex:NXQ_00063 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  {
  ?entry :isoform ?iso.
  # >=1 RRM RNA-binding domain
  ?iso :region/:term nextprot_cv:DO-00581.
- # No GO "RNA binding" 
+ # No GO "RNA binding"
  filter not exists {
  ?iso :function/:term /:childOf nextprot_cv:GO_0003723
  }

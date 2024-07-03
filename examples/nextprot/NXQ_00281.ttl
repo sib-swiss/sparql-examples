@@ -10,13 +10,13 @@ ex:NXQ_00281 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry ?gene ?entry2 ?gene2 ?commonitcnt ?sampleit where {
+SELECT DISTINCT ?entry ?gene ?entry2 ?gene2 ?commonitcnt ?sampleit WHERE {
  {
- select distinct ?entry (str(?gen) as ?gene) ?entry2 (str(?gen2) as ?gene2) (count (distinct ?commonpartner) as ?commonitcnt) (str(sample(?genit)) as ?sampleit) where {
+ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?entry2 (str(?gen2) as ?gene2) (count (distinct ?commonpartner) as ?commonitcnt) (str(sample(?genit)) as ?sampleit) WHERE {
  ?entry :isoform / :interaction ?it1; :gene / :name / rdfs:label ?gen.
  ?it1 :quality :GOLD; :interactant ?commonpartner .
  ?entry2 :isoform / :interaction ?it2; :gene / :name / rdfs:label ?gen2.
- ?it2 :quality :GOLD;:interactant ?commonpartner . 
+ ?it2 :quality :GOLD;:interactant ?commonpartner .
  ?commonpartner :gene / :name / rdfs:label ?genit .
  filter(?entry != ?entry2)
  filter(!contains(?gen,"KRT") && !contains(?gen2,"KRT") && !contains(?genit,"KRT")) # remove sticky keratins

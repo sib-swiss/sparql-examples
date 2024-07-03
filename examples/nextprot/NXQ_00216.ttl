@@ -10,12 +10,12 @@ ex:NXQ_00216 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct (sample(?iso) as ?isospl) (sample(?pos) as ?posspl) where {
+SELECT DISTINCT (sample(?iso) as ?isospl) (sample(?pos) as ?posspl) WHERE {
  ?entry :isoform ?iso .
  ?iso :ptm ?ptm.
  ?ptm :entryAnnotationId ?ptmid; :start ?pos .
  ?ptm :evidence / :assignedBy source:PeptideAtlas_human_phosphoproteome .
-} 
+}
 group by ?ptmid
 order by ?isospl ?posspl""" ;
     schema:keyword "dataset",

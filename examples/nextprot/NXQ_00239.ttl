@@ -10,7 +10,7 @@ ex:NXQ_00239 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>
 
-select distinct ?entry ?iprac where {
+SELECT DISTINCT ?entry ?iprac WHERE {
  ?entry :reference ?ref.
  ?ref :provenance db:InterPro.
  ?ref :accession ?iprac}

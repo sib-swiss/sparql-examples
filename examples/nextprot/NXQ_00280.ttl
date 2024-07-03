@@ -11,22 +11,22 @@ ex:NXQ_00280 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry (str(?gen) as ?gene) (str(?xlab) as ?itfamily) ?itcnt ?membercnt ((xsd:float(?itcnt) / xsd:float(?membercnt)) as ?ratio) where {
+SELECT DISTINCT ?entry (str(?gen) as ?gene) (str(?xlab) as ?itfamily) ?itcnt ?membercnt ((xsd:float(?itcnt) / xsd:float(?membercnt)) as ?ratio) WHERE {
  {
- select ?xterm ?xlab (count(distinct ?member) as ?membercnt) where {
+ select ?xterm ?xlab (count(distinct ?member) as ?membercnt) WHERE {
  ?member :isoform? / :familyName /:term /:childOf ?xterm.
  ?xterm rdfs:label ?xlab .
  } group by ?xterm ?xlab
- } 
+ }
  {
- select ?xterm ?entry ?gen (count (distinct ?interactant) as ?itcnt) where {
+ select ?xterm ?entry ?gen (count (distinct ?interactant) as ?itcnt) WHERE {
  ?entry :isoform ?iso; :gene / :name / rdfs:label ?gen .
  ?iso :interaction ?it.
  ?it :quality :GOLD; :interactant ?interactant.
- ?interactant :familyName /:term /:childOf ?xterm . 
- } group by ?xterm ?entry ?gen having (count (distinct ?interactant) >= 10)	
+ ?interactant :familyName /:term /:childOf ?xterm .
+ } group by ?xterm ?entry ?gen having (count (distinct ?interactant) >= 10)
  }
-} 
+}
 order by desc(?ratio)
 limit 60""" ;
     schema:keyword "PPI",

@@ -11,7 +11,7 @@ ex:NXQ_00298 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?iso ?name where {
+SELECT DISTINCT ?iso ?name WHERE {
  nextprot:NX_P52701 :isoform ?iso. # MSH6 entry
  ?iso :recommendedName ?name_entity .
  ?name_entity a :IsoformName; rdfs:label ?name.

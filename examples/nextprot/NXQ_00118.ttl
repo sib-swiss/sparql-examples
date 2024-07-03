@@ -11,10 +11,10 @@ ex:NXQ_00118 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :variant ?var.
- { 
+ {
  ?var rdfs:comment ?comment.
  filter (contains (?comment,'somatic'))
  }

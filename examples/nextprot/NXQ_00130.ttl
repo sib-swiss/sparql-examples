@@ -11,7 +11,7 @@ ex:NXQ_00130 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?entry :gene / :name / rdfs:label ?gen .
  ?iso :dnaBindingRegion ?dnab.

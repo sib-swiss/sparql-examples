@@ -11,10 +11,10 @@ ex:NXQ_00299 a sh:SPARQLExecutable,
 PREFIX db: <http://nextprot.org/rdf/db/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select distinct ?entry (group_concat(distinct str(?lbl); SEPARATOR = ";") as ?mol) where {
- ?entry :isoform / :smallMoleculeInteraction / :interactant ?ref . 
- ?ref :provenance db:DrugBank. 
- ?ref rdfs:label ?lbl. 
+SELECT DISTINCT ?entry (group_concat(distinct str(?lbl); SEPARATOR = ";") as ?mol) WHERE {
+ ?entry :isoform / :smallMoleculeInteraction / :interactant ?ref .
+ ?ref :provenance db:DrugBank.
+ ?ref rdfs:label ?lbl.
 }
 group by ?entry""" ;
     schema:keyword "small molecule interaction",

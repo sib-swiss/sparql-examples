@@ -10,7 +10,7 @@ ex:NXQ_00001 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
  ?entry :isoform ?iso.
  ?iso :uniprotKeyword / :term nextprot_cv:KW-0597. # Phosphorylated
@@ -19,9 +19,9 @@ select distinct ?entry where {
  filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
 }
 
-# Assign values to the variable ?cytoloc 
+# Assign values to the variable ?cytoloc
 # The values correspond to the two controlled vocabulary (cv) terms for cytoplam:
-# SL-0086 is the UniProt subcellular location term 
+# SL-0086 is the UniProt subcellular location term
 # GO_0005737 is the Gene Ontology cellular component term
 #
 # Use the same name of the variable (?iso and ?loc) in several statements.

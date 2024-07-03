@@ -10,14 +10,14 @@ ex:NXQ_00143 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select ?entry where {
+select ?entry WHERE {
  ?entry :isoform / :peptideMapping ?pm.
  ?pm :proteotypic true .
  ?pm :peptideSource ?src .
- bind (?src = source:MassIVE as ?massive)	 
- bind (?src = source:PeptideAtlas as ?pa)	 
+ bind (?src = source:MassIVE as ?massive)
+ bind (?src = source:PeptideAtlas as ?pa)
  bind (?src != source:MassIVE && ?src != source:PeptideAtlas as ?other)
-} 
+}
 group by ?entry
 having (sum(?massive)=0 && sum(?pa)=0 && sum(?other)>0)""" ;
     schema:keyword "dataset",

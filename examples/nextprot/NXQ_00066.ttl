@@ -10,16 +10,16 @@ ex:NXQ_00066 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?cytoloc {nextprot_cv:SL-0086 nextprot_cv:GO_0005737} # SL and GO values for cytoplasm
- 
+
  ?entry :isoform ?iso.
  ?iso :cellularComponent ?loc .
  ?loc :term /:childOf ?cytoloc .
  filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
  ?iso :modifiedResidue /:term ?ptmtype.
  ?iso :modifiedResidue /:start ?ptmpos.
- filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255)) 
+ filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255))
  ?iso :glycosylationSite /:start ?ptmpos.
 }""" ;
     schema:keyword "PTM",

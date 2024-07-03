@@ -10,7 +10,7 @@ ex:NXQ_00016 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?sloc {nextprot_cv:GO_0005576 nextprot_cv:SL-0243} # GO and SL values for secreted
  ?entry :isoform ?iso.
  ?iso :cellularComponent ?anno .
@@ -19,15 +19,15 @@ select distinct ?entry where {
  #
  # filter not exists {?iso :cellularComponent /:term nextprot_cv:GO_0070062 .
  # filter not exists {?iso :cellularComponent /:term /:childOf nextprot_cv:SL-0243 .}
- # } 
- # you can uncomment this to filters out extracellular exosome only location (2240 entries), 
- # most of them evidenced only by large-scale proteomic analysis 
+ # }
+ # you can uncomment this to filters out extracellular exosome only location (2240 entries),
+ # most of them evidenced only by large-scale proteomic analysis
  #
- ?iso :sequence / :chain ?seq. 
+ ?iso :sequence / :chain ?seq.
  ?iso :matureProtein [ :start ?mstart ; :end ?mend]
- filter ((?mend-?mstart > 0) && (?mend-?mstart < 1000))	 
- bind (?mend - ?mstart + 1 as ?mlen)	 
- bind (substr(?seq, ?mstart, ?mlen) as ?mseq)	 
+ filter ((?mend-?mstart > 0) && (?mend-?mstart < 1000))
+ bind (?mend - ?mstart + 1 as ?mlen)
+ bind (substr(?seq, ?mstart, ?mlen) as ?mseq)
  filter (!regex (?mseq,'C'))
 }""" ;
     schema:keyword "processing",

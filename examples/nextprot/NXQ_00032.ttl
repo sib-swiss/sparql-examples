@@ -11,7 +11,7 @@ ex:NXQ_00032 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :function ?func .
  ?func :term / :childOf nextprot_cv:GO_0006351. # Transcription

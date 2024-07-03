@@ -10,11 +10,11 @@ ex:NXQ_00021 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  values ?peroxiloc {nextprot_cv:GO_0005777 nextprot_cv:SL-0204} # GO and SL values for peroxisome
- 
- ?entry :isoform ?iso. 
- ?iso :antibodyMapping ?map. 
+
+ ?entry :isoform ?iso.
+ ?iso :antibodyMapping ?map.
  ?iso :cellularComponent ?loc .
  ?loc :term /:childOf ?peroxiloc. # peroxisomal
  filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence

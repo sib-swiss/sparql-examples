@@ -11,16 +11,16 @@ ex:NXQ_00082 a sh:SPARQLExecutable,
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :chromosome "21"^^xsd:string; :isoform / :variant ?variant.
  ?variant :evidence / :quality :GOLD.
  filter not exists { ?variant :disease ?disease. }
- filter ( not exists { 
+ filter ( not exists {
 	?entry :isoform / :proteoform ?pf.
 	?pf :difference ?variant.
 	?variant :evidence / :negative false. # variant with positive evidence
 	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # variant is causing disease
- } ) 
+ } )
 }""" ;
     schema:keyword "chromosomal location",
         "disease",

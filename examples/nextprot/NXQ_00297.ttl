@@ -10,7 +10,7 @@ ex:NXQ_00297 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>
 
-select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = ",") as ?pdbacs) where { 
+select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = ",") as ?pdbacs) WHERE {
  ?entry :isoform ?iso.
  ?iso :pdbMapping ?pdbmap.
  ?pdbmap :evidence /:reference ?ref.
@@ -18,7 +18,7 @@ select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = ",") as ?pdbacs) w
  ?ref :accession ?pdbac.
  ?pdbmap :start ?pdbstart ; :end ?pdbend.
  ?iso :matureProtein [ :start ?mstart ; :end ?mend]
- filter (?mend-?mstart > 0)	 
+ filter (?mend-?mstart > 0)
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
 } group by ?entry""" ;
     schema:keyword "3D structure",

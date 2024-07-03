@@ -14,7 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-select distinct ?entry where {
+SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  optional {?iso :interactionInfo ?itinfo .}
  {
@@ -39,14 +39,14 @@ UNION
  ?entry :isoform / :binaryInteraction ?it .
  ?it :interactant ?interactant; :quality :GOLD. # NeXtprot entries with a GOLD IntAct binary interaction
  ?interactant skos:exactMatch ?viralinteractor . # interactant must be in the uniprot service result set to select the entry
- } 
+ }
 UNION
  {
  SERVICE <http://sparql.uniprot.org/sparql> {
  SELECT distinct ?humprotein WHERE # get human proteins that share a PDB xref with a viral protein (same PDB id)
  {
 	?humprotein a up:Protein .
- ?humprotein up:organism taxon:9606 . 
+ ?humprotein up:organism taxon:9606 .
 	?humprotein rdfs:seeAlso ?db .
 	?db up:database <http://purl.uniprot.org/database/PDB> .
 	?viralprotein a up:Protein .
@@ -56,8 +56,8 @@ UNION
 	filter(contains(?orgname,"virus"))
  }
  }
- ?entry skos:exactMatch ?humprotein .	
- } 
+ ?entry skos:exactMatch ?humprotein .
+ }
 }
 order by ?entry""" ;
     schema:keyword "PPI",

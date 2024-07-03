@@ -11,7 +11,7 @@ ex:NXQ_00289 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX source: <http://nextprot.org/rdf/source/>
 
-select distinct ?src (str(?pathwayname) as ?pw) where {
+SELECT DISTINCT ?src (str(?pathwayname) as ?pw) WHERE {
  ?entry :isoform / :pathway ?pathannot .
  ?pathannot rdfs:comment ?pathwayname; :evidence / :assignedBy ?src.
  filter(?src = source:Reactome || ?src = source:KEGG_PTW)
