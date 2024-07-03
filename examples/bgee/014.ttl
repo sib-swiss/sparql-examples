@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:14 a sh:SPARQLExecutable,
+ex:014 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What is all the metadata related to the ENSG00000130208 gene, where ENSG00000130208 is the identifier of the APOC1 human gene." ;
     sh:prefixes _:sparql_examples_prefixes ;
@@ -11,7 +11,6 @@ ex:14 a sh:SPARQLExecutable,
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
 
 SELECT DISTINCT ?symbol ?description ?id
 ?links ?organism ?uniprot ?ensembl ?ncbi WHERE {

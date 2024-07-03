@@ -1,24 +1,24 @@
-@prefix ex: <https://sparql.omabrowser.org/.well-known/sparql-examples/> .
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:1 a sh:SPARQLExecutable,
+ex:021 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find all Rattus norvegicus proteins present in OMA RDF database." ;
+    rdfs:comment "Which species the Mt-co1 gene is present (without considering synonyms)?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX orth: <http://purl.org/net/orth#>
 PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX orth: <http://purl.org/net/orth#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 
-SELECT ?protein ?OMA_link
+SELECT ?name
 WHERE {
-    ?protein a orth:Protein ;
+    ?gene a orth:Gene ;
+        rdfs:label ?geneName ;
         orth:organism ?organism .
     ?organism obo:RO_0002162 ?taxon . # in taxon
-    ?taxon up:scientificName 'Rattus norvegicus' .
-    ?protein rdfs:seeAlso ?OMA_link .
+    ?taxon up:scientificName ?name .
+    FILTER ( UCASE(?geneName) = UCASE('Mt-co1') )
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
-
+    schema:target <https://www.bgee.org/sparql/> .

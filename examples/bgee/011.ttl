@@ -3,20 +3,18 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:11-a a sh:SPARQLExecutable,
+ex:011 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What is the post-juvenile stage link and description?" ;
+    rdfs:comment "What are the developmental stages present in Bgee?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-
 SELECT DISTINCT ?stage ?stageName ?stageDescription WHERE {
     ?stage a efo:EFO_0000399 ;
         rdfs:label ?stageName ;
         dcterms:description ?stageDescription .
-    FILTER (CONTAINS(?stageName,"post-juvenile"))
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
 

@@ -3,37 +3,31 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:6 a sh:SPARQLExecutable,
+ex:005 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed in the post-juvenile stage?" ;
+    rdfs:comment "What are the anatomical entities where the APOC1 gene is expressed independently of the developmental stage, sex, strain and cell type?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX up: <http://purl.uniprot.org/core/>
 
-
-SELECT DISTINCT ?anat ?anatName ?stage WHERE {
+SELECT DISTINCT ?anat ?anatName {
     ?seq a orth:Gene ;
-        rdfs:label "APOC1" ;
         genex:isExpressedIn ?condition ;
-        orth:organism ?organism .
+        rdfs:label "APOC1" .
     ?condition a genex:ExpressionCondition ;
         genex:hasAnatomicalEntity ?anat ;
         genex:hasAnatomicalEntity obo:GO_0005575 ;
         genex:hasDevelopmentalStage ?stage ;
         genex:hasSex "any" ;
         genex:hasStrain ?strain .
-    ?anat rdfs:label ?anatName .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label ?anatName .
     ?stage a efo:EFO_0000399 ;
-        rdfs:label "post-juvenile" .
-    ?strain a efo:EFO_0005135 ;
-        rdfs:label "wild-type" .
-    ?organism obo:RO_0002162  ?species .
-    ?species a up:Taxon ;
-        up:commonName "human" .
+        rdfs:label "life cycle" .
+    ?strain rdfs:label "wild-type" .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
 

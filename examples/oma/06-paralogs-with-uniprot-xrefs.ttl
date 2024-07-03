@@ -11,17 +11,17 @@ ex:6 a sh:SPARQLExecutable,
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX orth: <http://purl.org/net/orth#>
 
-select ?protein2 ?Uniprot_link
-where {
-    ?cluster a orth:ParalogsCluster.
-    ?cluster orth:hasHomologousMember ?node1.
-    ?cluster orth:hasHomologousMember ?node2.
-    ?node2 orth:hasHomologousMember* ?protein2.
-    ?node1 orth:hasHomologousMember* ?protein1.
-    ?protein1 a orth:Protein.
-    ?protein1 dc:identifier 'HUMAN00529'.
-    ?protein2 a orth:Protein. 
-    ?protein2  lscr:xrefUniprot ?Uniprot_link. 
+SELECT ?protein2 ?Uniprot_link
+WHERE {
+    ?cluster a orth:ParalogsCluster ;
+        orth:hasHomologousMember ?node1 ;
+        orth:hasHomologousMember ?node2 .
+    ?node2 orth:hasHomologousMember* ?protein2 .
+    ?node1 orth:hasHomologousMember* ?protein1 .
+    ?protein1 a orth:Protein ;
+        dc:identifier 'HUMAN00529'.
+    ?protein2 a orth:Protein ;
+        lscr:xrefUniprot ?Uniprot_link .
     filter(?node1 != ?node2)
 }""" ;
     schema:target <https://sparql.omabrowser.org/sparql/> .

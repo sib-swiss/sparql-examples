@@ -12,8 +12,8 @@ PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-select distinct ?HOG ?MEMBER ?GENE_LABEL
-where {
+SELECT DISTINCT ?HOG ?MEMBER ?GENE_LABEL
+WHERE {
     ?HOG a orth:OrthologsCluster ;
       orth:hasHomologousMember ?node1 ;
       orth:hasTaxonomicRange ?taxRange .
@@ -29,4 +29,3 @@ where {
       rdfs:label 'CDIN1'.
 }""" ;
     schema:target <https://sparql.omabrowser.org/sparql/> .
-

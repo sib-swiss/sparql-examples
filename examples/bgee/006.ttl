@@ -3,9 +3,9 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:9 a sh:SPARQLExecutable,
+ex:006 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities including cell types, if any, where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain and sex?" ;
+    rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed in the post-juvenile stage?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX genex: <http://purl.org/genex#>
@@ -14,32 +14,23 @@ PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-
-SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage WHERE {
+SELECT DISTINCT ?anatName ?anat ?stageName ?stage WHERE {
     ?seq a orth:Gene ;
         rdfs:label "APOC1" ;
+        genex:isExpressedIn ?condition ;
         orth:organism ?organism .
-    ?expression a genex:Expression ;
-        genex:hasExpressionCondition ?condition ;
-        genex:hasExpressionLevel ?score ;
-        genex:hasSequenceUnit ?seq .
     ?condition a genex:ExpressionCondition ;
         genex:hasAnatomicalEntity ?anat ;
-        genex:hasAnatomicalEntity ?cellType ;
-        genex:hasDevelopmentalStage ?stage ;
-        genex:hasSex "any" ;
-        genex:hasStrain ?strain .
+        genex:hasAnatomicalEntity obo:GO_0005575 ;
+        genex:hasDevelopmentalStage ?stage .
     ?anat a genex:AnatomicalEntity ;
         rdfs:label ?anatName .
-    ?cellType rdfs:label ?cellTypeName .
-    ?stage rdfs:label "post-juvenile" .
-    ?strain a efo:EFO_0005135 ;
-        rdfs:label "wild-type" .
+    ?stage a efo:EFO_0000399 ;
+        rdfs:label ?stageName .
     ?organism obo:RO_0002162  ?species .
     ?species a up:Taxon ;
         up:commonName "human" .
-    FILTER (?anat != obo:GO_0005575)
-    FILTER (?anat != ?cellType)
-} ORDER BY DESC(?score)""" ;
+    FILTER (CONTAINS(LCASE(?stageName), 'post-juvenile' ))
+}""" ;
     schema:target <https://www.bgee.org/sparql/> .
 

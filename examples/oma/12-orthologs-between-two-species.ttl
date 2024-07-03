@@ -11,18 +11,18 @@ ex:12 a sh:SPARQLExecutable,
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-select distinct ?MOUSE_PROTEIN ?RABIT_PROTEIN ?HOG
-where {
-?HOG a orth:OrthologsCluster ;
- orth:hasHomologousMember ?node1 ;
- orth:hasHomologousMember ?node2 . 
-?node2 orth:hasHomologousMember* ?RABIT_PROTEIN. 
-?node1 orth:hasHomologousMember* ?MOUSE_PROTEIN.
-?MOUSE_PROTEIN a orth:Protein ;
- orth:organism/obo:RO_0002162/up:scientificName 'Mus musculus'.
-?RABIT_PROTEIN a orth:Protein ;
- orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .  
-filter(?node1 != ?node2)
+SELECT DISTINCT ?MOUSE_PROTEIN ?RABIT_PROTEIN ?HOG
+WHERE {
+    ?HOG a orth:OrthologsCluster ;
+        orth:hasHomologousMember ?node1 ;
+        orth:hasHomologousMember ?node2 .
+    ?node2 orth:hasHomologousMember* ?RABIT_PROTEIN .
+    ?node1 orth:hasHomologousMember* ?MOUSE_PROTEIN .
+    ?MOUSE_PROTEIN a orth:Protein ;
+        orth:organism/obo:RO_0002162/up:scientificName 'Mus musculus' .
+    ?RABIT_PROTEIN a orth:Protein ;
+        orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .
+    FILTER(?node1 != ?node2)
 }""" ;
     schema:target <https://sparql.omabrowser.org/sparql/> .
 

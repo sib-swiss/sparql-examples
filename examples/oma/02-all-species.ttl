@@ -9,11 +9,11 @@ ex:2 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT ?species ?sciname WHERE
-{
-    ?species a up:Taxon.
-    ?species up:scientificName ?sciname.
-    ?species up:rank up:Species.
+SELECT ?species ?sciname
+WHERE {
+    ?species a up:Taxon ;
+        up:scientificName ?sciname ;
+        up:rank up:Species .
 }""" ;
     schema:target <https://sparql.omabrowser.org/sparql/> .
 

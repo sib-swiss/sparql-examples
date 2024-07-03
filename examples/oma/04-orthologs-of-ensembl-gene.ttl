@@ -13,26 +13,23 @@ PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sio: <http://semanticscience.org/resource/>
 
-select ?protein2 ?OMA_LINK 
-where {
-    #The three that contains Orthologs. The leafs are proteins.
-    #This graph pattern defines the relationship protein1 is Orthologs to protein2
-    ?cluster a orth:OrthologsCluster.
-    ?cluster orth:hasHomologousMember ?node1.
-    ?cluster orth:hasHomologousMember ?node2. 
-    ?node2 orth:hasHomologousMember* ?protein2. 
-    ?node1 orth:hasHomologousMember* ?protein1.
-    ########
-     
-    #Specify the protein to look for its orthologs
-    ?protein1 sio:SIO_010079/lscr:xrefEnsemblGene  ensembl:ENSLACG00000002497.
-    ########
-     
-    #The OMA link to the second protein
-    ?protein2 rdfs:seeAlso ?OMA_LINK. 
-    ########
-     
-    filter(?node1 != ?node2) 
+SELECT ?protein2 ?OMA_LINK
+WHERE {
+    # The three that contains Orthologs. The leafs are proteins.
+    # This graph pattern defines the relationship protein1 is Orthologs to protein2
+    ?cluster a orth:OrthologsCluster ;
+        orth:hasHomologousMember ?node1 ;
+        orth:hasHomologousMember ?node2 .
+    ?node2 orth:hasHomologousMember* ?protein2 .
+    ?node1 orth:hasHomologousMember* ?protein1 .
+
+    # Specify the protein to look for its orthologs
+    ?protein1 sio:SIO_010079/lscr:xrefEnsemblGene ensembl:ENSLACG00000002497 .
+
+    # The OMA link to the second protein
+    ?protein2 rdfs:seeAlso ?OMA_LINK .
+
+    filter(?node1 != ?node2)
 }""" ;
     schema:target <https://sparql.omabrowser.org/sparql/> .
 

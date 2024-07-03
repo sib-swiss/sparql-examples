@@ -3,16 +3,15 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:8 a sh:SPARQLExecutable,
+ex:008 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed in the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?" ;
+    rdfs:comment "What are the anatomical entities where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain, sex, and cell type?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
-
 
 SELECT DISTINCT ?anat ?anatName ?score ?stage WHERE {
     ?seq a orth:Gene ;
@@ -30,12 +29,13 @@ SELECT DISTINCT ?anat ?anatName ?score ?stage WHERE {
         genex:hasStrain ?strain .
     ?anat a genex:AnatomicalEntity ;
         rdfs:label ?anatName .
-    ?stage rdfs:label "post-juvenile" .
+    ?stage rdfs:label ?stageName .
     ?strain rdfs:label "wild-type" .
     ?organism obo:RO_0002162  ?species .
     ?species a up:Taxon ;
         up:commonName "human" .
-FILTER (?anat !=  obo:GO_0005575)
+    FILTER (?anat !=  obo:GO_0005575)
+    FILTER (CONTAINS(LCASE(?stageName), 'post-juvenile' ))
 } ORDER BY DESC(?score)""" ;
     schema:target <https://www.bgee.org/sparql/> .
 

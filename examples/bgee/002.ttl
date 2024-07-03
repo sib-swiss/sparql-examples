@@ -3,12 +3,11 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:2 a sh:SPARQLExecutable,
+ex:00002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the species present in Bgee and their scientific and common names?" ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
-
 
 SELECT ?species ?sci_name ?common_name WHERE {
     ?species a up:Taxon ;
