@@ -12,11 +12,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import javax.naming.Binding;
+
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.base.CoreDatatype;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.algebra.Avg;
 import org.eclipse.rdf4j.query.algebra.BindingSetAssignment;
 import org.eclipse.rdf4j.query.algebra.Bound;
@@ -181,10 +184,25 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	@Override
 	public void meet(BindingSetAssignment b) throws RuntimeException {
-//		String bindId = "bind" + filterCount++;
-//		rq.add(indent() + bindId);
+		String bindId = "bind" + filterCount++;
+		int values=0;
+		rq.add(indent() + bindId + "[/VALUES "
+				+ b.getBindingNames().stream().sorted().map(s -> "?" + s).collect(Collectors.joining(" ")) + "/]");
+		for (String bn : b.getBindingNames())
+		{
+			rq.add(indent() + bindId + "-->" + variableKeys.get(bn));
+		}
+		for (BindingSet bs : b.getBindingSets()) {
+			for (String bn : b.getBindingNames()) {
+				int valueId=values++;
+				rq.add(indent() + bindId + valueId + "([" + prefix(bs.getValue(bn), iriPrefixes, '"') + "])");
+				rq.add(indent() + bindId + valueId + " --> " + bindId);
+			}
+		}
+		
 //		b.getBindingNames();
 //		rq.add(indent() + bindId + "-->" + );
+
 		super.meet(b);
 	}
 
@@ -262,7 +280,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	public void meet(Difference s) throws RuntimeException {
 
 		s.getLeftArg().visit(this);
-		String key = "minus"+filterCount++;
+		String key = "minus" + filterCount++;
 		rq.add(indent() + "subgraph " + key + "[\"MINUS\"]");
 		indent += 2;
 		rq.add(indent() + "style " + key + " stroke-width:6px,fill:pink,stroke:red;");
@@ -270,7 +288,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		indent -= 2;
 		rq.add(indent() + "end");
 	}
-	
+
 	private String indent() {
 		return IntStream.range(0, indent).mapToObj(i -> " ").collect(Collectors.joining());
 	}
