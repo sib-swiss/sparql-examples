@@ -22,6 +22,7 @@ import org.eclipse.rdf4j.query.algebra.BindingSetAssignment;
 import org.eclipse.rdf4j.query.algebra.Bound;
 import org.eclipse.rdf4j.query.algebra.Compare;
 import org.eclipse.rdf4j.query.algebra.Count;
+import org.eclipse.rdf4j.query.algebra.Difference;
 import org.eclipse.rdf4j.query.algebra.Exists;
 import org.eclipse.rdf4j.query.algebra.ExtensionElem;
 import org.eclipse.rdf4j.query.algebra.Filter;
@@ -257,6 +258,19 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		rq.add(indent() + "end");
 	}
 
+	@Override
+	public void meet(Difference s) throws RuntimeException {
+
+		s.getLeftArg().visit(this);
+		String key = "minus"+filterCount++;
+		rq.add(indent() + "subgraph " + key + "[\"MINUS\"]");
+		indent += 2;
+		rq.add(indent() + "style " + key + " stroke-width:6px,fill:pink,stroke:red;");
+		s.getRightArg().visit(this);
+		indent -= 2;
+		rq.add(indent() + "end");
+	}
+	
 	private String indent() {
 		return IntStream.range(0, indent).mapToObj(i -> " ").collect(Collectors.joining());
 	}
