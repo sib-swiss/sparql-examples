@@ -55,15 +55,9 @@ public class SparqlInRdfToMd {
 		streamOf(ex, null, SIB.PROJECT, null).map(Statement::getObject).distinct()
 				.forEach(o -> rq.add("# " + o.stringValue()));
 		rq.add("");
-		streamOf(ex, null, SIB.FILE_NAME, null).forEach(s -> {
-
-			String fileName = s.getObject().stringValue();
-			streamOf(ex, s.getSubject(), RDFS.COMMENT, null).map(Statement::getObject)
-					.map(asNiceLink(fileName))
-					.sorted()
-					.forEach(rq::add);
-		});
-
+		
+		streamOf(ex, null, SIB.FILE_NAME, null).flatMap(s -> streamOf(ex, s.getSubject(), RDFS.COMMENT, null)
+				.map(Statement::getObject).map(asNiceLink(s.getObject().stringValue()))).sorted().forEach(rq::add);
 		return rq;
 	}
 
