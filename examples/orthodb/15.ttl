@@ -12,9 +12,11 @@ ex:15 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
-?og a :OrthoGroup; :ogBuiltAt ?level; :hasMember/rdfs:seeAlso uniprotkb:P12345
+SELECT *
+WHERE {
+    ?og a :OrthoGroup ;
+        :ogBuiltAt ?level;
+        :hasMember/rdfs:seeAlso uniprotkb:P12345 .
 }""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

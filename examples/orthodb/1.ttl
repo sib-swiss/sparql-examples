@@ -12,10 +12,10 @@ ex:1 a sh:SPARQLExecutable,
 PREFIX : <http://purl.orthodb.org/>
 
 SELECT *
-where {
+WHERE {
     ?tx a :Species; up:scientificName ?tax_name .
     ?org a ?tx; up:scientificName ?org_name.
-    filter (strstarts (lcase(?tax_name ), "drosophila" ))
+    FILTER(strstarts (lcase(?tax_name ), "drosophila" ))
 }""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

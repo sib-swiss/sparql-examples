@@ -11,17 +11,17 @@ ex:11 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-select *
-where {
+SELECT *
+WHERE {
 ?gene a :Gene; :description ?description.
 ?gene :geneTranslatedLength ?aa_length.
 ?gene :memberOf ?og.
 ?og :ogBuiltAt [up:scientificName "Caudovirales"].
 ?og a :OrthoGroup; :ogEvolRate ?evolrate.
-filter (?evolrate > 1)
+FILTER(?evolrate > 1)
 bind (?evolrate/?aa_length as ?x)
 }
-order by desc(?x) limit 99
+ORDER BY desc(?x) limit 99
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

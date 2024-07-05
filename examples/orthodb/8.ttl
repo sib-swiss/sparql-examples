@@ -12,11 +12,11 @@ ex:8 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
+SELECT *
+WHERE {
     ?tx rdfs:subClassOf+/up:scientificName "Gammaproteobacteria".
     ?gene a :Gene; up:organism/a ?tx; :description ?description.
-    filter (contains (lcase(?description), "protease" ))
+    FILTER(contains (lcase(?description), "protease" ))
 }""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

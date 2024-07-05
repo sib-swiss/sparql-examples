@@ -27,11 +27,11 @@ WHERE {
         :ogSingleCopyGenesCount ?singleCopyGenesCount;
         :ogInSpeciesCount ?inSpeciesCount;
         :cladeTotalSpeciesCount ?cladeTotalSpeciesCount .
-    optional { ?og :ogMedianProteinLength ?medianProteinLength}
-    optional { ?og :ogStddevProteinLength ?stddevProteinLength}
-    optional { ?og :ogMedianExonsCount ?medianExonsCount}
-    optional { ?og :ogStddevExonsCount ?stddevExonsCount}
-    filter (?og = odbgroup:6400at314295)
+    OPTIONAL { ?og :ogMedianProteinLength ?medianProteinLength}
+    OPTIONAL { ?og :ogStddevProteinLength ?stddevProteinLength}
+    OPTIONAL { ?og :ogMedianExonsCount ?medianExonsCount}
+    OPTIONAL { ?og :ogStddevExonsCount ?stddevExonsCount}
+    FILTER(?og = odbgroup:6400at314295)
 }""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

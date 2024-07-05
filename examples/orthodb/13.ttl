@@ -11,15 +11,15 @@ ex:13 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
 
-select ?og ?og_description (group_concat(distinct ?xref; SEPARATOR="; ") as ?xrefs)
-where {
-?og a :OrthoGroup; :name ?og_description.
-?og :xref [a :Xref; :xrefResource ?xref].
-?og :xref [a :Xref; :xrefResource interpro:IPR011990].
-?og :xref [a :Xref; :xrefResource interpro:IPR013083].
-?og :xref [a :Xref; :xrefResource interpro:IPR001841].
-} group by ?og ?og_description
-order by ?og_description
+SELECT ?og ?og_description (group_concat(distinct ?xref; SEPARATOR="; ") as ?xrefs)
+WHERE {
+    ?og a :OrthoGroup; :name ?og_description.
+    ?og :xref [a :Xref; :xrefResource ?xref].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR011990].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR013083].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR001841].
+} GROUP BY ?og ?og_description
+ORDER BY ?og_description
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

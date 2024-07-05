@@ -11,14 +11,15 @@ ex:7 a sh:SPARQLExecutable,
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX : <http://purl.orthodb.org/>
 
-select  *
-where {
-    ?gene a :Gene; up:organism [up:scientificName ?sciname].
-    filter (strstarts (?sciname, "Arabidopsis thaliana" ))
+SELECT *
+WHERE {
+    ?gene a :Gene;
+        up:organism [up:scientificName ?sciname] .
+    FILTER(strstarts (?sciname, "Arabidopsis thaliana" ))
     ?gene :name ?gene_name; :description ?description; :geneTranslatedLength ?aa_seq_length.
-    optional {?gene :geneNbExons ?geneNbExons}.
+    OPTIONAL {?gene :geneNbExons ?geneNbExons}.
     ?gene :aaSequence ?sequence
-    filter (?gene_name in(
+    FILTER(?gene_name in(
         "CHX10"
         ,"GPX1"
         ,"MAG"
@@ -29,6 +30,6 @@ where {
         ,"UVR3"
         ,"XRCC1"
     ))
-} order by ?aa_seq_length""" ;
+} ORDER BY ?aa_seq_length""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

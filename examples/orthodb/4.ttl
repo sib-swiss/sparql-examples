@@ -12,8 +12,8 @@ ex:4 a sh:SPARQLExecutable,
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
+SELECT *
+WHERE {
     ?og a :OrthoGroup;
         rdfs:label "6400at314295";
         :name ?description;

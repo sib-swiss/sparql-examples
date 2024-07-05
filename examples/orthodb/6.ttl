@@ -12,8 +12,8 @@ ex:6 a sh:SPARQLExecutable,
 PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
+SELECT *
+WHERE {
     ?gene a :Gene.
     ?gene :name ?gene_name.
     ?gene :description ?description.

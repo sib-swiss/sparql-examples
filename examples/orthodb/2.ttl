@@ -13,11 +13,11 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX : <http://purl.orthodb.org/>
 
-select * where {
-    ?taxon a :Clade
-    ; rdfs:subClassOf+ taxon:2
-    ; up:scientificName ?name
-    ; up:rank ?rank
-} order by ?rank ?name""" ;
+SELECT * WHERE {
+    ?taxon a :Clade ;
+        rdfs:subClassOf+ taxon:2 ;
+        up:scientificName ?name ;
+        up:rank ?rank .
+} ORDER BY ?rank ?name""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

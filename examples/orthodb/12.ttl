@@ -11,22 +11,21 @@ ex:12 a sh:SPARQLExecutable,
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
-
 PREFIX : <http://purl.orthodb.org/>
 
-select ?og ?og_description ?gene_m ?gene_m_name ?gene_h ?gene_h_name
-where {
-?gene_m a :Gene.
-?gene_h a :Gene.
-?gene_m up:organism/a [up:scientificName "Mus musculus"].
-?gene_h up:organism/a taxon:9606.
-?gene_m :name ?gene_m_name.
-?gene_h :name ?gene_h_name.
-?gene_m :memberOf ?og.
-?gene_h :memberOf ?og.
-?og a :OrthoGroup; :name ?og_description.
-?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
-} order by ?og
+SELECT ?og ?og_description ?gene_m ?gene_m_name ?gene_h ?gene_h_name
+WHERE {
+    ?gene_m a :Gene.
+    ?gene_h a :Gene.
+    ?gene_m up:organism/a [up:scientificName "Mus musculus"].
+    ?gene_h up:organism/a taxon:9606.
+    ?gene_m :name ?gene_m_name.
+    ?gene_h :name ?gene_h_name.
+    ?gene_m :memberOf ?og.
+    ?gene_h :memberOf ?og.
+    ?og a :OrthoGroup; :name ?og_description.
+    ?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
+} ORDER BY ?og
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

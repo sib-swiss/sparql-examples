@@ -15,19 +15,23 @@ PREFIX : <http://purl.orthodb.org/>
 PREFIX np: <http://nextprot.org/rdf#>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
 
-select ?gene_zf ?gene_zf_name ?gene ?gene_name ?description ?go ?disease
-where {
+SELECT ?gene_zf ?gene_zf_name ?gene ?gene_name ?description ?go ?disease
+WHERE {
 	SERVICE <https://sparql.nextprot.org/> {
         select distinct ?entry ?disease WHERE {
             ?entry np:isoform / np:disease / rdfs:comment ?disease
         }
     }
-    ?gene rdfs:seeAlso ?entry; :name ?gene_name; :description ?description.
+    ?gene rdfs:seeAlso ?entry;
+        :name ?gene_name ;
+        :description ?description.
     ?gene :memberOf ?og .
-    ?og :xref/:xrefResource interpro:IPR000719, obo:GO_0048013.
-    ?og :ogBuiltAt/up:scientificName "Vertebrata"; :hasMember ?gene_zf.
-    ?gene_zf :name ?gene_zf_name; up:organism/a [up:scientificName "Danio rerio"].
-} order by ?disease
+    ?og :xref/:xrefResource interpro:IPR000719 , obo:GO_0048013.
+    ?og :ogBuiltAt/up:scientificName "Vertebrata";
+        :hasMember ?gene_zf.
+    ?gene_zf :name ?gene_zf_name;
+        up:organism/a [up:scientificName "Danio rerio"].
+} ORDER BY ?disease
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

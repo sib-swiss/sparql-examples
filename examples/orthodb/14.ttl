@@ -14,12 +14,12 @@ PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX entrezgene: <http://www.ncbi.nlm.nih.gov/gene/>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
+SELECT *
+WHERE {
     ?gene a :Gene.
     ?gene :name ?gene_name; :description ?description; up:organism [up:scientificName ?org_name].
     ?gene :xref [a :Xref; :xrefResource ?xref]
-    filter(?xref in (
+    FILTER(?xref in (
     ensembl:ENSPTRG00000022217
     ,ensembl:ENSPVAG00000015405
     ,uniprotkb:Q9D4H7

@@ -12,13 +12,17 @@ ex:17 a sh:SPARQLExecutable,
 PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
-?gene a :Gene; :memberOf odbgroup:6400at314295.
-?gene :xref [a :Xref; :xrefResource ?xref]. ?xref a :Uniprot
-SERVICE <https://sparql.uniprot.org/sparql> {
-?xref a up:Protein; up:recommendedName [up:fullName ?name]
-}}
+SELECT *
+WHERE {
+    ?gene a :Gene;
+        :memberOf odbgroup:6400at314295 .
+    ?gene :xref [a :Xref; :xrefResource ?xref] .
+    ?xref a :Uniprot .
+    SERVICE <https://sparql.uniprot.org/sparql> {
+        ?xref a up:Protein ;
+            up:recommendedName [up:fullName ?name] .
+    }
+}
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

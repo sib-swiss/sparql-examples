@@ -14,21 +14,21 @@ PREFIX : <http://purl.orthodb.org/>
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
 
-select ?og ?equation
+SELECT ?og ?equation
     (group_concat (distinct ?clade_name; SEPARATOR="; ") as ?clades)
     (count(distinct ?taxon) as ?cnt_taxons)
     (count(distinct ?gene) as ?cnt_genes)
     (group_concat (distinct ?org_name; SEPARATOR="; ") as ?taxons)
-
 WHERE {
     ?taxon a :Species; up:scientificName ?org_name ;
         rdfs:subClassOf+/up:scientificName ?clade_name.
-    ?gene a :Gene; up:organism/a ?taxon.
+    ?gene a :Gene ;
+        up:organism/a ?taxon.
     ?gene rdfs:seeAlso ?xref.
     ?xref a :Uniprot.
     ?gene :memberOf ?og.
-    ?og :xref/:xrefResource interpro:IPR002328
-    ; :ogBuiltAt/up:scientificName "Eukaryota".
+    ?og :xref/:xrefResource interpro:IPR002328 ;
+        :ogBuiltAt/up:scientificName "Eukaryota".
 
     # join via uniprot ?xref
     SERVICE <https://sparql.uniprot.org/sparql> {
@@ -43,14 +43,12 @@ WHERE {
     }
 
     # restrict taxons to several clades
-    values ?clade_name {
-    "Stramenopiles"
-    "Alveolata"
-    "Liliopsida"
-    "Coleoptera"}
-}
-group by ?equation ?og
-order by ?og ?equation
-""" ;
+    VALUES ?clade_name {
+        "Stramenopiles"
+        "Alveolata"
+        "Liliopsida"
+        "Coleoptera"
+    }
+} GROUP BY ?equation ?og ORDER BY ?og ?equation""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

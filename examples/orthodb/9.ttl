@@ -12,8 +12,8 @@ ex:9 a sh:SPARQLExecutable,
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX : <http://purl.orthodb.org/>
 
-select *
-where {
+SELECT *
+WHERE {
     ?og a :OrthoGroup.
     ?og :ogBuiltAt taxon:314146.
     ?gene_m a :Gene.
@@ -24,7 +24,7 @@ where {
     ?gene_h :memberOf ?og.
     ?gene_m :name ?gene_m_name.
     ?gene_h :name ?gene_h_name.
-    filter (contains (UCASE(?gene_m_name), "MAPK" ))
+    FILTER(contains (UCASE(?gene_m_name), "MAPK" ))
 }""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 
