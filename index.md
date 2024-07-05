@@ -10,6 +10,7 @@ In this github pages we have a HTML rendering of them.
  * [MetaNetX](./examples/metanetx/)
  * [NeXtProt](./examples/nextprot/)
  * [OMA](./examples/oma/)
+ * [OrthoDB](./examples/orthodb)
  * [Rhea](./examples/rhea)
  * [SwissLipids](./examples/swisslipids)
  * [UniProt](./examples/uniprot/) 

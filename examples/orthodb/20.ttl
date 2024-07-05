@@ -10,7 +10,7 @@ ex:20 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX : <http://purl.orthodb.org/>
 PREFIX ip_highest: <http://string-db.org/rdf/interaction/physical-highest-confidence-cutoff>
 
@@ -23,7 +23,7 @@ WHERE {
     ?og a :OrthoGroup ;
         :name ?og_description ;
         :ogBuiltAt [up:scientificName "Mammalia"] .
-    ?og :xref [a :Xref; :xrefResource obo:GO_0005164], [a :Xref; :xrefResource obo:GO_0045739] .
+    ?og :xref [a :Xref; :xrefResource GO:0005164], [a :Xref; :xrefResource GO:0045739] .
     ?gene_m :xref [a :Xref; :xrefResource ?xref_m] .
     ?xref_m a :Entrezgene.
 

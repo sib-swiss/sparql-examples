@@ -10,7 +10,7 @@ ex:12 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX : <http://purl.orthodb.org/>
 
 SELECT ?og ?og_description ?gene_m ?gene_m_name ?gene_h ?gene_h_name
@@ -24,7 +24,7 @@ WHERE {
     ?gene_m :memberOf ?og.
     ?gene_h :memberOf ?og.
     ?og a :OrthoGroup; :name ?og_description.
-    ?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
+    ?og :xref [a :Xref; :xrefResource GO:0005164],[a :Xref; :xrefResource GO:0045739].
 } ORDER BY ?og
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .

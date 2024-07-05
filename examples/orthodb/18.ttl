@@ -10,7 +10,7 @@ ex:18 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX : <http://purl.orthodb.org/>
 PREFIX np: <http://nextprot.org/rdf#>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
@@ -26,7 +26,7 @@ WHERE {
         :name ?gene_name ;
         :description ?description.
     ?gene :memberOf ?og .
-    ?og :xref/:xrefResource interpro:IPR000719 , obo:GO_0048013.
+    ?og :xref/:xrefResource interpro:IPR000719 , GO:0048013.
     ?og :ogBuiltAt/up:scientificName "Vertebrata";
         :hasMember ?gene_zf.
     ?gene_zf :name ?gene_zf_name;

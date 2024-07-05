@@ -8,7 +8,7 @@ ex:16 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find statistics on translated sequence length for genes matching both IPR002117 and GO:0008219"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX obo: <http://purl.obolibrary.org/obo/>
+    sh:select """PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
 PREFIX : <http://purl.orthodb.org/>
 
@@ -20,7 +20,7 @@ SELECT
 WHERE {
     ?gene a :Gene; :geneTranslatedLength ?aa_seq_length.
     ?gene :xref [a :Xref; :xrefResource interpro:IPR002117].
-    ?gene :xref [a :Xref; :xrefResource obo:GO_0008219].
+    ?gene :xref [a :Xref; :xrefResource GO:0008219].
 }
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> .
