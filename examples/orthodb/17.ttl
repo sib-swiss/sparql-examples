@@ -1,17 +1,24 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:17
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:17 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find genes having Uniprot xrefs in the group 6400at314295, along with their names fetched from Uniprot SPARQL endpoint"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find genes having Uniprot xrefs in the group 6400at314295, along with their names fetched from Uniprot SPARQL endpoint"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/>
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>
+PREFIX : <http://purl.orthodb.org/>
+
 select *
 where {
 ?gene a :Gene; :memberOf odbgroup:6400at314295.
 ?gene :xref [a :Xref; :xrefResource ?xref]. ?xref a :Uniprot
-service <https://sparql.uniprot.org/sparql> {
-?xref a up:Protein; up:recommendedName [up:fullName ?name] 
+SERVICE <https://sparql.uniprot.org/sparql> {
+?xref a up:Protein; up:recommendedName [up:fullName ?name]
 }}
-""" .
+""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
+

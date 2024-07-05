@@ -1,16 +1,23 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:4
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:4 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find URI and some properties of the orthologous group 6400at314295 by its short text label"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find URI and some properties of the orthologous group 6400at314295 by its short text label"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/>
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX : <http://purl.orthodb.org/>
+
 select *
 where {
-?og a :OrthoGroup;
- rdfs:label "6400at314295";
- :name ?description;
- :ogBuiltAt [up:scientificName ?clade]
-}""" .
+    ?og a :OrthoGroup;
+        rdfs:label "6400at314295";
+        :name ?description;
+        :ogBuiltAt [up:scientificName ?clade] .
+}""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
+

@@ -15,7 +15,6 @@ SELECT DISTINCT ?stage ?stageName ?stageDescription WHERE {
     ?stage a efo:EFO_0000399 ;
         rdfs:label ?stageName ;
         dcterms:description ?stageDescription .
-    FILTER (CONTAINS(?stageName, "post-juvenile"))
+    FILTER(CONTAINS(LCASE(?stageName), "post-juvenile"))
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

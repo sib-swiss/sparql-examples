@@ -1,38 +1,25 @@
-# baseURI: http://purl.orthodb.org/
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-@prefix : <http://purl.orthodb.org/> .
-@prefix annotation: <http://purl.uniprot.org/annotation/> .
-@prefix bibo: <http://purl.org/ontology/bibo/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix disease: <http://purl.uniprot.org/diseases/> .
-@prefix ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/> .
-@prefix ensemblgenomes: <http://ensemblgenomes.org/id/> .
-@prefix entrezgene: <http://www.ncbi.nlm.nih.gov/gene/> .
-@prefix entrezprotein: <http://www.ncbi.nlm.nih.gov/protein/> .
-@prefix NCBIgenome: <https://www.ncbi.nlm.nih.gov/datasets/genome/> .
-@prefix enzyme: <http://purl.uniprot.org/enzyme/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix obo: <http://purl.obolibrary.org/obo/> .
-@prefix interpro: <http://www.ebi.ac.uk/interpro/entry/> .
-@prefix isoform: <http://purl.uniprot.org/isoforms/> .
-@prefix keyword: <http://purl.uniprot.org/keywords/> .
-@prefix location: <http://purl.uniprot.org/locations/> .
-@prefix nextprot: <http://nextprot.org/rdf/entry/> .
-@prefix obotaxon: <http://purl.obolibrary.org/obo/NCBITaxon_> .
-@prefix odbgene: <http://purl.orthodb.org/odbgene/> .
-@prefix odbgroup: <http://purl.orthodb.org/odbgroup/> .
-@prefix odborganism: <http://purl.orthodb.org/odborganism/> .
-@prefix orth: <http://purl.org/net/orth#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix position: <http://purl.uniprot.org/position/> .
-@prefix pubmed: <http://purl.uniprot.org/pubmed/> .
-@prefix range: <http://purl.uniprot.org/range/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix taxon: <http://purl.uniprot.org/taxonomy/> .
-@prefix tissue: <http://purl.uniprot.org/tissues/> .
-@prefix uniprot: <http://purl.uniprot.org/uniprot/> .
-@prefix up: <http://purl.uniprot.org/core/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+_:orthodb_sparql_examples_prefixes
+  a owl:Ontology ;
+  owl:imports sh: .
+
+_:orthodb_sparql_examples_prefixes sh:declare _:prefix_orthodb_blank .
+_:prefix_orthodb_blank sh:prefix "" ;
+  sh:namespace "http://purl.orthodb.org/"^^xsd:anyURI .
+
+
+_:orthodb_sparql_examples_prefixes sh:declare _:prefix_interpro .
+_:prefix_interpro sh:prefix "interpro" ;
+  sh:namespace "http://www.ebi.ac.uk/interpro/entry/"^^xsd:anyURI .
+
+_:orthodb_sparql_examples_prefixes sh:declare _:prefix_odbgroup .
+_:prefix_odbgroup sh:prefix "odbgroup" ;
+  sh:namespace "http://purl.orthodb.org/odbgroup/"^^xsd:anyURI .
+
+_:orthodb_sparql_examples_prefixes sh:declare _:prefix_entrezgene .
+_:prefix_entrezgene sh:prefix "entrezgene" ;
+  sh:namespace "http://www.ncbi.nlm.nih.gov/gene/"^^xsd:anyURI .

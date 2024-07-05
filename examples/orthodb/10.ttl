@@ -1,12 +1,16 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:10
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:10 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find most conservative single copy Danio rerio genes at the Vertebrata level"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find most conservative single copy Danio rerio genes at the Vertebrata level"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/>
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX : <http://purl.orthodb.org/>
+
 select ?og ?gene ?description ?evolrate
 where {
 ?gene a :Gene; :description ?description; up:organism/a [up:scientificName "Danio rerio"].
@@ -16,4 +20,6 @@ where {
 filter (?evolrate < 1)
 }
 order by ?evolrate
-""" .
+""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
+

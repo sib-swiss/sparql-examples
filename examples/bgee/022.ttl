@@ -19,6 +19,6 @@ WHERE {
         dcterms:identifier ?geneId ;
         orth:organism/obo:RO_0002162/up:commonName ?commonName .
     OPTIONAL { ?gene rdfs:label ?geneName .}
-    FILTER ( lcase(str(?commonName)) = "pig-tailed macaque" ) .
+    FILTER ( LCASE(?commonName) = "pig-tailed macaque" ) .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .

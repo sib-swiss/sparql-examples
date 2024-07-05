@@ -18,7 +18,7 @@ SELECT DISTINCT ?anatomicalEntity ?stageName {
         obo:RO_0002162/up:commonName ?commonName .
     ?anatEntity rdfs:label ?anatomicalEntity .
     ?stage rdfs:label ?stageName .
-    FILTER ( lcase(str(?commonName)) = lcase("Human") ).
-    FILTER ( CONTAINS(?stageName, "young adult") )
+    FILTER( LCASE(?commonName) = "human" )
+    FILTER( CONTAINS(LCASE(?stageName), "young adult") )
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .

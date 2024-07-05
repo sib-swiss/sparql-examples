@@ -1,47 +1,56 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:19
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:19 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find distribution of oxidation reactions catalyzed by genes arranged into several Eukaryota-level orthologous groups annotated with IPR002328 across species in Alveolata, Stramenopiles, Liliopsida and Coleoptera via cooperation with both Uniprot SPARQL endpoint and RHEA SPARQL endpoint"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find distribution of oxidation reactions catalyzed by genes arranged into several Eukaryota-level orthologous groups annotated with IPR002328 across species in Alveolata, Stramenopiles, Liliopsida and Coleoptera via cooperation with both Uniprot SPARQL endpoint and RHEA SPARQL endpoint"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/> 
-PREFIX rh: <http://rdf.rhea-db.org/> 
- 
-select ?og ?equation 
-(group_concat (distinct ?clade_name,"; ") as ?clades) 
-(count(distinct ?taxon) as ?cnt_taxons) 
-(count(distinct ?gene) as ?cnt_genes) 
-(group_concat (distinct ?org_name,"; ") as ?taxons) 
- 
-where { 
-?taxon a :Species; up:scientificName ?org_name 
-; rdfs:subClassOf+/up:scientificName ?clade_name. 
-?gene a :Gene; up:organism/a ?taxon. 
-?gene rdfs:seeAlso ?xref. 
-?xref a :Uniprot. 
-?gene :memberOf ?og. 
-?og :xref/:xrefResource interpro:IPR002328 
-; :ogBuiltAt/up:scientificName "Eukaryota". 
- 
-# join via uniprot ?xref 
-service <https://sparql.uniprot.org/sparql> { 
-?xref a up:Protein 
-; up:annotation/up:catalyticActivity/up:catalyzedReaction ?rh} 
- 
-# join via reaction ?rh 
-service <https://sparql.rhea-db.org/sparql> { 
-?rh rdfs:subClassOf rh:Reaction 
-; rh:equation ?equation. } 
- 
-# restrict taxons to several clades 
-values ?clade_name { 
-"Stramenopiles" 
-"Alveolata" 
-"Liliopsida" 
-"Coleoptera"} 
-} 
-group by ?equation ?og 
-order by ?og ?equation 
-""" .
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://purl.orthodb.org/>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
+
+select ?og ?equation
+    (group_concat (distinct ?clade_name; SEPARATOR="; ") as ?clades)
+    (count(distinct ?taxon) as ?cnt_taxons)
+    (count(distinct ?gene) as ?cnt_genes)
+    (group_concat (distinct ?org_name; SEPARATOR="; ") as ?taxons)
+
+WHERE {
+    ?taxon a :Species; up:scientificName ?org_name ;
+        rdfs:subClassOf+/up:scientificName ?clade_name.
+    ?gene a :Gene; up:organism/a ?taxon.
+    ?gene rdfs:seeAlso ?xref.
+    ?xref a :Uniprot.
+    ?gene :memberOf ?og.
+    ?og :xref/:xrefResource interpro:IPR002328
+    ; :ogBuiltAt/up:scientificName "Eukaryota".
+
+    # join via uniprot ?xref
+    SERVICE <https://sparql.uniprot.org/sparql> {
+        ?xref a up:Protein ;
+            up:annotation/up:catalyticActivity/up:catalyzedReaction ?rh .
+    }
+
+    # join via reaction ?rh
+    SERVICE <https://sparql.rhea-db.org/sparql> {
+        ?rh rdfs:subClassOf rh:Reaction ;
+            rh:equation ?equation.
+    }
+
+    # restrict taxons to several clades
+    values ?clade_name {
+    "Stramenopiles"
+    "Alveolata"
+    "Liliopsida"
+    "Coleoptera"}
+}
+group by ?equation ?og
+order by ?og ?equation
+""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
+

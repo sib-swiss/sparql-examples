@@ -1,33 +1,38 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:20
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:20 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find single-copy phyletic profile at all orthologous levels of STRING-anotated well known interacting genes pertinent to mouse gene/s from the OrthoDB orthologous group annotated with GO MF GO:0005164 (tumor necrosis factor receptor binding) and GO BP GO:0045739 (positive regulation of DNA repair)"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find single-copy phyletic profile at all orthologous levels of STRING-anotated well known interacting genes pertinent to mouse gene/s from the OrthoDB orthologous group annotated with GO MF GO:0005164 (tumor necrosis factor receptor binding) and GO BP GO:0045739 (positive regulation of DNA repair)"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/> 
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX : <http://purl.orthodb.org/>
 PREFIX ip_highest: <http://string-db.org/rdf/interaction/physical-highest-confidence-cutoff>
 
-select ?gene_m, ?gene_m_name, 
-?partner_m, ?string_partner_genename, ?level,?percent_single_copy 
+select ?gene_m ?gene_m_name ?partner_m ?string_partner_genename ?level ?percent_single_copy
+where {
+    ?gene_m a :Gene.
+    ?gene_m up:organism/a [up:scientificName "Mus musculus"].
+    ?gene_m :name ?gene_m_name.
+    ?gene_m :memberOf ?og.
+    ?og a :OrthoGroup; :name ?og_description; :ogBuiltAt [up:scientificName "Mammalia"].
+    ?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
+    ?gene_m :xref [a :Xref; :xrefResource ?xref_m].
+    ?xref_m a :Entrezgene.
 
-where { 
-?gene_m a :Gene.
-?gene_m up:organism/a [up:scientificName "Mus musculus"]. 
-?gene_m :name ?gene_m_name. 
-?gene_m :memberOf ?og.
-?og a :OrthoGroup; :name ?og_description; :ogBuiltAt [up:scientificName "Mammalia"].
-?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
-?gene_m :xref [a :Xref; :xrefResource ?xref_m]. 
-?xref_m a :Entrezgene.
+    SERVICE <https://sparql.string-db.org/> {
+        ?string_gene_m rdfs:seeAlso ?xref_m; ip_highest: ?partner_m.
+        ?partner_m rdfs:label ?string_partner_genename; rdfs:comment ?string_partner_description
+    }
 
-service <https://sparql.string-db.org/> { 
-?string_gene_m rdfs:seeAlso ?xref_m; ip_highest: ?partner_m.
-?partner_m rdfs:label ?string_partner_genename; rdfs:comment ?string_partner_description
-} 
+    ?gene_m2 a :Gene; up:organism/a [up:scientificName "Mus musculus"]; :name ?string_partner_genename; :memberOf ?og2.
+    ?og2 a :OrthoGroup; :ogBuiltAt/up:scientificName ?level; :ogPercentSingleCopy ?percent_single_copy.
+}
+""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
 
-?gene_m2 a :Gene; up:organism/a [up:scientificName "Mus musculus"]; :name ?string_partner_genename; :memberOf ?og2. 
-?og2 a :OrthoGroup; :ogBuiltAt/up:scientificName ?level; :ogPercentSingleCopy ?percent_single_copy. 
-} 
-""" .

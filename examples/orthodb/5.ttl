@@ -1,29 +1,37 @@
-prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
-prefix sh: <http://www.w3.org/ns/shacl#> 
-prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
-ex:5
-    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+@prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:5 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find all properties of the orthologous group 6400at314295 by its URI"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
-    rdfs:comment """Find all properties of the orthologous group 6400at314295 by its URI"""^^rdf:HTML ;
-    sh:select """prefix : <http://purl.orthodb.org/>
-select *
-where {
-?og a :OrthoGroup;
- rdfs:label ?label;
- :name ?description;
- :ogBuiltAt [up:scientificName ?clade];
- :ogEvolRate ?evolRate;
- :ogPercentSingleCopy ?percentSingleCopy;
- :ogPercentInSpecies ?percentInSpecies;
- :ogTotalGenesCount ?totalGenesCount;
- :ogMultiCopyGenesCount ?multiCopyGenesCount;
- :ogSingleCopyGenesCount ?singleCopyGenesCount;
- :ogInSpeciesCount ?inSpeciesCount;
- :cladeTotalSpeciesCount ?cladeTotalSpeciesCount .
-optional { ?og :ogMedianProteinLength ?medianProteinLength}
-optional { ?og :ogStddevProteinLength ?stddevProteinLength}
-optional { ?og :ogMedianExonsCount ?medianExonsCount}
-optional { ?og :ogStddevExonsCount ?stddevExonsCount}
-filter (?og = odbgroup:6400at314295)
-}""" .
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?og a :OrthoGroup;
+        rdfs:label ?label;
+        :name ?description;
+        :ogBuiltAt [up:scientificName ?clade];
+        :ogEvolRate ?evolRate;
+        :ogPercentSingleCopy ?percentSingleCopy;
+        :ogPercentInSpecies ?percentInSpecies;
+        :ogTotalGenesCount ?totalGenesCount;
+        :ogMultiCopyGenesCount ?multiCopyGenesCount;
+        :ogSingleCopyGenesCount ?singleCopyGenesCount;
+        :ogInSpeciesCount ?inSpeciesCount;
+        :cladeTotalSpeciesCount ?cladeTotalSpeciesCount .
+    optional { ?og :ogMedianProteinLength ?medianProteinLength}
+    optional { ?og :ogStddevProteinLength ?stddevProteinLength}
+    optional { ?og :ogMedianExonsCount ?medianExonsCount}
+    optional { ?og :ogStddevExonsCount ?stddevExonsCount}
+    filter (?og = odbgroup:6400at314295)
+}""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
+
