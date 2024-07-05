@@ -1,0 +1,21 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:11
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """Find shortest rapidly evolving Caudovirales genes"""^^rdf:HTML ;
+    sh:select """prefix : <http://purl.orthodb.org/>
+select *
+where {
+?gene a :Gene; :description ?description.
+?gene :geneTranslatedLength ?aa_length.
+?gene :memberOf ?og.
+?og :ogBuiltAt [up:scientificName "Caudovirales"].
+?og a :OrthoGroup; :ogEvolRate ?evolrate.
+filter (?evolrate > 1)
+bind (?evolrate/?aa_length as ?x)
+}
+order by desc(?x) limit 99
+""" .

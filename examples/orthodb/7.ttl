@@ -1,0 +1,27 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:7
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """Find A.thaliana genes with their properties by a list of their gene symbols/names"""^^rdf:HTML ;
+    sh:select """prefix : <http://purl.orthodb.org/>
+select  *
+where {
+?gene a :Gene; up:organism [up:scientificName ?sciname].
+filter (strstarts (?sciname, "Arabidopsis thaliana" ))
+?gene :name ?gene_name; :description ?description; :geneTranslatedLength ?aa_seq_length.
+optional {?gene :geneNbExons ?geneNbExons}.
+?gene :aaSequence ?sequence
+filter (?gene_name in(
+"CHX10"
+,"GPX1"
+,"MAG"
+,"MSRB6"
+,"MYH"
+,"POLH"
+,"RPA3A"
+,"UVR3"
+,"XRCC1"
+))} order by ?aa_seq_length""" .

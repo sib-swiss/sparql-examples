@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:6
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """Find all genes with their name and description in the orthologous group 6400at314295"""^^rdf:HTML ;
+    sh:select """prefix : <http://purl.orthodb.org/>
+select *
+where {
+?gene a :Gene.
+?gene :name ?gene_name.
+?gene :description ?description.
+?gene up:organism/a ?taxon.
+?taxon up:scientificName ?org_name.
+?gene :memberOf odbgroup:6400at314295.
+}
+""" .

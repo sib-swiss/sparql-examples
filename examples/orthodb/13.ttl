@@ -1,0 +1,19 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:13
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """List all xrefs attached to the groups annotated with at least three Interpro domains (IPR011990, IPR013083 and IPR001841)"""^^rdf:HTML ;
+    sh:select """prefix : <http://purl.orthodb.org/>
+select ?og ?og_description (group_concat(distinct ?xref,"; ") as ?xrefs)
+where {
+?og a :OrthoGroup; :name ?og_description.
+?og :xref [a :Xref; :xrefResource ?xref].
+?og :xref [a :Xref; :xrefResource interpro:IPR011990].
+?og :xref [a :Xref; :xrefResource interpro:IPR013083].
+?og :xref [a :Xref; :xrefResource interpro:IPR001841].
+} group by ?og ?og_description 
+order by ?og_description
+""" .

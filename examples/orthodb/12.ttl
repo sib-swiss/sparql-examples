@@ -1,0 +1,24 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:12
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """Find orthologous human and mouse genes in the group(s) annotated with GO MF GO:0005164 (tumor necrosis factor receptor binding) and GO BP GO:0045739 (positive regulation of DNA repair)"""^^rdf:HTML ;
+    sh:select """
+prefix : <http://purl.orthodb.org/>
+select ?og ?og_description ?gene_m ?gene_m_name ?gene_h ?gene_h_name
+where {
+?gene_m a :Gene.
+?gene_h a :Gene.
+?gene_m up:organism/a [up:scientificName "Mus musculus"].
+?gene_h up:organism/a taxon:9606.
+?gene_m :name ?gene_m_name.
+?gene_h :name ?gene_h_name.
+?gene_m :memberOf ?og.
+?gene_h :memberOf ?og.
+?og a :OrthoGroup; :name ?og_description.
+?og :xref [a :Xref; :xrefResource obo:GO_0005164],[a :Xref; :xrefResource obo:GO_0045739].
+} order by ?og
+""" .
