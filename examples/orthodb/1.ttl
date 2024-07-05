@@ -1,0 +1,15 @@
+prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/>
+prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+ex:1
+    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    rdfs:comment """Find all OrthoDB species with attached OrthoDB organisms containing "drosophila" in the beginning of the taxonomic name"""^^rdf:HTML ;
+    sh:select """prefix : <http://purl.orthodb.org/>
+select *
+where {
+?tx a :Species; up:scientificName ?tax_name .
+?org a ?tx; up:scientificName ?org_name.
+filter (strstarts (lcase(?tax_name ), "drosophila" ))
+}""" .
