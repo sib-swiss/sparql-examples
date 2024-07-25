@@ -7,6 +7,7 @@ have a public SPARQL endpoint.
 In this github pages we have a HTML rendering for all them.
 
  * [Bgee](./examples/Bgee/)
+ * [dbgi](./examples/dbgi/)
  * [GlyConnect](./examples/GlyConnect/)
  * [HAMAP](./examples/HAMAP/)
  * [MetaNetX](./examples/MetaNetX/)
@@ -15,4 +16,4 @@ In this github pages we have a HTML rendering for all them.
  * [OrthoDB](./examples/OrthoDB)
  * [Rhea](./examples/Rhea)
  * [SwissLipids](./examples/SwissLipids)
- * [UniProt](./examples/UniProt/) 
+ * [UniProt](./examples/UniProt/)
