@@ -15,7 +15,7 @@ PREFIX emi: <https://purl.org/emi#>
 SELECT (COUNT(?feature) AS ?count)
 WHERE {
         ?lcms emi:hasMassiveDOI ?massive_doi ;
-			emi:hasLCMSFeatureSet ?feature_list .
+            emi:hasLCMSFeatureSet ?feature_list .
         # FILTER(regex(str(?massive_doi), "MSV000087728")) # MassIVE id filter, MSV000087728 is pf1600, MSV000093464 is 337 Korean medicinal plants, if you want to query both you can pipe "MSV000087728|MSV000093464". You can apply or not these filters by ucommenting/commenting this line.
         ?feature_list emi:hasLCMSFeature ?feature .
         ?feature emi:hasAnnotation ?sirius_annotation .
@@ -24,9 +24,9 @@ WHERE {
             emi:hasChemicalStructure ?sirius_ik2d .
         ?activity prov:wasAssociatedWith <https://bio.informatik.uni-jena.de/software/sirius> .
         ?feature emi:hasAnnotation ?isdb_annotation .
-		?activity_isdb prov:wasAssociatedWith <https://oolonek.github.io/ISDB> .
+        ?activity_isdb prov:wasAssociatedWith <https://oolonek.github.io/ISDB> .
         ?isdb_annotation a emi:StructuralAnnotation ;
-			prov:wasGeneratedBy ?activity_isdb ;
+            prov:wasGeneratedBy ?activity_isdb ;
             emi:hasChemicalStructure ?isdb_ik2d .
     FILTER(?isdb_ik2d = ?sirius_ik2d) .
 }""" ;

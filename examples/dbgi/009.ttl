@@ -17,10 +17,10 @@ PREFIX sosa: <http://www.w3.org/ns/sosa/>
 SELECT ?extract ?organe ?species_name ?genus_name ?family_name ?count_of_selected_class
 WHERE {
     ?material sosa:hasSample ?extract ;
-		sosa:isSampleOf ?organe .
-	?organe emi:inTaxon ?wd_sp .
-	OPTIONAL {
-		SERVICE <https://query.wikidata.org/sparql> {
+        sosa:isSampleOf ?organe .
+    ?organe emi:inTaxon ?wd_sp .
+    OPTIONAL {
+        SERVICE <https://query.wikidata.org/sparql> {
             ?wd_sp wdt:P225 ?species_name .
             ?family wdt:P31 wd:Q16521 ;
                 wdt:P105 wd:Q35409 ;
@@ -30,9 +30,9 @@ WHERE {
                 wdt:P105 wd:Q34740 ;
                 wdt:P225 ?genus_name ;
                 ^wdt:P171* ?wd_sp .
-		}
-	}
-	{
+        }
+    }
+    {
         SELECT ?extract (COUNT(DISTINCT ?feature) AS ?count_of_selected_class)
         WHERE {
             ?extract a emi:ExtractSample ;

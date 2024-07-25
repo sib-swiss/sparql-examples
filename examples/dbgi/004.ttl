@@ -28,8 +28,8 @@ WHERE {
         sosa:hasResult ?feature_list .
     ?feature_list emi:hasLCMSFeature ?feature .
     ?feature emi:hasRetentionTime ?rt ;
-		emi:hasAnnotation ?sirius .
-	?sirius a emi:StructuralAnnotation ;
+        emi:hasAnnotation ?sirius .
+    ?sirius a emi:StructuralAnnotation ;
         prov:wasGeneratedBy ?activity .
     ?activity prov:wasAssociatedWith <https://bio.informatik.uni-jena.de/software/sirius> .
     ?sirius emi:hasChemicalStructure ?ik2d .
@@ -39,7 +39,7 @@ WHERE {
     ?feature_list_opp emi:hasLCMSFeature ?feature_opp .
     ?feature_opp emi:hasRetentionTime ?rt_opp ;
         emi:hasAnnotation ?sirius_opp .
-	?sirius_opp a emi:StructuralAnnotation ;
+    ?sirius_opp a emi:StructuralAnnotation ;
         prov:wasGeneratedBy ?activity_opp ;
         emi:hasChemicalStructure ?ik2d .
     ?activity_opp prov:wasAssociatedWith <https://bio.informatik.uni-jena.de/software/sirius> .
