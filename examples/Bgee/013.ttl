@@ -21,4 +21,3 @@ SELECT DISTINCT ?anat ?anatName WHERE {
         rdfs:label ?anatName .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

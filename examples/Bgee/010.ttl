@@ -38,4 +38,3 @@ SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage WHERE {
     FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

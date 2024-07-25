@@ -52,4 +52,3 @@ SELECT ?gene ?omaLink ?uniprot ?diseaseLabel ?annotationText WHERE {
     }
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

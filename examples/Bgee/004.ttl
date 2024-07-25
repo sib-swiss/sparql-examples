@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:00004 a sh:SPARQLExecutable,
+ex:004 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "What are the anatomical entities where the APOC1 Homo sapiens gene is expressed?" ;
     sh:prefixes _:sparql_examples_prefixes ;
@@ -26,4 +26,3 @@ SELECT DISTINCT ?geneName ?anat ?anatName WHERE {
     FILTER (LCASE(?geneName) = LCASE('APOC1') )
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

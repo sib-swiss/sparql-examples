@@ -30,4 +30,3 @@ SELECT DISTINCT ?anat ?anatName {
     ?strain rdfs:label "wild-type" .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

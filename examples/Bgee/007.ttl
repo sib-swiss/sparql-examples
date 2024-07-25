@@ -34,4 +34,3 @@ SELECT DISTINCT ?geneName ?anatName ?anat ?stageName ?stage WHERE {
     FILTER (lcase(str(?geneName)) = "apoc1" ).
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

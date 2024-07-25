@@ -35,4 +35,3 @@ SELECT DISTINCT ?anat ?anatName ?stageIRI ?score WHERE {
     FILTER (?anat != obo:GO_0005575)
 } ORDER BY DESC(?score)""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

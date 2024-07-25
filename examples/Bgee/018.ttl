@@ -45,4 +45,3 @@ SELECT ?humanProtein ?mouseProtein ?mouseOmaLink {
     }
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

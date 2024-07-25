@@ -35,4 +35,3 @@ SELECT DISTINCT ?anatomicalEntity ?goClass ?goLabel {
     }
 } LIMIT 20""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

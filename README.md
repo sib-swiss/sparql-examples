@@ -44,6 +44,8 @@ An other option is to build the inbuild converter and use that.
 ```bash
 mvn package
 java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -f jsonld
+# Or for a specific example folder, as turtle, to a file:
+java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
 ```
 
 ## Conversion to RQ files

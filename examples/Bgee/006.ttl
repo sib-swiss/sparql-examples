@@ -33,4 +33,3 @@ SELECT DISTINCT ?anatName ?anat ?stageName ?stage WHERE {
     FILTER (CONTAINS(LCASE(?stageName), 'post-juvenile' ))
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

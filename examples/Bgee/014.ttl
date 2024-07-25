@@ -26,4 +26,3 @@ SELECT DISTINCT ?symbol ?description ?id
     FILTER (?id = "ENSG00000130208")
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

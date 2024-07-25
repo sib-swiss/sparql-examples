@@ -25,4 +25,3 @@ SELECT DISTINCT ?anat ?anatName WHERE {
         up:scientificName "Homo sapiens" .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-

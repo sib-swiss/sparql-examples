@@ -17,4 +17,3 @@ SELECT DISTINCT ?stage ?stageName ?stageDescription WHERE {
         dcterms:description ?stageDescription .
 }""" ;
     schema:target <https://www.bgee.org/sparql/> .
-
