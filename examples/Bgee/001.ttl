@@ -11,6 +11,7 @@ ex:001 a sh:SPARQLExecutable,
 
 SELECT ?species WHERE {
     ?species a up:Taxon .
+    ?species up:rank up:Species .
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql/>,
-        <https://www.bgee.org/sparql/> .
+        <https://www.bgee.org/sparql/>, <https://sparql.omabrowser.org/sparql> .
