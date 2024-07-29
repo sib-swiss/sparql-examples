@@ -3,8 +3,9 @@
 
 
 project="uniprot"
-while getopts nuhrsgmcbop: option; do
+while getopts anuhrsgmcbop: option; do
     case "$option" in
+        a) project="all";;
         p) project="$OPTARG";;
         u) project="uniprot";;
         h) project="hamap";;
@@ -20,6 +21,7 @@ while getopts nuhrsgmcbop: option; do
         *) help; exit 1;;
     esac
 done
+pattern="$project"
 case "$project" in
     trembl)
         ;&
@@ -29,6 +31,8 @@ case "$project" in
             ln -s uniprot "${project}"
         fi
         ;;
+    all)
+        pattern='*';;
 esac
 
 if [ -f examples_${project}.ttl ]
@@ -38,7 +42,7 @@ fi
 
 if which riot
 then
-  cat examples/prefixes.ttl examples/$project/*.ttl | riot --syntax=turtle --formatted=turtle > examples_${project}.ttl
+  cat examples/prefixes.ttl examples/$pattern/*.ttl | riot --syntax=turtle --formatted=turtle > examples_${project}.ttl
 else
-  rapper -q -i turtle <(cat examples/prefixes.ttl examples/${project}/*.ttl) -o turtle  > examples_${project}.ttl
+  rapper -q -i turtle <(cat examples/prefixes.ttl examples/${pattern}/*.ttl) -o turtle  > examples_${project}.ttl
 fi

@@ -98,3 +98,13 @@ mvn test -PallTests
 ```
 
 This does change the queries to add a LIMIT 1 if no limit was set in the query. Then if there is a result it is fetched.
+
+## Finding queries that run on more than one endpoint
+
+```bash
+
+./contvertAllToOneTurtle.sh -a 
+
+sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
+```
+
