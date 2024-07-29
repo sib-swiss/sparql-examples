@@ -1,6 +1,6 @@
 # SPARQL examples
 
-This is a collection of SPARQL examples useable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories. 
+This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories. 
 
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
@@ -24,11 +24,11 @@ WHERE
 }""" .
 ```
 
-# QA.
+# Quality Assurance (QA).
 
 There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org) and [eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above.
 
-# Conversion
+# Conversion for upload in SPARQL endpoint
 
 To load the examples into a SPARQL endpoint they should be concatenated into one example file. Use the script `convertIntoOneTurtle.sh` provide the project name with a `-p` parameter
 
@@ -39,7 +39,7 @@ This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$J
 ./convertToOneTurtle.sh -p uniprot
 ```
 
-An other option is to build the inbuild converter and use that.
+Another option is to build the converter and use that.
 
 ```bash
 mvn package
@@ -66,7 +66,7 @@ java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m
 
 # Querying for queries
 
-As the SPARQL examples are in RDF once loaded in a SPARQL endpoint they can be queried for.
+As the SPARQL examples are themselves RDF, they can be queried for as soon as they are loaded in a SPARQL endpoint.
 ```sparql
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 SELECT *
