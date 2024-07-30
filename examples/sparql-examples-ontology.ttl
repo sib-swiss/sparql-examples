@@ -1,0 +1,35 @@
+# baseURI: https://purl.expasy.org/sparql-examples
+
+@prefix sparql-example:        <https://purl.expasy.org/sparql-examples#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:    	 <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+sparql-example: a owl:Ontology ;
+	<http://purl.org/dc/terms/license>
+	<http://creativecommons.org/publicdomain/zero/1.0/> ;
+	owl:versionInfo "1.0"^^xsd:string .
+
+sparql-example:describe 
+	a rdf:Propery ;
+	rdfs:label "describe"@en ;
+	rdfs:comment "The SPARQL describe query to execute"@en ;
+	rdfs:domain sparql-example:SPARQLDescribeExecutable ;
+	rdfs:range xsd:string ;
+	rdfs:isDefinedBy sparql-example: .
+
+sparql-example:SPARQLDescribeExecutable
+	a rdfs:Class ;
+	rdf:label "SPARQL Descibe executable"@en ;
+	rdfs:comment "The class of SPARQL executables that are based on Descrive queries"@en ;
+	rdfs:subClassOf sh:SPARQLExecutable ;
+	rdfs:isDefinedBy sparql-example: .
+
+sparql-example:federatesWith
+	a rdf:Property ;
+	rdfs:label "List of endpoints a SPARQL Executable uses with SERVICE clauses."@en ;
+	rdfs:range sh:SPARQLExecutable ;
+	rdfs:comment "SPARQL endpoints used in an SPARQL executable which are not the direct target."@en ;
+	rdfs:isDefinedBy sparql-example: .
