@@ -52,5 +52,4 @@ WHERE
         }
     }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/>,
-        <https://www.bgee.org/sparql/> .
+    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
