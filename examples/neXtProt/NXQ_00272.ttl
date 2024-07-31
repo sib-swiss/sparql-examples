@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00272 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -45,5 +46,6 @@ order by ?entry""" ;
         "federated query",
         "pathway",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    sparql-examples:federates_with <http://sparql.wikipathways.org/sparql> .
 

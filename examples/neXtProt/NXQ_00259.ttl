@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00259 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -14,7 +15,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sio: <http://semanticscience.org/resource/>
 
 SELECT DISTINCT ?entry (str(?gen) as ?genx) ?umlsTerm WHERE {
- SERVICE <http://rdf.disgenet.org/sparql/> {
+ SERVICE <https://rdf.disgenet.org/sparql> {
  SELECT DISTINCT ?protein ?umlsTerm WHERE {
  ?gda sio:SIO_000628 ?gene,?disease .
  ?disease a sio:SIO_010056 . # traits or phenotypes
@@ -30,5 +31,6 @@ SELECT DISTINCT ?entry (str(?gen) as ?genx) ?umlsTerm WHERE {
     schema:keyword "disease",
         "federated query",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    sparql-examples:federates_with <https://rdf.disgenet.org/sparql> .
 

@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:29 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -13,7 +14,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT ?protein ?englishLabelStr
 WHERE {
-    SERVICE <http://data.allie.dbcls.jp/sparql>{
+    SERVICE <https://data.allie.dbcls.jp/sparql>{
         ?x rdfs:label "アミロイド前駆体タンパク質"@ja ;
             rdfs:label ?englishLabel .
         FILTER(lang(?englishLabel) = "en")
@@ -32,5 +33,6 @@ WHERE {
     ?structuredName ?anyKindOfName  ?englishLabelStr .
     ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    sparql-examples:federates_with <https://data.allie.dbcls.jp/sparql> .
 

@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:019 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -41,4 +42,5 @@ SELECT DISTINCT ?geneEnsembl ?proteinOrtholog ?geneOrthologEnsembl ?taxonOrtholo
     ?taxonOrthologUri up:commonName ?taxonOrtholog .
     ?geneOrtholog dcterms:identifier ?geneOrthologEnsembl .
 }""" ;
-    schema:target <https://www.bgee.org/sparql/> .
+    schema:target <https://www.bgee.org/sparql/> ;
+    sparql-examples:federates_with  <https://sparql.omabrowser.org/sparql> .

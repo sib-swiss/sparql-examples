@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:uniprot_identifiers_org_translation a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -17,9 +18,10 @@ SELECT
 WHERE {
     VALUES (?protein) {(uniprotkb:P00750) (uniprotkb:P05067)}
     ?protein a up:Protein .
-    SERVICE <https://sparql.api.identifiers.org.sparql> {
+    SERVICE <https://sparql.api.identifiers.org/sparql> {
         ?protein owl:sameAs ?otherIdentifier .
     }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    sparql-examples:federates_with <https://sparql.api.identifiers.org/sparql> .
 

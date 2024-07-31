@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:016 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -18,7 +19,7 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX sio: <http://semanticscience.org/resource/>
 
 SELECT ?gene ?omaLink ?uniprot ?diseaseLabel ?annotationText WHERE {
-    SERVICE <https://www.bgee.org/sparql/> {
+    {
         SELECT ?gene {
             ?anat rdfs:label 'brain' .
             ?gene genex:isExpressedIn ?anat ;
@@ -51,4 +52,5 @@ SELECT ?gene ?omaLink ?uniprot ?diseaseLabel ?annotationText WHERE {
         ?disease skos:prefLabel ?diseaseLabel .
     }
 }""" ;
-    schema:target <https://www.bgee.org/sparql/> .
+    schema:target <https://www.bgee.org/sparql/> ;
+    sparql-examples:federates_with <https://sparql.uniprot.org/sparql> , <https://sparql.omabrowser.org/sparql> .

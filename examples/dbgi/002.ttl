@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -38,4 +39,5 @@ WHERE {
         }
     }
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
+    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> ;
+    sparql-examples:federates_with <https://idsm.elixir-czech.cz/sparql/endpoint/wikidata> .

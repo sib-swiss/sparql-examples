@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:52 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -80,5 +81,6 @@ WHERE
     schema:keyword "drug",
         "enzyme",
         "metabolite" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql>, <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> .
 

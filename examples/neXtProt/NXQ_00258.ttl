@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00258 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -15,7 +16,7 @@ PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX so: <http://purl.obolibrary.org/obo/SO_>
 
 SELECT DISTINCT ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle WHERE {
- SERVICE <http://rdf.disgenet.org/sparql/> {
+ SERVICE <https://rdf.disgenet.org/sparql> {
  SELECT DISTINCT ?protein ?diseaseTitle (sample(?article) as ?sampleArticle) WHERE {
  ?vda sio:SIO_000628 ?variant,?disease .
 	?vda sio:SIO_000772 ?article .
@@ -34,5 +35,6 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle WHERE {
         "publication",
         "tutorial",
         "variant" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    sparql-examples:federates_with <https://rdf.disgenet.org/sparql> .
 

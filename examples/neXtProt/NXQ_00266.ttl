@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00266 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -42,5 +43,7 @@ GROUP BY ?entry""" ;
         "similarity",
         "small molecule interaction",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    sparql-examples:federates_with <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> ,
+    <https://idsm.elixir-czech.cz/sparql/endpoint/cco> .
 

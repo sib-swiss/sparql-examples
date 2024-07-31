@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:53 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -36,7 +37,7 @@ WHERE {
   ?a up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
 
-  SERVICE  <https://sparql.omabrowser.org/sparql/> {
+  SERVICE  <https://sparql.omabrowser.org/sparql> {
     ?cluster a orth:ParalogsCluster .
     ?cluster orth:hasHomologousMember ?node1 , ?node2 .
     ?node1 orth:hasHomologousMember* ?orthoProtein1 .
@@ -47,5 +48,5 @@ WHERE {
     ?orthoProtein1 orth:organism/<http://purl.obolibrary.org/obo/RO_0002162> taxon:10090 . 
   }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
-
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql> , <https://sparql.omabrowser.org/sparql> .

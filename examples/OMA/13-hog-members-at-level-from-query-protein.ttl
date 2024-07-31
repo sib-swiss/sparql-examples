@@ -28,4 +28,4 @@ WHERE {
       orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens';
       rdfs:label 'CDIN1'.
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .

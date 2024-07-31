@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> . 
 
 ex:20 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -27,7 +28,7 @@ WHERE {
     ?gene_m :xref [a :Xref; :xrefResource ?xref_m] .
     ?xref_m a :Entrezgene.
 
-    SERVICE <https://sparql.string-db.org/> {
+    SERVICE <https://sparql.string-db.org/sparql> {
         ?string_gene_m rdfs:seeAlso ?xref_m ;
             ip_highest: ?partner_m .
         ?partner_m rdfs:label ?string_partner_genename ;
@@ -43,5 +44,6 @@ WHERE {
         :ogPercentSingleCopy ?percent_single_copy .
 }
 """ ;
-    schema:target <https://sparql.orthodb.org/sparql/> .
+    schema:target <https://sparql.orthodb.org/sparql/> ;
+    sparql-examples:federates_with <https://sparql.string-db.org/sparql> .
 

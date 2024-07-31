@@ -23,5 +23,5 @@ WHERE {
   ?rhea rh:isTransport ?isTransport .
   ?rhea rh:isChemicallyBalanced ?isChemicallyBalanced .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

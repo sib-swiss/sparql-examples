@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00254 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -15,7 +16,7 @@ PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT DISTINCT ?entry ?gen ?pathwayname WHERE {
- SERVICE <http://sparql.wikipathways.org/sparql> {
+ SERVICE <https://sparql.wikipathways.org/sparql> {
 
  {?geneProduct a wp:Protein}
  union
@@ -38,5 +39,6 @@ order by ?pathwayname""" ;
     schema:keyword "federated query",
         "pathway",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    sparql-examples:federates_with <https://sparql.wikipathways.org/sparql> .
 

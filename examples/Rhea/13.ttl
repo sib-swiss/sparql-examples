@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -33,5 +34,6 @@ WHERE {
   ?rhea rh:accession ?accession .
   ?rhea rh:equation ?equation .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> ;
+    sparql-examples:federates_with <https://sparql.uniprot.org/sparql> .
 
