@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -23,5 +24,6 @@ WHERE {
   }
   ?rhea rh:side/rh:contains/rh:compound/rdfs:subClassOf ?chebi .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> ;
+    spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> .
 

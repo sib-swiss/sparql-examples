@@ -1,7 +1,9 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
 ex:NXQ_00091 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are targets of drugs for cardiac therapy'''@en ;
@@ -21,4 +23,5 @@ select distinct ?entry where {
     }
   }
   BIND (IRI(CONCAT("http://nextprot.org/rdf/entry/NX_",substr(str(?uniprot),28,6))) as ?entry) # cast drugbank id to neXtprot entry
-}''' .
+}''' ;
+  spex:federatesWith <http://drugbank.bio2rdf.org/sparql> .

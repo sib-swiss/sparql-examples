@@ -28,5 +28,5 @@ WHERE {
 }
 GROUP BY ?chebi ?name
 ORDER BY DESC(?countRhea)""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

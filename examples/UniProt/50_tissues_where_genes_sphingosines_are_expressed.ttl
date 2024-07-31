@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:50 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -40,7 +41,7 @@ WHERE {
   ?ca up:catalyzedReaction ?reaction .
   ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
 
-  SERVICE  <https://www.bgee.org/sparql/> {
+  SERVICE  <https://www.bgee.org/sparql> {
     ?gene genex:isExpressedIn ?anatomicEntity .
     ?gene lscr:xrefEnsemblGene ?ensemblGene .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
@@ -48,5 +49,6 @@ WHERE {
 }""" ;
     schema:keywords "enzyme",
         "tissue" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql> .
 

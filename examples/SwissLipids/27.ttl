@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:27 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -16,11 +17,11 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT ?swisslipid  ?organism {
   ?swisslipid owl:equivalentClass ?chebi .
-  SERVICE <https://sparql.rhea-db.org/sparql/> {
+  SERVICE <https://sparql.rhea-db.org/sparql> {
     ?rhea rh:side/rh:contains/rh:compound ?compound .
     ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite .
   }
-  SERVICE <https://sparql.uniprot.org/sparql/> {
+  SERVICE <https://sparql.uniprot.org/sparql> {
     ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .
     ?protein up:annotation ?catalyticActivityAnnotation ;
              up:organism ?organism .
@@ -28,5 +29,6 @@ SELECT ?swisslipid  ?organism {
   ?swisslipidIsomericSubpecies rdfs:subClassOf ?swisslipid ;
         SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies .
 }""" ;
-    schema:target <https://sparql.swisslipids.org/sparql/> .
+    schema:target <https://sparql.swisslipids.org/sparql/> ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> , <https://sparql.rhea-db.org/sparql> .
 

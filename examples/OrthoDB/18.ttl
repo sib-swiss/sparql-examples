@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -33,5 +34,6 @@ WHERE {
         up:organism/a [up:scientificName "Danio rerio"].
 } ORDER BY ?disease
 """ ;
-    schema:target <https://sparql.orthodb.org/sparql/> .
+    schema:target <https://sparql.orthodb.org/sparql/> ;
+    spex:federatesWith <https://sparql.nextprot.org/> .
 

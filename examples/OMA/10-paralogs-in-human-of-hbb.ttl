@@ -30,5 +30,5 @@ WHERE {
         rdfs:label ?PARALOG_GENE_LABEL .
     FILTER(?node1 != ?node2)
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .
 

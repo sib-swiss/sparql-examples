@@ -1,7 +1,9 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
 ex:NXQ_00095 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins which are targets of antipsychotic drugs and highly expressed in brain'''@en ;
@@ -24,4 +26,5 @@ select distinct ?entry where {
   ?entry :isoform/:expressionProfile ?expr.
   ?expr :term/:childOf cv:TS-0095.
   ?expr :evidence / :expressionLevel :High.
-}''' .
+}''' ;
+  spex:federatesWith <http://drugbank.bio2rdf.org/sparql> .

@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:49 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -41,11 +42,12 @@ WHERE {
   ?ca up:catalyzedReaction ?reaction .
   # federated query to Bgee (expression data)
   BIND(IRI(REPLACE(STR(?ensemblGene), "\\\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
-  SERVICE <https://www.bgee.org/sparql/> {
+  SERVICE <https://www.bgee.org/sparql> {
     ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
       genex:isExpressedIn ?anatomicEntity .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://sparql.rhea-db.org/sparql>, <https://www.bgee.org/sparql> .
 

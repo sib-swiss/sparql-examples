@@ -1,7 +1,8 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:NXQ_00260 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -18,7 +19,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX so: <http://purl.obolibrary.org/obo/SO_>
 
 SELECT DISTINCT ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?orgAA) (str(?varaa) as ?varAA) WHERE {
- SERVICE <http://rdf.disgenet.org/sparql/> {
+ SERVICE <https://rdf.disgenet.org/sparql> {
  SELECT DISTINCT ?protein ?variantTitle ?umlsTerm
  WHERE {
  ?vda sio:SIO_000628 ?umls, ?variant .
@@ -50,5 +51,6 @@ SELECT DISTINCT ?entry ?umlsTerm (str(?snpac) as ?varid) ?pos (str(?orgaa) as ?o
         "sequence",
         "tutorial",
         "variant" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    spex:federatesWith <https://rdf.disgenet.org/sparql> .
 

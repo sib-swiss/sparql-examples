@@ -1,7 +1,8 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:NXQ_00267 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -40,5 +41,7 @@ group by ?entry""" ;
         "similarity",
         "small molecule interaction",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> ,
+        <https://idsm.elixir-czech.cz/sparql/endpoint/cco> .
 
