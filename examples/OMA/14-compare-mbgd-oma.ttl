@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> . 
 
 ex:14 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -41,5 +42,6 @@ SELECT ?protein2 ?species WHERE {
     FILTER (?node1 != ?node2)
   }
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> ;
+    spex:federatesWith <http://sparql.nibb.ac.jp/sparql> .
 

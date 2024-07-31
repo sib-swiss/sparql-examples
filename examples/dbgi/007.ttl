@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:007 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -52,5 +53,6 @@ WHERE {
         }
     }
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
+    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> ;
+    spex:federatesWith <https://query.wikidata.org/sparql> .
 

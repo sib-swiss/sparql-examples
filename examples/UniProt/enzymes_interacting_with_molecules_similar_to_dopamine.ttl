@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:enzymes_interacting_with_molecules_similar_to_dopamine a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -37,5 +38,5 @@ WHERE {
         "rhea",
         "sachem" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .
-
+    schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> ;
+    spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> .

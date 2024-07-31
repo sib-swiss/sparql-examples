@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:46 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -35,5 +36,6 @@ WHERE
            <http://xmlns.com/foaf/0.1/depiction> ?image .
     }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://semantic.eea.europa.eu/sparql> .
 

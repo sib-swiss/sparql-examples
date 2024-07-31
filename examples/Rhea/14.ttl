@@ -28,5 +28,5 @@ WHERE {
   ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
   VALUES (?chebi) { (CHEBI:29985) }
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -40,5 +41,6 @@ WHERE {
     ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
   }
 }""" ;
-    schema:target <https://sparql.swisslipids.org/sparql/> .
+    schema:target <https://sparql.swisslipids.org/sparql/> ;
+    spex:federatesWith <https://sparql.uniprot.org/sparql> , <https://sparql.rhea-db.org/sparql> .
 

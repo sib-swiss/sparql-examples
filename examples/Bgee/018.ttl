@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:018 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -16,11 +17,11 @@ PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX lscr: <http://purl.org/lscr#>
 
 SELECT ?humanProtein ?mouseProtein ?mouseOmaLink {
-    SERVICE <https://www.bgee.org/sparql/> {
+    {
         ?humanTaxon up:commonName 'human' .
         ?mouseTaxon up:commonName 'mouse' .
     }
-    SERVICE <https://sparql.omabrowser.org/sparql/> {
+    SERVICE <https://sparql.omabrowser.org/sparql> {
         ?cluster a orth:OrthologsCluster ;
             orth:hasHomologousMember ?node1 ;
             orth:hasHomologousMember ?node2 .
@@ -36,7 +37,7 @@ SELECT ?humanProtein ?mouseProtein ?mouseOmaLink {
         ?mouseGene lscr:xrefEnsemblGene ?mouseGeneEnsembl .
         FILTER ( ?node1 != ?node2 )
     }
-    SERVICE <https://www.bgee.org/sparql/> {
+    {
         ?mouseGeneBgee a orth:Gene ;
             lscr:xrefEnsemblGene ?mouseGeneEnsembl ;
             genex:isExpressedIn ?cond ;
@@ -44,4 +45,5 @@ SELECT ?humanProtein ?mouseProtein ?mouseOmaLink {
         ?cond genex:hasAnatomicalEntity/rdfs:label 'liver' .
     }
 }""" ;
-    schema:target <https://www.bgee.org/sparql/> .
+    schema:target <https://www.bgee.org/sparql/> ;
+    spex:federatesWith <https://sparql.omabrowser.org/sparql> .

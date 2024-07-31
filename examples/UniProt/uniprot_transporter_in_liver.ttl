@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:uniprot_transporter_in_liver a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -38,5 +39,6 @@ WHERE
     ?organism obo:RO_0002162 taxon:9606 .
   }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://www.bgee.org/sparql> .
 

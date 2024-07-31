@@ -1,7 +1,9 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
 ex:NXQ_00293 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Glycosylation sites annotated by GlyConnect from a list of publications (PMIDs)'''@en ;
@@ -28,4 +30,5 @@ service <https://glyconnect.expasy.org/sparql> {
  }
 BIND(IRI(replace(str(?isoform),"http://purl.uniprot.org/isoforms/","http://nextprot.org/rdf/isoform/NX_")) AS ?isoNP) .
 ?entry :isoform ?isoNP .
-} order by ?entry ?position''' .
+} order by ?entry ?position''' ;
+  spex:federatesWith <https://glyconnect.expasy.org/sparql> .

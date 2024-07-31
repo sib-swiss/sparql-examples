@@ -1,7 +1,8 @@
-@prefix ex:<https://purl.expasy.org/sparql-examples/neXtProt/> .
+@prefix ex:<https://purl.expasy.org/sparql-examples/ontology#neXtProt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:NXQ_00253 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -16,7 +17,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 
 select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) WHERE {
- SERVICE <http://sparql.wikipathways.org/sparql> {
+ SERVICE <https://sparql.wikipathways.org/sparql> {
 
  { ?geneProduct a wp:GeneProduct . }
  union
@@ -46,5 +47,6 @@ order by ?pathwayname""" ;
         "quality",
         "subcellular location",
         "tutorial" ;
-    schema:target <https://sparql.nextprot.org/sparql> .
+    schema:target <https://sparql.nextprot.org/sparql> ;
+    spex:federatesWith <https://sparql.wikipathways.org/sparql> .
 
