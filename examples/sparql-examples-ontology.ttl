@@ -27,7 +27,7 @@ sparql-example:SPARQLDescribeExecutable
 	rdfs:subClassOf sh:SPARQLExecutable ;
 	rdfs:isDefinedBy sparql-example: .
 
-sparql-example:federatesWith
+sparql-example:federates_with
 	a rdf:Property ;
 	rdfs:label "List of endpoints a SPARQL Executable uses with SERVICE clauses."@en ;
 	rdfs:range sh:SPARQLExecutable ;
