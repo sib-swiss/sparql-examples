@@ -31,6 +31,13 @@ case "$project" in
             ln -s uniprot "${project}"
         fi
         ;;
+    uniprot)
+        project="uniprot";
+        pattern="UniProt";;
+    nextprot)
+        pattern="neXtProt";;
+    bgee)
+        pattern="Bgee";;
     all)
         pattern='*';;
 esac
