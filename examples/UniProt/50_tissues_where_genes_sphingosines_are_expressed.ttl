@@ -17,38 +17,33 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT
-  DISTINCT
-    ?chebi 
-    ?reaction 
-    ?protein ?ensemblGene
-    ?anatomicEntityLabel
-    ?anatomicEntity
+SELECT DISTINCT ?chebi ?reaction ?protein ?ensemblGene ?anatomicEntityLabel ?anatomicEntity
 WHERE {
   SERVICE <https://sparql.rhea-db.org/sparql> {
-    ?reaction rdfs:subClassOf rh:Reaction .
-    ?reaction rh:equation ?reactionEquation .
-    ?reaction rh:side ?reactionSide .
+    ?reaction rdfs:subClassOf rh:Reaction ;
+      rh:equation ?reactionEquation ;
+      rh:side ?reactionSide .
     ?reactionSide rh:contains ?participant .
     ?participant rh:compound ?compound .
     ?compound rh:chebi ?chebi .
     ?chebi rdfs:subClassOf* CHEBI:52639
-}
-  ?protein up:organism taxon:9606 .
-  ?protein up:annotation ?a .
-  ?a a up:Catalytic_Activity_Annotation .
-  ?a up:catalyticActivity ?ca .
+  }
+  ?protein up:organism taxon:9606 ;
+    up:annotation ?a .
+  ?a a up:Catalytic_Activity_Annotation ;
+    up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
   ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
 
-  SERVICE  <https://www.bgee.org/sparql> {
-    ?gene genex:isExpressedIn ?anatomicEntity .
-    ?gene lscr:xrefEnsemblGene ?ensemblGene .
+  BIND(IRI(REPLACE(STR(?ensemblGene), "\\\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
+  SERVICE <https://www.bgee.org/sparql/> {
+    ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
+      genex:isExpressedIn ?anatomicEntity .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
     schema:keyword "enzyme",
         "tissue" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql> .
+    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql/> .
 

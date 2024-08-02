@@ -16,36 +16,30 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT
-  DISTINCT
-    ?chebi
-    ?reaction
-    ?humanProtein
-    ?mouseProtein
-    ?cluster 
+SELECT DISTINCT ?chebi ?reaction ?humanProtein ?mouseProtein ?cluster
 WHERE {
   SERVICE <https://sparql.rhea-db.org/sparql> {
-    ?reaction rdfs:subClassOf rh:Reaction .
-    ?reaction rh:side/rh:contains/rh:compound ?compound .
+    ?reaction rdfs:subClassOf rh:Reaction ;
+      rh:side/rh:contains/rh:compound ?compound .
     ?compound rh:chebi ?chebi .
     ?chebi rdfs:subClassOf* CHEBI:15889
   }
 
-  ?humanProtein up:organism taxon:9606 .
-  ?humanProtein up:annotation ?a .
-  ?a a up:Catalytic_Activity_Annotation .
-  ?a up:catalyticActivity ?ca .
+  ?humanProtein up:organism taxon:9606 ;
+    up:annotation ?a .
+  ?a a up:Catalytic_Activity_Annotation ;
+    up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
 
-  SERVICE  <https://sparql.omabrowser.org/sparql> {
-    ?cluster a orth:ParalogsCluster .
-    ?cluster orth:hasHomologousMember ?node1 , ?node2 .
+  SERVICE <https://sparql.omabrowser.org/sparql> {
+    ?cluster a orth:ParalogsCluster ;
+      orth:hasHomologousMember ?node1 , ?node2 .
     ?node1 orth:hasHomologousMember* ?orthoProtein1 .
     ?node2 orth:hasHomologousMember* ?orthoProtein2 .
-    ?orthoProtein1 lscr:xrefUniprot ?mouseProtein .
+    ?orthoProtein1 lscr:xrefUniprot ?mouseProtein ;
+      # inTaxon mouse
+      orth:organism/<http://purl.obolibrary.org/obo/RO_0002162> taxon:10090 .
     ?orthoProtein2 lscr:xrefUniprot ?humanProtein .
-    # inTaxon mouse
-    ?orthoProtein1 orth:organism/<http://purl.obolibrary.org/obo/RO_0002162> taxon:10090 . 
   }
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;

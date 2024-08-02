@@ -42,12 +42,12 @@ WHERE {
   ?ca up:catalyzedReaction ?reaction .
   # federated query to Bgee (expression data)
   BIND(IRI(REPLACE(STR(?ensemblGene), "\\\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
-  SERVICE <https://www.bgee.org/sparql> {
+  SERVICE <https://www.bgee.org/sparql/> {
     ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
       genex:isExpressedIn ?anatomicEntity .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql>, <https://www.bgee.org/sparql> .
+    sparql-examples:federates_with <https://sparql.rhea-db.org/sparql>, <https://www.bgee.org/sparql/> .
 
