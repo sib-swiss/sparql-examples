@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:NXQ_00267 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -34,7 +34,7 @@ SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = ",") as
 	?entry :isoform ?iso.
 	?iso :goMolecularFunction / :term ?gomf .
 	?gomf rdfs:label ?gomflab .
-} 
+}
 group by ?entry""" ;
     schema:keyword "federated query",
         "function",

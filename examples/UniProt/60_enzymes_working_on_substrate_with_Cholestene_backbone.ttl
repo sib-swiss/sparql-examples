@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:60 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -30,7 +30,7 @@ WHERE {
 "[C@]12(CCC3CCCC[C@]3(C)[C@@]1([H])CC[C@]1(C)[C@@]([H])([C@@](C)([H])CCCC(C)C)CC[C@@]21[H])[H]"
 ].
    }
-   # Use the fact that UniProt catalytic activities are annotated using Rhea 
+   # Use the fact that UniProt catalytic activities are annotated using Rhea
    # Mapping the found ChEBIs to Rhea reactions
    SERVICE <https://sparql.rhea-db.org/sparql>{
      ?rhea rh:side/rh:contains/rh:compound/rdfs:subClassOf ?chebi .

@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:uniprot_transporter_in_liver a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;

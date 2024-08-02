@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -14,8 +14,8 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
 
 
-SELECT 
-  ?rhea 
+SELECT
+  ?rhea
   ?chebi
 WHERE {
   SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> {

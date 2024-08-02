@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:38 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -16,8 +16,8 @@ PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
 
-SELECT 
-	?protein 
+SELECT
+	?protein
 	?begin
 	?end
 	?chromosome
@@ -29,7 +29,7 @@ WHERE {
     }
     SERVICE <https://query.wikidata.org/sparql> {
         ?wp wdt:P352 ?protein ;
-            wdt:P702 ?wg . 
+            wdt:P702 ?wg .
         ?wg p:P644   ?wgss .
         ?wgss ps:P644        ?begin ;
           pq:P1057/wdt:P1813 ?chromosome ;
@@ -39,7 +39,7 @@ WHERE {
           pq:P1057/wdt:P1813 ?chromosome ;
           pq:P659/rdfs:label ?assembly .
         FILTER(lang(?assembly) = "en")
-  } 
+  }
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     sparql-examples:federates_with <https://query.wikidata.org/sparql> .

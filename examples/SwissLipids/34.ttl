@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:34 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -17,7 +17,7 @@ SELECT ?swisslipid  {
   ?swisslipid owl:equivalentClass ?chebi .
   SERVICE <https://sparql.rhea-db.org/sparql> {
     ?rhea rh:side/rh:contains/rh:compound ?compound .
-	?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite . 
+	?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite .
   }
   SERVICE <https://sparql.uniprot.org/sparql> {
     ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .

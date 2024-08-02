@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:uniprot_bioregistry_iri_translation a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -12,8 +12,8 @@ ex:uniprot_bioregistry_iri_translation a sh:SPARQLExecutable,
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
-    ?protein 
+SELECT
+    ?protein
     ?otherIdentifier
 WHERE {
     BIND(uniprotkb:P00750 AS ?protein)

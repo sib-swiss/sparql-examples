@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:enzymes_interacting_with_molecules_similar_to_dopamine a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -15,7 +15,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
   ?protein
-  ?rhea 
+  ?rhea
   ?chebi
 WHERE {
   # Use the smiles of dopamine CHEBI:18243

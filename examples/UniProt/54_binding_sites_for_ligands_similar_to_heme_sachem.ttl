@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:54 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -13,7 +13,7 @@ PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-SELECT 
+SELECT
   ?protein
   ?mnemonic
   ?proteinName
@@ -21,7 +21,7 @@ SELECT
   ?ligand
 WHERE {
   SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> {
-    ?ssc sachem:compound ?ligand; 
+    ?ssc sachem:compound ?ligand;
       sachem:score ?ligandSimilarityScore ;
       sachem:similaritySearch ?sss .
         # Smiles of Heme

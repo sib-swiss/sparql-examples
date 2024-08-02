@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -16,19 +16,19 @@ PREFIX up: <http://purl.uniprot.org/core/>
 # Query 13
 # Select all Rhea reactions used to annotate Escherichia coli (taxid=83333) in UniProtKB/Swiss-Prot
 # return the number of UniProtKB entries
-# 
+#
 # Federated query using a service to UniProt SPARQL endpoint
 #
 # This query cannot be performed using the Rhea search website
-SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
+SELECT ?uniprot ?mnemo ?rhea ?accession ?equation
 WHERE {
-  SERVICE <https://sparql.uniprot.org/sparql> { 
+  SERVICE <https://sparql.uniprot.org/sparql> {
     VALUES (?taxid) { (taxon:83333) }
     GRAPH <http://sparql.uniprot.org/uniprot> {
-      ?uniprot up:reviewed true . 
-      ?uniprot up:mnemonic ?mnemo . 
+      ?uniprot up:reviewed true .
+      ?uniprot up:mnemonic ?mnemo .
       ?uniprot up:organism ?taxid .
-      ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
+      ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
     }
   }
   ?rhea rh:accession ?accession .

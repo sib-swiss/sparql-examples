@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:5 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -17,14 +17,14 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>
 
 # Example 5
-SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation 
+SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation
 WHERE
 {
   # SwissLipids query (list of) identifier(s)
   VALUES ?startId { SWISSLIPID:000399814 }
   # name
   ?startId rdfs:label ?startName .
-  # Retrieve children lipids 
+  # Retrieve children lipids
   ?id rdfs:subClassOf* ?startId .
   ?id rdfs:label ?name .
   # ChEBI x-ref
@@ -33,8 +33,8 @@ WHERE
   SERVICE <https://sparql.rhea-db.org/sparql> {
   	?rhea rh:equation ?rheaEquation .
   	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
-  }    
-} 
+  }
+}
 ORDER BY  ?startId ?id""" ;
     schema:target <https://sparql.swisslipids.org/sparql/> ;
     sparql-examples:federates_with <https://sparql.rhea-db.org/sparql> .

@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -18,22 +18,22 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
 # Example 7
-SELECT ?startId ?startLabel ?id ?name 
+SELECT ?startId ?startLabel ?id ?name
 WHERE {
   # Queried lipid species
   VALUES ?startId { SWISSLIPID:000056871 }
-  ?startId rdfs:label ?startLabel . 
+  ?startId rdfs:label ?startLabel .
   # Corresponding Isomeric subspecies
-  ?id rdfs:subClassOf+ ?startId .  
+  ?id rdfs:subClassOf+ ?startId .
   ?id SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecie ;
 	  rdfs:label ?name .
   # Mapped ChEBI
-  ?id owl:equivalentClass ?chebi .  
+  ?id owl:equivalentClass ?chebi .
   # federated query to Rhea
   SERVICE <https://sparql.rhea-db.org/sparql> {
   	?rhea rh:equation ?rheaEquation .
   	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
-  }    
+  }
   # federated query to UniProt
   SERVICE <https://sparql.uniprot.org/sparql> {
     ?uniprot up:reviewed true .

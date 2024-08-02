@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:51 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -14,7 +14,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
 
-SELECT 
+SELECT
     DISTINCT
         ?uniprot
         ?uniprotID

@@ -2,7 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:52 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -19,13 +19,13 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
-        DISTINCT  
-            ?protein 
-            ?proteinFullName 
-            ?activityType 
-            ?standardActivityValue 
-            ?standardActivityUnit 
-            ?chemblMolecule 
+        DISTINCT
+            ?protein
+            ?proteinFullName
+            ?activityType
+            ?standardActivityValue
+            ?standardActivityUnit
+            ?chemblMolecule
             ?chemlbMoleculePrefLabel
 WHERE
   {
@@ -38,7 +38,7 @@ WHERE
     ?reactionSide
 	      rh:contains      ?participant .
     ?participant rh:compound  ?compound
-    { 
+    {
       ?compound  rh:chebi  ?chebi .
       ?chebi (rdfs:subClassOf)+ CHEBI:15889
     } UNION {
@@ -51,7 +51,7 @@ WHERE
       ?chebi2 (rdfs:subClassOf)+ CHEBI:15889
     }
   }
-  # UniProt: retrieve the human (taxid:9606) enzymes catalyzing these Rhea reactions 
+  # UniProt: retrieve the human (taxid:9606) enzymes catalyzing these Rhea reactions
   ?ca       up:catalyzedReaction  ?reaction .
   ?a        up:catalyticActivity  ?ca .
   ?protein  up:annotation         ?a ;
@@ -62,7 +62,7 @@ WHERE
   # Find drugs in wikidata that interact with the UniProt Proteins
   # ChEMBL: retrieve the corresponding targets and with drugs in clinical phase 4
   # Via https://idsm.elixir-czech.cz/sparql/
-  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> { 
+  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> {
     ?activity a cco:Activity ;
       cco:hasMolecule ?chemblMolecule ;
       cco:hasAssay ?assay ;

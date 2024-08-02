@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix sparql-examples:<https://purl.expasy.org/sparql-examples/> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:12 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -20,11 +20,11 @@ PREFIX up: <http://purl.uniprot.org/core/>
 # This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=uniprot:*
 #
-SELECT ?uniprotCount ?rhea ?accession ?equation 
+SELECT ?uniprotCount ?rhea ?accession ?equation
 WHERE {
-  SERVICE <https://sparql.uniprot.org/sparql> { 
+  SERVICE <https://sparql.uniprot.org/sparql> {
   	SELECT ?rhea (count(?uniprot) as ?uniprotCount) {
-      ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
+      ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
   	}
   	GROUP BY ?rhea
   }
