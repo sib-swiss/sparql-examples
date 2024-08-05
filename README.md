@@ -28,7 +28,7 @@ WHERE
 {
     ?taxon a up:Taxon .
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
     schema:keywords "taxa".
 ```
 
