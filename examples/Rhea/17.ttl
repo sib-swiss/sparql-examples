@@ -44,5 +44,5 @@ WHERE {
   }
   ?chebi up:name ?name .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

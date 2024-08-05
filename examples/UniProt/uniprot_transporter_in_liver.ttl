@@ -3,6 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-examples: <https://purl.expasy.org/sparql-examples/> .
 
 ex:uniprot_transporter_in_liver a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -17,26 +18,23 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX uberon: <http://purl.obolibrary.org/obo/uo#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT
-  ?rhea
-  ?protein
-  ?anat
-WHERE
-{
+SELECT ?rhea ?protein ?anat
+WHERE {
   GRAPH <https://sparql.rhea-db.org/rhea> {
     ?rhea rh:isTransport true .
   }
-  ?protein up:annotation ?ann .
-  ?protein up:organism taxon:9606 .
+  ?protein up:annotation ?ann ;
+    up:organism taxon:9606 .
   ?ann up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?rhea .
   BIND(uberon:0002107 AS ?anat)
-  SERVICE <https://www.bgee.org/sparql> {
-    ?seq genex:isExpressedIn ?anat .
-    ?seq lscr:xrefUniprot ?protein .
-    ?seq orth:organism ?organism .
+  SERVICE <https://www.bgee.org/sparql/> {
+    ?seq genex:isExpressedIn ?anat ;
+      lscr:xrefUniprot ?protein ;
+      orth:organism ?organism .
     ?organism obo:RO_0002162 taxon:9606 .
   }
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    sparql-examples:federates_with <https://www.bgee.org/sparql/> .
 

@@ -23,5 +23,5 @@ WHERE {
   ?childrenRhea rdfs:subClassOf+ ?rhea .
   ?childrenRhea rh:equation ?childrenEquation .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

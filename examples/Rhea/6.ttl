@@ -39,5 +39,5 @@ WHERE {
     BIND(?bidirectionalReaction as ?rheaDir  )
   }
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

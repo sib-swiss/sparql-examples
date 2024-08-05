@@ -9,6 +9,8 @@ public class SIB {
 	
 	public static final IRI FILE_NAME = SimpleValueFactory.getInstance().createIRI("http://example.org/", "file_name");
 	public static final IRI PROJECT = SimpleValueFactory.getInstance().createIRI("http://example.org/", "project");
+
+	public static final IRI FEDERATES_WITH = SimpleValueFactory.getInstance().createIRI("https://purl.expasy.org/sparql-examples/", "federates_with");
 	
 	private SIB() {
 		

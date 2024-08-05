@@ -32,5 +32,5 @@ WHERE {
         orth:organism/obo:RO_0002162/up:scientificName ?species2.
     FILTER(?node1 != ?node2)
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .
 

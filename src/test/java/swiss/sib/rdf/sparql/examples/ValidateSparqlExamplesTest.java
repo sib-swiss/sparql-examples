@@ -87,6 +87,13 @@ public class ValidateSparqlExamplesTest {
 		Function<Stream<String>, Stream<DynamicTest>> test = iris ->  iris.distinct().map(s -> DynamicTest.dynamicTest(s, () -> consumer.accept(s)));
 		return testAllAsOne(tester, test);
 	}
+	
+	@TestFactory
+	public Stream<DynamicTest> testAllServicesAnnotated() throws URISyntaxException, IOException {
+		
+		Function<Path, Executable> tester = (p) -> () -> CreateTestWithRDF4jMethods.testQueryAnnotatedWithFederatesWith(p);
+		return testAll(tester);
+	}
 
 	@TestFactory
 	@Tag("SlowTest")

@@ -23,5 +23,5 @@ WHERE {
   ?rheaDir rdfs:seeAlso ?kegg .
   FILTER (regex(str(?kegg),'kegg'))
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

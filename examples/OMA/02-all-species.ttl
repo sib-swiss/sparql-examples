@@ -15,5 +15,5 @@ WHERE {
         up:scientificName ?sciname ;
         up:rank up:Species .
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .
 

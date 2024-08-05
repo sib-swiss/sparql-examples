@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.model.IRI;
@@ -21,6 +22,7 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.BooleanQuery;
 import org.eclipse.rdf4j.query.GraphQuery;
@@ -50,13 +52,10 @@ import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
 public class CreateTestWithRDF4jMethods {
 
-
 	private enum QueryTypes {
-		ASK(SHACL.ASK, (rc, q) -> rc.prepareBooleanQuery(q)),
-		SELECT(SHACL.SELECT, (rc, q) -> rc.prepareTupleQuery(q)),
+		ASK(SHACL.ASK, (rc, q) -> rc.prepareBooleanQuery(q)), SELECT(SHACL.SELECT, (rc, q) -> rc.prepareTupleQuery(q)),
 		DESCRIBE(SIB.DESCRIBE, (rc, q) -> rc.prepareGraphQuery(q)),
 		CONSTRUCT(SHACL.CONSTRUCT, (rc, q) -> rc.prepareGraphQuery(q));
-
 
 		private final IRI iri;
 		private final BiFunction<RepositoryConnection, String, ? extends Query> pq;
@@ -75,14 +74,39 @@ public class CreateTestWithRDF4jMethods {
 		try (InputStream newInputStream = Files.newInputStream(p)) {
 			rdfParser.parse(newInputStream);
 		} catch (RDFParseException | RDFHandlerException | IOException e) {
-			fail(e);
+			fail(p + " Failed to parse", e);
 		}
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
-			.map(s -> model.getStatements(null, s, null))
-			.map(Iterable::iterator)
-			.forEach(i -> testAllQueryStringsInModel(parser, i));
+		Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).map(s -> model.getStatements(null, s, null))
+				.map(Iterable::iterator).forEach(i -> testAllQueryStringsInModel(parser, i));
+
+	}
+
+	static void testQueryAnnotatedWithFederatesWith(Path p) {
+		assertTrue(Files.exists(p));
+		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
+		Model model = new LinkedHashModel();
+		rdfParser.setRDFHandler(new StatementCollector(model));
+		try (InputStream newInputStream = Files.newInputStream(p)) {
+			rdfParser.parse(newInputStream);
+		} catch (RDFParseException | RDFHandlerException | IOException e) {
+			fail(e);
+		}
+		assertFalse(model.isEmpty());
+		Set<String> serviceEndpoints = extractServiceEndpoints(model).collect(Collectors.toSet());
+		
+		serviceEndpoints.forEach(endpoint -> {
+			boolean test = model.contains(null, SIB.FEDERATES_WITH,
+					SimpleValueFactory.getInstance().createIRI(endpoint));
+			assertTrue(test, p + " expected to be annotated with sparql-examples:federates_with <" + endpoint + ">");
+		});
+		Iterator<Statement> iterator = model.getStatements(null, SIB.FEDERATES_WITH, null).iterator();
+		while (iterator.hasNext()) {
+			String expectedEndpoint = iterator.next().getObject().stringValue();
+			assertTrue(serviceEndpoints.contains(expectedEndpoint),
+					p + " annotated with sparql-examples:federates_with <" + expectedEndpoint + "> not in query");
+		}
 
 	}
 
@@ -97,17 +121,19 @@ public class CreateTestWithRDF4jMethods {
 			fail(e);
 		}
 		assertFalse(model.isEmpty());
+		return extractServiceEndpoints(model);
+	}
+
+	private static Stream<String> extractServiceEndpoints(Model model) {
 		QueryParser parser = new SPARQLParserFactory().getParser();
 
-		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).map(
-				s -> model.getStatements(null, s, null))
-				.map(Iterable::iterator).map(i -> {
+		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
+				.map(s -> model.getStatements(null, s, null)).map(Iterable::iterator).map(i -> {
 					return collectServiceIrisInFromOneExample(parser, i);
 				}).flatMap(Set::stream);
 	}
 
-	private static Set<String> collectServiceIrisInFromOneExample(QueryParser parser,
-			Iterator<Statement> i) {
+	private static Set<String> collectServiceIrisInFromOneExample(QueryParser parser, Iterator<Statement> i) {
 		Set<String> serviceIris = new HashSet<>();
 		while (i.hasNext()) {
 			Value obj = i.next().getObject();
@@ -124,7 +150,7 @@ public class CreateTestWithRDF4jMethods {
 
 				});
 			} catch (MalformedQueryException qe) {
-				//Ignore as tested by above;
+				// Ignore as tested by above;
 			}
 		}
 		return serviceIris;
@@ -151,6 +177,7 @@ public class CreateTestWithRDF4jMethods {
 
 	/**
 	 * Generate a test case to make sure the query runs.
+	 * 
 	 * @param p of file containing the query
 	 */
 	public static void testQueryRuns(Path p) {
@@ -164,8 +191,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		assertFalse(model.isEmpty());
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		Arrays.stream(QueryTypes.values())
-			.forEach(s -> executeAllQueryStringsInModel(parser, model, s));
+		Arrays.stream(QueryTypes.values()).forEach(s -> executeAllQueryStringsInModel(parser, model, s));
 	}
 
 	private static void executeAllQueryStringsInModel(QueryParser parser, Model m, QueryTypes qt) {
@@ -173,13 +199,12 @@ public class CreateTestWithRDF4jMethods {
 		while (i.hasNext()) {
 			Statement next = i.next();
 			Iterator<Statement> targets = m.getStatements(next.getSubject(), SchemaDotOrg.TARGET, null).iterator();
-			while(targets.hasNext()) {
+			while (targets.hasNext()) {
 				Statement targetStatement = targets.next();
 				executeQueryStringInValue(parser, next.getObject(), targetStatement.getObject(), qt);
 			}
 		}
 	}
-
 
 	private static void executeQueryStringInValue(QueryParser parser, Value obj, Value target, QueryTypes qt) {
 		assertNotNull(obj);
@@ -189,7 +214,7 @@ public class CreateTestWithRDF4jMethods {
 		SPARQLRepository r = new SPARQLRepository(target.stringValue());
 		try {
 			r.init();
-			try (RepositoryConnection connection = r.getConnection()){
+			try (RepositoryConnection connection = r.getConnection()) {
 				queryStr = addLimitToQuery(parser, obj, qt, queryStr);
 				Query query = qt.pq.apply(connection, queryStr);
 				query.setMaxExecutionTime(45 * 60);
@@ -207,14 +232,14 @@ public class CreateTestWithRDF4jMethods {
 			bq.evaluate();
 		}
 		if (query instanceof TupleQuery tq) {
-			try (TupleQueryResult evaluate = tq.evaluate()){
+			try (TupleQueryResult evaluate = tq.evaluate()) {
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
 			}
 		}
 		if (query instanceof GraphQuery gq) {
-			try (GraphQueryResult evaluate = gq.evaluate()){
+			try (GraphQueryResult evaluate = gq.evaluate()) {
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
@@ -222,15 +247,14 @@ public class CreateTestWithRDF4jMethods {
 		}
 	}
 
-	private static String addLimitToQuery(QueryParser parser, Value obj, QueryTypes qt,
-			String queryStr) {
-		//If it is not an ask we better insert a limit into the query.
+	private static String addLimitToQuery(QueryParser parser, Value obj, QueryTypes qt, String queryStr) {
+		// If it is not an ask we better insert a limit into the query.
 		if (qt != QueryTypes.ASK) {
 			HasLimit visitor = new HasLimit();
 			ParsedQuery pq = parser.parseQuery(queryStr, "https://example.org/");
 			pq.getTupleExpr().visit(visitor);
 			if (!visitor.hasLimit) {
-				//We can add the limit at the end.
+				// We can add the limit at the end.
 				queryStr = obj.stringValue() + " LIMIT 1";
 			}
 		}

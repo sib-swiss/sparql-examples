@@ -20,5 +20,5 @@ WHERE {
     ?taxon up:scientificName 'Rattus norvegicus' .
     ?protein rdfs:seeAlso ?OMA_link .
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .
 

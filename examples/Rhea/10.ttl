@@ -34,5 +34,5 @@ WHERE {
   #FILTER (regex(?ecNumber,'^1\\\\.1\\\\.1\\\\.')) 
   ?rhea rh:equation ?equation .
 }""" ;
-    schema:target <https://sparql.rhea-db.org/sparql/> .
+    schema:target <https://sparql.rhea-db.org/sparql> .
 

@@ -29,5 +29,5 @@ WHERE {
     ?RABIT_PROTEIN lscr:xrefUniprot ?RABIT_UNIPROT_XREF.
     FILTER(?node1 != ?node2)
 }""" ;
-    schema:target <https://sparql.omabrowser.org/sparql/> .
+    schema:target <https://sparql.omabrowser.org/sparql> .
 
