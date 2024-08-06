@@ -13,7 +13,7 @@ sparql-example: a owl:Ontology ;
 	owl:versionInfo "1.0"^^xsd:string .
 
 sparql-example:describe 
-	a rdf:Propery ;
+	a rdf:Property ;
 	rdfs:label "describe"@en ;
 	rdfs:comment "The SPARQL describe query to execute"@en ;
 	rdfs:domain sparql-example:SPARQLDescribeExecutable ;
@@ -22,8 +22,8 @@ sparql-example:describe
 
 sparql-example:SPARQLDescribeExecutable
 	a rdfs:Class ;
-	rdf:label "SPARQL Descibe executable"@en ;
-	rdfs:comment "The class of SPARQL executables that are based on Descrive queries"@en ;
+	rdfs:label "SPARQL Describe executable"@en ;
+	rdfs:comment "The class of SPARQL executables that are based on Describe queries"@en ;
 	rdfs:subClassOf sh:SPARQLExecutable ;
 	rdfs:isDefinedBy sparql-example: .
 
