@@ -30,7 +30,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-public class ValidateSparqlExamplesWithShACLTest {
+public class ValidateSparqlExamplesWithSHACLTest {
 	private static final String shaclOneIdOneQuery = """
 			PREFIX sh:<http://www.w3.org/ns/shacl#>
 			PREFIX schema:<https://schema.org/>
