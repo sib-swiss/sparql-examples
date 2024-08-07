@@ -34,10 +34,11 @@ public class ValidateSparqlExamplesWithShACLTest {
 	private static final String shaclOneIdOneQuery = """
 			PREFIX sh:<http://www.w3.org/ns/shacl#>
 			PREFIX schema:<https://schema.org/>
+			PREFIX sparql-example:<https://purl.expasy.org/sparql-examples#>
 
 			[] sh:targetClass sh:SPARQLExecutable ;
 				sh:property [
-					sh:path [ sh:alternativePath ( sh:select sh:ask sh:describe sh:construct ) ] ;
+					sh:path [ sh:alternativePath ( sh:select sh:ask sparql-example:describe sh:construct ) ] ;
 					sh:maxCount 1 ;
 					sh:minCount 1
 				] , [

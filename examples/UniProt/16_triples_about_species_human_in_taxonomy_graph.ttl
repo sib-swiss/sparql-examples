@@ -3,11 +3,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-example: <https://purl.expasy.org/sparql-examples#> .
 
 ex:16 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Select all triples that relate to the taxon that describes <i>Homo sapiens</i> in the named graph for <a href=\"http://sparql.uniprot.org/taxonomy\">taxonomy</a>"^^rdf:HTML ;
-    sh:describe """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+    sparql-example:describe """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 
 DESCRIBE taxon:9606 
 FROM <http://sparql.uniprot.org/taxonomy>""" ;

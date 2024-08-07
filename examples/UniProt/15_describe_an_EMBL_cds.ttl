@@ -2,9 +2,10 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sparql-example: <https://purl.expasy.org/sparql-examples#> .
 
 ex:15 a sh:SPARQLExecutable ;
     rdfs:comment "Select all triples that relate to the EMBL CDS entry AA089367.1: " ;
-    sh:describe "DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>" ;
+    sparql-example:describe "DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
