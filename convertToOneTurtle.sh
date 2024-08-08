@@ -28,7 +28,7 @@ case "$project" in
     swiss-prot)
         if [ ! -L "${project}" ]
         then
-            ln -s uniprot "${project}"
+            ln -s UniProt "${project}"
         fi
         ;;
     uniprot)
