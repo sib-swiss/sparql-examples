@@ -26,7 +26,7 @@ SELECT DISTINCT ?geneEnsembl ?proteinOrtholog ?geneOrthologEnsembl ?taxonOrtholo
         } LIMIT 20
     }
 
-    SERVICE <https://sparql.omabrowser.org/sparql> {
+    SERVICE <https://sparql.omabrowser.org/sparql/> {
         ?cluster a orth:OrthologsCluster ;
             orth:hasHomologousMember ?node1 ;
             orth:hasHomologousMember ?node2 .

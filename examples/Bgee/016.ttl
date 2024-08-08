@@ -29,7 +29,7 @@ SELECT ?gene ?omaLink ?uniprot ?diseaseLabel ?annotationText WHERE {
     SERVICE <https://sparql.uniprot.org/sparql> {
         ?taxonHuman up:commonName 'Human' .
     }
-    SERVICE <https://sparql.omabrowser.org/sparql> {
+    SERVICE <https://sparql.omabrowser.org/sparql/> {
         ?cluster a orth:OrthologsCluster ;
             orth:hasHomologousMember ?node1 ;
             orth:hasHomologousMember ?node2 .
