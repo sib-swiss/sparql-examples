@@ -36,5 +36,6 @@ WHERE {
         "idsm",
         "rhea",
         "sachem" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .
 
