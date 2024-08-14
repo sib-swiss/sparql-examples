@@ -6,19 +6,16 @@
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Same as example 12 but with <a href=\"http://purl.uniprot.org/uniprot/P0ABU7\">P0ABU7</a> as a query (Biopolymer transport protein ExbB)."^^rdf:HTML ;
+    rdfs:comment "Given the protein with UniProt accession number <a href=\"http://purl.uniprot.org/uniprot/P0ABU7\">P0ABU7</a> (Biopolymer transport protein ExbB) retrieve all reactions and models in which this polypeptide appears."^^rdf:HTML ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX up: <http://purl.uniprot.org/core/>
-
-# Same as example 13 but with *P0ABU7* as a query (Biopolymer 
-# transport protein ExbB). 
+PREFIX uniprot: <http://purl.uniprot.org/uniprot/> 
 
 SELECT ?mnet_label ?reac_label ?reac_eq ?MNXR (GROUP_CONCAT( ?cata_label; separator=';' ) AS ?complex )
 FROM <https://rdf.metanetx.org/> WHERE{
-    ?pept mnx:peptXref up:P0ABU7 .
+    ?pept mnx:peptXref uniprot:P0ABU7 .
     ?cata mnx:pept ?pept ;
           rdfs:label ?cata_label .
     ?gpr mnx:cata ?cata ;
