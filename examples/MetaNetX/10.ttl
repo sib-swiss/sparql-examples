@@ -16,7 +16,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 # the reac label is the one produced while compiling MetaNetX 
 
 SELECT ?reac_label ?chem_name ?comp_name ?coef
-WHERE{
+FROM <https://rdf.metanetx.org/> WHERE{
     ?mnet rdfs:label 'bigg_e_coli_core' ;
           mnx:gpr/mnx:reac ?reac .
     ?reac rdfs:label ?reac_label ;

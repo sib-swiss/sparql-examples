@@ -19,7 +19,7 @@ SELECT ?mnet ?taxon
     (COUNT( DISTINCT ?chem) AS ?count_chem)
     (COUNT( DISTINCT ?comp) AS ?count_comp)
     (COUNT( DISTINCT ?pept) AS ?count_pept)
-WHERE{
+FROM <https://rdf.metanetx.org/> WHERE{
     ?mnet a mnx:MNET .
     ?mnet mnx:gpr  ?gpr .
     ?gpr  mnx:reac ?reac .

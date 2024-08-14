@@ -16,7 +16,7 @@ PREFIX mnx: <https://rdf.metanetx.org/schema/>
 # of external identifiers is the core of MNXref. 
 
 SELECT ?xref
-WHERE {
+FROM <https://rdf.metanetx.org/> WHERE {
     ?reaction a mnx:REAC .
     ?reaction mnx:reacXref keggR:R00703 .
     ?reaction mnx:reacXref ?xref

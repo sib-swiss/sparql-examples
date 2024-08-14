@@ -17,7 +17,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 # coefficients for substrates are given a negative value 
 
 SELECT ?chem ?chem_name ?comp ?comp_name ?coef
-WHERE{
+FROM <https://rdf.metanetx.org/> WHERE{
     ?reac mnx:reacXref keggR:R00703 .
     ?reac ?side ?part .
     ?part mnx:chem ?chem ;

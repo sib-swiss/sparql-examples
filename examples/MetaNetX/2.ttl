@@ -16,7 +16,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 # identifiers is the core of MNXref. 
 
 SELECT ?metabolite ?xref
-WHERE {
+FROM <https://rdf.metanetx.org/> WHERE {
     ?metabolite a mnx:CHEM .
     ?metabolite rdfs:comment 'N-nitrosomethanamine' .
     ?metabolite mnx:chemXref ?xref
