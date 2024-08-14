@@ -30,6 +30,6 @@ FROM <https://rdf.metanetx.org/> WHERE{
           mnx:cplx ?cplx .
     ?cplx rdfs:label ?cplx_label .
 }
-GROUP BY ?reac_orig_label ?reac_mnx_label ?lb ?ub ?dir ?cata_orig ORDER BY (?reac)""" ;
+GROUP BY ?reac ?reac_orig_label ?reac_mnx_label ?lb ?ub ?dir ?cata_orig ORDER BY (?reac)""" ;
     schema:target <https://rdf.metanetx.org/sparql/> .
 
