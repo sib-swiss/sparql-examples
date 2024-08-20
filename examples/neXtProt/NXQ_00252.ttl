@@ -1,0 +1,38 @@
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:NXQ_00252 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Protein kinases involved in cancer pathways according to wikipathways''' ;
+  schema:keyword "federated query", "function", "pathway" ;
+  schema:target <https://sparql.nextprot.org/sparql> ;
+  sh:select '''PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+select distinct ?entry ?gen ?pathwayname where {
+service <http://sparql.wikipathways.org/sparql> {
+SELECT DISTINCT ?pathwayname ?gen WHERE
+{ 
+  {?geneProduct a wp:Protein}
+    union
+  {?geneProduct a wp:GeneProduct}
+  
+  ?geneProduct rdfs:label ?gen . 
+  ?geneProduct dcterms:isPartOf ?pathway . 
+  ?pathway a wp:Pathway . 
+  ?pathway wp:organism ?organism . 
+  FILTER(contains(str(?organism),"9606")) 
+  ?pathway dc:title ?pathwayname . 
+  FILTER(regex(?pathwayname,"cancer","i")). }
+}
+?entry a :Entry .
+?entry :gene / :name / rdfs:label ?gen .
+?entry :isoform / :enzymeClassification / :term /:childOf cv:2_7_-_- . # protein kinase activity
+}
+order by ?gen''' .

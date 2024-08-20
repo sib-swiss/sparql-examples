@@ -126,7 +126,7 @@ public class ValidateSparqlExamplesTest {
 	private DynamicTest createTest(Function<Path, Executable> tester, Path projectPath, Path specificExamplePath) {
 		String testName = pathToTestName(specificExamplePath);
 		Executable apply = tester.apply(specificExamplePath);
-		return DynamicTest.dynamicTest(testName, apply);
+		return DynamicTest.dynamicTest(testName, specificExamplePath.toUri(), apply);
 	}
 
 	private String pathToTestName(Path specificExamplePath) {

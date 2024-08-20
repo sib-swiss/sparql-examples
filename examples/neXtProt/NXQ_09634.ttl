@@ -1,0 +1,17 @@
+@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:NXQ_09634 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes ;
+  rdfs:comment '''Check there are no entries with a variant annotation with the end less than 1''' ;
+  schema:keyword "QC", "variant" ;
+  schema:target <https://sparql.nextprot.org/sparql> ;
+  sh:select '''PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform /:variant ?var.
+  ?var :end ?end.
+  filter ( ?end < 1)
+}''' .
