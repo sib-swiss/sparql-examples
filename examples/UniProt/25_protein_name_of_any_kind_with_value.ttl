@@ -15,7 +15,7 @@ WHERE
 {
 		?protein a up:Protein .
 		?protein (up:recommendedName|up:alternativeName) ?structuredName .
-		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B-73 alpha chain" .
+		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B alpha chain" .
 		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
