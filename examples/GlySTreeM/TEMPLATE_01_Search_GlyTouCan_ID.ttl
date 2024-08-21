@@ -1,0 +1,21 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TEMPLATE_01_Search_GlyTouCan_ID a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Template_01 Search GlyTouCan IDs''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?glycanid ?p ?glytoucanID
+WHERE 
+	{
+		VALUES ?glytoucanID {"G00027MO" "G00030VN" "G70894RY"}
+		?glycan a glystreem:Glycan ;
+			glystreem:id ?glycanid ;
+			glystreem:glytoucan_id|glystreem:composition_glytoucan_id ?glytoucanID .
+		?glycan ?p ?glytoucanID .
+	}''' .

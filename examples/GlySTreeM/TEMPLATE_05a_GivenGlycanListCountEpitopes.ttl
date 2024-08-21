@@ -1,0 +1,26 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TEMPLATE_05a_GivenGlycanListCountEpitopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Template_05 Count Epitopes in a list of Glycan IDs''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+select distinct ?epitope ?name (count(distinct ?glycan) as ?count) where
+{
+    VALUES ?id {"1" "2" "3"}
+    # Source: "Cummings" or "UniLectin"
+    VALUES ?source {"Cummings"}
+    ?epitope a glystreem:Epitope .
+    ?epitope glystreem:epitopeSource ?source .
+    ?epitope glystreem:epitopeName ?name .
+    ?glycan a glystreem:Glycan ;
+            glystreem:id ?id ;
+            glystreem:hasEpitopeSet ?set .
+    ?epitope modl:bagitemOf ?set .
+} group by ?epitope ?name
+order by DESC(?count)''' .

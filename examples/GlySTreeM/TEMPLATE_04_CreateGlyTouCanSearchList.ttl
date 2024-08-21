@@ -1,0 +1,31 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TEMPLATE_04_CreateGlyTouCanSearchList a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Template_04 Return a list of GlyTouCan IRIs that contain a given Epitope''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT (GROUP_CONCAT(?glytoucan_glycan) AS ?glytoucan_list) WHERE
+{
+	# Epitope36: Blood Group H (Type 2)
+	VALUES ?epitope {glystreem:Epitope36}
+	# VALUES ?type {"N-Linked"}
+	# VALUES ?core {"Complex"}
+	?glycan a glystreem:Glycan ;
+		glystreem:id ?glycanid ;
+		glystreem:glycan_type ?type ;
+		glystreem:glycan_core ?core ;
+		glystreem:hasEpitopeSet ?epiSet .
+	OPTIONAL {?glycan glystreem:composition_glytoucan_id ?glytoucan_composition_id}
+	OPTIONAL {?glycan glystreem:glytoucan_id ?glytoucan_topology_id}
+	BIND(URI(concat("glytoucan:", ?glytoucan_topology_id)) AS ?glytoucan_glycan)
+	?epitope a glystreem:Epitope ;
+		modl:bagitemOf ?epiSet .
+} GROUP BY ?glytoucan_glycan
+ORDER BY ASC(xsd:integer(?glycanid))''' .

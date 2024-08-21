@@ -1,0 +1,38 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.5-Complex-Tetra-Neutral a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Q2.5 Complex Tetra Neutral''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?glycan ?id ?glytoucanID WHERE
+{
+    ?glycan a glystreem:Glycan ;
+            glystreem:id ?id ;
+            glystreem:glytoucan_id ?glytoucanID ;
+            glystreem:glycan_type "N-Linked" ;
+            glystreem:glycan_core "Complex" .
+    FILTER NOT EXISTS {?glycan glystreem:hasResidueSet/^modl:bagitemOf/glystreem:composition "NeuAc" .}
+    FILTER NOT EXISTS {?glycan glystreem:hasResidueSet/^modl:bagitemOf/glystreem:composition "NeuGc" .}
+    # Tetra Ant
+    ?glycan glystreem:hasGlycanCore/glystreem:hasCoreRoot/modl:treehasChild/modl:treehasChild ?Man .
+    ?Man glystreem:hasBase/glystreem:baseName ?baseMan
+    FILTER(?baseMan in ("dman-HEX-1:5"))
+    ?Man modl:treehasChild ?Man1, ?Man2 .
+    FILTER(?Man1 != ?Man2)
+    ?Man1 modl:treehasChild ?GlcNAc1, ?GlcNAc2 .
+    ?Man2 modl:treehasChild ?GlcNAc3, ?GlcNAc4 .
+    FILTER (
+        (?GlcNAc1 != ?GlcNAc2) &&
+        (?GlcNAc1 != ?GlcNAc3) &&
+        (?GlcNAc1 != ?GlcNAc4) &&
+        (?GlcNAc2 != ?GlcNAc3) &&
+        (?GlcNAc2 != ?GlcNAc4) &&
+        (?GlcNAc3 != ?GlcNAc4))
+} ORDER BY ASC(xsd:integer(?id))''' .

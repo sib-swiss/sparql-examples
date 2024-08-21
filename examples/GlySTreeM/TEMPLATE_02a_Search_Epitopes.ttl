@@ -1,0 +1,26 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TEMPLATE_02a_Search_Epitopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Template_02a What Epitopes are available?''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?epitope ?name ?glytoucanID ?source (COUNT(DISTINCT ?glycan) AS ?glycanCount)
+WHERE 
+	{
+		# VALUES ?source {"Cummings"}
+		# VALUES ?source {"UniLectin"}
+		?glycan a glystreem:Glycan;
+			glystreem:hasEpitopeSet/^modl:bagitemOf ?epitope .
+		?epitope a glystreem:Epitope ;
+			glystreem:epitopeName ?name ;
+			glystreem:epitopeSource ?source .
+		OPTIONAL {?epitope glystreem:epitope_glytoucanID ?glytoucanID}
+	}
+GROUP BY ?epitope ?name ?glytoucanID ?source''' .

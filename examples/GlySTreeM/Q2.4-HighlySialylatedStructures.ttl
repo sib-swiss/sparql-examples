@@ -1,0 +1,27 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.4-HighlySialylatedStructures a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Q2.4 Highly Sialylated Structures''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+
+SELECT DISTINCT ?glycan ?id ?glytoucanID (COUNT(DISTINCT(?NeuAc))AS ?countNeuAc) WHERE
+{
+    ?glycan a glystreem:Glycan ;
+            glystreem:id ?id ;
+            glystreem:glytoucan_id ?glytoucanID ;
+            glystreem:glycan_type "N-Linked" ;
+            glystreem:glycan_core "Complex" ;
+            glystreem:hasResidueSet ?resSet .
+    ?NeuAc modl:bagitemOf ?resSet .
+    ?NeuAc glystreem:composition "NeuAc" .
+}
+GROUP BY ?glycan ?id ?glytoucanID
+HAVING (?countNeuAc > 3)
+ORDER BY DESC(?countNeuAc) ASC(xsd:integer(?id)) ''' .
