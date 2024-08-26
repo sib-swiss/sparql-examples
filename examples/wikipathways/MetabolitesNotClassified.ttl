@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:MetabolitesNotClassified a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file MetabolitesNotClassified.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Metabolites not classified as such
+
+prefix wp:      <http://vocabularies.wikipathways.org/wp#>
+prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+prefix dcterms:  <http://purl.org/dc/terms/>
+
+select (str(?datasourceLit) as ?datasource) (count(?identifier) as ?count)
+where {
+  ?mb dc:source ?datasourceLit ;
+    dcterms:identifier ?identifier .
+  FILTER NOT EXISTS { ?mb a wp:Metabolite }
+} order by desc(?count)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

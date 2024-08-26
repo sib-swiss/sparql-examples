@@ -1,0 +1,37 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:extracting protein titles and identifiers for metabolic reactions a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file extracting protein titles and identifiers for metabolic reactions.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+### Part 1: ###
+SELECT DISTINCT ?interaction ?sourceDb ?targetDb ?proteinDBWPs ?proteinName 
+WHERE {  
+?pathway a wp:Pathway ; 
+wp:ontologyTag cur:AnalysisCollection ;
+wp:organismName "Homo sapiens"; 
+dc:title ?titleLit . 
+?interaction dcterms:isPartOf ?pathway ;				
+   a wp:DirectedInteraction ; 
+   wp:source ?source ; 
+ 	   wp:target ?target .   
+?source a wp:Metabolite . 
+?source wp:bdbWikidata ?sourceDb . 
+?target a wp:Metabolite . 
+?target wp:bdbWikidata ?targetDb . 
+
+### Part 2: ###
+?interactions2 dcterms:isPartOf ?pathway;
+               a wp:Catalysis; 
+               wp:source ?sources2;
+               wp:target ?interaction . 
+OPTIONAL{?sources2 wp:bdbEnsembl ?proteinDBWPs}.
+OPTIONAL{?sources2 rdfs:label ?proteinName} .
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

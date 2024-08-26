@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:linkoutCounts a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file linkoutCounts.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT ?pred (COUNT(DISTINCT ?entity) AS ?count) WHERE {
+  VALUES ?pred {
+    # metabolites
+    wp:bdbChEBI wp:bdbChemspider wp:bdbHmdb wp:bdbPubChem
+    # gene products
+    wp:bdbEnsembl wp:bdbEntrezGene wp:bdbHgncSymbol
+    # interactions
+    wp:bdbRhea wp:bdbUniprot
+  }
+  ?entity ?pred []
+} GROUP BY ?pred
+  ORDER BY DESC(?count)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

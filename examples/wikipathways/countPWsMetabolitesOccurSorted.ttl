@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:countPWsMetabolitesOccurSorted a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file countPWsMetabolitesOccurSorted.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Sorting the metabolites by the number of pathways they occur in
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?metabolite (count(DISTINCT ?pathwayRes) as ?pathways) WHERE {
+  ?metabolite a wp:Metabolite ;
+    dcterms:identifier ?id ;
+    dcterms:isPartOf ?pathwayRes .
+  ?pathwayRes a wp:Pathway .
+  OPTIONAL { ?metabolite wp:bdbWikidata ?wikidata . }
+  FILTER (!BOUND(?wikidata))
+} GROUP BY ?metabolite ORDER BY DESC(?pathways)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

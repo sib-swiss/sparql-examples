@@ -1,0 +1,53 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:extracting directed metabolic reactions a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file extracting directed metabolic reactions.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+### Part 1: ###
+SELECT DISTINCT ?interaction ?sourceDb ?targetDb ?mimtype 
+?pathway (str(?titleLit) as ?title) 
+?sourceCHEBI ?targetDbCHEBI ?sourceHMDB ?targetDbHMDB ?InteractionID  
+WHERE {  
+
+### Part 2: ###
+?pathway a wp:Pathway ;
+         wp:organismName "Homo sapiens" ; 
+         dc:title ?titleLit . 	
+         
+### Part 3A: ###
+FILTER (EXISTS {?pathway wp:ontologyTag cur:AnalysisCollection})  .
+### Part 3B: ###
+#FILTER (EXISTS {?pathway wp:ontologyTag cur:Reactome_Approved}) .    
+### Part 3C: ###
+#FILTER (EXISTS {?pathway wp:ontologyTag cur:Lipids}) .
+
+### Part 4: ###
+?interaction dcterms:isPartOf ?pathway ;			
+             a wp:DirectedInteraction ;
+	           wp:source ?source ;
+	           wp:target ?target .  
+OPTIONAL{?interaction a ?mimtype}. 
+VALUES ?mimtype {wp:ComplexBinding wp:Conversion wp:Inhibition wp:Catalysis
+wp:Stimulation wp:TranscriptionTranslation wp:DirectedInteraction} .  
+
+### Part 5: ###
+?source a wp:Metabolite . 
+?source wp:bdbWikidata ?sourceDb . 
+OPTIONAL{?source wp:bdbChEBI ?sourceCHEBI}.
+OPTIONAL{?source wp:bdbHmdb ?sourceHMDB}.
+?target a wp:Metabolite . 
+?target wp:bdbWikidata ?targetDb . 
+OPTIONAL{?target wp:bdbChEBI ?targetDbCHEBI}. 
+OPTIONAL{?target wp:bdbHmdb ?targetDbHMDB}. 
+
+### Part 6: ###
+OPTIONAL{?interaction wp:bdbRhea ?InteractionID} .
+} ORDER BY DESC(?InteractionID)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

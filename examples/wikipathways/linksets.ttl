@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:linksets a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file linksets.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?dataset (str(?titleLit) as ?title) ?date ?license 
+WHERE {
+   ?dataset a void:Linkset ;
+   dcterms:title ?titleLit .
+   OPTIONAL {
+     ?dataset dcterms:license ?license ;
+       pav:createdOn ?date .
+   }
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

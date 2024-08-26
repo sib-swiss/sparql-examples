@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:63 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Infectious diseases with their human minimum and maximum incubation time (in days)"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+SELECT ?DiseaseLabel ((?min / 86400) AS ?Minimal_Incubation_Time) ((?max / 86400) AS ?Maximum_Incubation_Time)
+WHERE {
+  ?Disease wdt:P31/wdt:P279* wd:Q18123741 .
+  ?Disease p:P3488/psn:P3488/wikibase:quantityAmount ?min .
+  ?Disease p:P3487/psn:P3487/wikibase:quantityAmount ?max
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+}
+ORDER BY ?DiseaseLabel""" ;
+    schema:target <https://query.wikidata.org/sparql> .

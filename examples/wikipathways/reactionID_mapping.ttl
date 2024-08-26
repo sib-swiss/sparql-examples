@@ -1,0 +1,56 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:reactionID_mapping a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file reactionID_mapping.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Prefixes required which might not be available in the SPARQL endpoint by default
+PREFIX wp:      <http://vocabularies.wikipathways.org/wp#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+#Prefixes for the MetaNetX RDF:
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rhea: <http://rdf.rhea-db.org/>
+
+#Variable selection
+SELECT DISTINCT (str(?title) as ?pathwayName) ?PWID ?interactionID ?reac
+
+WHERE {
+#Pathway Model IDs of interest
+VALUES ?PWID {"WP5275"}
+  
+    ?pathway a wp:Pathway . #Define what a pathway is
+    ?pathway dcterms:identifier ?PWID. #Obtain the ID
+    ?pathway dc:title ?title . #Obtain the title
+  
+    ?interaction wp:bdbRhea ?interactionID . #Find interactions with a Rhea ID
+    ?interaction dcterms:isPartOf ?pathway . #Only those part of PW
+  
+  ##The IRI for Rhea-IDs from WikiPathways starts with https://identifiers.org/rhea/, where the one from MetaNetX starts with "http://rdf.rhea-db.org/ , so we need to rewrite the IRI
+    BIND(                      # Bind the created IRI into a new variable (called ?newIRI)
+        IRI(                   # Convert the string back to an IRI
+          CONCAT(              # Concatenate item 1 and 2 together as one string
+               "http://rdf.rhea-db.org/",        # First item to concat (more items can be added with a comma
+              #Second item to concat:
+               SUBSTR(         # Obtain a substring
+                 STR(?interactionID), # Convert the Rhea IRI from WikiPathways to a string,
+                 30)            # removing the first 29 charachters
+        )) AS ?newIRI          # Name for the new variable 
+    )
+   SERVICE <https://rdf.metanetx.org/sparql/>  {
+     SELECT DISTINCT ?reac
+                           WHERE{
+    ?reac mnx:reacXref rhea:17658 .}
+     }
+  
+} ORDER BY ASC(?pathway)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

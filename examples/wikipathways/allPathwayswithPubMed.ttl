@@ -1,0 +1,19 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:allPathwayswithPubMed a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file allPathwayswithPubMed.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?pathway ?pubmed 
+WHERE 
+     {?pubmed a       wp:PublicationReference . 
+      ?pubmed dcterms:isPartOf ?pathway }
+ORDER BY ?pathway
+LIMIT 50
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

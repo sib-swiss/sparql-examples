@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:20 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Danish phrases"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:828--> Danish phrases</translate>
+# <translate><!--T:829--> Author: So9q</translate>
+# <translate><!--T:830--> Date: 2024-01-03</translate>
+SELECT ?l ?lemma WHERE {
+  ?l dct:language wd:Q9035; # Change language here
+     wikibase:lemma ?lemma;
+     wikibase:lexicalCategory ?cat.
+  ?cat wdt:P279 wd:Q187931.
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

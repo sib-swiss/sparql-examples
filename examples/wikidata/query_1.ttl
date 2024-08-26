@@ -1,0 +1,34 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Horses on Wikidata"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#Illustrates optional fields, instances of subclasses, language fallback on label service, date to year conversion
+#title: <translate><!--T:745--> Horses on Wikidata</translate>
+SELECT DISTINCT ?horse ?horseLabel ?mother ?motherLabel ?father ?fatherLabel (year(?birthdate) as ?birthyear) (year(?deathdate) as ?deathyear) ?genderLabel
+WHERE
+{
+  ?horse wdt:P31/wdt:P279* wd:Q726 .     # Instance of and subclasses of Q726 (horse)
+
+  OPTIONAL{?horse wdt:P25 ?mother .}     # mother
+  OPTIONAL{?horse wdt:P22 ?father .}     # father
+  OPTIONAL{?horse wdt:P569 ?birthdate .} # date of birth
+  OPTIONAL{?horse wdt:P570 ?deathdate .} # date of death
+  OPTIONAL{?horse wdt:P21 ?gender .}     # sex or gender
+
+  SERVICE wikibase:label { #BabelRainbow
+    bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,fr,ar,be,bg,bn,ca,cs,da,de,el,en,es,et,fa,fi,he,hi,hu,hy,id,it,ja,jv,ko,nb,nl,eo,pa,pl,pt,ro,ru,sh,sk,sr,sv,sw,te,th,tr,uk,yue,vec,vi,zh"
+  }
+}
+ORDER BY ?horse""" ;
+    schema:target <https://query.wikidata.org/sparql> .

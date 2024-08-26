@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:68 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "PubMed references in CIViCdb"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# variants that are associated with renal cell carcinoma
+SELECT DISTINCT ?reference ?referenceLabel ?pmid
+WHERE
+{
+  ?item wdt:P3329 ?civicId ;
+          ?property ?object .
+    ?object prov:wasDerivedFrom ?provenance .
+    ?provenance pr:P248 ?reference .
+    ?reference wdt:P31 wd:Q13442814 ;
+               wdt:P698 ?pmid .
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

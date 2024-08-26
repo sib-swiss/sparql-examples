@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:WPforHMDB a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file WPforHMDB.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#ist of WikiPathways for HMDB identifiers
+
+select distinct ?pathwayRes (str(?wpid) as ?pathway) (str(?title) as ?pathwayTitle) (fn:substring(?hmdbId,29) as ?hmdb) where {
+  ?gene a wp:Metabolite ;
+    dcterms:identifier ?id ;
+    dcterms:isPartOf ?pathwayRes ;
+    wp:bdbHmdb ?hmdbId .
+  ?pathwayRes a wp:Pathway ;
+    dcterms:identifier ?wpid ;
+    dc:title ?title .
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

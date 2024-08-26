@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:CyTargetLinkerLinksetInput a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file CyTargetLinkerLinksetInput.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+select distinct  (str(?title) as ?PathwayName) (str(?wpid) as ?PathwayID) (fn:substring(?genename,37) as ?GeneName) (fn:substring(?ncbiGeneId,34) as ?GeneID) where {
+  ?gene a wp:DataNode ;
+    dcterms:identifier ?id ;
+    dcterms:isPartOf ?pathwayRes ;
+    wp:bdbEntrezGene ?ncbiGeneId ;
+    wp:bdbHgncSymbol ?genename .
+  ?pathwayRes a wp:Pathway ;
+    dcterms:identifier ?wpid ;
+    dc:title ?title .
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

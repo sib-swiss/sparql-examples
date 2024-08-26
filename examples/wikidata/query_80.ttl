@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:80 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Organisms that are located in the female urogential tract and that have a gene with product indole"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+SELECT ?organism_name
+WHERE
+{
+  ?organism_item wdt:P2974 wd:Q5880 ;
+                 rdfs:label ?organism_name .
+  ?gene wdt:P703 ?organism_item ;
+        wdt:P1056 wd:Q319541 .
+  FILTER (LANG(?organism_name) = "en") .
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

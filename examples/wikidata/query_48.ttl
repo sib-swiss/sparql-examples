@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:48 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Show all Dutch municipalities that share a border with {{Q|Q213246}}, ignoring rank"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?muni ?muniLabel where {
+  ?muni p:P31 [ps:P31 wd:Q2039348];
+        wdt:P47 wd:Q213246.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "nl". }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

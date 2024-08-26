@@ -1,0 +1,33 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:24 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Pictures of noun lexemes in English (picture dictionary à la Wikidata)"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# <translate><!--T:832--> Lexemes in English with picture and description fetched from the concept Q-item</translate>
+# <translate><!--T:833--> NB: when 2 or more pictures occur for the same lemma a preferred rank is missing on the Q-item.</translate>
+# <translate><!--T:834--> Please fix that if you know how.</translate>
+# <translate><!--T:835--> by So9q</translate>
+#defaultView:ImageGrid
+SELECT DISTINCT ?lexemeId ?lemma ?q_concept ?q_conceptDescription ?picture
+WHERE {
+  ?lexemeId dct:language wd:Q1860;
+            wikibase:lemma ?lemma;
+            ontolex:sense ?sense.
+  ?sense wdt:P5137 ?q_concept.
+  ?q_concept wdt:P18 ?picture.
+  # <translate><!--T:836--> if you wish to only browse certain items you can insert a FILTER</translate>
+  # <translate><!--T:837--> regular expression here, like in the example above.</translate>
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+ORDER BY lcase(?lemma) # order a-z""" ;
+    schema:target <https://query.wikidata.org/sparql> .

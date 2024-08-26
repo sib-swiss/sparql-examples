@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:13 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Total population in the Øresund Region"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:757--> Total population in the Øresund Region</translate>
+# <translate><!--T:799--> Illustrates the SUM aggregate function</translate>
+
+SELECT DISTINCT ?area ?areaLabel (sum(?folkm_ngd) as ?total_folkm) # <translate><!--T:800--> the first two variables can be removed</translate>
+                                                                   # <translate><!--T:801--> if only the number is needed</translate>
+WHERE {
+  ?item wdt:P361 wd:Q297853. # <translate><!--T:802--> part of (P361) Øresund Region (Q297853)</translate>
+  ?item wdt:P1082 ?folkm_ngd. # <translate><!--T:803--> population (P1082)</translate>
+  ?area wdt:P31 wd:Q1907114. # <translate><!--T:804--> instance of (P31) metropolitan area (Q1907114)</translate>
+  ?area wdt:P527 ?item. # <translate><!--T:805--> has part (P527)</translate>
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+GROUP BY ?area ?areaLabel""" ;
+    schema:target <https://query.wikidata.org/sparql> .

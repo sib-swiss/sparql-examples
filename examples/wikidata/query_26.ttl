@@ -1,0 +1,32 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:26 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Lexeme languages by number of usage examples"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:768--> Lexeme languages by number of usage examples</translate>
+# <translate><!--T:855--> by Vesihiisi</translate>
+# <translate><!--T:856--> improved by So9q 23-20-2020 to only show those with both a form and a sense,</translate>
+# <translate><!--T:857--> because that's what we really want</translate>
+
+#defaultView:BubbleChart
+SELECT ?languageLabel (COUNT(?example) AS ?count) WHERE {
+  ?l dct:language ?language;
+     p:P5831 ?statement.
+  ?statement ps:P5831 ?example;
+             pq:P6072 [];
+             pq:P5830 [].
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+GROUP BY ?languageLabel
+ORDER BY DESC(?count)""" ;
+    schema:target <https://query.wikidata.org/sparql> .

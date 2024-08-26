@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:133 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Map of all the paintings for which we know a location with the count per location"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+#Map of all the paintings for which we know a location with the count per location
+#defaultView:Map
+SELECT ?locationLabel ?coord (count(*) as ?count)
+WHERE
+{
+    ?painting wdt:P31 wd:Q3305213 .
+    ?painting wdt:P276 ?location .
+  ?location wdt:P625 ?coord
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+}
+GROUP BY ?locationLabel ?coord""" ;
+    schema:target <https://query.wikidata.org/sparql> .

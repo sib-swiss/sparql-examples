@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:59 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Ten largest islands in the world"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:776--> Ten largest islands in the world</translate>
+# Inspired by this infographic: https://redd.it/a6423t
+
+#defaultView:ImageGrid
+SELECT DISTINCT ?island ?islandLabel ?islandImage WHERE {
+  ?island (wdt:P31/(wdt:P279*)) wd:Q23442.
+  OPTIONAL { ?island wdt:P18 ?islandImage. }
+  ?island (p:P2046/psn:P2046/wikibase:quantityAmount) ?islandArea.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+ORDER BY DESC (?islandArea)
+LIMIT 10""" ;
+    schema:target <https://query.wikidata.org/sparql> .

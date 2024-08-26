@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:165 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Swedish municipalities which changed their municipality identifier at some point"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title:<translate><!--T:784--> Swedish municipalities which changed their municipality identifier at some point</translate>
+#author:Salgo60 2021-09-11
+SELECT DISTINCT ?item ?itemLabel ?kkod1 ?kkod2 ?svwp_artikel WHERE
+{
+  ?item wdt:P525 ?kkod1 .
+  ?item wdt:P525 ?kkod2 .
+  FILTER ( ?kkod1<?kkod2 )
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "sv". }
+  OPTIONAL { ?svwp_artikel schema:about ?item; schema:isPartOf <https://sv.wikipedia.org/> }
+}
+ORDER BY ?itemLabel""" ;
+    schema:target <https://query.wikidata.org/sparql> .

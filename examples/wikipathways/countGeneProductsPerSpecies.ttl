@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:countGeneProductsPerSpecies a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file countGeneProductsPerSpecies.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+select (count(distinct ?gene) as ?count) (str(?label) as ?species) where {
+  ?gene a wp:GeneProduct ;
+    dcterms:isPartOf ?pw .
+  ?pw dc:title ?title ;
+    wp:organism ?organism ;
+    wp:organismName ?label .
+} GROUP BY ?label ORDER BY DESC(?count)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:WPforEnsembl a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file WPforEnsembl.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#List of WikiPathways for Ensembl identifiers
+
+select distinct ?pathwayRes (str(?wpid) as ?pathway) (str(?title) as ?pathwayTitle) (fn:substring(?ensId,32) as ?ensembl) where {
+  ?gene a wp:GeneProduct ;
+    dcterms:identifier ?id ;
+    dcterms:isPartOf ?pathwayRes ;
+    wp:bdbEnsembl ?ensId .
+  ?pathwayRes a wp:Pathway ;
+    dcterms:identifier ?wpid ;
+    dc:title ?title .
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

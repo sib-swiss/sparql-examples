@@ -1,0 +1,30 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:LIPIDMAPS_Federated a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file LIPIDMAPS_Federated.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Pathways describing the biology of oxygenated hydrocarbons (LMFA12)
+PREFIX chebi: <http://purl.obolibrary.org/obo/chebi/>
+
+SELECT ?lipid ?name ?formula ?lmid (GROUP_CONCAT(?wpid_;separator=", ") AS ?pathway)
+WHERE {
+  SERVICE <https://lipidmaps.org/sparql> {
+    VALUES ?category { <https://www.lipidmaps.org/rdf/category/112> <https://www.lipidmaps.org/rdf/category/11200> } 
+    ?lipidmaps rdfs:label ?name ;
+      rdfs:subClassOf* ?category ;
+      chebi:formula ?formula .
+  }
+  BIND (IRI(CONCAT("https://identifiers.org/lipidmaps/",
+               SUBSTR(STR(?lipidmaps), 31))) AS ?lmid)
+  ?lipid wp:bdbLipidMaps ?lmid ;
+         dcterms:isPartOf ?pathway .
+  ?pathway a wp:Pathway ; dcterms:identifier ?wpid_ .
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

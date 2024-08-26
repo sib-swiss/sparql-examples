@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:130 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "'27 club' - musicians who died at age 27"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+#defaultView:Map
+SELECT ?label ?coord ?subj
+WHERE
+{
+   ?subj wdt:P170 wd:Q5593 .
+  OPTIONAL {?subj wdt:P276 ?loc .
+    ?loc wdt:P625 ?coord } .
+   ?subj rdfs:label ?label FILTER (lang(?label) = "en")
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

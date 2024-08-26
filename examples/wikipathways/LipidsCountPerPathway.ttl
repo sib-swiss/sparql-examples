@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:LipidsCountPerPathway a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file LipidsCountPerPathway.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+prefix lipidmaps:      <https://identifiers.org/lipidmaps/> #IRI can be used to create URLs from identifiers in line 7
+select distinct ?pathwayRes (str(?wpid) as ?pathway) (str(?title) as ?pathwayTitle) (count(distinct ?lipidID) AS ?LipidsInPWs)
+where {
+  ?metabolite a wp:Metabolite ;    #Define what are metabolites
+    dcterms:identifier ?id ;       #Find the identifier of a certain metabolite
+    dcterms:isPartOf ?pathwayRes ; #Define metabolites are part of a pathway
+    wp:bdbLipidMaps ?lipidID .     #Find the LIPID MAPS identifier for a certain metabolite
+  ?pathwayRes a wp:Pathway ;       #Define what is a pathway
+              wp:organismName "Homo sapiens" ; #Filter pathways on species Human
+    dcterms:identifier ?wpid ;     #Obtain identifier of pathway
+    dc:title ?title .              #Obtain title of pathway
+}
+
+ORDER BY DESC(?LipidsInPWs)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

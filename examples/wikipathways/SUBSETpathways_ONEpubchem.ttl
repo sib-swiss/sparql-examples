@@ -1,0 +1,32 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:SUBSETpathways_ONEpubchem a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file SUBSETpathways_ONEpubchem.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?pathwayRes (str(?wpid) as ?pathway) (str(?title) as ?pathwayTitle) ((substr(str(?COMPOUND),46)) as ?PubChem) WHERE {
+  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/molmedb> {
+    SERVICE <https://sparql.wikipathways.org/sparql> {
+      VALUES ?wpid {"WP4224" "WP4225" "WP4571"}
+
+    ?gene a wp:Metabolite ;
+      dcterms:identifier ?id ;
+      dcterms:isPartOf ?pathwayRes ;
+      wp:bdbPubChem ?COMPOUND .
+
+    ?pathwayRes a wp:Pathway ;
+      wp:organismName "Homo sapiens" ;
+      dcterms:identifier ?wpid ;
+      dc:title ?title .
+    }
+    
+    <http://identifiers.org/molmedb/MM00431> skos:exactMatch ?COMPOUND.
+  }
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .
