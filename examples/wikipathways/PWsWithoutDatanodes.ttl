@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:PWsWithoutDatanodes a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file PWsWithoutDatanodes.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Pathways without (annotated) datanodes
+
+prefix wp:      <http://vocabularies.wikipathways.org/wp#>
+prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?pathway
+WHERE{
+?pathway a wp:Pathway, skos:Collection .
+FILTER NOT EXISTS {?node dcterms:isPartOf ?pathway.
+?node a wp:DataNode}
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

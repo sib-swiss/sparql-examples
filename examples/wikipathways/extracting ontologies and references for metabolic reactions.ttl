@@ -1,0 +1,42 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:extracting ontologies and references for metabolic reactions a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file extracting ontologies and references for metabolic reactions.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+### Part 1: ###
+SELECT DISTINCT ?interaction ?sourceDb ?targetDb ?PWOnt ?DiseaseOnt 
+?curationstatus ?InteractionRef ?PWref ?sourceLit ?targetLit 
+WHERE {
+?pathway a wp:Pathway ; 
+         	wp:organismName "Homo sapiens"; 
+         	dc:title ?titleLit . 
+?interaction dcterms:isPartOf ?pathway ; 
+   a wp:DirectedInteraction ; 
+   wp:source ?source ;
+   wp:target ?target . 
+?source a wp:Metabolite . 
+?source wp:bdbWikidata ?sourceDb . 
+?target a wp:Metabolite . 
+?target wp:bdbWikidata ?targetDb . 
+
+### Part 2: ###
+#OPTIONAL{?pathway wp:pathwayOntologyTag ?PWOnt} . 
+#OPTIONAL{?pathway wp:diseaseOntologyTag ?DiseaseOnt} . 
+
+### Part 3: ###
+#OPTIONAL{?pathway wp:ontologyTag ?curationstatus} . 
+
+### Part 4: ###
+OPTIONAL{?interaction dcterms:bibliographicCitation ?InteractionRef} . 
+OPTIONAL{?pathway dcterms:references ?PWref} . 
+OPTIONAL{?source dcterms:bibliographicCitation ?sourceLit} . 
+OPTIONAL{?target dcterms:bibliographicCitation ?targetLit} . 
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

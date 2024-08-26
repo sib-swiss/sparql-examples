@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:averageGeneProducts a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file averageGeneProducts.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT (AVG(?no) AS ?avg) 
+       (MIN(?no) AS ?min) 
+       (MAX(?no) AS ?max) 
+WHERE {
+    SELECT ?Pathway (COUNT(?DataNodes) AS ?no) 
+    WHERE {
+    ?DataNodes a wp:GeneProduct ;
+       dcterms:isPartOf ?Pathway.
+    ?Pathway a wp:Pathway.}
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

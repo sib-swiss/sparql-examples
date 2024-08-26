@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:OntologyofPathway a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file OntologyofPathway.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT (?o as ?pwOntologyTerm) (str(?titleLit) as ?title) ?pathway 
+WHERE {
+  ?pathwayRDF wp:ontologyTag ?o ;
+    foaf:page ?pathway ;
+    dc:title ?titleLit ;
+    dcterms:identifier "WP1560" . #Replace "WP1560" with WP ID of interest
+
+  FILTER (! regex(str(?pathway), "group"))
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

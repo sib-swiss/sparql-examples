@@ -1,0 +1,32 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:55 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Places that are below 10 meters above sea level"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+#defaultView:Map
+SELECT ?place ?location ?elev ?image
+WHERE
+{
+  ?place p:P2044/psv:P2044 ?placeElev.
+  ?placeElev wikibase:quantityAmount ?elev.
+  ?placeElev wikibase:quantityUnit ?unit.
+  bind(0.01 as ?km).
+  filter( (?elev < ?km*1000 && ?unit = wd:Q11573)
+       {{!}}{{!}} (?elev < ?km*3281 && ?unit = wd:Q3710)
+       {{!}}{{!}} (?elev < ?km      && ?unit = wd:Q828224) ).
+  ?place wdt:P625 ?location.
+  OPTIONAL { ?place wdt:P18 ?image }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

@@ -1,0 +1,41 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:controlling duplicate mappings from Wikidata a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file controlling duplicate mappings from Wikidata.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+### Part 1: ###
+#Required prefixes for querying WikiPathways content in Blazegraph
+PREFIX gpml:		<http://vocabularies.wikipathways.org/gpml#>
+PREFIX wp:		<http://vocabularies.wikipathways.org/wp#> 
+PREFIX wprdf:		<http://rdf.wikipathways.org/>
+PREFIX biopax:		<http://www.biopax.org/release/biopax-level3.owl#> 
+PREFIX cas:		<http://identifiers.org/cas/>
+PREFIX dc:		<http://purl.org/dc/elements/1.1/> 
+PREFIX dcterms:		<http://purl.org/dc/terms/>
+PREFIX foaf:		<http://xmlns.com/foaf/0.1/> 
+PREFIX ncbigene:		<http://identifiers.org/ncbigene/>
+PREFIX pubmed:		<http://www.ncbi.nlm.nih.gov/pubmed/> 
+PREFIX rdf:		<http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs:		<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos:		<http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:		<http://www.w3.org/2001/XMLSchema#> 
+PREFIX cur:		<http://vocabularies.wikipathways.org/wp#Curation:>
+
+### Part 2: ###
+#Control for double mappings to Wikidata IDs.
+SELECT DISTINCT ?metaboliteID 
+(GROUP_CONCAT(DISTINCT ?wikidata;separator=", ") AS ?results) 
+WHERE {
+  ?metaboliteID a wp:Metabolite .
+  ?metaboliteID wp:bdbWikidata ?wikidata .
+  ?metaboliteID wp:bdbWikidata ?wikidata2 .
+FILTER(?wikidata != ?wikidata2)
+} GROUP BY ?metaboliteID
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

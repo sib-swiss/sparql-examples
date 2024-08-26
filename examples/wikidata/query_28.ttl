@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:28 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Lexemes that means water ordered by language"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# <translate><!--T:859--> By So9q</translate>
+# <translate><!--T:860--> Lexemes that means (liquid) water</translate>
+SELECT ?l ?sense ?lemma ?languageLabel WHERE {
+  ?l a ontolex:LexicalEntry ; # <translate><!--T:861--> get from the special LexicalEntry</translate>
+       ontolex:sense ?sense ; # <translate><!--T:862--> the sense</translate>
+       dct:language ?language ; # <translate><!--T:863--> the language</translate>
+       wikibase:lemma ?lemma. # <translate><!--T:864--> and the lemma</translate>
+  ?sense wdt:P5137 wd:Q29053744 .
+                   # <translate><!--T:865--> change Q29053744 to anything you want</translate>
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+# <translate><!--T:866--> Lower case before order</translate>
+ORDER BY (LCASE(?languageLabel))""" ;
+    schema:target <https://query.wikidata.org/sparql> .

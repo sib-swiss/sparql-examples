@@ -1,0 +1,38 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:10 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Recent events"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:753--> Recent events</translate>
+SELECT ?event ?eventLabel ?date
+WITH {
+  SELECT DISTINCT ?event ?date
+  WHERE {
+    # find events
+    ?event wdt:P31/wdt:P279* wd:Q1190554.
+    # with a point in time or start date
+    OPTIONAL { ?event wdt:P585 ?date. }
+    OPTIONAL { ?event wdt:P580 ?date. }
+    # but at least one of those
+    FILTER(BOUND(?date) && DATATYPE(?date) = xsd:dateTime).
+    # not in the future, and not more than 31 days ago
+    BIND(NOW() - ?date AS ?distance).
+    FILTER(0 <= ?distance && ?distance < 31).
+  }
+  LIMIT 150
+} AS %i
+WHERE {
+  INCLUDE %i
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" . }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

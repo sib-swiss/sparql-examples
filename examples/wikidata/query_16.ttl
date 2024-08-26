@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:16 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Swedish lexemes that are missing in the biggest official printed Swedish dictionary SAOB."^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title:<translate><!--T:762--> Swedish lexemes that are missing in the biggest official printed Swedish dictionary SAOB.</translate>
+# <translate><!--T:820--> date: 2021-10-12</translate>
+# <translate><!--T:821--> author:So9q</translate>
+SELECT ?lemma
+WHERE {
+  ?lexemeId dct:language wd:Q9027;
+            wikibase:lemma ?lemma;
+            wdt:P9660 wd:Q1935308.
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

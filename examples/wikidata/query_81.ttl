@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:81 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Threatened Species of Animals as per IUCN Classification"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+SELECT DISTINCT ?idExtension ?extension ?mediaType ?idExtensionLabel
+WHERE
+{
+  ?idExtension wdt:P31 wd:Q235557 ;
+               wdt:P1195 ?extension .
+  OPTIONAL { ?idExtension wdt:P1163 ?mediaType }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+}
+ORDER BY ?extension ?mediaType""" ;
+    schema:target <https://query.wikidata.org/sparql> .

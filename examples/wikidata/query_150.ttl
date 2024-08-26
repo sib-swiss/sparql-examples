@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:150 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Female artists"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+SELECT DISTINCT ?women ?women_label ?women_description
+WHERE
+{
+       ?women wdt:P31 wd:Q5 .
+       ?women wdt:P21 wd:Q6581072 .
+       ?women wdt:P106/wdt:P279* wd:Q483501 . # artists
+       OPTIONAL {?women rdfs:label ?women_label FILTER (LANG(?women_label) = "en")}.
+	   OPTIONAL {?women schema:description ?women_description FILTER (LANG(?women_description) = "en")}.
+}
+LIMIT 500""" ;
+    schema:target <https://query.wikidata.org/sparql> .

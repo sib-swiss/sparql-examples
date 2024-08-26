@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:156 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "The awards received by Cristiano Ronaldo by year"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?doi (count(?doi) as ?counts) WHERE {
+   ?statement prov:wasDerivedFrom ?ref .
+   ?ref pr:P356 ?doi .
+   FILTER (CONTAINS(lcase(?doi), "figshare"))
+}
+GROUP BY ?doi
+ORDER BY DESC(?counts)""" ;
+    schema:target <https://query.wikidata.org/sparql> .

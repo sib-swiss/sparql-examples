@@ -1,0 +1,60 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:countProteinsMetabolitesRheaDiseases a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file countProteinsMetabolitesRheaDiseases.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+#Prefixes required which might not be available in the SPARQL endpoint by default
+PREFIX wp:      <http://vocabularies.wikipathways.org/wp#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+#Variable selection
+SELECT DISTINCT (str(?title) as ?pathwayName) ?PWID 
+(count(distinct ?geneProduct) AS ?ProteinsInPWs) (count(distinct ?metaboliteNode) AS ?MetabolitesInPWs) 
+(count(distinct ?interactionID) AS ?RheaInPWs) (count(distinct ?interactionMissing) AS ?NoRheaInPWs)
+(count(distinct ?omim) as ?diseaseIDs)
+
+WHERE {
+
+    ?pathway wp:ontologyTag cur:IEM . 
+    ?pathway dcterms:identifier ?PWID. #Obtain the ID
+    ?pathway wp:isAbout ?gpmlRDF_ID . #find the corresponding GPML link     
+    ?pathway dc:title ?title . #Obtain the title   
+
+    {
+    ?geneProduct dcterms:isPartOf ?pathway . #Only those part of PW             
+    ?geneProduct a wp:Protein . #Filter for Protein DataNodes    
+    } 
+    UNION
+    { 
+    ?metaboliteNode a wp:Metabolite . #Filter for Metabolite DataNodes
+    ?metaboliteNode dcterms:isPartOf ?pathway . #Only those part of PW
+    }
+    UNION 
+    { 
+    OPTIONAL{?interaction wp:bdbRhea ?interactionID . #Find interactions with a Rhea ID
+    ?interaction dcterms:isPartOf ?pathway .} #Only those part of PW
+    }
+    UNION
+    {
+    OPTIONAL{?interactionMissing dcterms:isPartOf ?pathway . #Find additional interactions
+    ?interactionMissing rdf:type wp:Conversion . #That are of type 'metabolic conversion'
+    FILTER NOT EXISTS {?interactionMissing wp:bdbRhea ?interactionID . } #Without a Rhea ID   
+    }  
+    }
+    UNION {
+    ?diseaseNode dcterms:isPartOf ?gpmlRDF_ID . #Only check for matching pathways 
+    ?diseaseNode rdf:type gpml:Label . #Only include textLabels
+    ?diseaseNode gpml:href ?omim . #That have an href attribute  
+    FILTER regex(?omim, "omim.org", "i") #Only keep hrefs if they contain 'omim.org'
+    }
+      
+} ORDER BY ASC(?pathway)
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

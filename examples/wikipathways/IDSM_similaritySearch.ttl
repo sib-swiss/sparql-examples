@@ -1,0 +1,49 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:IDSM_similaritySearch a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file IDSM_similaritySearch.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ebi: <http://ebi.rdf.ac.uk/dataset/>
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
+PREFIX sso: <http://semanticscience.org/resource/>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+SELECT distinct ((substr(str(?chebioSrc),32)) as ?SourceOrigin) ((substr(str(?similarSrc),32)) as ?SourceSimilar) ((substr(str(?chebioTgt),32)) as ?TargetOrigin) ((substr(str(?similarTgt),32)) as ?TargetSimilar)  #?reaction 
+WHERE {
+  ?interaction dcterms:isPartOf ?pathway ; a wp:Conversion ;
+      wp:source ?source ;
+      wp:target ?target .
+    ?source wp:bdbChEBI ?chebiSrc .
+    ?target wp:bdbChEBI ?chebiTgt .
+    ?pathway dcterms:identifier "WP4225".
+    BIND(iri(concat("http://purl.obolibrary.org/obo/CHEBI_", substr(str(?chebiSrc),37))) AS ?chebioSrc)
+    BIND(iri(concat("http://purl.obolibrary.org/obo/CHEBI_", substr(str(?chebiTgt),37))) AS ?chebioTgt)
+#IDSM
+SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> {
+   ?chebioSrc ^sso:is-attribute-of / sso:has-value ?molfileSrc .
+ ?chebioTgt ^sso:is-attribute-of / sso:has-value ?molfileTgt .
+  [ sachem:compound ?similarSrc; sachem:score ?scoreSrc ]
+    sachem:similaritySearch [
+      sachem:query ?molfileSrc ;
+     sachem:cutoff 98e-2
+    ].
+  [ sachem:compound ?similarTgt; sachem:score ?scoreTgt ]
+    sachem:similaritySearch [
+      sachem:query ?molfileTgt ;
+      sachem:cutoff 98e-2 
+    ] .
+  }
+ }
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

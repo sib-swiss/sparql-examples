@@ -1,0 +1,37 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:ProteinMitochondria a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file ProteinMitochondria.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX : <http://nextprot.org/rdf#>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct  ?pathwayname (group_concat(distinct ?gen , ',') as ?genes) where {
+  {?geneProduct a wp:Protein}
+   union
+  {?geneProduct a wp:GeneProduct}
+  ?geneProduct rdfs:label ?gen .
+  filter(!regex(?gen,"[ a-z-]")).
+  ?geneProduct dcterms:isPartOf ?pathway .
+  ?pathway a wp:Pathway .
+  ?pathway wp:organism ?organism .
+  filter(contains(str(?organism),"9606")) 
+  ?pathway dc:title ?pathwayname .
+  filter(regex(?pathwayname,"Rett")).
+  service <https://api.nextprot.org/sparql> {
+    ?entry a :Entry .
+    ?entry :gene / :name ?gen .
+    ?entry :isoform / :cellularComponent ?loc .
+    values ?mitoloc {cv:SL-0173 cv:GO_0005739 } # SL and GO values for mitochondrion
+    ?loc :term / :childOf ?mitoloc.  # mitochondrion
+    ?loc :evidence / :quality :GOLD .
+  }}
+order by ?pathwayname
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

@@ -1,0 +1,58 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:25 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "German picture dictionary for young children"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# <translate><!--T:838--> German picture dictionary for young children</translate>
+# <translate><!--T:839--> NB: when 2 or more pictures occur for the same lemma a preferred rank is missing on the Q-item.</translate>
+# <translate><!--T:840--> Please fix that if you know how.</translate>
+# <translate><!--T:841--> If any inapproriate terms show up it is probably because the sense is missing a correct P5137</translate>
+# <translate><!--T:842--> by So9q</translate>
+#defaultView:ImageGrid
+SELECT DISTINCT ?lexemeId ?lemma ?q_concept ?q_conceptDescription ?picture
+WHERE {
+  ?lexemeId dct:language wd:Q188; # change language here
+            wikibase:lemma ?lemma;
+            ontolex:sense ?sense.
+  ?sense wdt:P5137 ?q_concept.
+  ?q_concept wdt:P18 ?picture.
+  ############
+  # <translate><!--T:843--> Exclusions</translate>
+  ############
+  # <translate><!--T:844--> Exclude out of scope concepts</translate>
+  MINUS {?q_concept wdt:P31 wd:Q3624078.}. # countries
+
+  # <translate><!--T:845--> Exclude non suitable concepts</translate>
+  VALUES ?minus {
+  wd:Q47092 # <translate><!--T:846--> rape</translate>
+  wd:Q198   # <translate><!--T:847--> war</translate>
+  wd:Q124490 # <translate><!--T:848--> violence</translate>
+  wd:Q170382 # <translate><!--T:849--> revolver</translate>
+  wd:Q1576   # <translate><!--T:850--> cigar</translate>
+  #... <translate><!--T:851--> add yours here</translate>
+  }.
+  MINUS {?sense wdt:P5137 ?minus.}.
+
+  # <translate><!--T:852--> Exclude senses not suitable for young children:</translate>
+  VALUES ?filter {
+  wd:Q8102
+  wd:Q545779
+  wd:Q1521634
+  wd:Q184439}.
+  FILTER NOT EXISTS {?sense wdt:P6191 ?filter.}.
+  # <translate><!--T:853--> if you wish to only browse certain items you can insert a FILTER</translate>
+  # <translate><!--T:854--> regular expression here, like in the example above.</translate>
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "de,en,mul". }
+}
+ORDER BY lcase(?lemma) # order a-z""" ;
+    schema:target <https://query.wikidata.org/sparql> .

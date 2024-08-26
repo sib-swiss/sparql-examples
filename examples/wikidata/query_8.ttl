@@ -1,0 +1,31 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:8 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Items with a Wikispecies sitelink"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# <translate><!--T:787--> illustrates sitelink selection, ";" notation</translate>
+#title: <translate><!--T:751--> Items with a Wikispecies sitelink</translate>
+SELECT ?item ?itemLabel ?article
+WITH {
+  SELECT *
+  WHERE {
+    ?article schema:about ?item ;
+      schema:isPartOf <https://species.wikimedia.org/> .
+  }
+  LIMIT 200
+} AS %i
+WHERE {
+  INCLUDE %i
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" . }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

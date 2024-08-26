@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:MetaboliteInAOP-Wiki a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file MetaboliteInAOP-Wiki.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX aopo:	<http://aopkb.org/aop_ontology#> 
+PREFIX cheminf:	<http://semanticscience.org/resource/CHEMINF_> 
+
+SELECT DISTINCT (str(?title) as ?pathwayName) ?chemical ?ChEBI ?ChemicalName  ?mappedid ?LinkedStressor 
+
+WHERE {
+   ?pathway a wp:Pathway ; wp:organismName "Homo sapiens"; dcterms:identifier ?WPID ; dc:title ?title . 
+   ?chemical a wp:Metabolite; dcterms:isPartOf ?pathway; wp:bdbChEBI ?mappedid . 
+   SERVICE <https://aopwiki.rdf.bigcat-bioinformatics.org/sparql/>{
+    ?mappedid a cheminf:000407; cheminf:000407 ?ChEBI .
+    ?cheLook a cheminf:000000; dc:title ?ChemicalName ; dcterms:isPartOf ?LinkedStressor ;  skos:exactMatch ?mappedid .
+   }}
+limit 1
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

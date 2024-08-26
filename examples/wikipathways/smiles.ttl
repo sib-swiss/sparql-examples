@@ -1,0 +1,18 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:smiles a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file smiles.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX cheminf: <http://semanticscience.org/resource/>
+
+SELECT ?mol ?smilesDepict WHERE {
+ ?mol wp:bdbWikidata/cheminf:CHEMINF_000018 ?smilesDepict .
+} LIMIT 25
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

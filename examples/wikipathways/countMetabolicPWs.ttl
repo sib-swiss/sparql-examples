@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:countMetabolicPWs a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file countMetabolicPWs.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT count(distinct ?pathway) as ?pathwaycount
+WHERE {
+  ?tag1 a owl:Class ;
+  rdfs:label ?label .
+  ?tag rdfs:subClassOf* ?tag1.
+  ?pathway a wp:Pathway; wp:ontologyTag ?tag.
+FILTER regex(str(?label), "metabolic pathway")
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

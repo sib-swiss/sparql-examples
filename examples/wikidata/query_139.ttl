@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:139 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Ten random painting images"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# This returns 10 random painting images
+# RAND() returns one random number (cached like every query).
+# The string representation of the item and the random number are hashed.
+# This will give a complete different ordering every time you have a different random number.
+# You can change the LIMIT if you want to trigger a new random number
+#defaultView:ImageGrid
+SELECT ?item ?itemLabel ?image (MD5(CONCAT(str(?item),str(RAND()))) as ?random) WHERE {
+  ?item wdt:P31 wd:Q3305213.
+  ?item wdt:P18 ?image.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en"}
+} ORDER BY ?random
+LIMIT 10""" ;
+    schema:target <https://query.wikidata.org/sparql> .

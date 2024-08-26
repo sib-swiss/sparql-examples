@@ -1,0 +1,34 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:111 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Museums"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT DISTINCT ?museumLabel ?museumDescription ?villeId ?villeIdLabel (?villeIdLabel AS ?ville) ?coord ?lat ?lon
+WHERE
+{
+  ?museum wdt:P539 ?museofile. # french museofile Id
+  ?museum wdt:P131* wd:Q12130. # in Brittany
+  ?museum wdt:P131 ?villeId. #city of the museum
+  # ?object wdt:P166 wd:Q2275045 # that have french label "musées de France"
+  OPTIONAL {?museum wdt:P856 ?link.} # official website
+  OPTIONAL {?museum wdt:P625 ?coord .} # geographic coord
+  OPTIONAL {
+    ?museum p:P625 ?statement.
+    ?statement psv:P625 ?node.
+    ?node wikibase:geoLatitude ?lat.
+    ?node wikibase:geoLongitude ?lon.
+   }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". } #french label
+}
+ORDER BY ?villeIdLabel""" ;
+    schema:target <https://query.wikidata.org/sparql> .

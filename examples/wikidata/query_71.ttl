@@ -1,0 +1,34 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:71 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Metabolites"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?compound ?compoundLabel ?speciesLabel ?sourceLabel ?doi ?wpid WHERE {
+  ?compound wdt:P31 wd:Q11173.
+  MINUS { ?compound wdt:P31 wd:Q8054. }
+  ?compound p:P703 ?statement.
+  ?statement rdf:type wikibase:BestRank.
+  ?statement ps:P703 ?species.
+  OPTIONAL {
+    ?statement (prov:wasDerivedFrom/pr:P248) ?source.
+    OPTIONAL { ?source wdt:P2410 ?wpid. }
+    OPTIONAL { ?source wdt:P356 ?doi. }
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+ORDER BY ASC(?compound)""" ;
+    schema:target <https://query.wikidata.org/sparql> .

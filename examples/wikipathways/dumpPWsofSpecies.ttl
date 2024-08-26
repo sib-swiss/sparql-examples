@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:dumpPWsofSpecies a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file dumpPWsofSpecies.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?wpIdentifier ?pathway ?title ?page
+WHERE {
+    ?pathway dc:title ?title ;
+       foaf:page ?page ;
+       dc:identifier ?wpIdentifier ;
+       wp:organismName "Mus musculus" .
+ }
+ORDER BY ?wpIdentifier
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

@@ -1,0 +1,31 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:56 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Globes used to represent coordinates"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+SELECT ?item ?itemLabel ?count
+WHERE
+{
+  {
+    SELECT ?item (COUNT(DISTINCT ?country) AS ?count) WHERE {
+      ?item wdt:P31/wdt:P279* wd:Q41176 .
+      ?item wdt:P17 ?country .
+      FILTER NOT EXISTS { ?country wdt:P576 ?end }
+    }
+    GROUP BY ?item
+  }
+  FILTER ( ?count > 1 )
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
+}
+ORDER BY DESC(?count) ?itemL""" ;
+    schema:target <https://query.wikidata.org/sparql> .

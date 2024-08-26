@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:18 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Get the lemma for an inflected word in English"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#title: <translate><!--T:764--> Get the lemma for an inflected word in English</translate>
+# <translate><!--T:823--> Author: So9q</translate>
+# <translate><!--T:824--> 2021-07-25</translate>
+# <translate><!--T:825--> inspired by <tvar name="1">https://sinaahmadi.github.io/posts/10-essential-sparql-queries-for-lexicographical-data-on-wikidata.html</tvar></translate>
+SELECT DISTINCT ?l ?word ?lemma WHERE {
+  VALUES ?word { "bought"@en }
+  ?l dct:language wd:Q1860 ;
+     wikibase:lemma ?lemma ;
+     ontolex:lexicalForm ?form .
+  ?form ontolex:representation ?word .
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

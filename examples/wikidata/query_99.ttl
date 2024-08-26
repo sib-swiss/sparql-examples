@@ -1,0 +1,36 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:99 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Translations of the Disease Ontology term DOID:399 (Tuberculosis)"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+#defaultView:Timeline
+SELECT
+  ?genderLabel
+  ?theorem
+  ?theoremLabel
+  ?nameLabel
+  ?death
+  ?formula
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en,de,pl". }
+  ?theorem wdt:P31 wd:Q65943;
+           wdt:P138 ?name.
+  ?name    wdt:P570 ?death;
+           wdt:P21 ?gender .
+  # OPTIONAL{
+  ?theorem wdt:P2534 ?formula.
+  # }
+}
+ORDER BY DESC(?death)
+LIMIT 100""" ;
+    schema:target <https://query.wikidata.org/sparql> .

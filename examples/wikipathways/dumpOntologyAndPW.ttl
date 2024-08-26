@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:dumpOntologyAndPW a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file dumpOntologyAndPW.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?depicts (str(?titleLit) as ?title) (str(?speciesLabelLit) as ?speciesLabel) ?identifier ?ontology
+WHERE {
+	?pathway foaf:page ?depicts .
+        ?pathway dc:title ?titleLit .
+        ?pathway wp:organism ?species .
+        ?pathway wp:organismName ?speciesLabelLit .
+        ?pathway dc:identifier ?identifier .
+
+        OPTIONAL {?pathway wp:ontologyTag ?ontology .}
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

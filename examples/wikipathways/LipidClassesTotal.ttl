@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:LipidClassesTotal a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file LipidClassesTotal.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT count(DISTINCT ?lipidID) as ?IndividualLipidsPerClass
+WHERE {     ?metabolite a wp:Metabolite ;
+    dcterms:identifier ?id ;
+    dcterms:isPartOf ?pathwayRes ;
+    wp:bdbLipidMaps ?lipidID . #Metabolite DataNodes need to have a LIPID MAPS ID, for this query to count correctly (some lipids might be missed due to missing Xrefs)
+  ?pathwayRes a wp:Pathway ;
+              wp:organismName "Homo sapiens"; #Filter for a species (ommit when querying all pathways available for all species)
+    dcterms:identifier ?wpid ;
+    dc:title ?title .
+  FILTER regex(str(?lipidID), "FA" ). #Filter for a LIPID MAPS ID subclass: 'FA' Fatty Acids ; 'GL' Glycerolipid ; 'GP' Glycerophospholipid ; 'SP' Sphingolipids ; 'ST' Sterol lipids ; 'PR' Prenol Lipids ; 'SL' Saccharolipids ; 'PK' Polyketides
+}
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .

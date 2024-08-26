@@ -1,0 +1,35 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:29 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "The 100 most translated concepts in the Lexeme namespace"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# <translate><!--T:867--> by So9q, 2019-11-21</translate>
+#defaultView:BubbleChart
+SELECT ?meaning ?meaningLabel ?count
+WITH {
+  SELECT ?meaning (count(?l) as ?count)
+  WHERE {
+    ?l a ontolex:LexicalEntry ;
+      ontolex:sense ?sense.
+    ?sense wdt:P5137 ?meaning.
+  }
+  GROUP BY ?meaning
+  ORDER BY desc(?count)
+  LIMIT 100
+} AS %i
+WHERE {
+  INCLUDE %i
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" . }
+}
+ORDER BY desc(?count)""" ;
+    schema:target <https://query.wikidata.org/sparql> .

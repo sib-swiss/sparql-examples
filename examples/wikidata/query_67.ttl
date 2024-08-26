@@ -1,0 +1,37 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:67 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Variants that are associated with renal cell carcinoma"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+# variants that are associated with renal cell carcinoma
+SELECT DISTINCT ?civic_id ?item ?itemLabel
+WHERE
+{
+  VALUES ?property {
+                      wdt:P3356 # positive diagnostic predictor
+                      wdt:P3357 # negative diagnostic predictor
+                      wdt:P3358 # positive prognostic predicator
+                      wdt:P3359 # negative prognostic predictor
+                     }
+    ?item wdt:P3329 ?civic_id .
+    {?item ?property wd:Q1164529.} # wd:Q1164529 = renal cell carcinoma
+    UNION
+    {?item p:P3354 ?o . # positive therapeutic predictor
+     ?o pq:P2175 wd:Q1164529 .}
+    UNION
+    {?item p:P3354 ?o . # negative therapeutic predictor
+     ?o pq:P2175 wd:Q1164529 .}
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" }
+}""" ;
+    schema:target <https://query.wikidata.org/sparql> .

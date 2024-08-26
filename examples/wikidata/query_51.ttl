@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:51 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Body of water with the most watercourses ending in it"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+
+# Bodies of water that most watercourses end in (transitive).
+# For example, over 4000 watercourses eventually flow into the Ob,
+# and since the Ob flows into the Kara Sea, the Kara Sea has over 4000 results as well.
+SELECT ?mouth (COUNT(?watercourse) AS ?count)
+WHERE
+{
+  ?watercourse wdt:P403+ ?mouth.
+}
+GROUP BY ?mouth
+ORDER BY DESC(?count)
+LIMIT 10""" ;
+    schema:target <https://query.wikidata.org/sparql> .

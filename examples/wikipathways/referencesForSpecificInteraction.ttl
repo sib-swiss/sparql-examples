@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:referencesForSpecificInteraction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Sparql query from file referencesForSpecificInteraction.rq"^^rdf:HTML ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+SELECT DISTINCT ?pathway ?interaction ?pubmed WHERE {
+   ?pathway a wp:Pathway .
+   ?pathway dc:identifier <https://identifiers.org/wikipathways/WP5200> . #filter for pathway
+   ?interaction dcterms:isPartOf ?pathway .
+   ?interaction a wp:Interaction .
+   ?interaction wp:participants <https://identifiers.org/uniprot/P35498>. #filter for interaction
+  ?interaction dcterms:references ?pubmed .
+} LIMIT 100
+""" ;
+    schema:target <https://sparql.wikipathways.org/sparql/> .
