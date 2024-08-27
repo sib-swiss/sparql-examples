@@ -1,19 +1,9 @@
-# SIB SPARQL examples
+# BioHackathon SPARQL examples
 
 We collect the SPARQL examples in different formats,
-for different projects of the SIB Swiss Institute of Bioinformatics where we
+for different projects for which there is interest in the Biohackathon Japan 24 where we
 have a public SPARQL endpoint.
 
 In this github pages we have a HTML rendering for all them.
 
- * [Bgee](./examples/Bgee/)
- * [dbgi](./examples/dbgi/)
- * [GlyConnect](./examples/GlyConnect/)
- * [HAMAP](./examples/HAMAP/)
- * [MetaNetX](./examples/MetaNetX/)
- * [neXtProt](./examples/neXtProt/)
- * [OMA](./examples/OMA/)
- * [OrthoDB](./examples/OrthoDB)
- * [Rhea](./examples/Rhea)
- * [SwissLipids](./examples/SwissLipids)
- * [UniProt](./examples/UniProt/)
+ * [WikiData](./examples/WikiData/)
