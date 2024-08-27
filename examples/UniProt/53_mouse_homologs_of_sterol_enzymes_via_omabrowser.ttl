@@ -5,7 +5,7 @@
 
 ex:53 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find mouse homologs in OMABrowser of human enzymes that catalyze reactions involving Sterols (CHEBI:15889). Federating with Rhea-DB and OMABrowser." ;
+    rdfs:comment "Find mouse homologs in OMABrowser of human enzymes that catalyze reactions involving Sterols (CHEBI:15889). Federating with Rhea-DB and OMABrowser."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX lscr: <http://purl.org/lscr#>

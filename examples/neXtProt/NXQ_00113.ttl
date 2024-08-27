@@ -5,7 +5,7 @@
 
 ex:NXQ_00113 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with protein existence \"At protein level\" (PE=1) and at least one proteotypic peptide" ;
+    rdfs:comment "Proteins with protein existence \"At protein level\" (PE=1) and at least one proteotypic peptide"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

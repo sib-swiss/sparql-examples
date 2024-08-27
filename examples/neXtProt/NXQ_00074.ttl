@@ -5,7 +5,7 @@
 
 ex:NXQ_00074 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins belonging to a family with at least two members in the human proteome" ;
+    rdfs:comment "Proteins belonging to a family with at least two members in the human proteome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

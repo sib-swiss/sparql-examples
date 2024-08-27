@@ -6,7 +6,7 @@
 
 ex:9 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "At the LCA level, find all human orthologs of mouse genes with name containing \"MAPK\", case-insensitive"^^rdf:HTML ;
+    rdfs:comment "At the LCA level, find all human orthologs of mouse genes with name containing \"MAPK\", case-insensitive"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

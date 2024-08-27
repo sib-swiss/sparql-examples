@@ -5,7 +5,7 @@
 
 ex:diseases_involving_enzymes_located_in_mitochondrion a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find (Human genetic) diseases that are thought to be related to Enzymes, known to be located in the Mitochondrion" ;
+    rdfs:comment "Find (Human genetic) diseases that are thought to be related to Enzymes, known to be located in the Mitochondrion"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>

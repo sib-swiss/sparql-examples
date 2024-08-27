@@ -5,7 +5,7 @@
 
 ex:uniprot_signature_match_start_end a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all InterPro member database signature match start and end for a specific UniProt protein." ;
+    rdfs:comment "List all InterPro member database signature match start and end for a specific UniProt protein."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

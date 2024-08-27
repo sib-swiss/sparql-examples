@@ -5,7 +5,7 @@
 
 ex:NXQ_00256 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Variants identified in exome datasets in a frequent homozygote state" ;
+    rdfs:comment "Variants identified in exome datasets in a frequent homozygote state"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

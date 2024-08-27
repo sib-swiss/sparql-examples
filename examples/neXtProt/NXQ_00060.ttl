@@ -5,7 +5,7 @@
 
 ex:NXQ_00060 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which have one or more negatively charged residue in a transmembrane domain" ;
+    rdfs:comment "Proteins which have one or more negatively charged residue in a transmembrane domain"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

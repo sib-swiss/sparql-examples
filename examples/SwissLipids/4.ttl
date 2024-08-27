@@ -6,10 +6,10 @@
 
 ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Potential lipid structures for lipid classes" ;
+    rdfs:label "Potential lipid structures for lipid classes"@en ;
     rdfs:comment """For a given (list of) lipid classes (e.g. SWISSLIPID:000399814 (Ceramide) SWISSLIPID:000000007 (Sphingomyelin (iso-d17:1(4E))), return a list of the corresponding Isomeric subspecies. 
 The query should return the lipid recommended names (?name) as well as identifiers (?id).
-Recapitulates the “browse lipid classes” function of the website (in batch)."""^^rdf:HTML ;
+Recapitulates the “browse lipid classes” function of the website (in batch)."""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

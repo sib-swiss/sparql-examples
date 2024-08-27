@@ -5,7 +5,7 @@
 
 ex:37 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine" ;
+    rdfs:comment "Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00204 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with protein existence \"At transcript level\" (PE=2) or \"Inferred from homology\" (PE=3) or \"Predicted\" (PE=4)" ;
+    rdfs:comment "Proteins with protein existence \"At transcript level\" (PE=2) or \"Inferred from homology\" (PE=3) or \"Predicted\" (PE=4)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

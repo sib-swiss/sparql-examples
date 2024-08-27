@@ -5,7 +5,7 @@
 
 ex:NXQ_00030 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome" ;
+    rdfs:comment "Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

@@ -5,9 +5,9 @@
 
 ex:12 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Mapping SwissLipids to ChEBI" ;
+    rdfs:label "Mapping SwissLipids to ChEBI"@en ;
     rdfs:comment """Retrieve mapping between SwissLipids lipid identifiers and their corresponding ChEBI identifiers.
-Output should include SwissLipids identifier and name plus the ChEBI identifier.""" ;
+Output should include SwissLipids identifier and name plus the ChEBI identifier."""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

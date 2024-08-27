@@ -5,7 +5,7 @@
 
 ex:enzymes_interacting_with_molecules_similar_to_dopamine a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Look for enzymes catalyzing reactions with molecules similar to dopamine." ;
+    rdfs:comment "Look for enzymes catalyzing reactions with molecules similar to dopamine."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX rh: <http://rdf.rhea-db.org/>

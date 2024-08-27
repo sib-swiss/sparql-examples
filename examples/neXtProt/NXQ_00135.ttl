@@ -5,7 +5,7 @@
 
 ex:NXQ_00135 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins involved in both Wnt and Hippo signaling pathways" ;
+    rdfs:comment "Proteins involved in both Wnt and Hippo signaling pathways"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

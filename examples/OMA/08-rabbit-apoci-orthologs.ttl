@@ -5,7 +5,7 @@
 
 ex:8 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all genes per species that are orthologous to Rabbit's APOCI or APOC1 gene and their cross-reference links to OMA and Uniprot including the corresponding Ensembl gene identifier." ;
+    rdfs:comment "Retrieve all genes per species that are orthologous to Rabbit's APOCI or APOC1 gene and their cross-reference links to OMA and Uniprot including the corresponding Ensembl gene identifier."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX dc: <http://purl.org/dc/terms/>
 PREFIX lscr: <http://purl.org/lscr#>

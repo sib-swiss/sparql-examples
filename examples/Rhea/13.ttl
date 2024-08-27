@@ -6,7 +6,7 @@
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all Rhea reactions used in UniProtKB/Swiss-Prot for a given organism (NCBI taxonomy ID)."^^rdf:html ;
+    rdfs:comment "Select all Rhea reactions used in UniProtKB/Swiss-Prot for a given organism (NCBI taxonomy ID)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

@@ -5,7 +5,7 @@
 
 ex:9 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all Rabbit's proteins encoded by genes that are orthologous to Mouses's hemoglobin Y gene and their cross-reference links to Uniprot." ;
+    rdfs:comment "Retrieve all Rabbit's proteins encoded by genes that are orthologous to Mouses's hemoglobin Y gene and their cross-reference links to Uniprot."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX lscr: <http://purl.org/lscr#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

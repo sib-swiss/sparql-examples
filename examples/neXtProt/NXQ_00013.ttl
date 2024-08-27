@@ -5,7 +5,7 @@
 
 ex:NXQ_00013 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins that have a protein kinase domain but lack protein kinase activity" ;
+    rdfs:comment "Proteins that have a protein kinase domain but lack protein kinase activity"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

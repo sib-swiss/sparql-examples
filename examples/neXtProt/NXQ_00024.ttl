@@ -5,7 +5,7 @@
 
 ex:NXQ_00024 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with more than 10 reported interactions (of 'gold' quality)" ;
+    rdfs:comment "Proteins with more than 10 reported interactions (of 'gold' quality)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

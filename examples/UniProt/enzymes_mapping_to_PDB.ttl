@@ -2,10 +2,11 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 ex:enzymes_mapping_to_PDB a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select a mapping of UniProt Enzymes to PDB entries using the UniProt cross-references to the <a href=\"https://www.uniprot.org/database/DB-0070\">PDB</a> database" ;
+    rdfs:comment '''Select a mapping of UniProt Enzymes to PDB entries using the UniProt cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database.'''^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

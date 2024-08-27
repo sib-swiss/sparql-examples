@@ -5,7 +5,7 @@
 
 ex:uniprot_recomended_protein_full_name a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "The recommended protein full names for UniProtKB entries" ;
+    rdfs:comment "The recommended protein full names for UniProtKB entries"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

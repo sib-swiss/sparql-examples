@@ -5,7 +5,7 @@
 
 ex:NXQ_00239 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with cross-references to InterPro" ;
+    rdfs:comment "Proteins with cross-references to InterPro"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

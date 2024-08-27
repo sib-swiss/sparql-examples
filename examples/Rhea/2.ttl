@@ -6,7 +6,7 @@
 
 ex:2 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all Rhea reactions annotated with a given Pubmed ID"^^rdf:HTML ;
+    rdfs:comment "Select all Rhea reactions annotated with a given Pubmed ID"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX pubmed: <http://rdf.ncbi.nlm.nih.gov/pubmed/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

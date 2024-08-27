@@ -5,7 +5,7 @@
 
 ex:uniparc_linked_to_active_uniprot a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Show for a given UniParc accessions which active UniProt entries have the same amino acid sequence" ;
+    rdfs:comment "Show for a given UniParc accessions which active UniProt entries have the same amino acid sequence"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

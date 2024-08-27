@@ -5,7 +5,7 @@
 
 ex:NXQ_00146 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa" ;
+    rdfs:comment "Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

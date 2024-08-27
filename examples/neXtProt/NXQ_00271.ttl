@@ -5,7 +5,7 @@
 
 ex:NXQ_00271 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM..." ;
+    rdfs:comment "Polymorphisms located on ACE2 and TMPRSS2 and affecting proteins’ activity, structure, PTM..."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>

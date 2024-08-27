@@ -5,7 +5,7 @@
 
 ex:drosophila_enzymes_derived_from_at_least_two_mRNAs a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find Drosophila proteins, that depend on more than one transcript (Requires cross-references to Ensembl family of resources)." ;
+    rdfs:comment "Find Drosophila proteins, that depend on more than one transcript (Requires cross-references to Ensembl family of resources)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

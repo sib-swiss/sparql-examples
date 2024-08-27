@@ -5,7 +5,7 @@
 
 ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select reviewed UniProt entries (Swiss-Prot), and their recommended protein name, that have a preferred gene name that contains the text 'DNA'" ;
+    rdfs:comment "Select reviewed UniProt entries (Swiss-Prot), and their recommended protein name, that have a preferred gene name that contains the text 'DNA'"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>

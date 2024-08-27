@@ -6,7 +6,7 @@
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all xrefs attached to the groups annotated with at least three Interpro domains (IPR011990, IPR013083 and IPR001841)"^^rdf:HTML ;
+    rdfs:comment "List all xrefs attached to the groups annotated with at least three Interpro domains (IPR011990, IPR013083 and IPR001841)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>

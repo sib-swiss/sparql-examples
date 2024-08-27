@@ -5,7 +5,7 @@
 
 ex:11 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "The percentage of proteins in Drosophila melanogaster that has at least one paralogous sequence (protein)." ;
+    rdfs:comment "The percentage of proteins in Drosophila melanogaster that has at least one paralogous sequence (protein)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX orth: <http://purl.org/net/orth#>

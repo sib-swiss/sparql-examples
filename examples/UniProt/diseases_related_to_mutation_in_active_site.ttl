@@ -5,7 +5,7 @@
 
 ex:diseases_related_to_mutation_in_active_site a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find (Human Genetic) diseases, that are related to a natural variant on the active site of an enzyme." ;
+    rdfs:comment "Find (Human Genetic) diseases, that are related to a natural variant on the active site of an enzyme."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

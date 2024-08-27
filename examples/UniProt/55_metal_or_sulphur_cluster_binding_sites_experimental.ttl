@@ -5,7 +5,7 @@
 
 ex:55 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Number of proteins with annotated binding sites for metals or metal sulfur clusters (and experimental evidence for the binding)" ;
+    rdfs:comment "Number of proteins with annotated binding sites for metals or metal sulfur clusters (and experimental evidence for the binding)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

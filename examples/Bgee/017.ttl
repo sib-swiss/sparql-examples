@@ -5,7 +5,7 @@
 
 ex:017 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Anatomical entities where the ins zebrafish gene is expressed and its gene GO annotations." ;
+    rdfs:comment "Anatomical entities where the ins zebrafish gene is expressed and its gene GO annotations."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX genex: <http://purl.org/genex#>

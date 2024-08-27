@@ -5,7 +5,7 @@
 
 ex:43 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Connect patents cited in UniProtKB with those in the patent database at EPO via publication number, whose grant date is more than twenty years in the past." ;
+    rdfs:comment "Connect patents cited in UniProtKB with those in the patent database at EPO via publication number, whose grant date is more than twenty years in the past."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX patent: <http://data.epo.org/linked-data/def/patent/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

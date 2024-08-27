@@ -5,7 +5,7 @@
 
 ex:014 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What is all the metadata related to the ENSG00000130208 gene, where ENSG00000130208 is the identifier of the APOC1 human gene." ;
+    rdfs:comment "What is all the metadata related to the ENSG00000130208 gene, where ENSG00000130208 is the identifier of the APOC1 human gene."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX lscr: <http://purl.org/lscr#>

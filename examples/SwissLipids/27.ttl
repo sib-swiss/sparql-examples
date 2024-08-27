@@ -6,7 +6,7 @@
 
 ex:27 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the list of SwissLipids for all organisms and their Isomeric subspecies"^^rdf:HTML ;
+    rdfs:comment "Find the list of SwissLipids for all organisms and their Isomeric subspecies"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>

@@ -5,7 +5,7 @@
 
 ex:56 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select Enzymes that have Ligands that have a known allosteric effect" ;
+    rdfs:comment "Select Enzymes that have Ligands that have a known allosteric effect"@en ;
     rdfs:seeAlso <https://www.youtube.com/watch?v=DuSinQd9YhA> ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

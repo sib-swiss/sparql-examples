@@ -5,7 +5,7 @@
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all proteins belongong to the Hierarchical Orthologous Group (HOG) at the level 'Vertebrata' to which humans' CDIN1 gene belong, together with their gene name symbol if available." ;
+    rdfs:comment "Retrieve all proteins belongong to the Hierarchical Orthologous Group (HOG) at the level 'Vertebrata' to which humans' CDIN1 gene belong, together with their gene name symbol if available."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX orth: <http://purl.org/net/orth#>

@@ -6,7 +6,7 @@
 
 ex:20 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find single-copy phyletic profile at all orthologous levels of STRING-anotated well known interacting genes pertinent to mouse gene/s from the OrthoDB orthologous group annotated with GO MF GO:0005164 (tumor necrosis factor receptor binding) and GO BP GO:0045739 (positive regulation of DNA repair)"^^rdf:HTML ;
+    rdfs:comment "Find single-copy phyletic profile at all orthologous levels of STRING-anotated well known interacting genes pertinent to mouse gene/s from the OrthoDB orthologous group annotated with GO MF GO:0005164 (tumor necrosis factor receptor binding) and GO BP GO:0045739 (positive regulation of DNA repair)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

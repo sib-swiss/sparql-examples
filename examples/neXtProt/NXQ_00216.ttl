@@ -5,7 +5,7 @@
 
 ex:NXQ_00216 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Phosphorylation sites from PeptideAtlas Phosphoproteome" ;
+    rdfs:comment "Phosphorylation sites from PeptideAtlas Phosphoproteome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX source: <http://nextprot.org/rdf/source/>

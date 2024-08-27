@@ -5,7 +5,7 @@
 
 ex:41 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve entries with sequences that are composed of fragments" ;
+    rdfs:comment "Retrieve entries with sequences that are composed of fragments"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

@@ -5,7 +5,7 @@
 
 ex:uniprot_affected_by_metabolic_diseases_using_MeSH a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins annotated in UniProtKB to be affected by metabolic diseases. Using the MeSH concept as a root to find metabolic diseases in UniProt." ;
+    rdfs:comment "Proteins annotated in UniProtKB to be affected by metabolic diseases. Using the MeSH concept as a root to find metabolic diseases in UniProt."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>

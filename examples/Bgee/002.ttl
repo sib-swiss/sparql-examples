@@ -5,7 +5,7 @@
 
 ex:002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the species present in Bgee and their scientific and common names?" ;
+    rdfs:comment "What are the species present in Bgee and their scientific and common names?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

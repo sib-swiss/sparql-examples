@@ -5,7 +5,7 @@
 
 ex:NXQ_00243 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a signal sequence " ;
+    rdfs:comment "Proteins with a signal sequence "@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

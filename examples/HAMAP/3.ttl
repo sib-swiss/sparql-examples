@@ -6,7 +6,7 @@
 
 ex:3 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all hamap rules that deal with Catalytic Activity"^^rdf:HTML ;
+    rdfs:comment "Select all hamap rules that deal with Catalytic Activity"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX sh: <http://www.w3.org/ns/shacl#>
 

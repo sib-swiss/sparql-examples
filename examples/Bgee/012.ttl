@@ -5,7 +5,7 @@
 
 ex:012 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities where the eel gene apoc1 is expressed along with its expression score independently of the strain, sex, and cell type?" ;
+    rdfs:comment "What are the anatomical entities where the eel gene apoc1 is expressed along with its expression score independently of the strain, sex, and cell type?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX genex: <http://purl.org/genex#>

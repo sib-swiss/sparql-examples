@@ -5,7 +5,7 @@
 
 ex:5 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List the external identifiers that correspond to the KEGG reaction R00703 (lactate dehydrogenase). This crosslinking of external identifiers is the core of MNXref" ;
+    rdfs:comment "List the external identifiers that correspond to the KEGG reaction R00703 (lactate dehydrogenase). This crosslinking of external identifiers is the core of MNXref"@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX keggR: <https://identifiers.org/kegg.reaction:>

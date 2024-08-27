@@ -5,7 +5,7 @@
 
 ex:NXQ_00107 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a protein existence not \"At protein level\" (PE=1) and with a HGNC approved gene name that contains \"orf\"" ;
+    rdfs:comment "Proteins with a protein existence not \"At protein level\" (PE=1) and with a HGNC approved gene name that contains \"orf\""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

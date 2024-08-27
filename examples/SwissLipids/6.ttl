@@ -6,9 +6,9 @@
 
 ex:6 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Enzymes for lipids" ;
+    rdfs:label "Enzymes for lipids"@en ;
     rdfs:comment """For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation), as well as their enzymes as annotated in UniProtKB/Swiss-Prot) enzymes themselves (ID and protein name).
-This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified lipid."""^^rdf:HTML ;
+This query does not consider the hierarchy: it looks for reactions and enzymes only for the specified lipid."""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>

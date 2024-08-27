@@ -5,7 +5,7 @@
 
 ex:NXQ_00054 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\"" ;
+    rdfs:comment "Proteins which are \"Receptor binding\" according to GO and have the Swiss-Prot keyword \"Immunity\""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

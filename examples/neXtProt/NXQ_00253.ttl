@@ -5,7 +5,7 @@
 
 ex:NXQ_00253 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Human pathways in which at least one protein is mitochondrial GOLD" ;
+    rdfs:comment "Human pathways in which at least one protein is mitochondrial GOLD"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX dc: <http://purl.org/dc/terms/>

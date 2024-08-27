@@ -5,7 +5,7 @@
 
 ex:NXQ_00002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins that are located in both the nucleus and in the cytoplasm" ;
+    rdfs:comment "Proteins that are located in both the nucleus and in the cytoplasm"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

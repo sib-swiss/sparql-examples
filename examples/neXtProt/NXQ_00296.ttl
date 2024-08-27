@@ -5,7 +5,7 @@
 
 ex:NXQ_00296 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Pathways in which SCN1A GOLD interactants are involved" ;
+    rdfs:comment "Pathways in which SCN1A GOLD interactants are involved"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>

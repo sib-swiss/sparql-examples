@@ -5,7 +5,7 @@
 
 ex:NXQ_00016 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain" ;
+    rdfs:comment "Proteins with a mature chain of less than 1000 amino acids which are secreted and do not contain cysteines in the mature chain"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

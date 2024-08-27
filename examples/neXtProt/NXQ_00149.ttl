@@ -5,7 +5,7 @@
 
 ex:NXQ_00149 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "BRCA1 variants with at least 5 different Severe phenotypes" ;
+    rdfs:comment "BRCA1 variants with at least 5 different Severe phenotypes"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>

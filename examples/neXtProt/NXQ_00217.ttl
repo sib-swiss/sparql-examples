@@ -5,7 +5,7 @@
 
 ex:NXQ_00217 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins associated with an incomplete EC number, no function annotated and high expression in liver" ;
+    rdfs:comment "Proteins associated with an incomplete EC number, no function annotated and high expression in liver"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

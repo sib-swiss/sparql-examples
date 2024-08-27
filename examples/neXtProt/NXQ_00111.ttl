@@ -5,7 +5,7 @@
 
 ex:NXQ_00111 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with one transmembrane domain and no annotated topology" ;
+    rdfs:comment "Proteins with one transmembrane domain and no annotated topology"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

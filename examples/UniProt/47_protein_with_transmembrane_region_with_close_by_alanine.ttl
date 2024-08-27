@@ -5,7 +5,7 @@
 
 ex:47 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find UniProt entries with a transmembrane region, with an Alanine in the 15 Aminoacid region preceding the transmembrane" ;
+    rdfs:comment "Find UniProt entries with a transmembrane region, with an Alanine in the 15 Aminoacid region preceding the transmembrane"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

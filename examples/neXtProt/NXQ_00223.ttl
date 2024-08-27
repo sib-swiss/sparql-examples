@@ -5,7 +5,7 @@
 
 ex:NXQ_00223 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "100 most-cited publications in neXtProt and the corresponding number of associated entries" ;
+    rdfs:comment "100 most-cited publications in neXtProt and the corresponding number of associated entries"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

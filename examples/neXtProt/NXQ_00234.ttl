@@ -5,7 +5,7 @@
 
 ex:NXQ_00234 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with at least two proteotypic synthetic peptides from SRMAtlas of at least 9 amino acids in length" ;
+    rdfs:comment "Proteins with at least two proteotypic synthetic peptides from SRMAtlas of at least 9 amino acids in length"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

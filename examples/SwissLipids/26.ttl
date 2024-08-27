@@ -5,7 +5,7 @@
 
 ex:26 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Lipids produced in different organisms" ;
+    rdfs:comment "Lipids produced in different organisms"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rh: <http://rdf.rhea-db.org/>

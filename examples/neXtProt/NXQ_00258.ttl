@@ -5,7 +5,7 @@
 
 ex:NXQ_00258 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins involved in diseases due to intronic variants with one selected publication" ;
+    rdfs:comment "Proteins involved in diseases due to intronic variants with one selected publication"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX dcterms: <http://purl.org/dc/terms/>

@@ -5,7 +5,7 @@
 
 ex:uniprot_reviewed_or_not a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all UniProt protein and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)" ;
+    rdfs:comment "List all UniProt protein and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

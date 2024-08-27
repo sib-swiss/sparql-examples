@@ -6,10 +6,10 @@
 
 ex:10 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Mapping SwissLipids to HMDB" ;
+    rdfs:label "Mapping SwissLipids to HMDB"@en ;
     rdfs:comment """Retrieve mapping between SwissLipids lipid identifiers and their corresponding HMDB identifiers.
 Output should include SwissLipids identifier and name plus the HMDB identifier. 
-"""^^rdf:HTML ;
+"""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 

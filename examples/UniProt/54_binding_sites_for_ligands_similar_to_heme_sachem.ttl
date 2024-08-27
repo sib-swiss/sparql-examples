@@ -5,7 +5,7 @@
 
 ex:54 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with annotated binding sites for ligands similar to heme" ;
+    rdfs:comment "Proteins with annotated binding sites for ligands similar to heme"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>

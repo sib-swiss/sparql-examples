@@ -6,7 +6,7 @@
 
 ex:10 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all Rhea reactions linked to an enzyme classification (sub)-class"^^rdf:html ;
+    rdfs:comment "Select all Rhea reactions linked to an enzyme classification (sub)-class"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX ec: <http://purl.uniprot.org/enzyme/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

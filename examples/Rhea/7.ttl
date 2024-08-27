@@ -5,7 +5,7 @@
 
 ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all Rhea reactions mapped to Reactome reactions</a>" ;
+    rdfs:comment "Select all Rhea reactions mapped to Reactome reactions"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>

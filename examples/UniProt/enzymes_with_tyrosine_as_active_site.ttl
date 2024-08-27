@@ -5,7 +5,7 @@
 
 ex:enzyme_with_threonine_as_active_site a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find enzymes with a Tyrosine (Y) as an active site" ;
+    rdfs:comment "Find enzymes with a Tyrosine (Y) as an active site"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

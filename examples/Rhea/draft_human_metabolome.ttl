@@ -5,7 +5,7 @@
 
 ex:draft_human_metabolome a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Generate a draft human metabolome" ;
+    rdfs:comment "Generate a draft human metabolome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX chebislash: <http://purl.obolibrary.org/obo/chebi/>
 PREFIX rh: <http://rdf.rhea-db.org/>

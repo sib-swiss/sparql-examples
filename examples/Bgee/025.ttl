@@ -5,7 +5,7 @@
 
 ex:025 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What is the post-juvenile stage link and description?" ;
+    rdfs:comment "What is the post-juvenile stage link and description?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX efo: <http://www.ebi.ac.uk/efo/>

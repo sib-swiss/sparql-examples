@@ -5,7 +5,7 @@
 
 ex:020 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Which are the genes in Primates orthologous to a gene that is expressed in the fruit fly's eye?" ;
+    rdfs:comment "Which are the genes in Primates orthologous to a gene that is expressed in the fruit fly's eye?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>

@@ -5,7 +5,7 @@
 
 ex:11 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Building on example 10. ...in addition reactions are endowed with a direction, flux bounds and possibly the description of the enzymes that catalyze it." ;
+    rdfs:comment "Building on example 10. ...in addition reactions are endowed with a direction, flux bounds and possibly the description of the enzymes that catalyze it."@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>

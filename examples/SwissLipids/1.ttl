@@ -6,7 +6,7 @@
 
 ex:1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select the SwissLipids categories and their labels."^^rdf:HTML ;
+    rdfs:comment "Select the SwissLipids categories and their labels."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

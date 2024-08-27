@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ex:15 a sh:SPARQLExecutable ;
-    rdfs:comment "Select all triples that relate to the EMBL CDS entry AA089367.1: " ;
+    rdfs:comment "Select all triples that relate to the EMBL CDS entry AA089367.1: "@en ;
     sh:describe "DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

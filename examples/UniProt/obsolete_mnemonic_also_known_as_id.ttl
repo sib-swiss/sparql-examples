@@ -5,7 +5,7 @@
 
 ex:obsolete_mnemonic_also_known_as_id a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all UniProt protein ID (mnemonic) that where used in the past for current UniProt entries." ;
+    rdfs:comment "List all UniProt protein ID (mnemonic) that where used in the past for current UniProt entries."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

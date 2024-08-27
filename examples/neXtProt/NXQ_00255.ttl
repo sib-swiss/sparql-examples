@@ -5,7 +5,7 @@
 
 ex:NXQ_00255 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Variants identified in exome datasets with a frequency of >0.1" ;
+    rdfs:comment "Variants identified in exome datasets with a frequency of >0.1"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

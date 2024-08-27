@@ -5,7 +5,7 @@
 
 ex:59 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Count all isoforms for a given proteome" ;
+    rdfs:comment "Count all isoforms for a given proteome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

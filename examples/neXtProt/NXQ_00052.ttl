@@ -5,7 +5,7 @@
 
 ex:NXQ_00052 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a sequence that does not contain a lysine in the mature region" ;
+    rdfs:comment "Proteins with a sequence that does not contain a lysine in the mature region"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 
