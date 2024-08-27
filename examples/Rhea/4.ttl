@@ -6,7 +6,7 @@
 
 ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all cross-references for a given reaction"^^rdf:HTML ;
+    rdfs:comment "Select all cross-references for a given reaction"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>

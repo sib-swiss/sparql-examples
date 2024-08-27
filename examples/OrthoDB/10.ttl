@@ -6,7 +6,7 @@
 
 ex:10 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find most conservative single copy Danio rerio genes at the Vertebrata level"^^rdf:HTML ;
+    rdfs:comment "Find most conservative single copy Danio rerio genes at the Vertebrata level"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX : <http://purl.orthodb.org/>

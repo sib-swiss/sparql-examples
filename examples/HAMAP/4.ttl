@@ -5,7 +5,7 @@
 
 ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all hamap rules that annotate a Rhea reaction with an EC enzyme class" ;
+    rdfs:comment "Select all hamap rules that annotate a Rhea reaction with an EC enzyme class"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX sp: <http://spinrdf.org/sp#>

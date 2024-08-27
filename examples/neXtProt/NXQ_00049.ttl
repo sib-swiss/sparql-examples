@@ -5,7 +5,7 @@
 
 ex:NXQ_00049 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with at least one variant of the types \"A->R\" or \"R->A\"" ;
+    rdfs:comment "Proteins with at least one variant of the types \"A->R\" or \"R->A\""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

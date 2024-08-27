@@ -6,7 +6,7 @@
 
 ex:16 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find statistics on translated sequence length for genes matching both IPR002117 and GO:0008219"^^rdf:HTML ;
+    rdfs:comment "Find statistics on translated sequence length for genes matching both IPR002117 and GO:0008219"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>

@@ -5,7 +5,7 @@
 
 ex:2 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Get all Glyconnect glycan with their graphical SNFG representation" ;
+    rdfs:comment "Get all Glyconnect glycan with their graphical SNFG representation"@en ;
     sh:prefixes ex: ;
     sh:select """PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>

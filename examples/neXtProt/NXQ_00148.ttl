@@ -5,7 +5,7 @@
 
 ex:NXQ_00148 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Variants with normal \"ubiquitin-protein transferase activity\" and decreased or increased binding to UBE2D1 (example: BRCA1-p.Ile89Thr)" ;
+    rdfs:comment "Variants with normal \"ubiquitin-protein transferase activity\" and decreased or increased binding to UBE2D1 (example: BRCA1-p.Ile89Thr)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>

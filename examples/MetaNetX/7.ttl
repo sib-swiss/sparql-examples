@@ -5,7 +5,7 @@
 
 ex:7 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Show the reaction equation for the tartrate/succinate antiporter (rhea:34763). NB: there are two generic compartments here.)" ;
+    rdfs:comment "Show the reaction equation for the tartrate/succinate antiporter (rhea:34763). NB: there are two generic compartments here.)"@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>

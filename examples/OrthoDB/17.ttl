@@ -6,7 +6,7 @@
 
 ex:17 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find genes having Uniprot xrefs in the group 6400at314295, along with their names fetched from Uniprot SPARQL endpoint"^^rdf:HTML ;
+    rdfs:comment "Find genes having Uniprot xrefs in the group 6400at314295, along with their names fetched from Uniprot SPARQL endpoint"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00260 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with high-frequency missense variants involved in bacterial infection, with dbSNP identifiers and position on the canonical isoform" ;
+    rdfs:comment "Proteins with high-frequency missense variants involved in bacterial infection, with dbSNP identifiers and position on the canonical isoform"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

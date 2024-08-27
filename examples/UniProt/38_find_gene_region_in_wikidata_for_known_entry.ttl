@@ -5,7 +5,7 @@
 
 ex:38 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData" ;
+    rdfs:comment "For the human entry P05067 (Amyloid-beta precursor protein) find the gene start ends in WikiData"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>

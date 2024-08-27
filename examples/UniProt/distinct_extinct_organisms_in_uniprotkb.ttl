@@ -5,7 +5,7 @@
 
 ex:distinct_extinct_organisms_in_uniprotkb a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "How many distinct extinct organisms are represented in UniProtKB" ;
+    rdfs:comment "How many distinct extinct organisms are represented in UniProtKB"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX keywords: <http://purl.uniprot.org/keywords/>
 PREFIX up: <http://purl.uniprot.org/core/>

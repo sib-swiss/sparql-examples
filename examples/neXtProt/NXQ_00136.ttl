@@ -5,7 +5,7 @@
 
 ex:NXQ_00136 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins whose sequence was updated in 2014" ;
+    rdfs:comment "Proteins whose sequence was updated in 2014"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

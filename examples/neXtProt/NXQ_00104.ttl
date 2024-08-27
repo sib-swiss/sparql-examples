@@ -5,7 +5,7 @@
 
 ex:NXQ_00104 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins whose gene is on chromosome 21 with at least one disease annotation from Orphanet" ;
+    rdfs:comment "Proteins whose gene is on chromosome 21 with at least one disease annotation from Orphanet"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

@@ -5,7 +5,7 @@
 
 ex:12 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all orthologs between mouse and rabbit, together with their HOG id" ;
+    rdfs:comment "Retrieve all orthologs between mouse and rabbit, together with their HOG id"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX orth: <http://purl.org/net/orth#>

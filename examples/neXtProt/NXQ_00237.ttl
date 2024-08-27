@@ -5,7 +5,7 @@
 
 ex:NXQ_00237 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order" ;
+    rdfs:comment "Transmembrane proteins with the number of transmembrane domains in the canonical isoform by decreasing order"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

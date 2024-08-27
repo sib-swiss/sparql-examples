@@ -5,7 +5,7 @@
 
 ex:NXQ_00261 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Glycosylation sites from GlyConnect" ;
+    rdfs:comment "Glycosylation sites from GlyConnect"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

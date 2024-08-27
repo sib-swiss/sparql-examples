@@ -5,7 +5,7 @@
 
 ex:22 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "For two accessions find the GO term labels and group them into GO process,function and component" ;
+    rdfs:comment "For two accessions find the GO term labels and group them into GO process,function and component"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>

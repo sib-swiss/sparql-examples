@@ -5,7 +5,7 @@
 
 ex:018 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Which are the mouse's proteins encoded by genes which are expressed in the liver and are orthologous to human's INS gene?" ;
+    rdfs:comment "Which are the mouse's proteins encoded by genes which are expressed in the liver and are orthologous to human's INS gene?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>

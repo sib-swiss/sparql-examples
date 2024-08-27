@@ -6,7 +6,7 @@
 
 ex:2 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find all clades, i.e. taxonomic levels where orthologous groups were built on, with their Latin names and ranks underneath Bacteria, sorted alphabetically by rank, then name"^^rdf:HTML ;
+    rdfs:comment "Find all clades, i.e. taxonomic levels where orthologous groups were built on, with their Latin names and ranks underneath Bacteria, sorted alphabetically by rank, then name"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

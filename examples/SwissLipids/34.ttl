@@ -5,7 +5,7 @@
 
 ex:34 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Lipids affected by human enzymes" ;
+    rdfs:comment "Lipids affected by human enzymes"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rh: <http://rdf.rhea-db.org/>

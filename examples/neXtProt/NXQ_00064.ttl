@@ -5,7 +5,7 @@
 
 ex:NXQ_00064 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which are enzymes and that have an incomplete EC number" ;
+    rdfs:comment "Proteins which are enzymes and that have an incomplete EC number"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

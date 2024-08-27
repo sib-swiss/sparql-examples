@@ -5,7 +5,7 @@
 
 ex:NXQ_00090 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which are linked to a disease and that do not have orthologs/paralogs in mouse" ;
+    rdfs:comment "Proteins which are linked to a disease and that do not have orthologs/paralogs in mouse"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

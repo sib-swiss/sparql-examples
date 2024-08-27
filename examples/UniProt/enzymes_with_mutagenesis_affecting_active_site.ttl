@@ -5,7 +5,7 @@
 
 ex:enzymes_with_mutagenesis_affecting_active_site a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find enzymes, where the active site is a region affected by mutagenesis and show the comment regarding mutagenesis effect." ;
+    rdfs:comment "Find enzymes, where the active site is a region affected by mutagenesis and show the comment regarding mutagenesis effect."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

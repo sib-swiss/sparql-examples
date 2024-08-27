@@ -5,7 +5,7 @@
 
 ex:NXQ_00028 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins associated with a disease but without a disease-causing amino-acid substitution variant" ;
+    rdfs:comment "Proteins associated with a disease but without a disease-causing amino-acid substitution variant"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

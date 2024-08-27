@@ -5,7 +5,7 @@
 
 ex:016 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Which are the genes in Human associated to a disease that are orthologous to a gene expressed in the rat's brain?" ;
+    rdfs:comment "Which are the genes in Human associated to a disease that are orthologous to a gene expressed in the rat's brain?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

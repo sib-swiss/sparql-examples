@@ -5,7 +5,7 @@
 
 ex:NXQ_00078 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which have been identified in at least one proteomics set and that are secreted" ;
+    rdfs:comment "Proteins which have been identified in at least one proteomics set and that are secreted"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

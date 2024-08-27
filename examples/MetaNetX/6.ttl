@@ -5,7 +5,7 @@
 
 ex:6 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Show the reaction equation catalyzed by lactate dehydrogenase (KEGG reaction R00703). NB: Stoichiometric coefficients for substrates are given a negative value." ;
+    rdfs:comment "Show the reaction equation catalyzed by lactate dehydrogenase (KEGG reaction R00703). NB: Stoichiometric coefficients for substrates are given a negative value."@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX keggR: <https://identifiers.org/kegg.reaction:>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00278 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Authors who have reported more than 25000 human protein-protein interactions " ;
+    rdfs:comment "Authors who have reported more than 25000 human protein-protein interactions "@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

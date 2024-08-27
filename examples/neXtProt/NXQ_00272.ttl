@@ -5,7 +5,7 @@
 
 ex:NXQ_00272 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins involved in coronaviruses/SARS-CoV-2 pathways with associated medical information" ;
+    rdfs:comment "Proteins involved in coronaviruses/SARS-CoV-2 pathways with associated medical information"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX dc: <http://purl.org/dc/terms/>

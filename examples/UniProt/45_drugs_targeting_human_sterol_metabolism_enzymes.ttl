@@ -5,7 +5,7 @@
 
 ex:45 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with WikiData and Rhea)." ;
+    rdfs:comment "Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with WikiData and Rhea)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>

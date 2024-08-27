@@ -5,7 +5,7 @@
 
 ex:NXQ_00045 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with an active site that is a proton acceptor" ;
+    rdfs:comment "Proteins with an active site that is a proton acceptor"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

@@ -6,7 +6,7 @@
 ex:49 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:label "Where are the human genes encoding enzymes metabolizing cholesterol expressed? (double federated query)" ;
-    rdfs:comment "Retrieve the UniProt proteins, their catalyzed Rhea reactions, their encoding genes (Ensembl) and the anatomic entities where the genes are expressed (UBERON anatomic entites from Bgee expression data resource)." ;
+    rdfs:comment "Retrieve the UniProt proteins, their catalyzed Rhea reactions, their encoding genes (Ensembl) and the anatomic entities where the genes are expressed (UBERON anatomic entites from Bgee expression data resource)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX genex: <http://purl.org/genex#>

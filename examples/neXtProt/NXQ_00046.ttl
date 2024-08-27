@@ -5,7 +5,7 @@
 
 ex:NXQ_00046 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a gene alternative name starting with IL27" ;
+    rdfs:comment "Proteins with a gene alternative name starting with IL27"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

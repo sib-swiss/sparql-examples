@@ -5,7 +5,7 @@
 
 ex:uniprot_proteome_location_of_gene a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List UniProt proteins with genetic replicon that they are encoded on using the Proteome data." ;
+    rdfs:comment "List UniProt proteins with genetic replicon that they are encoded on using the Proteome data."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>

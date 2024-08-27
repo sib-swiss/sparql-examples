@@ -5,7 +5,7 @@
 
 ex:27 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components" ;
+    rdfs:comment "Find all names associated with uniprot entry P05067, and if the name is associated with the entry it's domains or its components"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00077 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins which are expressed in liver according to IHC data but not found in HUPO liver proteome set" ;
+    rdfs:comment "Proteins which are expressed in liver according to IHC data but not found in HUPO liver proteome set"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

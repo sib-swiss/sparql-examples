@@ -5,7 +5,7 @@
 
 ex:35 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluster identity" ;
+    rdfs:comment "Find the similar proteins for UniProtKB entry P05067 sorted by UniRef cluster identity"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX up: <http://purl.uniprot.org/core/>

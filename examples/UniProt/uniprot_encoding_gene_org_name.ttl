@@ -5,7 +5,7 @@
 
 ex:uniprot_encoding_gene_org_name a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List UniProt proteins with their associated gene and the gene's ORF label" ;
+    rdfs:comment "List UniProt proteins with their associated gene and the gene's ORF label"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

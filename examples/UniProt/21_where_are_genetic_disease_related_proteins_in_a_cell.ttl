@@ -5,7 +5,7 @@
 
 ex:21 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find where disease related proteins are known to be located in the cell" ;
+    rdfs:comment "Find where disease related proteins are known to be located in the cell"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>

@@ -5,7 +5,7 @@
 
 ex:005 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "How many features have the same SIRIUS and ISDB annotation?" ;
+    rdfs:comment "How many features have the same SIRIUS and ISDB annotation?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>

@@ -6,7 +6,7 @@
 
 ex:15 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find orthologous group/s at any level containing protein with Uniprot id P12345"^^rdf:HTML ;
+    rdfs:comment "Find orthologous group/s at any level containing protein with Uniprot id P12345"@en;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

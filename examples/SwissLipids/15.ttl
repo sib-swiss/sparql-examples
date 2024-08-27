@@ -6,11 +6,11 @@
 
 ex:15 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Mapping LipidX lipids to published structures" ;
+    rdfs:label "Mapping LipidX lipids to published structures"@en ;
     rdfs:comment """For a given list of LipidX lipid identifiers return the list of published Isomeric subspecies.
 Output should include the LipidX ID and the corresponding SwissLipids ID(s) and name(s) plus PubMed ID(s). 
 This query first identifies SwissLipids identifiers for a given list of LipidX identifiers. It then retrieves the corresponding Isomeric subspecies that are linked to at least one publication, and the corresponding PMIDs. 
-extends ex:15"""^^rdf:HTML ;
+extends ex:15"""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

@@ -5,7 +5,7 @@
 
 ex:3 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all proteins in OMA that is encoded by the INS gene and their mnemonics and evidence types from Uniprot database (federated query)." ;
+    rdfs:comment "Retrieve all proteins in OMA that is encoded by the INS gene and their mnemonics and evidence types from Uniprot database (federated query)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX lscr: <http://purl.org/lscr#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

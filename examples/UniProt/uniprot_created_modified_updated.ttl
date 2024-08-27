@@ -5,7 +5,7 @@
 
 ex:uniprot_created_modified_updated a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List the created, last modified, and last sequence update dates for UniProtKB proteins." ;
+    rdfs:comment "List the created, last modified, and last sequence update dates for UniProtKB proteins."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

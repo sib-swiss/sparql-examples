@@ -5,7 +5,7 @@
 
 ex:8 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Show the reaction equation for ATP synthase (reaction ATPS4m from BiGG). NB: there are two types of protons here, as MetaNetX distinguishes protons used for balancing (MNXM1) from those that are translocated (MNXM01)." ;
+    rdfs:comment "Show the reaction equation for ATP synthase (reaction ATPS4m from BiGG). NB: there are two types of protons here, as MetaNetX distinguishes protons used for balancing (MNXM1) from those that are translocated (MNXM01)."@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX biggR: <https://identifiers.org/bigg.reaction:>

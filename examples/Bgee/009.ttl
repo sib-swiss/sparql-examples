@@ -5,7 +5,7 @@
 
 ex:009 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities including cell types, if any, where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain and sex?" ;
+    rdfs:comment "What are the anatomical entities including cell types, if any, where the human gene APOC1 is expressed at the post-juvenile stage along with its expression score independently of the strain and sex?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX efo: <http://www.ebi.ac.uk/efo/>
 PREFIX genex: <http://purl.org/genex#>

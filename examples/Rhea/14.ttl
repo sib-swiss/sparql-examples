@@ -6,7 +6,7 @@
 
 ex:14 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all Rhea reactions that have a given ChEBI ID as reaction participant"^^rdf:html ;
+    rdfs:comment "Select all Rhea reactions that have a given ChEBI ID as reaction participant"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

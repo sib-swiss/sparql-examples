@@ -5,7 +5,7 @@
 
 ex:NXQ_00232 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with sequences 100% identical to other proteins, grouped" ;
+    rdfs:comment "Proteins with sequences 100% identical to other proteins, grouped"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

@@ -5,7 +5,7 @@
 
 ex:NXQ_00276 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Diseases/phenotypes associated with coding variants and associated publications for a given gene" ;
+    rdfs:comment "Diseases/phenotypes associated with coding variants and associated publications for a given gene"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

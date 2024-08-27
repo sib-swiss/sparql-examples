@@ -5,7 +5,7 @@
 
 ex:14 a sh:SPARQLConstructExecutable,
         sh:SPARQLExecutable ;
-    rdfs:comment "Construct new triples of the type 'HumanProtein' from all human UniProt entries" ;
+    rdfs:comment "Construct new triples of the type 'HumanProtein' from all human UniProt entries"@en ;
     sh:construct """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 

@@ -5,7 +5,7 @@
 
 ex:003 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Filter the positive ionization mode features of Melochia umbellate annotated as [M+H]+ by SIRIUS to keep the ones for which a feature in negative ionization mode is detected with the same retention time (± 3 seconds) and a mass corresponding to the [M-H]- adduct (± 5 ppm)." ;
+    rdfs:comment "Filter the positive ionization mode features of Melochia umbellate annotated as [M+H]+ by SIRIUS to keep the ones for which a feature in negative ionization mode is detected with the same retention time (± 3 seconds) and a mass corresponding to the [M-H]- adduct (± 5 ppm)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

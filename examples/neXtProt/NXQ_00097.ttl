@@ -5,7 +5,7 @@
 
 ex:NXQ_00097 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine" ;
+    rdfs:comment "Proteins located on chromosome 2 and having at least one variant in a phosphorylated tyrosine"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

@@ -5,7 +5,7 @@
 
 ex:1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Get all Glyconnect proteins their Uniprot reference isoform" ;
+    rdfs:comment "Get all Glyconnect proteins their Uniprot reference isoform"@en ;
     sh:prefixes ex: ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>

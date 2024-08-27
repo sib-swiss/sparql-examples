@@ -5,7 +5,7 @@
 
 ex:23 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Number of reviewed entries (Swiss-Prot) that are related to <a href=\"http://amigo.geneontology.org/amigo/term/GO:0016301\">kinase activity</a>" ;
+    rdfs:comment "Number of reviewed entries (Swiss-Prot) that are related to <a href=\"http://amigo.geneontology.org/amigo/term/GO:0016301\">kinase activity</a>"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

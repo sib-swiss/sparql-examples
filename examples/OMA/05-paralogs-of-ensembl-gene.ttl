@@ -5,7 +5,7 @@
 
 ex:5 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve all genes that are paralogous to ENSG00000244734 Ensembl gene (identifier)." ;
+    rdfs:comment "Retrieve all genes that are paralogous to ENSG00000244734 Ensembl gene (identifier)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>
 PREFIX lscr: <http://purl.org/lscr#>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00209 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Glycosylation sites and cross links positions on SwissProt canonical isoforms" ;
+    rdfs:comment "Glycosylation sites and cross links positions on SwissProt canonical isoforms"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

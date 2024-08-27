@@ -6,7 +6,7 @@
 
 ex:14 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find genes with their properties by a list of their xrefs"^^rdf:HTML ;
+    rdfs:comment "Find genes with their properties by a list of their xrefs"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX ensembl: <http://rdf.ebi.ac.uk/resource/ensembl/>

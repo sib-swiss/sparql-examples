@@ -5,7 +5,7 @@
 
 ex:NXQ_00042 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins that bind a metal and are secreted" ;
+    rdfs:comment "Proteins that bind a metal and are secreted"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

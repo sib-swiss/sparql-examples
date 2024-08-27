@@ -5,7 +5,7 @@
 
 ex:uniparc_triples_directly_associated a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Predicates and objects, for a given UniParc accession as a subject" ;
+    rdfs:comment "Predicates and objects, for a given UniParc accession as a subject"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 

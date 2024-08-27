@@ -6,7 +6,7 @@
 
 ex:6 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find all genes with their name and description in the orthologous group 6400at314295"^^rdf:HTML ;
+    rdfs:comment "Find all genes with their name and description in the orthologous group 6400at314295"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>

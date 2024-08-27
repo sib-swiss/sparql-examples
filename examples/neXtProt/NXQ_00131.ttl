@@ -5,7 +5,7 @@
 
 ex:NXQ_00131 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Terms of controlled vocabularies containing some word(s)" ;
+    rdfs:comment "Terms of controlled vocabularies containing some word(s)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

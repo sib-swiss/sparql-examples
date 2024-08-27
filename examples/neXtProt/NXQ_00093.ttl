@@ -5,7 +5,7 @@
 
 ex:NXQ_00093 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a sequence containing \"FF.+QYE\" where \".+\" is any peptide of any length" ;
+    rdfs:comment "Proteins with a sequence containing \"FF.+QYE\" where \".+\" is any peptide of any length"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 

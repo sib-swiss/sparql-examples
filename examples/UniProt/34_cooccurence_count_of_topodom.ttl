@@ -5,7 +5,7 @@
 
 ex:34 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the co-occurence count of Topological Domain comment text in UniProtKB entries" ;
+    rdfs:comment "Find the co-occurence count of Topological Domain comment text in UniProtKB entries"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

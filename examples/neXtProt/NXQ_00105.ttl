@@ -5,7 +5,7 @@
 
 ex:NXQ_00105 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with at least one cross-reference to SMR (Swiss Model Repository) but no cross-references to PDB" ;
+    rdfs:comment "Proteins with at least one cross-reference to SMR (Swiss Model Repository) but no cross-references to PDB"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>

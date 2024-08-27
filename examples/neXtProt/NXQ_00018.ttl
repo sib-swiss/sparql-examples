@@ -5,7 +5,7 @@
 
 ex:NXQ_00018 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins that are acetylated and methylated and located in the nucleus" ;
+    rdfs:comment "Proteins that are acetylated and methylated and located in the nucleus"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

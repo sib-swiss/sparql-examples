@@ -5,7 +5,7 @@
 
 ex:NXQ_00282 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with an interaction mapping encompassing a coiled coil or bZip region " ;
+    rdfs:comment "Proteins with an interaction mapping encompassing a coiled coil or bZip region "@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

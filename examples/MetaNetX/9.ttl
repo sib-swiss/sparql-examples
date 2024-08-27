@@ -5,7 +5,7 @@
 
 ex:9 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all GEMs currently in the MetaNetX repository, with their numbers of reactions, chemical, compartments and genes/proteins." ;
+    rdfs:comment "List all GEMs currently in the MetaNetX repository, with their numbers of reactions, chemical, compartments and genes/proteins."@en ;
     sh:prefixes [ ],
         [ ] ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>

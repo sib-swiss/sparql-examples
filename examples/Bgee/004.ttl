@@ -5,7 +5,7 @@
 
 ex:004 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "What are the anatomical entities where the APOC1 Homo sapiens gene is expressed?" ;
+    rdfs:comment "What are the anatomical entities where the APOC1 Homo sapiens gene is expressed?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX genex: <http://purl.org/genex#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

@@ -5,7 +5,7 @@
 
 ex:NXQ_00222 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with both RNA-seq expression and observed IHC expression \"high\" in brain or one of its subparts" ;
+    rdfs:comment "Proteins with both RNA-seq expression and observed IHC expression \"high\" in brain or one of its subparts"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>

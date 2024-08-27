@@ -5,7 +5,7 @@
 
 ex:48 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve glycosylation sites and glycans on human enzymes (federated with glyconnect)" ;
+    rdfs:comment "Retrieve glycosylation sites and glycans on human enzymes (federated with glyconnect)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>

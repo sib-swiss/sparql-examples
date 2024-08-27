@@ -5,7 +5,7 @@
 
 ex:NXQ_00132 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins with a 3D structure in complex with another human protein which is not reported as binary interactant" ;
+    rdfs:comment "Proteins with a 3D structure in complex with another human protein which is not reported as binary interactant"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>
