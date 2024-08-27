@@ -3,9 +3,9 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix blazegraph_select: <http://example.org/BigDataSPARQLSelect>
 
-ex:10 a sh:SPARQLExecutable,
-        sh:SPARQLSelectExecutable ;
+ex:10 a blazegraph_select; 
     rdfs:comment "Recent events"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wikibase: <http://wikiba.se/ontology#>
