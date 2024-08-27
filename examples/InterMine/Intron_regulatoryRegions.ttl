@@ -1,0 +1,29 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Intron_regulatoryRegions a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified Intron or set of introns, return any overlapping regulatory regions."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?intron_id_primaryidentifier
+	?overlappingfeatures_id_primaryidentifier
+	?overlappingfeatures_id_name
+	?sequenceontologyterm_id_name
+WHERE {
+	?intron_id a intermine_voc:Intron .
+	?intron_id	intermine_voc:primaryIdentifier	?intron_id_primaryidentifier	.
+	?intron_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
+	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	?overlappingfeatures_id	intermine_voc:name	?overlappingfeatures_id_name	.
+	?overlappingfeatures_id	intermine_voc:sequenceOntologyTerm_id	?sequenceontologyterm_id	.
+	?sequenceontologyterm_id	intermine_voc:name	?sequenceontologyterm_id_name	.
+	FILTER (
+		?intron  = 'intron_CG31622:1_CG31622:2'
+	)
+}
+ORDER BY ASC(?intron_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

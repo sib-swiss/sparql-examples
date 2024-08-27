@@ -1,0 +1,48 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_RNAi a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show RNAi phenotypes for a specified gene or genes."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+	?rnairesults_id_phenotype
+	?rnairesults_id_score
+	?rnaiscreen_id_scoretype
+	?rnairesults_id_reagentid
+	?rnairesults_id_conditions
+	?publication_id_pubmedid
+	?rnaiscreen_id_name
+	?rnaiscreen_id_assay
+	?rnaiscreen_id_biosourcename
+	?rnaiscreen_id_biosourcetype
+	?rnaiscreen_id_method
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:rnaiResults_id	?rnairesults_id	.
+	?rnairesults_id	intermine_voc:phenotype	?rnairesults_id_phenotype	.
+	?rnairesults_id	intermine_voc:score	?rnairesults_id_score	.
+	?rnairesults_id	intermine_voc:rnaiScreen_id	?rnaiscreen_id	.
+	?rnaiscreen_id	intermine_voc:scoreType	?rnaiscreen_id_scoretype	.
+	?rnairesults_id	intermine_voc:reagentId	?rnairesults_id_reagentid	.
+	?rnairesults_id	intermine_voc:conditions	?rnairesults_id_conditions	.
+	?rnaiscreen_id	intermine_voc:publication_id	?publication_id	.
+	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
+	?rnaiscreen_id	intermine_voc:name	?rnaiscreen_id_name	.
+	?rnaiscreen_id	intermine_voc:assay	?rnaiscreen_id_assay	.
+	?rnaiscreen_id	intermine_voc:bioSourceName	?rnaiscreen_id_biosourcename	.
+	?rnaiscreen_id	intermine_voc:bioSourceType	?rnaiscreen_id_biosourcetype	.
+	?rnaiscreen_id	intermine_voc:method	?rnaiscreen_id_method	.
+	FILTER (
+		?gene  = 'eve'
+	)
+}
+ORDER BY ASC(?gene_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

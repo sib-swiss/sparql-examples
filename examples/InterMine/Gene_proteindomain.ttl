@@ -1,0 +1,40 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_proteindomain a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show protein domain information for the proteins of a specified gene."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+	?proteins_id_uniprotaccession
+	?proteindomain_id_name
+	?proteindomain_id_type
+	?proteindomainregions_id_start
+	?proteindomainregions_id_end
+	?proteindomainregions_id_identifier
+	?proteindomainregions_id_database
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:proteins_id	?proteins_id	.
+	?proteins_id	intermine_voc:uniprotAccession	?proteins_id_uniprotaccession	.
+	?proteins_id	intermine_voc:proteinDomainRegions_id	?proteindomainregions_id	.
+	?proteindomainregions_id	intermine_voc:proteinDomain_id	?proteindomain_id	.
+	?proteindomain_id	intermine_voc:name	?proteindomain_id_name	.
+	?proteindomain_id	intermine_voc:type	?proteindomain_id_type	.
+	?proteindomainregions_id	intermine_voc:start	?proteindomainregions_id_start	.
+	?proteindomainregions_id	intermine_voc:end	?proteindomainregions_id_end	.
+	?proteindomainregions_id	intermine_voc:identifier	?proteindomainregions_id_identifier	.
+	?proteindomainregions_id	intermine_voc:database	?proteindomainregions_id_database	.
+	FILTER (
+		?gene  = 'notch'
+	)
+}
+ORDER BY ASC(?gene_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

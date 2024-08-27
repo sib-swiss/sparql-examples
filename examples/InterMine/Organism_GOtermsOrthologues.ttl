@@ -1,0 +1,41 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Organism_GOtermsOrthologues a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show the GO terms for all genes in a particular organism which have an orthologue in another organism."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?homologue_id_primaryidentifier
+	?homologue_id_symbol
+	?ontologyterm_id_identifier
+	?ontologyterm_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:homologues_id	?homologues_id	.
+	?homologues_id	intermine_voc:homologue_id	?homologue_id	.
+	?homologue_id	intermine_voc:primaryIdentifier	?homologue_id_primaryidentifier	.
+	?homologue_id	intermine_voc:symbol	?homologue_id_symbol	.
+	?gene_id	intermine_voc:goAnnotation_id	?goannotation_id	.
+	?goannotation_id	intermine_voc:ontologyTerm_id	?ontologyterm_id	.
+	?ontologyterm_id	intermine_voc:identifier	?ontologyterm_id_identifier	.
+	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
+	FILTER (
+		?homologues_id_type  = 'orthologue'
+	)
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?organism_id_name  = 'Homo sapiens'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

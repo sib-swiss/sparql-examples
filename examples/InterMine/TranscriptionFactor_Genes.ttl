@@ -1,0 +1,39 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TranscriptionFactor_Genes a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For specified transcription factor(s) show the genes associated binding sites"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?factor_id_secondaryidentifier
+	?factor_id_symbol
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?chromosome_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?chromosomelocation_id_strand
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:regulatoryRegions_id	?regulatoryregions_id	.
+	?regulatoryregions_id	intermine_voc:factor_id	?factor_id	.
+	?factor_id	intermine_voc:secondaryIdentifier	?factor_id_secondaryidentifier	.
+	?factor_id	intermine_voc:symbol	?factor_id_symbol	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:chromosome_id	?chromosome_id	.
+	?chromosome_id	intermine_voc:primaryIdentifier	?chromosome_id_primaryidentifier	.
+	?gene_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	FILTER (
+		?regulatoryregions_id_factor  = 'CG2328'
+	)
+}
+ORDER BY ASC(?gene_id_regulatoryregions_id_factor_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

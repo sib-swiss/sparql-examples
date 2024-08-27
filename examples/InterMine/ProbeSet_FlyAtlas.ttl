@@ -1,0 +1,39 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:ProbeSet_FlyAtlas a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show the expression data of the following probeset in the FlyAtlas experiments. (Data Source: Affymetrix, FlyAtlas)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?probeset_id_primaryidentifier
+	?results_id_presentcall
+	?results_id_enrichment
+	?results_id_affycall
+	?datasets_id_name
+	?datasets_id_name
+	?tissue_id_name
+WHERE {
+	?probeset_id a intermine_voc:ProbeSet .
+	?probeset_id	intermine_voc:primaryIdentifier	?probeset_id_primaryidentifier	.
+	?probeset_id	intermine_voc:results_id	?results_id	.
+	?results_id	intermine_voc:presentCall	?results_id_presentcall	.
+	?results_id	intermine_voc:enrichment	?results_id_enrichment	.
+	?results_id	intermine_voc:affyCall	?results_id_affycall	.
+	?probeset_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?results_id	intermine_voc:dataSets_id	?datasets_id	.
+	?results_id	intermine_voc:tissue_id	?tissue_id	.
+	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	FILTER (
+		?datasets_id_name  = 'FlyAtlas'
+	)
+	FILTER (
+		?probeset_id_primaryidentifier  = '1622901_at'
+	)
+}
+ORDER BY ASC(?probeset_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

@@ -1,0 +1,29 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_FlyAtlas_TissueList a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show genes expressed in a set of FlyAtlas tissues."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?microarrayresults_id_affycall
+	?tissue_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:microArrayResults_id	?microarrayresults_id	.
+	?microarrayresults_id	intermine_voc:affyCall	?microarrayresults_id_affycall	.
+	?microarrayresults_id	intermine_voc:tissue_id	?tissue_id	.
+	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	FILTER (
+		?microarrayresults_id_affycall  = 'Up'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

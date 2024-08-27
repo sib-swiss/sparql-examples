@@ -1,0 +1,32 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_GOAll a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Given a gene show the associated GO terms, and all parents to the top of the directed graph. The query returns a column containing the assigned GO term and a column containing all parents of that primary assignment."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?ontologyterm_id_name
+	?parents_id_name
+	?goannotation_id_qualifier
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:goAnnotation_id	?goannotation_id	.
+	?goannotation_id	intermine_voc:ontologyTerm_id	?ontologyterm_id	.
+	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
+	?ontologyterm_id	intermine_voc:parents_id	?parents_id	.
+	?parents_id	intermine_voc:name	?parents_id_name	.
+	?goannotation_id	intermine_voc:qualifier	?goannotation_id_qualifier	.
+	FILTER (
+		?gene  = 'CG11348'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

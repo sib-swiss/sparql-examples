@@ -1,0 +1,30 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Disease_gene2 a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show the human genes associated with a specified disease."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?disease_id_identifier
+	?disease_id_name
+	?genes_id_primaryidentifier
+	?genes_id_symbol
+	?genes_id_name
+WHERE {
+	?disease_id a intermine_voc:Disease .
+	?disease_id	intermine_voc:identifier	?disease_id_identifier	.
+	?disease_id	intermine_voc:name	?disease_id_name	.
+	?disease_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:primaryIdentifier	?genes_id_primaryidentifier	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?genes_id	intermine_voc:name	?genes_id_name	.
+	FILTER (
+		?disease_id_name  = 'parkinson'
+	)
+}
+ORDER BY ASC(?disease_id_identifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

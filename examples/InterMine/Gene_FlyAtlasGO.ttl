@@ -1,0 +1,49 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_FlyAtlasGO a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a given D. melanogaster gene, show the FlyAtlas results and the GO terms applied to the gene"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?gene_id_primaryidentifier
+	?tissue_id_name
+	?microarrayresults_id_presentcall
+	?microarrayresults_id_enrichment
+	?microarrayresults_id_affycall
+	?material_id_primaryidentifier
+	?datasets_id_name
+	?ontologyterm_id_identifier
+	?ontologyterm_id_name
+	?datasets_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:microArrayResults_id	?microarrayresults_id	.
+	?microarrayresults_id	intermine_voc:tissue_id	?tissue_id	.
+	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	?microarrayresults_id	intermine_voc:presentCall	?microarrayresults_id_presentcall	.
+	?microarrayresults_id	intermine_voc:enrichment	?microarrayresults_id_enrichment	.
+	?microarrayresults_id	intermine_voc:affyCall	?microarrayresults_id_affycall	.
+	?microarrayresults_id	intermine_voc:material_id	?material_id	.
+	?material_id	intermine_voc:primaryIdentifier	?material_id_primaryidentifier	.
+	?microarrayresults_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?gene_id	intermine_voc:goAnnotation_id	?goannotation_id	.
+	?goannotation_id	intermine_voc:ontologyTerm_id	?ontologyterm_id	.
+	?ontologyterm_id	intermine_voc:identifier	?ontologyterm_id_identifier	.
+	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
+	?ontologyterm_id	intermine_voc:dataSets_id	?datasets_id	.
+	FILTER (
+		?gene  = 'CG9652'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

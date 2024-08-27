@@ -1,0 +1,41 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:DrosDel_GeneLocation a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Find all D. melanogaster genes interrupted by a specific DrosDel deletion. Show the chromosomal locations of the deletion and the genes. (Data Source: FlyBase)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?chromosomaldeletion_id_primaryidentifier
+	?chromosomaldeletion_id_secondaryidentifier
+	?chromosome_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?overlappingfeatures_id_primaryidentifier
+	?overlappingfeatures_id_symbol
+	?overlappingfeatures_id_secondaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+WHERE {
+	?chromosomaldeletion_id a intermine_voc:ChromosomalDeletion .
+	?chromosomaldeletion_id	intermine_voc:primaryIdentifier	?chromosomaldeletion_id_primaryidentifier	.
+	?chromosomaldeletion_id	intermine_voc:secondaryIdentifier	?chromosomaldeletion_id_secondaryidentifier	.
+	?chromosomaldeletion_id	intermine_voc:chromosome_id	?chromosome_id	.
+	?chromosome_id	intermine_voc:primaryIdentifier	?chromosome_id_primaryidentifier	.
+	?chromosomaldeletion_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?chromosomaldeletion_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
+	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	?overlappingfeatures_id	intermine_voc:symbol	?overlappingfeatures_id_symbol	.
+	?overlappingfeatures_id	intermine_voc:secondaryIdentifier	?overlappingfeatures_id_secondaryidentifier	.
+	?overlappingfeatures_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	FILTER (
+		?chromosomaldeletion_id_secondaryidentifier  = 'Df(1)LB6'
+	)
+}
+ORDER BY ASC(?chromosomaldeletion_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

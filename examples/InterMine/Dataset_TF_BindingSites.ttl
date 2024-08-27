@@ -1,0 +1,45 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Dataset_TF_BindingSites a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show all the binding sites for the transcription factors according to the REDfly dataset."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?factor_id_primaryidentifier
+	?factor_id_symbol
+	?tfbindingsite_id_secondaryidentifier
+	?locatedon_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?sequence_id_residues
+	?datasets_id_name
+WHERE {
+	?tfbindingsite_id a intermine_voc:TFBindingSite .
+	?tfbindingsite_id	intermine_voc:factor_id	?factor_id	.
+	?factor_id	intermine_voc:primaryIdentifier	?factor_id_primaryidentifier	.
+	?factor_id	intermine_voc:symbol	?factor_id_symbol	.
+	?tfbindingsite_id	intermine_voc:secondaryIdentifier	?tfbindingsite_id_secondaryidentifier	.
+	?tfbindingsite_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:locatedOn_id	?locatedon_id	.
+	?locatedon_id	intermine_voc:primaryIdentifier	?locatedon_id_primaryidentifier	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?tfbindingsite_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?tfbindingsite_id	intermine_voc:sequence_id	?sequence_id	.
+	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
+	?tfbindingsite_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	FILTER (
+		?datasets_id_name  = 'REDfly Drosophila transcription factor binding sites'
+	)
+}
+ORDER BY ASC(?tfbindingsite_id_factor_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

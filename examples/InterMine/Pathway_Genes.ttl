@@ -1,0 +1,37 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Pathway_Genes a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified KEGG, REACTOME or FlyReactome pathway, list all the genes that are involved for a particular organism"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?pathway_id_identifier
+	?pathway_id_name
+	?genes_id_secondaryidentifier
+	?genes_id_symbol
+	?datasets_id_name
+WHERE {
+	?pathway_id a intermine_voc:Pathway .
+	?pathway_id	intermine_voc:identifier	?pathway_id_identifier	.
+	?pathway_id	intermine_voc:name	?pathway_id_name	.
+	?pathway_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:secondaryIdentifier	?genes_id_secondaryidentifier	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?pathway_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	FILTER (
+		?pathway_id_name  = 'Pentose phosphate pathway'
+	)
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?datasets_id_name  = 'KEGG pathways data set'
+	)
+}
+ORDER BY ASC(?pathway_id_identifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

@@ -1,0 +1,43 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Pathway_GenesOrtholEST_new a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a particular pathway (from KEGG, REACTOME or FlyReactome), show all the D. melanogaster genes involved, the orthologous genes in A. gambiae and EST clusters overlapping these genes."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?pathway_id_identifier
+	?pathway_id_name
+	?genes_id_secondaryidentifier
+	?genes_id_symbol
+	?homologue_id_secondaryidentifier
+	?homologues_id_type
+	?overlappingfeatures_id_primaryidentifier
+WHERE {
+	?pathway_id a intermine_voc:Pathway .
+	?pathway_id	intermine_voc:identifier	?pathway_id_identifier	.
+	?pathway_id	intermine_voc:name	?pathway_id_name	.
+	?pathway_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:secondaryIdentifier	?genes_id_secondaryidentifier	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?genes_id	intermine_voc:homologues_id	?homologues_id	.
+	?homologues_id	intermine_voc:homologue_id	?homologue_id	.
+	?homologue_id	intermine_voc:secondaryIdentifier	?homologue_id_secondaryidentifier	.
+	?homologues_id	intermine_voc:type	?homologues_id_type	.
+	?homologue_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
+	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	FILTER (
+		?organism_id_name  = 'Anopheles gambiae'
+	)
+	FILTER (
+		?pathway_id_name  = 'Pentose phosphate pathway'
+	)
+	FILTER (
+		?datasets_id_name  = 'KEGG pathways data set'
+	)
+}
+ORDER BY ASC(?pathway_id_identifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

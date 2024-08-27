@@ -1,0 +1,46 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:ListPathway a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a given Gene A (or List A of Genes) show any associated Pathway(s) in common with Gene B (or List B of Genes). Datasource: KEGG or REACTOME. Keywords: pathways, cascade, metabolism, reaction"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+	?gene_id_name
+	?genes_id_primaryidentifier
+	?genes_id_symbol
+	?genes_id_name
+	?pathways_id_name
+	?pathways_id_identifier
+	?datasets_id_name
+	?organism_id_shortname
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:name	?gene_id_name	.
+	?gene_id	intermine_voc:pathways_id	?pathways_id	.
+	?pathways_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:primaryIdentifier	?genes_id_primaryidentifier	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?genes_id	intermine_voc:name	?genes_id_name	.
+	?pathways_id	intermine_voc:name	?pathways_id_name	.
+	?pathways_id	intermine_voc:identifier	?pathways_id_identifier	.
+	?pathways_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?genes_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:shortName	?organism_id_shortname	.
+	FILTER (
+		?gene  = 'N'
+	)
+	FILTER (
+		?pathways_id_genes  = 'ser'
+	)
+}
+ORDER BY ASC(?gene_id_symbol)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

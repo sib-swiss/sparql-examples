@@ -1,0 +1,41 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_ExonLocation2 a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specific gene, show its exons with their chromosomal locations and lengths.  To show exons for all genes, turn off the constraint on the gene name.  "@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?exons_id_primaryidentifier
+	?exons_id_length
+	?chromosome_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?chromosomelocation_id_strand
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:exons_id	?exons_id	.
+	?exons_id	intermine_voc:primaryIdentifier	?exons_id_primaryidentifier	.
+	?exons_id	intermine_voc:length	?exons_id_length	.
+	?exons_id	intermine_voc:chromosome_id	?chromosome_id	.
+	?chromosome_id	intermine_voc:primaryIdentifier	?chromosome_id_primaryidentifier	.
+	?exons_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	FILTER (
+		?gene  = 'CG1046'
+	)
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

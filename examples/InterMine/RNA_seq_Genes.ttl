@@ -1,0 +1,36 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:RNA_seq_Genes a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show RNA_seq expression data for all genes at a specified developmental stage.  Optionally also filter on expression level or expression score.  Data source:  modENCODE RNA_seq data analysed by FlyBase. Note: The expression scores are binned into the expression levels as follows: No/Extremely low expression: 0-0; Very low expression: 1-3; Low expression: 4-10; Moderate expression: 11-25; Moderately high expression: 26-50; High expression: 51-100; Very high expression: 101-1000; Extremely high expression: >1000;"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?rnaseqresult_id_stage
+	?rnaseqresult_id_expressionlevel
+	?rnaseqresult_id_expressionscore
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+WHERE {
+	?rnaseqresult_id a intermine_voc:RNASeqResult .
+	?rnaseqresult_id	intermine_voc:stage	?rnaseqresult_id_stage	.
+	?rnaseqresult_id	intermine_voc:expressionLevel	?rnaseqresult_id_expressionlevel	.
+	?rnaseqresult_id	intermine_voc:expressionScore	?rnaseqresult_id_expressionscore	.
+	?rnaseqresult_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	FILTER (
+		?rnaseqresult_id_stage  = 'embryo 02-04hr'
+	)
+	FILTER (
+		?rnaseqresult_id_expressionlevel  = 'High expression'
+	)
+	FILTER (
+		?rnaseqresult_id_expressionscore  = '4001'
+	)
+}
+ORDER BY ASC(?rnaseqresult_id_stage)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

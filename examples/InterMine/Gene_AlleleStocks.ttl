@@ -1,0 +1,48 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_AlleleStocks a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified gene or list of genes show the alleles and the stocks available.  Optionally, you can filter the search with a specific allele of the gene and/or show only those stocks available from a specified stock centre."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_symbol
+	?gene_id_primaryidentifier
+	?alleles_id_primaryidentifier
+	?alleles_id_symbol
+	?alleles_id_alleleclass
+	?phenotypeannotations_id_description
+	?phenotypeannotations_id_annotationtype
+	?stocks_id_primaryidentifier
+	?stocks_id_stockcenter
+	?stocks_id_type
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:alleles_id	?alleles_id	.
+	?alleles_id	intermine_voc:primaryIdentifier	?alleles_id_primaryidentifier	.
+	?alleles_id	intermine_voc:symbol	?alleles_id_symbol	.
+	?alleles_id	intermine_voc:alleleClass	?alleles_id_alleleclass	.
+	?alleles_id	intermine_voc:phenotypeAnnotations_id	?phenotypeannotations_id	.
+	?phenotypeannotations_id	intermine_voc:description	?phenotypeannotations_id_description	.
+	?phenotypeannotations_id	intermine_voc:annotationType	?phenotypeannotations_id_annotationtype	.
+	?alleles_id	intermine_voc:stocks_id	?stocks_id	.
+	?stocks_id	intermine_voc:primaryIdentifier	?stocks_id_primaryidentifier	.
+	?stocks_id	intermine_voc:stockCenter	?stocks_id_stockcenter	.
+	?stocks_id	intermine_voc:type	?stocks_id_type	.
+	FILTER (
+		?gene  = 'eve'
+	)
+	FILTER (
+		?gene_id_alleles  = 'eve[1] '
+	)
+	FILTER (
+		?stocks_id_stockcenter  = 'Bloomington Drosophila Stock Center'
+	)
+}
+ORDER BY ASC(?gene_id_symbol)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

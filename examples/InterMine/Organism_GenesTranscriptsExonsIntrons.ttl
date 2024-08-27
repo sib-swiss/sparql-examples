@@ -1,0 +1,57 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Organism_GenesTranscriptsExonsIntrons a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a particular Drosophila, list the genes, transcripts, exons and introns with their chromosomal locations and lengths."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?chromosome_id_primaryidentifier
+	?transcripts_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?transcripts_id_length
+	?exons_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?exons_id_length
+	?introns_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?introns_id_length
+	?organism_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:transcripts_id	?transcripts_id	.
+	?transcripts_id	intermine_voc:chromosome_id	?chromosome_id	.
+	?chromosome_id	intermine_voc:primaryIdentifier	?chromosome_id_primaryidentifier	.
+	?transcripts_id	intermine_voc:primaryIdentifier	?transcripts_id_primaryidentifier	.
+	?transcripts_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?transcripts_id	intermine_voc:length	?transcripts_id_length	.
+	?transcripts_id	intermine_voc:exons_id	?exons_id	.
+	?exons_id	intermine_voc:primaryIdentifier	?exons_id_primaryidentifier	.
+	?exons_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?exons_id	intermine_voc:length	?exons_id_length	.
+	?transcripts_id	intermine_voc:introns_id	?introns_id	.
+	?introns_id	intermine_voc:primaryIdentifier	?introns_id_primaryidentifier	.
+	?introns_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?introns_id	intermine_voc:length	?introns_id_length	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

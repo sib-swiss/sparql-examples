@@ -1,0 +1,22 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:CDNAClone_To_Protein_Type_Converter a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment ""@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?cdnaclone_id_id
+	?proteins_id_id
+WHERE {
+	?cdnaclone_id a intermine_voc:CDNAClone .
+	?cdnaclone_id	intermine_voc:id	?cdnaclone_id_id	.
+	?cdnaclone_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:proteins_id	?proteins_id	.
+	?proteins_id	intermine_voc:id	?proteins_id_id	.
+}
+ORDER BY ASC(?cdnaclone_id_id)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

@@ -1,0 +1,31 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:AlleleClass_Allele a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Find all D. melanogaster gene alleles from a certain allele type. List the corresponding genes. (Data Source: FlyBase)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?alleles_id_primaryidentifier
+	?alleles_id_secondaryidentifier
+	?alleles_id_alleleclass
+	?gene_id_symbol
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:alleles_id	?alleles_id	.
+	?alleles_id	intermine_voc:primaryIdentifier	?alleles_id_primaryidentifier	.
+	?alleles_id	intermine_voc:secondaryIdentifier	?alleles_id_secondaryidentifier	.
+	?alleles_id	intermine_voc:alleleClass	?alleles_id_alleleclass	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?alleles_id_alleleclass  = '*hypomorph*'
+	)
+}
+ORDER BY DESC(?gene_id_alleles_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

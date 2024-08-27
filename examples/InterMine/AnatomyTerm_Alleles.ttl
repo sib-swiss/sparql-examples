@@ -1,0 +1,39 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:AnatomyTerm_Alleles a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Find all D. melanogaster alleles that have a phenotype in  a specific anatomical structure and that are from a certain allele class. (Data Source: FlyBase)"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?alleles_id_alleleclass
+	?alleles_id_primaryidentifier
+	?alleles_id_secondaryidentifier
+	?phenotypeannotations_id_description
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:alleles_id	?alleles_id	.
+	?alleles_id	intermine_voc:alleleClass	?alleles_id_alleleclass	.
+	?alleles_id	intermine_voc:primaryIdentifier	?alleles_id_primaryidentifier	.
+	?alleles_id	intermine_voc:secondaryIdentifier	?alleles_id_secondaryidentifier	.
+	?alleles_id	intermine_voc:phenotypeAnnotations_id	?phenotypeannotations_id	.
+	?phenotypeannotations_id	intermine_voc:description	?phenotypeannotations_id_description	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?phenotypeannotations_id_description  = '*eye disc*'
+	)
+	FILTER (
+		?alleles_id_alleleclass  = '*loss of function*'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

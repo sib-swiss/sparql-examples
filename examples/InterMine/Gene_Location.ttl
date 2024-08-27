@@ -1,0 +1,38 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_Location a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show the chromosome and the chromosome location of a particular gene."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?gene_id_name
+	?chromosome_id_primaryidentifier
+	?locations_id_start
+	?locations_id_end
+	?locations_id_strand
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:name	?gene_id_name	.
+	?gene_id	intermine_voc:chromosome_id	?chromosome_id	.
+	?chromosome_id	intermine_voc:primaryIdentifier	?chromosome_id_primaryidentifier	.
+	?gene_id	intermine_voc:locations_id	?locations_id	.
+	?locations_id	intermine_voc:start	?locations_id_start	.
+	?locations_id	intermine_voc:end	?locations_id_end	.
+	?locations_id	intermine_voc:strand	?locations_id_strand	.
+	FILTER (
+		?gene  = 'CG1046'
+	)
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

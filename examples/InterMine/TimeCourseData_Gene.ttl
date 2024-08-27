@@ -1,0 +1,45 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TimeCourseData_Gene a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show gene expression data for a particular developmental stage according to the Arbeitman et al data set and filter this data on the median signal ratio. This template allows you to query on the general stage: use LIKE *Embryo*; *Larvae*; *Metamorphosis*; *Adult female* or *Adult male*. The templates Microarray Time course data from Arbeitman et al (filter on specific stage (and ratio)) --> Genes [D. melanogaster], allow you to filter on more specific stages.   Note that the reference sample in this experiment is pooled mRNA representing all stages of the life cycle."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?microarrayresults_id_type
+	?microarrayresults_id_value
+	?microarrayresults_id_iscontrol
+	?assays_id_sample2
+	?assays_id_sample1
+	?experiment_id_name
+	?publication_id_pubmedid
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:microArrayResults_id	?microarrayresults_id	.
+	?microarrayresults_id	intermine_voc:type	?microarrayresults_id_type	.
+	?microarrayresults_id	intermine_voc:value	?microarrayresults_id_value	.
+	?microarrayresults_id	intermine_voc:isControl	?microarrayresults_id_iscontrol	.
+	?microarrayresults_id	intermine_voc:assays_id	?assays_id	.
+	?assays_id	intermine_voc:sample2	?assays_id_sample2	.
+	?assays_id	intermine_voc:sample1	?assays_id_sample1	.
+	?assays_id	intermine_voc:experiment_id	?experiment_id	.
+	?experiment_id	intermine_voc:name	?experiment_id_name	.
+	?experiment_id	intermine_voc:publication_id	?publication_id	.
+	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
+	FILTER (
+		?experiment_id_name  = 'Arbeitman M: Gene Expression During the Life Cycle of Drosophila melanogaster'
+	)
+	FILTER (
+		?assays_id_sample2  = '*Embryo*'
+	)
+	FILTER (
+		?microarrayresults_id_value  = '2.0'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

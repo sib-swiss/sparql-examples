@@ -1,0 +1,52 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Tissue_Flyatlas a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show gene expression in the following tissue from D. melanogaster and the Affymetrix probes that were used to obtain these data.(Data Source: FlyAtlas)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?flyatlasresult_id_mrnasignal
+	?flyatlasresult_id_mrnasignalsem
+	?flyatlasresult_id_presentcall
+	?flyatlasresult_id_enrichment
+	?flyatlasresult_id_affycall
+	?genes_id_secondaryidentifier
+	?genes_id_symbol
+	?material_id_primaryidentifier
+	?datasets_id_name
+WHERE {
+	?flyatlasresult_id a intermine_voc:FlyAtlasResult .
+	?flyatlasresult_id	intermine_voc:mRNASignal	?flyatlasresult_id_mrnasignal	.
+	?flyatlasresult_id	intermine_voc:mRNASignalSEM	?flyatlasresult_id_mrnasignalsem	.
+	?flyatlasresult_id	intermine_voc:presentCall	?flyatlasresult_id_presentcall	.
+	?flyatlasresult_id	intermine_voc:enrichment	?flyatlasresult_id_enrichment	.
+	?flyatlasresult_id	intermine_voc:affyCall	?flyatlasresult_id_affycall	.
+	?flyatlasresult_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:secondaryIdentifier	?genes_id_secondaryidentifier	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?flyatlasresult_id	intermine_voc:material_id	?material_id	.
+	?material_id	intermine_voc:primaryIdentifier	?material_id_primaryidentifier	.
+	?flyatlasresult_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	FILTER (
+		?tissue_id_name  = 'Ovary'
+	)
+	FILTER (
+		?flyatlasresult_id_affycall  = 'Up'
+	)
+	FILTER (
+		?flyatlasresult_id_presentcall  = '3'
+	)
+	FILTER (
+		?flyatlasresult_id_enrichment  = '2.0'
+	)
+	FILTER (
+		?flyatlasresult_id_mrnasignal  = '100.0'
+	)
+}
+ORDER BY DESC(?flyatlasresult_id_enrichment)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
