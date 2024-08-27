@@ -1,0 +1,35 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:PhenotypeType_Alleles a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show alleles in which mutations cause a specific type of phenotype, such as enhancer or suppressor."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?allele_id_alleleclass
+	?allele_id_id
+	?phenotypeannotations_id_annotationtype
+	?phenotypeannotations_id_description
+	?allele_id_primaryidentifier
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+WHERE {
+	?allele_id a intermine_voc:Allele .
+	?allele_id	intermine_voc:alleleClass	?allele_id_alleleclass	.
+	?allele_id	intermine_voc:id	?allele_id_id	.
+	?allele_id	intermine_voc:phenotypeAnnotations_id	?phenotypeannotations_id	.
+	?phenotypeannotations_id	intermine_voc:annotationType	?phenotypeannotations_id_annotationtype	.
+	?phenotypeannotations_id	intermine_voc:description	?phenotypeannotations_id_description	.
+	?allele_id	intermine_voc:primaryIdentifier	?allele_id_primaryidentifier	.
+	?allele_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	FILTER (
+		?phenotypeannotations_id_description  = 'enhancer'
+	)
+}
+ORDER BY ASC(?allele_id_alleleclass)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

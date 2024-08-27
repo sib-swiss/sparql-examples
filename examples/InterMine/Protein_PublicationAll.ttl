@@ -1,0 +1,36 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Protein_PublicationAll a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "This search returns the publications referenced by Uniprot AND the publications for the Gene.  This gives two columns of pubmed Ids: the first for the publications from Uniprot and the second for the publications for the Gene.  To create a single list of all publications, create a list for the first set and then add the second set to this list using the functions under 'Create/Add to list'."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?protein_id_name
+	?protein_id_uniprotaccession
+	?genes_id_symbol
+	?genes_id_primaryidentifier
+	?publications_id_pubmedid
+	?publications_id_pubmedid
+WHERE {
+	?protein_id a intermine_voc:Protein .
+	?protein_id	intermine_voc:name	?protein_id_name	.
+	?protein_id	intermine_voc:uniprotAccession	?protein_id_uniprotaccession	.
+	?protein_id	intermine_voc:genes_id	?genes_id	.
+	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
+	?genes_id	intermine_voc:primaryIdentifier	?genes_id_primaryidentifier	.
+	?genes_id	intermine_voc:publications_id	?publications_id	.
+	?publications_id	intermine_voc:pubMedId	?publications_id_pubmedid	.
+	?protein_id	intermine_voc:publications_id	?publications_id	.
+	FILTER (
+		?protein  = '3-hydroxyacyl-CoA dehydrogenase type-2 '
+	)
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+}
+ORDER BY ASC(?protein_id_name)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

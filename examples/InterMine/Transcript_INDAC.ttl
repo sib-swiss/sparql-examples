@@ -1,0 +1,31 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Transcript_INDAC a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For specified transcript(s) show the corresponding INDAC microarray long oligo, along with its tm, length and sequence."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?transcript_id_primaryidentifier
+	?microarrayoligos_id_primaryidentifier
+	?microarrayoligos_id_tm
+	?microarrayoligos_id_length
+	?sequence_id_residues
+WHERE {
+	?transcript_id a intermine_voc:Transcript .
+	?transcript_id	intermine_voc:primaryIdentifier	?transcript_id_primaryidentifier	.
+	?transcript_id	intermine_voc:microarrayOligos_id	?microarrayoligos_id	.
+	?microarrayoligos_id	intermine_voc:primaryIdentifier	?microarrayoligos_id_primaryidentifier	.
+	?microarrayoligos_id	intermine_voc:tm	?microarrayoligos_id_tm	.
+	?microarrayoligos_id	intermine_voc:length	?microarrayoligos_id_length	.
+	?microarrayoligos_id	intermine_voc:sequence_id	?sequence_id	.
+	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
+	FILTER (
+		?transcript  = 'CG10000-RA'
+	)
+}
+ORDER BY ASC(?transcript_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

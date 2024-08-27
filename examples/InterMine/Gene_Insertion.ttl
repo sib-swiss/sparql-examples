@@ -1,0 +1,39 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_Insertion a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a particular Drosophila gene, search for overlapping insertions. (Data Source: FlyBase)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?overlappingfeatures_id_primaryidentifier
+	?overlappingfeatures_id_name
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?chromosomelocation_id_strand
+	?datasource_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
+	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	?overlappingfeatures_id	intermine_voc:name	?overlappingfeatures_id_name	.
+	?overlappingfeatures_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	?overlappingfeatures_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:dataSource_id	?datasource_id	.
+	?datasource_id	intermine_voc:name	?datasource_id_name	.
+	FILTER (
+		?gene  = 'CG4722'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

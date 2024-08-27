@@ -1,0 +1,38 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Mutagen_Allele a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Find all D. melanogaster gene alleles created in a certain way. Give the corresponding gene for the allele. (Data Source: FlyBase)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?alleles_id_primaryidentifier
+	?alleles_id_secondaryidentifier
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?mutagens_id_description
+	?datasource_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:alleles_id	?alleles_id	.
+	?alleles_id	intermine_voc:primaryIdentifier	?alleles_id_primaryidentifier	.
+	?alleles_id	intermine_voc:secondaryIdentifier	?alleles_id_secondaryidentifier	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?alleles_id	intermine_voc:mutagens_id	?mutagens_id	.
+	?mutagens_id	intermine_voc:description	?mutagens_id_description	.
+	?alleles_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:dataSource_id	?datasource_id	.
+	?datasource_id	intermine_voc:name	?datasource_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?mutagens_id_description  = 'P-element activity'
+	)
+}
+ORDER BY ASC(?gene_id_alleles_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

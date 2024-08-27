@@ -1,0 +1,40 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_FlyFish a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a certain gene from Drosophila melanogaster, show the mRNA embryonic localisation results from FlyFish."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?mrnaexpressionresults_id_stagerange
+	?mrnaexpressionresults_id_expressed
+	?mrnaexpressionterms_id_name
+	?dataset_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:mRNAExpressionResults_id	?mrnaexpressionresults_id	.
+	?mrnaexpressionresults_id	intermine_voc:stageRange	?mrnaexpressionresults_id_stagerange	.
+	?mrnaexpressionresults_id	intermine_voc:expressed	?mrnaexpressionresults_id_expressed	.
+	?mrnaexpressionresults_id	intermine_voc:mRNAExpressionTerms_id	?mrnaexpressionterms_id	.
+	?mrnaexpressionterms_id	intermine_voc:name	?mrnaexpressionterms_id_name	.
+	?mrnaexpressionresults_id	intermine_voc:dataSet_id	?dataset_id	.
+	?dataset_id	intermine_voc:name	?dataset_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?dataset_id_name  = 'fly-Fish data set'
+	)
+	FILTER (
+		?gene  = 'armadillo'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

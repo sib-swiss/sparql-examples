@@ -1,0 +1,26 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Probe_Gene a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For specified Affymetrix probeset(s) show the corresponding gene. (Data Source: Ensembl)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?probesets_id_primaryidentifier
+	?gene_id_symbol
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:probeSets_id	?probesets_id	.
+	?probesets_id	intermine_voc:primaryIdentifier	?probesets_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?gene_id_probesets  = '155099_at'
+	)
+}
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

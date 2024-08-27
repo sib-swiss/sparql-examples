@@ -1,0 +1,56 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_Interactions2 a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified gene, show physical and genetic interaction partners.  Optionally constrain to show just physical or genetic interactions or interactions determined by a specific method."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+	?participant2_id_primaryidentifier
+	?participant2_id_symbol
+	?details_id_type
+	?details_id_name
+	?details_id_role1
+	?details_id_role2
+	?interactiondetectionmethods_id_name
+	?experiment_id_name
+	?publication_id_pubmedid
+	?datasets_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:interactions_id	?interactions_id	.
+	?interactions_id	intermine_voc:participant2_id	?participant2_id	.
+	?participant2_id	intermine_voc:primaryIdentifier	?participant2_id_primaryidentifier	.
+	?participant2_id	intermine_voc:symbol	?participant2_id_symbol	.
+	?interactions_id	intermine_voc:details_id	?details_id	.
+	?details_id	intermine_voc:type	?details_id_type	.
+	?details_id	intermine_voc:name	?details_id_name	.
+	?details_id	intermine_voc:role1	?details_id_role1	.
+	?details_id	intermine_voc:role2	?details_id_role2	.
+	?details_id	intermine_voc:experiment_id	?experiment_id	.
+	?experiment_id	intermine_voc:interactionDetectionMethods_id	?interactiondetectionmethods_id	.
+	?interactiondetectionmethods_id	intermine_voc:name	?interactiondetectionmethods_id_name	.
+	?experiment_id	intermine_voc:name	?experiment_id_name	.
+	?experiment_id	intermine_voc:publication_id	?publication_id	.
+	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
+	?details_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	FILTER (
+		?gene  = 'notch'
+	)
+	FILTER (
+		?interactiondetectionmethods_id_name  = 'two hybrid'
+	)
+	FILTER (
+		?details_id_type  = 'physical'
+	)
+}
+ORDER BY ASC(?gene_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

@@ -1,0 +1,43 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_Orth a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a given Gene (or List of Genes) in named organism (default: D. melanogaster) returns the orthologues.  Optionally constrain the organism for which orthologues are shown and the data source from which the orthologue predictions are derived.  Currently  orthologue predictions are available from TreeFam, Panther and the Drosophila 12 genomes project. [keywords: homologue, homolog, paralogue, paralogue, ortholog]"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_symbol
+	?homologue_id_primaryidentifier
+	?homologue_id_symbol
+	?organism_id_shortname
+	?datasets_id_name
+	?homologues_id_type
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:homologues_id	?homologues_id	.
+	?homologues_id	intermine_voc:homologue_id	?homologue_id	.
+	?homologue_id	intermine_voc:primaryIdentifier	?homologue_id_primaryidentifier	.
+	?homologue_id	intermine_voc:symbol	?homologue_id_symbol	.
+	?homologue_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:shortName	?organism_id_shortname	.
+	?homologues_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?homologues_id	intermine_voc:type	?homologues_id_type	.
+	FILTER (
+		?gene  = 'cdk1'
+	)
+	FILTER (
+		?organism_id_shortname  = 'C. elegans'
+	)
+	FILTER (
+		?datasets_id_name  = 'Panther data set'
+	)
+}
+ORDER BY ASC(?gene_id_symbol)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

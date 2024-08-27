@@ -1,0 +1,28 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Clone_gene a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a cDNA clone or list of clones give the corresponding gene identifiers."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?cdnaclone_id_primaryidentifier
+	?gene_id_primaryidentifier
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+WHERE {
+	?cdnaclone_id a intermine_voc:CDNAClone .
+	?cdnaclone_id	intermine_voc:primaryIdentifier	?cdnaclone_id_primaryidentifier	.
+	?cdnaclone_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	FILTER (
+		?cdnaclone  = 'LD14383'
+	)
+}
+ORDER BY ASC(?cdnaclone_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

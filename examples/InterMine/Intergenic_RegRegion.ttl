@@ -1,0 +1,40 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Intergenic_RegRegion a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For the following intergenic region from D. melanogaster, show all regulatory elements with their chromosomal locations and lengths. Regulatory elements can include: CRMs and TF binding sites from REDfly, enhancers from FlyBase and predicted sites from Tiffin. (Data Source: FlyBase, REDfly, Tiffin)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?intergenicregion_id_primaryidentifier
+	?overlappingfeatures_id_primaryidentifier
+	?chromosomelocation_id_start
+	?chromosomelocation_id_end
+	?overlappingfeatures_id_length
+	?datasets_id_name
+	?sequenceontologyterm_id_name
+WHERE {
+	?intergenicregion_id a intermine_voc:IntergenicRegion .
+	?intergenicregion_id	intermine_voc:primaryIdentifier	?intergenicregion_id_primaryidentifier	.
+	?intergenicregion_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
+	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	?overlappingfeatures_id	intermine_voc:chromosomeLocation_id	?chromosomelocation_id	.
+	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
+	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
+	?overlappingfeatures_id	intermine_voc:length	?overlappingfeatures_id_length	.
+	?overlappingfeatures_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?overlappingfeatures_id	intermine_voc:sequenceOntologyTerm_id	?sequenceontologyterm_id	.
+	?sequenceontologyterm_id	intermine_voc:name	?sequenceontologyterm_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?intergenicregion_id_primaryidentifier  = 'intergenic_region_chr2L_10295386..10295858'
+	)
+}
+ORDER BY ASC(?intergenicregion_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

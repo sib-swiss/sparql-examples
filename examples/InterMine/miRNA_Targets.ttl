@@ -1,0 +1,39 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:miRNA_Targets a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For specified miRNA(s), find all predicted target transcripts and their genes. Show the location of the target sites, the score for each site and the p-value. (Data Source: miRBase)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?target_id_primaryidentifier
+	?gene_id_secondaryidentifier
+	?target_id_symbol
+	?mirnatargets_id_pvalue
+	?datasets_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:miRNAtargets_id	?mirnatargets_id	.
+	?mirnatargets_id	intermine_voc:target_id	?target_id	.
+	?target_id	intermine_voc:primaryIdentifier	?target_id_primaryidentifier	.
+	?target_id	intermine_voc:gene_id	?gene_id	.
+	?target_id	intermine_voc:symbol	?target_id_symbol	.
+	?mirnatargets_id	intermine_voc:pvalue	?mirnatargets_id_pvalue	.
+	?mirnatargets_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?gene  = 'mir-79'
+	)
+}
+ORDER BY ASC(?gene_id_mirnatargets_id_pvalue)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

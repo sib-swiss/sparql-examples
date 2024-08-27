@@ -1,0 +1,24 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Genes_Sequence a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified organism return the sequence of all or selected genes. Can be used to output a Fasta file of sequences for use with programs such as BLAST."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?sequence_id_residues
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:sequence_id	?sequence_id	.
+	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
+	FILTER (
+		?organism_id_name  = 'Drosophila pseudoobscura'
+	)
+}
+ORDER BY ASC(?gene_id_primaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

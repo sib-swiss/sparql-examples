@@ -1,0 +1,43 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:BDGP_Gene a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a specified ImaGo term and/or stage range, show all the D. melanogaster genes that are associated with it according to the BDGP in situ project. (Data Source: BDGP)."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?mrnaexpressionterms_id_name
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?mrnaexpressionresults_id_stagerange
+	?mrnaexpressionresults_id_expressed
+	?dataset_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:mRNAExpressionResults_id	?mrnaexpressionresults_id	.
+	?mrnaexpressionresults_id	intermine_voc:mRNAExpressionTerms_id	?mrnaexpressionterms_id	.
+	?mrnaexpressionterms_id	intermine_voc:name	?mrnaexpressionterms_id_name	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?mrnaexpressionresults_id	intermine_voc:stageRange	?mrnaexpressionresults_id_stagerange	.
+	?mrnaexpressionresults_id	intermine_voc:expressed	?mrnaexpressionresults_id_expressed	.
+	?mrnaexpressionresults_id	intermine_voc:dataSet_id	?dataset_id	.
+	?dataset_id	intermine_voc:name	?dataset_id_name	.
+	FILTER (
+		?mrnaexpressionresults_id_expressed  = 'true'
+	)
+	FILTER (
+		?dataset_id_name  = 'BDGP in situ data set'
+	)
+	FILTER (
+		?mrnaexpressionterms_id_name  = '*neuron*'
+	)
+	FILTER (
+		?mrnaexpressionresults_id_stagerange  = 'stage 11-12 (BDGP in situ)'
+	)
+}
+ORDER BY ASC(?gene_id_mrnaexpressionresults_id_mrnaexpressionterms_id_name)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

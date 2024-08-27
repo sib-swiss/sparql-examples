@@ -1,0 +1,25 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:modENCODE_RNA_seq_Tissues a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show genes expressed in a set of tissues/stages according to the modENCODE RNA_seq data.  The expression scores are binned into the expression levels as follows: No/Extremely low expression: 0-0; Very low expression: 1-3; Low expression: 4-10; Moderate expression: 11-25; Moderately high expression: 26-50; High expression: 51-100; Very high expression: 101-1000; Extremely high expression: >1000;"@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_symbol
+	?rnaseqresults_id_stage
+	?rnaseqresults_id_expressionlevel
+	?rnaseqresults_id_expressionscore
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:rnaSeqResults_id	?rnaseqresults_id	.
+	?rnaseqresults_id	intermine_voc:stage	?rnaseqresults_id_stage	.
+	?rnaseqresults_id	intermine_voc:expressionLevel	?rnaseqresults_id_expressionlevel	.
+	?rnaseqresults_id	intermine_voc:expressionScore	?rnaseqresults_id_expressionscore	.
+}
+ORDER BY ASC(?gene_id_symbol)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

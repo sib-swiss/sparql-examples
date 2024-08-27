@@ -1,0 +1,48 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:RNAiScreen_genes a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "Show phenotypes for genes identified in a specified RNAi screen."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_primaryidentifier
+	?gene_id_secondaryidentifier
+	?rnairesults_id_phenotype
+	?gene_id_symbol
+	?rnairesults_id_score
+	?rnaiscreen_id_scoretype
+	?rnairesults_id_reagentid
+	?rnaiscreen_id_reagenttype
+	?rnaiscreen_id_name
+	?rnaiscreen_id_assay
+	?rnaiscreen_id_method
+	?publication_id_pubmedid
+	?rnairesults_id_conditions
+WHERE {
+	?rnaiscreen_id a intermine_voc:RNAiScreen .
+	?rnaiscreen_id	intermine_voc:rnaiResults_id	?rnairesults_id	.
+	?rnairesults_id	intermine_voc:gene_id	?gene_id	.
+	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?rnairesults_id	intermine_voc:phenotype	?rnairesults_id_phenotype	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?rnairesults_id	intermine_voc:score	?rnairesults_id_score	.
+	?rnaiscreen_id	intermine_voc:scoreType	?rnaiscreen_id_scoretype	.
+	?rnairesults_id	intermine_voc:reagentId	?rnairesults_id_reagentid	.
+	?rnaiscreen_id	intermine_voc:reagentType	?rnaiscreen_id_reagenttype	.
+	?rnaiscreen_id	intermine_voc:name	?rnaiscreen_id_name	.
+	?rnaiscreen_id	intermine_voc:assay	?rnaiscreen_id_assay	.
+	?rnaiscreen_id	intermine_voc:method	?rnaiscreen_id_method	.
+	?rnaiscreen_id	intermine_voc:publication_id	?publication_id	.
+	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
+	?rnairesults_id	intermine_voc:conditions	?rnairesults_id_conditions	.
+	FILTER (
+		?rnaiscreen_id_name  = 'RNAi pathway'
+	)
+}
+ORDER BY ASC(?rnaiscreen_id_rnairesults_id_phenotype)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .

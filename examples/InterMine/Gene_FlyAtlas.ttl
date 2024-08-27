@@ -1,0 +1,55 @@
+@prefix ex: <https://www.intermine.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Gene_FlyAtlas a sh:SPARQLExecutable,
+	sh:SPARQLSelectExecutable ;
+	rdfs:comment "For a given D. melanogaster gene, show expression data from FlyAtlas."@en ;
+	sh:prefixes _:sparql_examples_prefixes ;
+	sh:select """PREFIX intermine_voc: <http://bio2rdf.org/intermine_voc:>
+SELECT
+	?gene_id_secondaryidentifier
+	?gene_id_symbol
+	?microarrayresults_id_mrnasignal
+	?microarrayresults_id_mrnasignalsem
+	?microarrayresults_id_presentcall
+	?microarrayresults_id_enrichment
+	?microarrayresults_id_affycall
+	?datasets_id_name
+	?tissue_id_name
+WHERE {
+	?gene_id a intermine_voc:Gene .
+	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
+	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:microArrayResults_id	?microarrayresults_id	.
+	?microarrayresults_id	intermine_voc:mRNASignal	?microarrayresults_id_mrnasignal	.
+	?microarrayresults_id	intermine_voc:mRNASignalSEM	?microarrayresults_id_mrnasignalsem	.
+	?microarrayresults_id	intermine_voc:presentCall	?microarrayresults_id_presentcall	.
+	?microarrayresults_id	intermine_voc:enrichment	?microarrayresults_id_enrichment	.
+	?microarrayresults_id	intermine_voc:affyCall	?microarrayresults_id_affycall	.
+	?microarrayresults_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?microarrayresults_id	intermine_voc:tissue_id	?tissue_id	.
+	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	FILTER (
+		?organism_id_name  = 'Drosophila melanogaster'
+	)
+	FILTER (
+		?gene  = 'FBgn0011582'
+	)
+	FILTER (
+		?microarrayresults_id_affycall  = 'Up'
+	)
+	FILTER (
+		?microarrayresults_id_enrichment  = '2'
+	)
+	FILTER (
+		?microarrayresults_id_mrnasignal  = '100'
+	)
+	FILTER (
+		?microarrayresults_id_presentcall  = '3'
+	)
+}
+ORDER BY ASC(?gene_id_secondaryidentifier)
+""" ;
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
