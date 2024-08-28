@@ -29,8 +29,9 @@ public class FindFiles {
 	}
 
 	public static Path getBasePath() throws URISyntaxException {
-		URL baseDir = FindFiles.class.getResource("/");
-		return Paths.get(baseDir.toURI());
+		
+//		URL baseDir = FindFiles.class.getResource("/");
+		return Paths.get(System.getProperty(Tester.class.getName()));
 	}
 
 	public static Stream<Path> allPrefixFiles() throws IOException, URISyntaxException{

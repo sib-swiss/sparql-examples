@@ -1,4 +1,4 @@
-package swiss.sib.rdf.sparql.examples;
+package swiss.sib.rdf.sparql.examples.tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,6 +32,8 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
+
+import swiss.sib.rdf.sparql.examples.FindFiles;
 
 public class ValidateSparqlExamplesTest {
 	private static final String FIND_PREFIXES = """

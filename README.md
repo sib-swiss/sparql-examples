@@ -1,6 +1,11 @@
-# SPARQL examples
+# SPARQL examples testing and conversion utilities
 
-This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder. 
+This is a set of tools to convert, test and help maintain SPARQL query examples.
+
+
+The code comes from the [SIB SPARQL Examples](https://github.com/sib-swiss/sparql-examples/) project. 
+
+For this code to work each query should be in a turtle file.
 
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
@@ -34,20 +39,16 @@ WHERE
 
 # Quality Assurance (QA).
 
-There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org) and [eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above.
+To test your examples pass the folder/directory containing your exampes as an argument ('--input-directory' to the Tester command.
+e.g
+```
+mvn package
+java -cp target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
+```
 
 # Conversion for upload in SPARQL endpoint
 
 To load the examples into a SPARQL endpoint they should be concatenated into one example file. Use the script `convertIntoOneTurtle.sh` provide the project name with a `-p` parameter
-
-This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"`
-
-```bash
-# e.g. make file examples_uniprot.ttl
-./convertToOneTurtle.sh -p uniprot
-```
-
-Another option is to build the converter and use that.
 
 ```bash
 mvn package
@@ -99,10 +100,11 @@ If you want to add a label to a query please use [schema.org keyword](https://sc
 
 # Testing the queries actually work
 
-The queries can be executed automatically on all endpoints they apply to using
+The queries can be executed automatically on all endpoints they apply to using ane extra argument for the Tester `--also-run-slow-tests`. 
 
 ```
-mvn test -PallTests
+mvn package
+java -cp target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
 ```
 
 This does change the queries to add a LIMIT 1 if no limit was set in the query. Then if there is a result it is fetched.
@@ -110,8 +112,7 @@ This does change the queries to add a LIMIT 1 if no limit was set in the query. 
 ## Finding queries that run on more than one endpoint
 
 ```bash
-
-./contvertAllToOneTurtle.sh -a 
+java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar --input-directory $HOME/git/sparql-examples/examples -f examples_all.ttl
 
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```

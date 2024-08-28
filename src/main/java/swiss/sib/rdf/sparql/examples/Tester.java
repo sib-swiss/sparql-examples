@@ -1,22 +1,19 @@
 package swiss.sib.rdf.sparql.examples;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.junit.platform.console.ConsoleLauncher;
-import org.junit.platform.console.options.CommandLineOptions;
-import org.junit.platform.console.options.PicocliCommandLineOptionsParser;
-import org.junit.platform.console.tasks.ConsoleTestExecutor;
-import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
+import swiss.sib.rdf.sparql.examples.tests.ValidateSparqlExamplesTest;
 
 public class Tester {
 
@@ -45,13 +42,13 @@ public class Tester {
 	}
 
 	@Option(names = { "-i",
-			"--input-directory" }, paramLabel = "directory containing example files to convert", description = "The root directory where the examples and their prefixes can be found.", required = true)
+			"--input-directory" }, paramLabel = "directory containing example files to test", description = "The root directory where the examples and their prefixes can be found.", required = true)
 	private Path inputDirectory;
 
 	@Option(names = { "-h", "--help" }, usageHelp = true, description = "display this help message")
 	private boolean usageHelpRequested;
 
-	@Option(names = { "-p", "--project" }, paramLabel = "projects to convert", defaultValue = "all")
+	@Option(names = { "-p", "--project" }, paramLabel = "projects to test", defaultValue = "all")
 	private String projects;
 
 	@Option(names = { "--also-run-slow-tests" })
@@ -94,8 +91,15 @@ public class Tester {
 	}
 
 	private void test(Stream<Path> list) throws Exception {
-		ConsoleLauncher.execute(System.out, System.err, "--fail-if-no-tests", "--include-engine",
+		System.setProperty(Tester.class.getName(), inputDirectory.toString());
+		List<String> standardOptions = List.of("--fail-if-no-tests", "--include-engine",
 				"junit-jupiter", "--select-class", ValidateSparqlExamplesTest.class.getName());
+		if (!alsoRunSlowTests) {
+			standardOptions = new ArrayList<>(standardOptions);
+			standardOptions.add("--exclude-tag");
+			standardOptions.add("SlowTest");
+		}
+		ConsoleLauncher.execute(System.out, System.err, (String[]) standardOptions.toArray(new String[0]));
 	}
 
 }

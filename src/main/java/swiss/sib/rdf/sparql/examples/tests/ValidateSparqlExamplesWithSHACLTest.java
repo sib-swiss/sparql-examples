@@ -1,4 +1,4 @@
-package swiss.sib.rdf.sparql.examples;
+package swiss.sib.rdf.sparql.examples.tests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,6 +29,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+
+import swiss.sib.rdf.sparql.examples.FindFiles;
 
 public class ValidateSparqlExamplesWithSHACLTest {
 	private static final String shaclOneIdOneQuery = """
