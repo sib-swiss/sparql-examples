@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>swiss.sib.rdf</groupId>
 	<artifactId>sparql-examples-util</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>Test and package the sparql examples</name>
 	<description>An simple package to help with managing the sparql examples,
