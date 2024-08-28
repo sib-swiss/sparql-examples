@@ -9,6 +9,7 @@ In this github pages we have a HTML rendering for all them.
  * [Bgee](./examples/Bgee/)
  * [dbgi](./examples/dbgi/)
  * [GlyConnect](./examples/GlyConnect/)
+ * [GlySTreeM](./examples/GlySTreeM)
  * [HAMAP](./examples/HAMAP/)
  * [MetaNetX](./examples/MetaNetX/)
  * [neXtProt](./examples/neXtProt/)

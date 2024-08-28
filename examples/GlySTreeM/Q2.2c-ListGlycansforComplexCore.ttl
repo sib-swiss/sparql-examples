@@ -1,0 +1,20 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.2c-ListGlycansforComplexCore a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment '''Q2.2c GlycanCores: Show Complex Glycans''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?glycan ?id ?glytoucanID WHERE
+{
+    ?glycan a glystreem:Glycan ;
+            glystreem:id ?id ;
+            glystreem:glytoucan_id ?glytoucanID ;
+            glystreem:glycan_core ?glycan_core .
+    FILTER(?glycan_core in ("Complex"))
+}
+ORDER BY ASC(xsd:integer(?id))''' .

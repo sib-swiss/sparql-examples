@@ -1,0 +1,28 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:WF01_02a_GivenGlycanListReturnSubstructureList a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment '''WorkFlow 01 Step 2a: List determinants for a list of glycans''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?epitope ?source ?substructureGlytoucanID (COUNT(DISTINCT ?glycan) AS ?count) ?name WHERE
+{
+VALUES ?glytoucanID {"G17689DH" "G77252PU" "G14996IQ"} # GlyTouCanID
+VALUES ?source {"UniLectin"}
+?epitope a glystreem:Epitope .
+?epitope glystreem:epitopeSource ?source .
+?epitope glystreem:epitopeName ?name .
+?epitope glystreem:epitope_glytoucanID ?substructureGlytoucanID .
+?glycan a glystreem:Glycan ;
+glystreem:id ?glyconnectID ;
+glystreem:glytoucan_id ?glytoucanID ;
+glystreem:hasEpitopeSet ?set .
+?epitope modl:bagitemOf ?set .
+} 
+group by ?epitope ?source ?name ?substructureGlytoucanID
+order by DESC(?count)''' .
