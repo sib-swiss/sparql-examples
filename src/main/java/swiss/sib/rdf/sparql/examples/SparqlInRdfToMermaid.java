@@ -90,7 +90,7 @@ public class SparqlInRdfToMermaid {
 
 		} catch (MalformedQueryException e) {
 			String queryS = queryId.getSubject().stringValue();
-			Converter.Failure.CANT_PARSE_EXAMPLE.exit(queryS, e);
+			Failure.CANT_PARSE_EXAMPLE.exit(queryS, e);
 		}
 	}
 

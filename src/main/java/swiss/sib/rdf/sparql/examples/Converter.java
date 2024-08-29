@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
@@ -20,7 +21,6 @@ import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
-import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParseException;
@@ -35,30 +35,6 @@ import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 public class Converter {
 
 	private static final SimpleValueFactory VF = SimpleValueFactory.getInstance();
-
-	public static enum Failure {
-		CANT_READ_INPUT_DIRECTORY(1), CANT_PARSE_EXAMPLE(2), CANT_READ_EXAMPLE(3), CANT_WRITE_EXAMPLE_RQ(4);
-
-		private final int exitCode;
-
-		Failure(int i) {
-			this.exitCode = i;
-		}
-
-		void exit(Exception e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-			System.exit(exitCode);
-		}
-
-		void exit(String queryS, MalformedQueryException e) {
-			System.err.println(queryS+"." + e.getMessage());
-			e.printStackTrace();
-			System.exit(exitCode);
-			
-		}
-
-	}
 
 	private final Set<RDFFormat> outputFormats = Set.of(RDFFormat.TURTLE, RDFFormat.RDFXML, RDFFormat.NTRIPLES,
 			RDFFormat.JSONLD, RDFFormat.NDJSONLD);
@@ -110,19 +86,24 @@ public class Converter {
 	private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);
 
 	private void convertToRdf() {
+		Model model = parseExampleFilesIntoModel(projects, inputDirectory);
+		print(model);
+	}
+
+	static Model parseExampleFilesIntoModel(String projects, Path inputDirectory) {
 		Model model = new LinkedHashModel();
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
-				parseAll(list, model);
+				parseAll(list, model, inputDirectory);
 			} catch (IOException e) {
 				Failure.CANT_READ_INPUT_DIRECTORY.exit(e);
 			}
 		} else {
 			try (Stream<Path> list = COMMA.splitAsStream(projects).map(inputDirectory::resolve)) {
-				parseAll(list, model);
+				parseAll(list, model, inputDirectory);
 			}
 		}
-		print(model);
+		return model;
 	}
 
 	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject){
@@ -207,7 +188,7 @@ public class Converter {
 		return prefixes;
 	}
 
-	private void parseAll(Stream<Path> paths, Model model) {
+	static void parseAll(Stream<Path> paths, Model model, Path inputDirectory) {
 		Stream.concat(FindFiles.prefixFile(inputDirectory), paths.flatMap(arg0 -> {
 			try {
 				return Stream.concat(FindFiles.prefixFile(arg0), FindFiles.sparqlExamples(arg0));
@@ -223,13 +204,14 @@ public class Converter {
 	private Model parseSingle(Path path) {
 		Model model = new LinkedHashModel();
 		parseTurtleFileIntoModel(model, path);
+		
 		return model;
 	}
 
-	private void parseTurtleFileIntoModel(Model model, Path p) {
+	static void parseTurtleFileIntoModel(Model model, Path p) {
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
-
-		rdfParser.setRDFHandler(new StatementCollector(model));
+		Model temp = new LinkedHashModel();
+		rdfParser.setRDFHandler(new StatementCollector(temp));
 		try (InputStream is = Files.newInputStream(p)) {
 			rdfParser.parse(is);
 		} catch (RDFParseException | RDFHandlerException e) {
@@ -237,6 +219,11 @@ public class Converter {
 		} catch (IOException e) {
 			Failure.CANT_READ_EXAMPLE.exit(e);
 		}
+		IRI pAsIri = VF.createIRI(p.toUri().toString());
+		temp.getStatements(null, RDF.TYPE, null).forEach(s -> {
+			temp.add(VF.createStatement(s.getSubject(), SIB.FILE_NAME, pAsIri));
+		});
+		model.addAll(temp);
 	}
 
 	private void print(Model model) {
