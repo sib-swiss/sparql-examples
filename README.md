@@ -43,7 +43,7 @@ To test your examples pass the folder/directory containing your exampes as an ar
 e.g
 ```
 mvn package
-java -cp target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
+java -cp target/sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
 ```
 
 # Conversion for upload in SPARQL endpoint
@@ -52,9 +52,9 @@ To load the examples into a SPARQL endpoint they should be concatenated into one
 
 ```bash
 mvn package
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -f jsonld
+java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -f jsonld
 # Or for a specific example folder, as turtle, to a file:
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
+java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
 ```
 
 ## Conversion to RQ files
@@ -62,7 +62,7 @@ java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p Bg
 For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
 ```bash
 mvn package
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -r
+java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -r
 ```
 
 ## Generate markdown file
@@ -104,7 +104,7 @@ The queries can be executed automatically on all endpoints they apply to using a
 
 ```
 mvn package
-java -cp target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
+java -cp target/sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
 ```
 
 This does change the queries to add a LIMIT 1 if no limit was set in the query. Then if there is a result it is fetched.
@@ -112,7 +112,7 @@ This does change the queries to add a LIMIT 1 if no limit was set in the query. 
 ## Finding queries that run on more than one endpoint
 
 ```bash
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar --input-directory $HOME/git/sparql-examples/examples -f examples_all.ttl
+java -jar target/sparql-examples-util-1.0.0-uber.jar --input-directory $HOME/git/sparql-examples/examples -f examples_all.ttl
 
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
