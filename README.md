@@ -37,13 +37,30 @@ WHERE
     schema:keywords "taxa".
 ```
 
+# Running the code
+
+If using a release
+```
+mkdir target
+wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar" 
+mv sparql-examples-util-1.0.0-uber.jar target
+
+# This target directory is only so that the commands in the examples match as if the code was build locally.
+# basically target/ can be remove from all examples below
+```
+if building locally in this git repository
+```
+mvn package
+
+```
+
+
 # Quality Assurance (QA).
 
 To test your examples pass the folder/directory containing your exampes as an argument ('--input-directory' to the Tester command.
 e.g
 ```
-mvn package
-java -cp target/sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
+java -jar target/sparql-examples-util-1.0.0-uber.jar tester --input-directory=$HOME/git/sparql-examples/examples
 ```
 
 # Conversion for upload in SPARQL endpoint
@@ -51,18 +68,16 @@ java -cp target/sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.example
 To load the examples into a SPARQL endpoint they should be concatenated into one example file. Use the script `convertIntoOneTurtle.sh` provide the project name with a `-p` parameter
 
 ```bash
-mvn package
-java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -f jsonld
+java -jar target/sparql-examples-util-1.0.0-uber.jar convert -i examples/ -p all -f jsonld
 # Or for a specific example folder, as turtle, to a file:
-java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
+java -jar target/sparql-examples-util-1.0.0-uber.jar convert -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
 ```
 
 ## Conversion to RQ files
 
 For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
 ```bash
-mvn package
-java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -r
+java -jar target/sparql-examples-util-1.0.0-uber.jar convert -i examples/ -p all -r
 ```
 
 ## Generate markdown file
@@ -70,7 +85,7 @@ java -jar target/sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -r
 Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
 
 ```bash
-java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m
+java -jar target/sparql-examples-util-*-uber.jar convert -i examples/ -m
 ```
 
 # Querying for queries
@@ -84,16 +99,6 @@ WHERE {
 }
 ```
 
-# Testing your queries
-
-The queries are parsed and validated but not executed with junit/maven
-
-```bash
-mvn test
-```
-should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
-
-
 # Labeling queries
 
 If you want to add a label to a query please use [schema.org keyword](https://schema.org/keywords)
@@ -103,8 +108,7 @@ If you want to add a label to a query please use [schema.org keyword](https://sc
 The queries can be executed automatically on all endpoints they apply to using ane extra argument for the Tester `--also-run-slow-tests`. 
 
 ```
-mvn package
-java -cp target/sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=$HOME/git/sparql-examples/examples
+java -cp target/sparql-examples-util-1.0.0-uber.jar test --input-directory=$HOME/git/sparql-examples/examples
 ```
 
 This does change the queries to add a LIMIT 1 if no limit was set in the query. Then if there is a result it is fetched.
@@ -112,7 +116,7 @@ This does change the queries to add a LIMIT 1 if no limit was set in the query. 
 ## Finding queries that run on more than one endpoint
 
 ```bash
-java -jar target/sparql-examples-util-1.0.0-uber.jar --input-directory $HOME/git/sparql-examples/examples -f examples_all.ttl
+java -jar target/sparql-examples-util-1.0.0-uber.jar convert --input-directory $HOME/git/sparql-examples/examples -f examples_all.ttl
 
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```

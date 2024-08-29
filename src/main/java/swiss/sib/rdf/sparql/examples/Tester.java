@@ -5,17 +5,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.platform.console.ConsoleLauncher;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
+import picocli.CommandLine.Model.CommandSpec;
 import swiss.sib.rdf.sparql.examples.tests.ValidateSparqlExamplesTest;
 
-public class Tester {
-
+@Command(name = "test", description = "Tests the example files")
+public class Tester implements Callable<Integer> {
+	@Spec 
+	CommandSpec spec;
+	
 	@Option(names = { "-i",
 			"--input-directory" }, paramLabel = "directory containing example files to test", description = "The root directory where the examples and their prefixes can be found.", required = true)
 	private Path inputDirectory;
@@ -29,19 +36,17 @@ public class Tester {
 	@Option(names = { "--also-run-slow-tests" })
 	private boolean alsoRunSlowTests;
 
-	public static void main(String[] args) {
-		Tester converter = new Tester();
-		CommandLine commandLine = new CommandLine(converter);
-		commandLine.parseArgs(args);
+	@Override
+	public Integer call() throws Exception {
+		CommandLine commandLine = spec.commandLine();
 		if (commandLine.isUsageHelpRequested()) {
 			commandLine.usage(System.out);
-			return;
 		} else if (commandLine.isVersionHelpRequested()) {
 			commandLine.printVersionHelp(System.out);
-			return;
 		} else {
-			converter.test();
+			test();
 		}
+		return 0;
 	}
 
 	private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);
@@ -67,8 +72,8 @@ public class Tester {
 
 	private void test(Stream<Path> list) throws Exception {
 		System.setProperty(Tester.class.getName(), inputDirectory.toString());
-		List<String> standardOptions = List.of("--fail-if-no-tests", "--include-engine",
-				"junit-jupiter", "--select-class", ValidateSparqlExamplesTest.class.getName());
+		List<String> standardOptions = List.of("--fail-if-no-tests", "--include-engine", "junit-jupiter",
+				"--select-class", ValidateSparqlExamplesTest.class.getName());
 		if (!alsoRunSlowTests) {
 			standardOptions = new ArrayList<>(standardOptions);
 			standardOptions.add("--exclude-tag");

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -29,11 +30,17 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 
-public class Converter {
-
+@Command(name = "convert", description = "Converts example files into RDF")
+public class Converter implements Callable<Integer>{
+	@Spec 
+	CommandSpec spec;
+	
 	private static final SimpleValueFactory VF = SimpleValueFactory.getInstance();
 
 	private final Set<RDFFormat> outputFormats = Set.of(RDFFormat.TURTLE, RDFFormat.RDFXML, RDFFormat.NTRIPLES,
@@ -62,25 +69,27 @@ public class Converter {
 	@Option(names = { "-p", "--project" }, paramLabel = "projects to convert", defaultValue = "all")
 	private String projects;
 
-	public static void main(String[] args) {
-		Converter converter = new Converter();
-		CommandLine commandLine = new CommandLine(converter);
-		commandLine.parseArgs(args);
+	public Integer call() {
+		CommandLine commandLine = spec.commandLine();
+		System.err.println("inputDirectory: "+inputDirectory);
+		
+		System.setProperty(Tester.class.getName(), inputDirectory.toString());
 		if (commandLine.isUsageHelpRequested()) {
 			commandLine.usage(System.out);
-			return;
+			return 0;
 		} else if (commandLine.isVersionHelpRequested()) {
 			commandLine.printVersionHelp(System.out);
-			return;
+			return 0;
 		} else {
-            if (converter.outputMd) {
-				converter.convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
-            } else if (converter.outputRq) {
-				converter.convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
+            if (outputMd) {
+				convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
+            } else if (outputRq) {
+				convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
 			} else {
-				converter.convertToRdf();
+				convertToRdf();
 			}
 		}
+		return 0;
 	}
 
 	private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);

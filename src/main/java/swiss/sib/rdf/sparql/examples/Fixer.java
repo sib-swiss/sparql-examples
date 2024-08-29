@@ -1,6 +1,7 @@
 package swiss.sib.rdf.sparql.examples;
 
 import java.nio.file.Path;
+import java.util.concurrent.Callable;
 
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Value;
@@ -13,9 +14,16 @@ import org.eclipse.rdf4j.sail.memory.MemoryStore;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
+import picocli.CommandLine.Model.CommandSpec;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 
-public class Fixer {
+@CommandLine.Command(name = "fix", description = "Attempts to fixes example files")
+public class Fixer implements Callable<Integer> {
+	
+	@Spec 
+	CommandSpec spec;
+	
 	private static final String PREFIXES = "PREFIX sh:<http://www.w3.org/ns/shacl#> PREFIX sib:<" + SIB.NAMESPACE + ">";
 	@Option(names = { "-i",
 			"--input-directory" }, paramLabel = "directory containing example files to test", description = "The root directory where the examples and their prefixes can be found.", required = true)
@@ -30,21 +38,20 @@ public class Fixer {
 	@Option(names = { "--also-run-slow-tests" })
 	private boolean alsoRunSlowTests;
 
-	public static void main(String[] args) {
+	public Integer call() {
 		Fixer converter = new Fixer();
-		CommandLine commandLine = new CommandLine(converter);
-		commandLine.parseArgs(args);
+		CommandLine commandLine = spec.commandLine();
 		if (commandLine.isUsageHelpRequested()) {
 			commandLine.usage(System.out);
-			return;
+			return 0;
 		} else if (commandLine.isVersionHelpRequested()) {
 			commandLine.printVersionHelp(System.out);
-			return;
+			return 0;
 		} else {
 			converter.test();
 		}
+		return 0;
 	}
-
 	private void test() {
 		Model model = Converter.parseExampleFilesIntoModel(projects, inputDirectory);
 		SailRepository sr = new SailRepository(new MemoryStore());
@@ -63,7 +70,6 @@ public class Fixer {
 					""");
 			try (TupleQueryResult tqr = tq.evaluate()) {
 				while (tqr.hasNext()) {
-					System.out.println(tqr.next());
 					BindingSet tqrb = tqr.next();
 					fix(tqrb.getValue("queryIri"), tqrb.getValue("query"), tqrb.getValue("file"), model);
 				}
