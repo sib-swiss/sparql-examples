@@ -34,7 +34,7 @@ WHERE
 
 # Quality Assurance (QA).
 
-There is a maven task/test that validates that all queries in the examples are valid according to [Jena](https://jena.apache.org) and [eclipse RDF4j](https://rdf4j.org/). This expects your `JAVA_HOME` to be version 21 or above.
+We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examples-utils/) for testing
 
 # Conversion for upload in SPARQL endpoint
 
@@ -50,18 +50,18 @@ This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$J
 Another option is to build the converter and use that.
 
 ```bash
-mvn package
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -f jsonld
+wget 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar'
+java -jar sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -f jsonld
 # Or for a specific example folder, as turtle, to a file:
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
+java -jar sparql-examples-util-1.0.0-uber.jar -i examples/ -p Bgee -f ttl > examples_Bgee.ttl
 ```
 
 ## Conversion to RQ files
 
 For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
 ```bash
-mvn package
-java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p all -r
+wget 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar'
+java -jar sparql-examples-util-1.0.0-uber.jar -i examples/ -p all -r
 ```
 
 ## Generate markdown file
@@ -69,7 +69,7 @@ java -jar target/sparql-examples-util-1.0.0-SNAPSHOT-uber.jar -i examples/ -p al
 Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
 
 ```bash
-java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m
+java -jar sparql-examples-util-*-uber.jar -i examples/ -m
 ```
 
 # Querying for queries
@@ -85,10 +85,12 @@ WHERE {
 
 # Testing your queries
 
-The queries are parsed and validated but not executed with junit/maven
+The queries are parsed and validated but not executed with junit using the Tester
 
 ```bash
-mvn test
+wget 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar'
+java -cp sparql-examples-util-1.0.0-uber.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples
+
 ```
 should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
 

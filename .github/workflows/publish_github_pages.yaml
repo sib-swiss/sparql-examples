@@ -30,9 +30,9 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '21'
-
-    - name: mvn package
-      run: mvn package -DskipTests
+    
+    - name: Install tester
+      run: wget 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar' -O sparql-examples-util-1.0.0-uber.jar
 
     - name: generate markdown
       run: java -jar target/sparql-examples-util-*-uber.jar -i examples/ -m 
