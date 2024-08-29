@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
-
+# To load the examples into a SPARQL endpoint they should be concatenated into one example file. Use the script `convertIntoOneTurtle.sh` provide the project name with a `-p` parameter
+# This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"`
+# ./convertToOneTurtle.sh -p uniprot
 
 project="uniprot"
 while getopts anuhrsgmcbop: option; do
