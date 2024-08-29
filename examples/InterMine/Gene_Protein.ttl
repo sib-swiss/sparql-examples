@@ -27,10 +27,11 @@ WHERE {
 	?proteins_id	intermine_voc:molecularWeight	?proteins_id_molecularweight	.
 	?proteins_id	intermine_voc:length	?proteins_id_length	.
 	?proteins_id	intermine_voc:isFragment	?proteins_id_isfragment	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'CG1046'
 	)
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

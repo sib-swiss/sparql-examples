@@ -29,10 +29,11 @@ WHERE {
 	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
 	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
 	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	?naturaltransposableelement_id	intermine_voc:NaturalTransposableElement_id	?naturaltransposableelement_id_naturaltransposableelement_id	.
 	FILTER (
 		?naturaltransposableelement  = 'FBte0000007'
 	)
 }
 ORDER BY ASC(?naturaltransposableelement_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

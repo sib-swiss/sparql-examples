@@ -28,6 +28,8 @@ WHERE {
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	?overlappingfeatures_id	intermine_voc:sequenceOntologyTerm_id	?sequenceontologyterm_id	.
 	?sequenceontologyterm_id	intermine_voc:name	?sequenceontologyterm_id_name	.
+	?intergenicregion_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -37,4 +39,4 @@ WHERE {
 }
 ORDER BY ASC(?intergenicregion_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

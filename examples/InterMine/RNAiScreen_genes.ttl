@@ -43,6 +43,6 @@ WHERE {
 		?rnaiscreen_id_name  = 'RNAi pathway'
 	)
 }
-ORDER BY ASC(?rnaiscreen_id_rnairesults_id_phenotype)
+ORDER BY ASC(?rnairesults_id_phenotype)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

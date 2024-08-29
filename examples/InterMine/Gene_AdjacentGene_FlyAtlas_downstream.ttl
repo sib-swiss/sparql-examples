@@ -24,17 +24,20 @@ WHERE {
 	?microarrayresults_id	intermine_voc:enrichment	?microarrayresults_id_enrichment	.
 	?microarrayresults_id	intermine_voc:tissue_id	?tissue_id	.
 	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	?downstreamintergenicregion_id	intermine_voc:adjacentGenes	?downstreamintergenicregion_id_adjacentgenes	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
+	?microarrayresults_id	intermine_voc:affyCall	?microarrayresults_id_affycall	.
 	FILTER (
-		?downstreamintergenicregion_id_adjacentgenes  = 'Gene'
+		?downstreamintergenicregion_id_adjacentgenes  != 'Gene'
 	)
 	FILTER (
 		?gene  = 'CG10267'
 	)
 	FILTER (
-		?microarrayresults_id_mrnasignal  = '100.0'
+		?microarrayresults_id_mrnasignal  >= '100.0'
 	)
 	FILTER (
-		?microarrayresults_id_enrichment  = '2.0'
+		?microarrayresults_id_enrichment  >= '2.0'
 	)
 	FILTER (
 		?microarrayresults_id_affycall  = 'Up'
@@ -42,4 +45,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

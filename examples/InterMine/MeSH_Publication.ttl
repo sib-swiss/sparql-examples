@@ -28,9 +28,9 @@ WHERE {
 	?publications_id	intermine_voc:pages	?publications_id_pages	.
 	?publications_id	intermine_voc:pubMedId	?publications_id_pubmedid	.
 	FILTER (
-		?meshterm_id_name  = 'Ataxia'
+		CONTAINS(?meshterm_id_name, 'Ataxia')
 	)
 }
 ORDER BY ASC(?meshterm_id_name)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -30,6 +30,10 @@ WHERE {
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	?microarrayresults_id	intermine_voc:tissue_id	?tissue_id	.
 	?tissue_id	intermine_voc:name	?tissue_id_name	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:taxonId	?organism_id_taxonid	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?organism_id_taxonid  = '7227'
 	)
@@ -45,4 +49,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

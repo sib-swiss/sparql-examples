@@ -30,10 +30,11 @@ WHERE {
 	?proteindomain_id	intermine_voc:goAnnotation_id	?goannotation_id	.
 	?goannotation_id	intermine_voc:ontologyTerm_id	?ontologyterm_id	.
 	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
+	?protein_id	intermine_voc:Protein_id	?protein_id_protein_id	.
 	FILTER (
 		?protein  = 'ZEN1_DROME'
 	)
 }
 ORDER BY ASC(?protein_id_primaryaccession)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

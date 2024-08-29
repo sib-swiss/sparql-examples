@@ -15,6 +15,9 @@ WHERE {
 	?gene_id	intermine_voc:probeSets_id	?probesets_id	.
 	?probesets_id	intermine_voc:primaryIdentifier	?probesets_id_primaryidentifier	.
 	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?gene_id	intermine_voc:probeSets	?gene_id_probesets	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -23,4 +26,4 @@ WHERE {
 	)
 }
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

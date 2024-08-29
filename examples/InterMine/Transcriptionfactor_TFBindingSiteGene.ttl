@@ -36,6 +36,7 @@ WHERE {
 	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
 	?tfbindingsite_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?tfbindingsite_id	intermine_voc:factor	?tfbindingsite_id_factor	.
 	FILTER (
 		?datasets_id_name  = 'REDfly Drosophila transcription factor binding sites'
 	)
@@ -43,6 +44,6 @@ WHERE {
 		?tfbindingsite_id_factor  = 'E(spl)'
 	)
 }
-ORDER BY ASC(?tfbindingsite_id_factor_id_primaryidentifier)
+ORDER BY ASC(?factor_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

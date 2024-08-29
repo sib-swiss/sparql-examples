@@ -16,6 +16,8 @@ WHERE {
 	?overlappingestset_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:dataSource_id	?datasource_id	.
 	?datasource_id	intermine_voc:name	?datasource_id_name	.
+	?overlappingestset_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Anopheles gambiae'
 	)
@@ -25,4 +27,4 @@ WHERE {
 }
 ORDER BY ASC(?overlappingestset_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

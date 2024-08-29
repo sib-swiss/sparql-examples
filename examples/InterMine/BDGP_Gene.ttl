@@ -38,6 +38,6 @@ WHERE {
 		?mrnaexpressionresults_id_stagerange  = 'stage 11-12 (BDGP in situ)'
 	)
 }
-ORDER BY ASC(?gene_id_mrnaexpressionresults_id_mrnaexpressionterms_id_name)
+ORDER BY ASC(?mrnaexpressionterms_id_name)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

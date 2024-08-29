@@ -32,9 +32,9 @@ WHERE {
 	?protein_id	intermine_voc:genes_id	?genes_id	.
 	?genes_id	intermine_voc:primaryIdentifier	?genes_id_primaryidentifier	.
 	FILTER (
-		?proteindomain_id_name  = 'Homeobox'
+		CONTAINS(?proteindomain_id_name, 'Homeobox')
 	)
 }
 ORDER BY ASC(?proteindomain_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

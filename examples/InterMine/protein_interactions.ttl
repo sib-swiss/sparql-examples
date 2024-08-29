@@ -56,6 +56,6 @@ WHERE {
 		?interactiondetectionmethods_id_name  = 'two hybrid'
 	)
 }
-ORDER BY ASC(?gene_id_proteins_id_uniprotaccession)
+ORDER BY ASC(?proteins_id_uniprotaccession)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

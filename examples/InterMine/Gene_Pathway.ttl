@@ -22,10 +22,11 @@ WHERE {
 	?pathways_id	intermine_voc:name	?pathways_id_name	.
 	?pathways_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'bsk'
 	)
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

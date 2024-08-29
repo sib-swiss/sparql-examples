@@ -32,6 +32,8 @@ WHERE {
 	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
 	?ontologyterm_id	intermine_voc:parents_id	?parents_id	.
 	?parents_id	intermine_voc:name	?parents_id_name	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -41,4 +43,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

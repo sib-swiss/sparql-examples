@@ -24,6 +24,9 @@ WHERE {
 	?mrnaexpressionresults_id	intermine_voc:dataSet_id	?dataset_id	.
 	?dataset_id	intermine_voc:dataSource_id	?datasource_id	.
 	?datasource_id	intermine_voc:name	?datasource_id_name	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -33,4 +36,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

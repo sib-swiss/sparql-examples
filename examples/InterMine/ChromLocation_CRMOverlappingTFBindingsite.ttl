@@ -36,12 +36,12 @@ WHERE {
 		?chromosome_id_primaryidentifier  = '2R'
 	)
 	FILTER (
-		?chromosomelocation_id_start  = '9000000'
+		?chromosomelocation_id_start  >= '9000000'
 	)
 	FILTER (
-		?chromosomelocation_id_end  = '10000000'
+		?chromosomelocation_id_end  <= '10000000'
 	)
 }
 ORDER BY ASC(?crm_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

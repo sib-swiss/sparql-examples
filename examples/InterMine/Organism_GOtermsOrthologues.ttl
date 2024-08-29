@@ -26,6 +26,10 @@ WHERE {
 	?goannotation_id	intermine_voc:ontologyTerm_id	?ontologyterm_id	.
 	?ontologyterm_id	intermine_voc:identifier	?ontologyterm_id_identifier	.
 	?ontologyterm_id	intermine_voc:name	?ontologyterm_id_name	.
+	?homologues_id	intermine_voc:type	?homologues_id_type	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?homologue_id	intermine_voc:organism_id	?organism_id	.
 	FILTER (
 		?homologues_id_type  = 'orthologue'
 	)
@@ -38,4 +42,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

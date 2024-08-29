@@ -25,6 +25,8 @@ WHERE {
 	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
 	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
 	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	?chromosome_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?chromosome_id_primaryidentifier  = '2L'
 	)
@@ -32,12 +34,12 @@ WHERE {
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
 	FILTER (
-		?chromosomelocation_id_start  = '1'
+		?chromosomelocation_id_start  > '1'
 	)
 	FILTER (
-		?chromosomelocation_id_end  = '50000'
+		?chromosomelocation_id_end  < '50000'
 	)
 }
-ORDER BY ASC(?chromosome_id_locatedfeatures_id_feature_id_primaryidentifier)
+ORDER BY ASC(?feature_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

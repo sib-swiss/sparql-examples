@@ -22,6 +22,8 @@ WHERE {
 	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
 	?pathway_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?genes_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?pathway_id_name  = 'Pentose phosphate pathway'
 	)
@@ -34,4 +36,4 @@ WHERE {
 }
 ORDER BY ASC(?pathway_id_identifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

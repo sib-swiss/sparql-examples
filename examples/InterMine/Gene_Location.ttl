@@ -26,6 +26,9 @@ WHERE {
 	?locations_id	intermine_voc:start	?locations_id_start	.
 	?locations_id	intermine_voc:end	?locations_id_end	.
 	?locations_id	intermine_voc:strand	?locations_id_strand	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?gene  = 'CG1046'
 	)
@@ -35,4 +38,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -25,6 +25,8 @@ WHERE {
 	?gene_id	intermine_voc:secondaryIdentifier	?gene_id_secondaryidentifier	.
 	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
 	?mrnaexpressionresults_id	intermine_voc:expressed	?mrnaexpressionresults_id_expressed	.
+	?mrnaexpressionresults_id	intermine_voc:dataSet_id	?dataset_id	.
+	?dataset_id	intermine_voc:name	?dataset_id_name	.
 	FILTER (
 		?dataset_id_name  = 'fly-Fish data set'
 	)
@@ -38,6 +40,6 @@ WHERE {
 		?mrnaexpressionterms_id_name  = '*blastoderm nuclei*'
 	)
 }
-ORDER BY ASC(?gene_id_mrnaexpressionresults_id_stagerange)
+ORDER BY ASC(?mrnaexpressionresults_id_stagerange)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

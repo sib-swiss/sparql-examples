@@ -35,6 +35,7 @@ WHERE {
 	?gene_id	intermine_voc:sequence_id	?sequence_id	.
 	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
 	?homologue_id	intermine_voc:sequence_id	?sequence_id	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'cdc2'
 	)
@@ -47,4 +48,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_symbol)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

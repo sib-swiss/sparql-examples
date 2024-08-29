@@ -38,6 +38,7 @@ WHERE {
 	?tfbindingsite_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:dataSource_id	?datasource_id	.
 	?datasource_id	intermine_voc:name	?datasource_id_name	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	FILTER (
 		?datasets_id_name  = 'REDfly Drosophila transcription factor binding sites'
 	)
@@ -47,4 +48,4 @@ WHERE {
 }
 ORDER BY ASC(?tfbindingsite_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

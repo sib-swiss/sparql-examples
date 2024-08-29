@@ -31,6 +31,8 @@ WHERE {
 	?material_id	intermine_voc:primaryIdentifier	?material_id_primaryidentifier	.
 	?flyatlasresult_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?flyatlasresult_id	intermine_voc:tissue_id	?tissue_id	.
+	?tissue_id	intermine_voc:name	?tissue_id_name	.
 	FILTER (
 		?tissue_id_name  = 'Ovary'
 	)
@@ -38,15 +40,15 @@ WHERE {
 		?flyatlasresult_id_affycall  = 'Up'
 	)
 	FILTER (
-		?flyatlasresult_id_presentcall  = '3'
+		?flyatlasresult_id_presentcall  >= '3'
 	)
 	FILTER (
-		?flyatlasresult_id_enrichment  = '2.0'
+		?flyatlasresult_id_enrichment  > '2.0'
 	)
 	FILTER (
-		?flyatlasresult_id_mrnasignal  = '100.0'
+		?flyatlasresult_id_mrnasignal  >= '100.0'
 	)
 }
 ORDER BY DESC(?flyatlasresult_id_enrichment)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

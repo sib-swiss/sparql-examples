@@ -27,6 +27,9 @@ WHERE {
 	?mirnatargets_id	intermine_voc:pvalue	?mirnatargets_id_pvalue	.
 	?mirnatargets_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -34,6 +37,6 @@ WHERE {
 		?gene  = 'mir-79'
 	)
 }
-ORDER BY ASC(?gene_id_mirnatargets_id_pvalue)
+ORDER BY ASC(?mirnatargets_id_pvalue)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

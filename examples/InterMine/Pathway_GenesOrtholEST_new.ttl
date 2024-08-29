@@ -28,6 +28,10 @@ WHERE {
 	?homologues_id	intermine_voc:type	?homologues_id_type	.
 	?homologue_id	intermine_voc:overlappingFeatures_id	?overlappingfeatures_id	.
 	?overlappingfeatures_id	intermine_voc:primaryIdentifier	?overlappingfeatures_id_primaryidentifier	.
+	?homologue_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?pathway_id	intermine_voc:dataSets_id	?datasets_id	.
+	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	FILTER (
 		?organism_id_name  = 'Anopheles gambiae'
 	)
@@ -40,4 +44,4 @@ WHERE {
 }
 ORDER BY ASC(?pathway_id_identifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

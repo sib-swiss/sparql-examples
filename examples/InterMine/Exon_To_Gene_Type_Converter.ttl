@@ -18,4 +18,4 @@ WHERE {
 }
 ORDER BY ASC(?exon_id_id)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

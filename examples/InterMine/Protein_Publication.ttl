@@ -29,6 +29,9 @@ WHERE {
 	?publications_id	intermine_voc:title	?publications_id_title	.
 	?protein_id	intermine_voc:primaryAccession	?protein_id_primaryaccession	.
 	?protein_id	intermine_voc:primaryIdentifier	?protein_id_primaryidentifier	.
+	?protein_id	intermine_voc:Protein_id	?protein_id_protein_id	.
+	?protein_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?protein  = '3-hydroxyacyl-CoA dehydrogenase type-2 '
 	)
@@ -38,4 +41,4 @@ WHERE {
 }
 ORDER BY ASC(?protein_id_name)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

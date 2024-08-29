@@ -19,6 +19,8 @@ WHERE {
 	?alleles_id	intermine_voc:secondaryIdentifier	?alleles_id_secondaryidentifier	.
 	?alleles_id	intermine_voc:alleleClass	?alleles_id_alleleclass	.
 	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
+	?alleles_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
@@ -26,6 +28,6 @@ WHERE {
 		?alleles_id_alleleclass  = '*hypomorph*'
 	)
 }
-ORDER BY DESC(?gene_id_alleles_id_secondaryidentifier)
+ORDER BY DESC(?alleles_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

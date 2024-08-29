@@ -17,10 +17,12 @@ WHERE {
 	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
 	?gene_id	intermine_voc:CDSs_id	?cdss_id	.
 	?cdss_id	intermine_voc:primaryIdentifier	?cdss_id_primaryidentifier	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
 }
 ORDER BY ASC(?gene_id_symbol)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

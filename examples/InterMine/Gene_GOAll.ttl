@@ -23,10 +23,11 @@ WHERE {
 	?ontologyterm_id	intermine_voc:parents_id	?parents_id	.
 	?parents_id	intermine_voc:name	?parents_id_name	.
 	?goannotation_id	intermine_voc:qualifier	?goannotation_id_qualifier	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'CG11348'
 	)
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

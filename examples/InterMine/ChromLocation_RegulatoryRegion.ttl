@@ -30,12 +30,12 @@ WHERE {
 		?chromosome_id_primaryidentifier  = '3R'
 	)
 	FILTER (
-		?chromosomelocation_id_start  = '24900000'
+		?chromosomelocation_id_start  >= '24900000'
 	)
 	FILTER (
-		?chromosomelocation_id_end  = '29200000'
+		?chromosomelocation_id_end  <= '29200000'
 	)
 }
-ORDER BY ASC(?regulatoryregion_id_chromosome_id_primaryidentifier)
+ORDER BY ASC(?chromosome_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

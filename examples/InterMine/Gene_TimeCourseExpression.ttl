@@ -28,6 +28,9 @@ WHERE {
 	?experiment_id	intermine_voc:name	?experiment_id_name	.
 	?experiment_id	intermine_voc:publication_id	?publication_id	.
 	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?experiment_id_name  = 'Arbeitman M: Gene Expression During the Life Cycle of Drosophila melanogaster'
 	)
@@ -41,9 +44,9 @@ WHERE {
 		?assays_id_sample2  = 'stage: Embryo - 11 To 12 hours'
 	)
 	FILTER (
-		?microarrayresults_id_value  = '2.0'
+		?microarrayresults_id_value  >= '2.0'
 	)
 }
-ORDER BY ASC(?gene_id_microarrayresults_id_value)
+ORDER BY ASC(?microarrayresults_id_value)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -38,6 +38,6 @@ WHERE {
 		?chromosome_id_primaryidentifier  = '2L'
 	)
 }
-ORDER BY ASC(?gene_id_chromosome_id_primaryidentifier)
+ORDER BY ASC(?chromosome_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

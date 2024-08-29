@@ -30,10 +30,11 @@ WHERE {
 	?chromosomelocation_id	intermine_voc:start	?chromosomelocation_id_start	.
 	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
 	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
+	?regulatoryregions_id	intermine_voc:factor	?regulatoryregions_id_factor	.
 	FILTER (
 		?regulatoryregions_id_factor  = 'CG2328'
 	)
 }
-ORDER BY ASC(?gene_id_regulatoryregions_id_factor_id_secondaryidentifier)
+ORDER BY ASC(?factor_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

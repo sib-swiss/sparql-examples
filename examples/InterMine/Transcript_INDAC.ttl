@@ -22,10 +22,11 @@ WHERE {
 	?microarrayoligos_id	intermine_voc:length	?microarrayoligos_id_length	.
 	?microarrayoligos_id	intermine_voc:sequence_id	?sequence_id	.
 	?sequence_id	intermine_voc:residues	?sequence_id_residues	.
+	?transcript_id	intermine_voc:Transcript_id	?transcript_id_transcript_id	.
 	FILTER (
 		?transcript  = 'CG10000-RA'
 	)
 }
 ORDER BY ASC(?transcript_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

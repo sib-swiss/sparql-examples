@@ -27,9 +27,9 @@ WHERE {
 	?gene_id	intermine_voc:primaryIdentifier	?gene_id_primaryidentifier	.
 	?gene_id	intermine_voc:symbol	?gene_id_symbol	.
 	FILTER (
-		?phenotypeannotations_id_description  = 'enhancer'
+		CONTAINS(?phenotypeannotations_id_description, 'enhancer')
 	)
 }
 ORDER BY ASC(?allele_id_alleleclass)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

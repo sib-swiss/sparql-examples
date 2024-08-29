@@ -28,6 +28,7 @@ WHERE {
 	?homologues_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	?homologues_id	intermine_voc:type	?homologues_id_type	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'cdk1'
 	)
@@ -40,4 +41,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_symbol)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

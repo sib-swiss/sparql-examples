@@ -29,10 +29,11 @@ WHERE {
 	?chromosomelocation_id	intermine_voc:end	?chromosomelocation_id_end	.
 	?chromosomelocation_id	intermine_voc:strand	?chromosomelocation_id_strand	.
 	?genes_id	intermine_voc:length	?genes_id_length	.
+	?protein_id	intermine_voc:Protein_id	?protein_id_protein_id	.
 	FILTER (
 		?protein  = 'P19107'
 	)
 }
 ORDER BY ASC(?protein_id_primaryaccession)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

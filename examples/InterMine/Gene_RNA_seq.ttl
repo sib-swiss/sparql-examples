@@ -21,6 +21,7 @@ WHERE {
 	?rnaseqresults_id	intermine_voc:stage	?rnaseqresults_id_stage	.
 	?rnaseqresults_id	intermine_voc:expressionScore	?rnaseqresults_id_expressionscore	.
 	?rnaseqresults_id	intermine_voc:expressionLevel	?rnaseqresults_id_expressionlevel	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
 	FILTER (
 		?gene  = 'eve'
 	)
@@ -28,12 +29,12 @@ WHERE {
 		?rnaseqresults_id_expressionlevel  = 'High expression'
 	)
 	FILTER (
-		?rnaseqresults_id_expressionscore  = '4001'
+		?rnaseqresults_id_expressionscore  >= '4001'
 	)
 	FILTER (
 		?rnaseqresults_id_stage  = 'embryo 02-04hr'
 	)
 }
-ORDER BY ASC(?gene_id_rnaseqresults_id_stage)
+ORDER BY ASC(?rnaseqresults_id_stage)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

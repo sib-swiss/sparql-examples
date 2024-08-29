@@ -34,4 +34,4 @@ WHERE {
 }
 ORDER BY ASC(?microarrayoligo_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -37,6 +37,8 @@ WHERE {
 	?publication_id	intermine_voc:pubMedId	?publication_id_pubmedid	.
 	?details_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
+	?interactions_id	intermine_voc:participant2	?interactions_id_participant2	.
 	FILTER (
 		?gene  = 'notch'
 	)
@@ -46,4 +48,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

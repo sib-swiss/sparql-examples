@@ -28,9 +28,9 @@ WHERE {
 		?rnaseqresult_id_expressionlevel  = 'High expression'
 	)
 	FILTER (
-		?rnaseqresult_id_expressionscore  = '4001'
+		?rnaseqresult_id_expressionscore  >= '4001'
 	)
 }
 ORDER BY ASC(?rnaseqresult_id_stage)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -38,6 +38,9 @@ WHERE {
 	?homologues_id	intermine_voc:type	?homologues_id_type	.
 	?homologues_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?gene_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
+	?homologue_id	intermine_voc:organism_id	?organism_id	.
 	FILTER (
 		?homologues_id_type  = 'orthologue'
 	)
@@ -53,4 +56,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -30,10 +30,11 @@ WHERE {
 	?proteindomainregions_id	intermine_voc:end	?proteindomainregions_id_end	.
 	?proteindomainregions_id	intermine_voc:identifier	?proteindomainregions_id_identifier	.
 	?proteindomainregions_id	intermine_voc:database	?proteindomainregions_id_database	.
+	?protein_id	intermine_voc:Protein_id	?protein_id_protein_id	.
 	FILTER (
 		?protein  = 'notch'
 	)
 }
 ORDER BY ASC(?protein_id_uniprotaccession)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -28,10 +28,11 @@ WHERE {
 	?disease_id	intermine_voc:name	?disease_id_name	.
 	?homologues_id	intermine_voc:dataSets_id	?datasets_id	.
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
+	?homologues_id	intermine_voc:homologue	?homologues_id_homologue	.
 	FILTER (
 		?homologues_id_homologue  = 'psn'
 	)
 }
 ORDER BY ASC(?disease_id_identifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

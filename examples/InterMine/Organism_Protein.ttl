@@ -14,10 +14,12 @@ WHERE {
 	?protein_id a intermine_voc:Protein .
 	?protein_id	intermine_voc:primaryIdentifier	?protein_id_primaryidentifier	.
 	?protein_id	intermine_voc:primaryAccession	?protein_id_primaryaccession	.
+	?protein_id	intermine_voc:organism_id	?organism_id	.
+	?organism_id	intermine_voc:name	?organism_id_name	.
 	FILTER (
 		?organism_id_name  = 'Drosophila melanogaster'
 	)
 }
 ORDER BY ASC(?protein_id_primaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

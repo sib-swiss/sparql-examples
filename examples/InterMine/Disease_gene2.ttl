@@ -22,9 +22,9 @@ WHERE {
 	?genes_id	intermine_voc:symbol	?genes_id_symbol	.
 	?genes_id	intermine_voc:name	?genes_id_name	.
 	FILTER (
-		?disease_id_name  = 'parkinson'
+		CONTAINS(?disease_id_name, 'parkinson')
 	)
 }
 ORDER BY ASC(?disease_id_identifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

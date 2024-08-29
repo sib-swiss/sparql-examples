@@ -37,9 +37,9 @@ WHERE {
 		?assays_id_sample2  = '*Embryo*'
 	)
 	FILTER (
-		?microarrayresults_id_value  = '2.0'
+		?microarrayresults_id_value  >= '2.0'
 	)
 }
 ORDER BY ASC(?gene_id_secondaryidentifier)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .

@@ -34,6 +34,8 @@ WHERE {
 	?datasets_id	intermine_voc:name	?datasets_id_name	.
 	?genes_id	intermine_voc:organism_id	?organism_id	.
 	?organism_id	intermine_voc:shortName	?organism_id_shortname	.
+	?gene_id	intermine_voc:Gene_id	?gene_id_gene_id	.
+	?pathways_id	intermine_voc:genes	?pathways_id_genes	.
 	FILTER (
 		?gene  = 'N'
 	)
@@ -43,4 +45,4 @@ WHERE {
 }
 ORDER BY ASC(?gene_id_symbol)
 """ ;
-    schema:target <http://intermine.bio2rdf.org:7000/flymine/IudBrP> .
+    schema:target <http://intermine.bio2rdf.org:7000/flymine/> .
