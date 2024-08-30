@@ -17,7 +17,7 @@ SELECT
 WHERE {
     VALUES (?protein) {(uniprotkb:P00750) (uniprotkb:P05067)}
     ?protein a up:Protein .
-    SERVICE <https://sparql.api.identifiers.org.sparql> {
+    SERVICE <https://sparql.api.identifiers.org/sparql> {
         ?protein owl:sameAs ?otherIdentifier .
     }
 }""" ;
