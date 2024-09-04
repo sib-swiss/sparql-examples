@@ -224,6 +224,7 @@ public class Converter implements Callable<Integer>{
 		try (InputStream is = Files.newInputStream(p)) {
 			rdfParser.parse(is);
 		} catch (RDFParseException | RDFHandlerException e) {
+			System.err.println("Failed to parse " + p);
 			Failure.CANT_PARSE_EXAMPLE.exit(e);
 		} catch (IOException e) {
 			Failure.CANT_READ_EXAMPLE.exit(e);
