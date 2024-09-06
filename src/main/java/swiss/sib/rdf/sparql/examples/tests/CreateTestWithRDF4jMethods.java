@@ -208,6 +208,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		if (query instanceof TupleQuery tq) {
 			try (TupleQueryResult evaluate = tq.evaluate()){
+				assertTrue(evaluate.hasNext(), "Expected at least one result but got none.");
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
@@ -215,6 +216,7 @@ public class CreateTestWithRDF4jMethods {
 		}
 		if (query instanceof GraphQuery gq) {
 			try (GraphQueryResult evaluate = gq.evaluate()){
+				assertTrue(evaluate.hasNext(), "Expected at least one result but got none.");
 				if (evaluate.hasNext()) {
 					evaluate.next();
 				}
