@@ -6,13 +6,12 @@
 ex:9 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List all GEMs currently in the MetaNetX repository, with their numbers of reactions, chemical, compartments and genes/proteins."@en ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 
-# List all GEMs currently in the MetaNetX repository, with 
-# their numbers of reactions, chemical, compartments and 
-# genes/proteins. 
+# List all GEMs currently in the MetaNetX repository, with
+# their numbers of reactions, chemical, compartments and
+# genes/proteins.
 
 SELECT ?mnet ?taxon
     (COUNT( DISTINCT ?reac) AS ?count_reac)

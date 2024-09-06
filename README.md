@@ -43,25 +43,7 @@ First, download the jar file with:
 wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar'
 ```
 
-### Testing the queries
-
-The queries are parsed and validated but not executed with junit using the Tester
-
-```bash
-java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples
-```
-
-should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
-
-The queries can be executed automatically on all endpoints they apply to using ane extra argument for the Tester `--also-run-slow-tests`:
-
-```bash
-java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples/Bgee --also-run-slow-tests
-```
-
-> This does change the queries to add a LIMIT 1 if no limit was set in the query. Then check if there is a result it is fetched.
-
-### Compile all query files 
+### Compile all query files into one file to upload to your endpoint
 
 Compile all query files for a specific example folder, into a local file including the prefixes/namespaces definitions:
 
@@ -69,7 +51,7 @@ Compile all query files for a specific example folder, into a local file includi
 java -jar sparql-examples-utils.jar -i examples/ -p UniProt -f ttl > examples_UniProt.ttl
 ```
 
-> You can then load this file to this project SPARQL endpoint!
+> You can then load this file to this project SPARQL endpoint! We recommend to upload it to a named graph: your endpoint URL + `/.well-known/sparql-examples`
 
 Or compile for all example folders, as JSON-LD, to the standard output:
 
@@ -91,6 +73,24 @@ Generate markdown files with the query and a mermaid diagram of the queries, to 
 ```bash
 java -jar sparql-examples-utils.jar -i examples/ -m
 ```
+
+### Testing the queries
+
+The queries are parsed and validated but not executed with junit using the Tester
+
+```bash
+java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples
+```
+
+should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
+
+The queries can be executed automatically on all endpoints they apply to using ane extra argument for the Tester `--also-run-slow-tests`:
+
+```bash
+java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples/Bgee --also-run-slow-tests
+```
+
+> This does change the queries to add a LIMIT 1 if no limit was set in the query. Then check if there is a result it is fetched.
 
 ## Querying for queries
 

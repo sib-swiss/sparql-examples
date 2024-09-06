@@ -7,8 +7,7 @@
 ex:1 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Retrieve the MNXref metabolite with name <em>N,N-dimethyl-beta-alanine</em>, together with molecular information."^^rdf:HTML ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 

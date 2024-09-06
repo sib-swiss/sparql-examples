@@ -6,16 +6,15 @@
 ex:12 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Given the protein with UniProt accession number P42588 (PAT_ECOLI, putrescine aminotransferase, EC 2.6.1.82) retrieve all reactions and models in which this polypeptide appears."@en ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
 
-# Given the protein with UniProt accession number *P42588* 
-# (PAT_ECOLI, putrescine aminotransferase, EC 2.6.1.82) 
-# retrieve all reactions and models in which this polypeptide 
-# appears. 
+# Given the protein with UniProt accession number *P42588*
+# (PAT_ECOLI, putrescine aminotransferase, EC 2.6.1.82)
+# retrieve all reactions and models in which this polypeptide
+# appears.
 
 SELECT ?mnet_label ?reac_label ?reac_eq ?MNXR (GROUP_CONCAT( ?cata_label; separator=';' ) AS ?complex )
 FROM <https://rdf.metanetx.org/> WHERE{

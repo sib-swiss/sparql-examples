@@ -6,14 +6,13 @@
 ex:3 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "For the KEGG compound C01732, retrieve the MNXref identifier, name and reference"@en ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX keggC: <https://identifiers.org/kegg.compound:>
 PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-# For the KEGG compound *C01732*, retrieve the MNXref 
-# identifier, name and reference. 
+# For the KEGG compound *C01732*, retrieve the MNXref
+# identifier, name and reference.
 
 SELECT ?metabolite ?reference ?name
 FROM <https://rdf.metanetx.org/> WHERE {

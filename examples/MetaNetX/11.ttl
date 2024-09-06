@@ -6,14 +6,13 @@
 ex:11 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Building on example 10. ...in addition reactions are endowed with a direction, flux bounds and possibly the description of the enzymes that catalyze it."@en ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-# Building on example 10. ...in addition reactions are endowed with a direction, flux 
-# bounds and possibly the description of the enzymes that 
-# catalyze it. 
+# Building on example 10. ...in addition reactions are endowed with a direction, flux
+# bounds and possibly the description of the enzymes that
+# catalyze it.
 
 SELECT ?reac_orig_label ?reac_mnx_label ?lb ?ub ?dir ?cata_orig (GROUP_CONCAT(?cplx_label ; separator=' OR ') AS ?cplx_info )
 FROM <https://rdf.metanetx.org/> WHERE{

@@ -7,11 +7,10 @@
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Given the protein with UniProt accession number <a href=\"http://purl.uniprot.org/uniprot/P0ABU7\">P0ABU7</a> (Biopolymer transport protein ExbB) retrieve all reactions and models in which this polypeptide appears."^^rdf:HTML ;
-    sh:prefixes [ ],
-        [ ] ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX mnx: <https://rdf.metanetx.org/schema/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX uniprot: <http://purl.uniprot.org/uniprot/> 
+PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
 
 SELECT ?mnet_label ?reac_label ?reac_eq ?MNXR (GROUP_CONCAT( ?cata_label; separator=';' ) AS ?complex )
 FROM <https://rdf.metanetx.org/> WHERE{
