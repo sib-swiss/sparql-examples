@@ -5,7 +5,7 @@
 ex:NXQ_09432 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with an xref to an ENSP but no xref to an ENSG''' ;
-  schema:keyword "QC", "chromosomal location" ;
+  schema:keywords "QC", "chromosomal location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -16,11 +16,11 @@ select distinct ?entry where {
   filter exists {
     ?entry :reference ?x.
     ?x :provenance db:Ensembl ; :accession ?ac.
-    filter (regex(?ac,'^ENSP'))   
+    filter (regex(?ac,'^ENSP'))
   }
   filter not exists {
     ?entry :reference ?x.
     ?x :provenance db:Ensembl ; :accession ?ac.
-    filter (regex(?ac,'^ENSG'))   
-  }           
+    filter (regex(?ac,'^ENSG'))
+  }
 }''' .

@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry (group_concat(distinct substr(str(?entry2),34); separator
 }
 group by ?entry
 order by ?entry""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

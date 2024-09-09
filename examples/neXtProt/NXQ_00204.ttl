@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry a :Entry .
  ?entry :existence ?level .
 }""" ;
-    schema:keyword "protein existence",
+    schema:keywords "protein existence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

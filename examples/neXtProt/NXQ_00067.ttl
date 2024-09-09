@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  # We use this filter to select acetylations
  filter regex(?comment, "acetyl","i")
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

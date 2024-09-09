@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry ?mw WHERE {
  ?entry :isoform / :sequence / :molecularWeight ?mw.
  filter ( ?mw < 25000)
 } order by ?mw""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

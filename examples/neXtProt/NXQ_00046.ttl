@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry ?recname ?altname WHERE {
  ?gn :alternativeName / rdfs:label ?altname.
  filter (regex(?altname, "^IL27"))
 }""" ;
-    schema:keyword "gene",
+    schema:keywords "gene",
         "name",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

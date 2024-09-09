@@ -12,7 +12,7 @@ ex:NXQ_00038 a sh:SPARQLExecutable,
 SELECT DISTINCT ?entry WHERE {
  ?entry :isoform/:selenocysteine ?statement.
 }""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

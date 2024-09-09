@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  bind (xsd:float(substr(?res_and_unit,0,strlen(?res_and_unit)-2)) as ?res)
  filter (?res <= 3.0)
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

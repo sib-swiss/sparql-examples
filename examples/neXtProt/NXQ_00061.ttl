@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  filter (?mend-?mstart > 0)
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "processing",
         "sequence",
         "tutorial" ;

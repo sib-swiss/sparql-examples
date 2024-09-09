@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :history / :lastSequenceUpdate ?sequpd.
  filter(contains(str(?sequpd),"2014"))
 }""" ;
-    schema:keyword "entry history",
+    schema:keywords "entry history",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :length ?l.
  filter (?l > 2000000)
 }""" ;
-    schema:keyword "gene",
+    schema:keywords "gene",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

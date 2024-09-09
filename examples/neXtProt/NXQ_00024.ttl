@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?interaction :interactant ?interactant; :quality :GOLD.
  ?interactant a :Entry.
 } group by ?entry having (count(distinct ?interactant) > 10)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "quality",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

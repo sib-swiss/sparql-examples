@@ -24,7 +24,7 @@ SELECT DISTINCT ?entry (str(?pfname) as ?phenovar) (concat(str(sample(?pdbac)),"
  ?pdbmap :start ?pdbstart ; :end ?pdbend.
  filter(?pdbstart <= ?vstart && ?pdbend >= ?vend )
 } group by ?entry ?pfname""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "phenotype",
         "tutorial",
         "variant" ;

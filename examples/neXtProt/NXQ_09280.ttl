@@ -5,7 +5,7 @@
 ex:NXQ_09280 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with expression information annotations from HPA for which the evidence code is NOT immunohistochemistry evidence, RNA-sequencing evidence or single-cell RNA-sequencing evidence''' ;
-  schema:keyword "QC", "evidence", "ECO", "expression" ;
+  schema:keywords "QC", "evidence", "ECO", "expression" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

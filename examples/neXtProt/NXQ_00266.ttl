@@ -37,7 +37,7 @@ SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = ",") as
 }
 
 GROUP BY ?entry""" ;
-    schema:keyword "federated query",
+    schema:keywords "federated query",
         "function",
         "similarity",
         "small molecule interaction",

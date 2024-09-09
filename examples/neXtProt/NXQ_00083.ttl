@@ -15,7 +15,7 @@ Select distinct ?entry WHERE {
  ?iso :detectedExpression /:term ?tiss, ?tiss2.
  ?tiss2 :childOf nextprot_cv:TS-0564. # Liver
 } group by ?entry ?iso having(count(distinct ?tiss) = count(distinct ?tiss2))""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

@@ -5,7 +5,7 @@
 ex:NXQ_09431 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with a gene name which does not contain a capital letter or is not "unknown"''' ;
-  schema:keyword "QC", "gene name" ;
+  schema:keywords "QC", "gene name" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

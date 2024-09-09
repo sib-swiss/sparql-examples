@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry ?varpos where
  filter(?hcnt > 100000)
  }
  order by desc(?hcnt)""" ;
-    schema:keyword "tutorial",
+    schema:keywords "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

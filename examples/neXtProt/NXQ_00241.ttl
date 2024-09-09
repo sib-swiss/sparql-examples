@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry (str(?txt) as ?itinfo) WHERE {
  ?iso :interactionInfo / rdfs:comment ?txt.
  } order by ?entry
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

@@ -19,7 +19,7 @@ SELECT DISTINCT ?domlabel WHERE {
  ?dom :term/rdfs:label ?domlabel
  filter ((?s1 <= ?d1) && (?s2 >= ?d2))
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "domain",
         "region",
         "tutorial" ;

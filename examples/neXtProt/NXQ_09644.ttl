@@ -5,7 +5,7 @@
 ex:NXQ_09644 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with a variant annotation with evidence from dbSNP that does not have an xref starting with rs''' ;
-  schema:keyword "QC", "variant", "xref" ;
+  schema:keywords "QC", "variant", "xref" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

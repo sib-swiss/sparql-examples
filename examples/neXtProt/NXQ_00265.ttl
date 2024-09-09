@@ -36,7 +36,7 @@ SELECT DISTINCT ?iso ?spos ?epos ?annot_type (str(?txt) as ?note) where
 
  filter((?spos <= ?poi) && (?epos >= ?poi)) # select annotations encompassing the position of interest
 } order by ?spos""" ;
-    schema:keyword "isoforms",
+    schema:keywords "isoforms",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

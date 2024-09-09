@@ -20,7 +20,7 @@ WHERE {
     rdfs:seeAlso ?transcript .
   ?transcript  a up:Transcript_Resource .
 } GROUP BY ?protein HAVING(COUNT(?transcript) >= 2)""" ;
-    schema:keyword "fruit fly",
+    schema:keywords "fruit fly",
         "mRNA",
         "transcript" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;

@@ -5,7 +5,7 @@
 ex:NXQ_09082 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with temperature dependence annotations with evidence NOT from UniProt''' ;
-  schema:keyword "QC", "provenance", "function", "enzyme" ;
+  schema:keywords "QC", "provenance", "function", "enzyme" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

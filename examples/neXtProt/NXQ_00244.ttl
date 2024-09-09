@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry ?interactant WHERE {
  ?phvar :evidence / :quality :GOLD .
  ?phvar :impactedObject / :interactant ?interactant.
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "phenotype",
         "tutorial",
         "variant" ;

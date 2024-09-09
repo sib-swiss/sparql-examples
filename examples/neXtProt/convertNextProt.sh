@@ -17,8 +17,8 @@ do
     echo "  a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;" >> $filename
 	echo -e "  rdfs:comment '''${title:1:-1}''' ;"  >> $filename
 	while read t;
-	do 
-		echo " schema:keyword $t;" >> $filename
+	do
+		echo " schema:keywords $t;" >> $filename
 	done < <(echo $i| jq '.[3] | .'| grep -v "\[" | grep -v "\]"|tr ',' ' '|grep -v 'snorql-only')
 	echo -e "  sh:select '''${sparql:1:-1}'''"  >> $filename
 	echo "."  >> $filename

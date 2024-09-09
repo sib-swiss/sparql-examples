@@ -34,7 +34,7 @@ SERVICE <http://sparql.orthodb.org/sparql>
 filter (?clade='Metazoa') }
 }
 } group by ?entry ?name""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "federated query",
         "function",
         "gene",

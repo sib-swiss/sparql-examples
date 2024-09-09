@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  ?func2 :term / :childOf nextprot_cv:GO_0035329.
  filter not exists { ?func2 :negativeEvidence ?negev. } # No negative function evidence
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

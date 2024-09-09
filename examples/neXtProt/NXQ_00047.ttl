@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :name / rdfs:label ?name.
  filter (regex(?name, "^CLDN"@en))
 }""" ;
-    schema:keyword "gene",
+    schema:keywords "gene",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

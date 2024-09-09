@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry ?publications WHERE {
  ?statement :evidence/:reference/:from ?xref .
  ?xref :accession ?pmid ; :provenance db:PubMed .
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "glycosylation",
         "proteomics",
         "publication",

@@ -21,7 +21,7 @@ select ?entry (group_concat(distinct str(?pdbac); SEPARATOR = ",") as ?pdbacs) W
  filter (?mend-?mstart > 0)
  filter ((?pdbstart <= ?mstart) && (?pdbend >= ?mend))
 } group by ?entry""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "processing",
         "sequence",
         "tutorial" ;

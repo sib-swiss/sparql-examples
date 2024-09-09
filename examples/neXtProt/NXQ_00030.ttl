@@ -14,7 +14,7 @@ select ?entry WHERE {
  ?entry :familyName / :term/^:term/^:familyName ?member.
  ?entry :gene / :chromosome "2"^^xsd:string .
 } group by ?entry having ( count(distinct ?member) >= 5 )""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "family",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

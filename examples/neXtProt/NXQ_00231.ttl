@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry2 :isoform / :sequence / :chain ?chain2.
  filter ( (?chain1 = ?chain2) && (?entry != ?entry2))
 }""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

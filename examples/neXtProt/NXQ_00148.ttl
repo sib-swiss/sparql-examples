@@ -13,7 +13,7 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT distinct ?pfname ?impact_on_ubi_trsfrt_activity ?impact_on_binding_UBE2D1 WHERE {
- values (?ubi_trsfrt_activity ?no_impact ?UBE2D1 ?impact) 
+ values (?ubi_trsfrt_activity ?no_impact ?UBE2D1 ?impact)
  { (nextprot_cv:GO_0004842 nextprot_cv:ME_0000003 nextprot:NX_P51668 nextprot_cv:ME_0000002) }
  ?pf a :Proteoform .
  ?pf rdfs:label ?pfname .
@@ -27,7 +27,7 @@ SELECT distinct ?pfname ?impact_on_ubi_trsfrt_activity ?impact_on_binding_UBE2D1
  ?sub_impact :childOf ?impact .
  ?sub_impact rdfs:label ?impact_on_binding_UBE2D1 .
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "enzyme",
         "function",
         "phenotype",

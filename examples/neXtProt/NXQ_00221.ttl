@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry WHERE {
  ?evi2 :observedExpression :High.
  ?tiss2 :childOf ?tiss . # same tissue or children
 }""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "method",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

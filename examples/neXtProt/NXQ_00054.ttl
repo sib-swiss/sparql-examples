@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists { ?statement :negativeEvidence ?negev. } # No negative function evidence
  ?iso :uniprotKeyword/:term nextprot_cv:KW-0391.
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "keyword",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

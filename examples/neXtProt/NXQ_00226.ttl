@@ -28,7 +28,7 @@ values ?pepsources {
  filter(?p2-?p1 >= 8) # peptide length >= 9
 }
 group by ?entry having(count (distinct ?pepid) > 1) # at least two such peptides""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "peptide",
         "proteomics",
         "tutorial" ;

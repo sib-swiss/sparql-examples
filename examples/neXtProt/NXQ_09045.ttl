@@ -5,7 +5,7 @@
 ex:NXQ_09045 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with intramembrane region annotations with evidence NOT from UniProt''' ;
-  schema:keyword "QC", "provenance", "region", "subcellular location" ;
+  schema:keywords "QC", "provenance", "region", "subcellular location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

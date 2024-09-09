@@ -44,7 +44,7 @@ select ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?locl
 }
 group by ?entry ?gen ?pathwayname
 order by ?entry""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "federated query",
         "pathway",
         "subcellular location",

@@ -23,7 +23,7 @@ select ?entry WHERE {
 	 ?map :evidence / :reference / :accession ?id .
  }
 } group by ?entry having (count(?id)>=2)""" ;
-    schema:keyword "antibody",
+    schema:keywords "antibody",
         "chromosomal location",
         "expression",
         "method",

@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry WHERE {
 	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # variant is causing disease
  } )
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "disease",
         "quality",
         "tutorial",

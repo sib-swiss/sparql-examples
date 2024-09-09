@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  #					} # you can uncomment this to filters out extracellular exosome only location (2240 entries), most of them evidenced only by large-scale proteomic analysis
  ?iso :peptideMapping ?map.
 }""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "proteomics",
         "subcellular location",
         "tutorial" ;

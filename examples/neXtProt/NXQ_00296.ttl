@@ -18,7 +18,7 @@ SELECT DISTINCT ?pathway WHERE {
  ?entry :isoform /:pathway /rdfs:comment ?pathway.
 }
 order by asc(?pathway)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

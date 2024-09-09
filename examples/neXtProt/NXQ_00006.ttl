@@ -23,7 +23,7 @@ SELECT DISTINCT ?entry WHERE {
 	 filter (?kw != nextprot_cv:KW-0656)
  }
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "disease",
         "keyword",
         "tutorial" ;

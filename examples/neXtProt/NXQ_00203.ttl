@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  bind(?mend - ?mstart as ?mlen)
  filter(?mlen >= 300 && ?mlen <= 400)
 }""" ;
-    schema:keyword "processing",
+    schema:keywords "processing",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

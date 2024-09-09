@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
 					#} # filters out extracellular exosome only location (2758 entries)
  ?iso :goMolecularFunction / :term /:childOf nextprot_cv:GO_0046872 . # metal-binding
 }""" ;
-    schema:keyword "metal binding",
+    schema:keywords "metal binding",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

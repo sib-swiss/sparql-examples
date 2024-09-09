@@ -12,7 +12,7 @@ ex:NXQ_00031 a sh:SPARQLExecutable,
 SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
 } group by ?entry having (count(?iso)>10)""" ;
-    schema:keyword "isoforms",
+    schema:keywords "isoforms",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

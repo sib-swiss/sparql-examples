@@ -23,7 +23,7 @@ values ?mitloc {nextprot_cv:GO_0005739 nextprot_cv:SL-0173} # GO and SL values f
  ?it2 :interactant ?partner; :quality :GOLD .
 } group by ?entry ?gen ?mitcnt having (count(distinct ?mitopartner) >= 20)
 order by desc(?mitcnt)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

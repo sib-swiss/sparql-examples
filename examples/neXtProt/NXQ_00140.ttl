@@ -60,7 +60,7 @@ UNION
  }
 }
 order by ?entry""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "federated query",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

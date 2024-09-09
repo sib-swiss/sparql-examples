@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  nextprot:NX_Q96I25 :isoform / :interaction / :interactant ?entry.
  ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-0508
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  bind (STRDT (?gene,xsd:string) as ?genename ) . # converts raw string to ^^xsd:string
  ?entry :gene / :recommendedName / rdfs:label ?genename .
  }""" ;
-    schema:keyword "gene",
+    schema:keywords "gene",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

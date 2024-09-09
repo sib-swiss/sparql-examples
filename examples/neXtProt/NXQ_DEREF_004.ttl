@@ -5,7 +5,7 @@
 ex:NXQ_DEREF_004 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Query for an Isoform Instance e.g isoform:NX_Q8WZ42-1''' ;
-  schema:keyword "deref_instance_Isoform" ;
+  schema:keywords "deref_instance_Isoform" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

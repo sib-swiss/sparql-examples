@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  ?srm :peptideName ?pepid .
 }
 group by ?entry having(count(distinct ?pepid) > 1)""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "peptide",
         "proteomics",
         "tutorial" ;

@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry (group_concat(distinct str(?lbl); SEPARATOR = ";") as ?mo
  ?ref rdfs:label ?lbl.
 }
 group by ?entry""" ;
-    schema:keyword "small molecule interaction",
+    schema:keywords "small molecule interaction",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

@@ -17,7 +17,7 @@ select ?entry (count(distinct(?statement)) as ?tmcnt) WHERE {
 }
 group by ?entry
 order by desc(?tmcnt)""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "isoforms",
         "region",
         "topology",

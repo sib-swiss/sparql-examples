@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists { ?ecode :childOf nextprot_cv:ECO_0000501. } # Automatic assertion
  filter not exists { ?ecode :childOf nextprot_cv:ECO_0000250. } # Sequence similarity evidence used in manual assertion
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "method",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

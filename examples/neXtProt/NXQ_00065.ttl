@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :enzymeClassification / :term ?ec .
 }
 group by ?entry having (count(distinct ?ec)>1)""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

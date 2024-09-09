@@ -35,7 +35,7 @@ SELECT DISTINCT (?neighbour as ?entry) (str(?gen) as ?spergen) WHERE {
 	 union
  { ?neighbour :gene ?rgene. } # right gene
 } order by ?gen""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

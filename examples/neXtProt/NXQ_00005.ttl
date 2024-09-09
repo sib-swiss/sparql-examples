@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
 
 # Variables start with ? and can be given any name.
 # Variables such as ?entry and ?mitoloc (location in the mitochondrion) are easily understood by humans.""" ;
-    schema:keyword "subcellular location",
+    schema:keywords "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

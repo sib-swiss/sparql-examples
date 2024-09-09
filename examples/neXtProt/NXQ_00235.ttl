@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry WHERE {
 }
 group by ?entry having(count(distinct ?aid) > 1)
 order by ?entry""" ;
-    schema:keyword "antibody",
+    schema:keywords "antibody",
         "expression",
         "method",
         "tutorial" ;

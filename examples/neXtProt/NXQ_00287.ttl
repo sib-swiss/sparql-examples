@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :binaryInteraction /:evidence ?ev.
  ?ev :interactionDetectionMethod nextprot_cv:MI_0114. # x-ray crystallography
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "method",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

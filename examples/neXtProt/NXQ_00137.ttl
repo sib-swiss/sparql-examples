@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  bind (substr(?seq, ?mend-2, 3) as ?cterseq).
  filter(regex(?cterseq,'[ST].[ILV]')). # short motif consensus for C-terminal PDZ-binding
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "domain",
         "motif",
         "region",

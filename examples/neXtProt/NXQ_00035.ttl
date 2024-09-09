@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  ?loc :term / :childOf ?mitoloc.
  filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "function",
         "subcellular location",
         "tutorial" ;

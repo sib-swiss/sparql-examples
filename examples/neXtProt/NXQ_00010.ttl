@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists { ?iso :uniprotKeyword / :term nextprot_cv:KW-0812.} # KW for Transmembrane
  filter not exists { ?iso :topology / :term nextprot_cv:CVTO_0004 } # intramembrane segment
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "glycosylation",
         "subcellular location",
         "tutorial" ;

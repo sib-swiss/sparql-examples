@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :gene/:begin ?gs;:gene/:chromosome ?chr.
  filter ( ?gs > (?s -50000) && ?gs <= (?s +50000) && ?entry != nextprot:NX_P04637 )
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

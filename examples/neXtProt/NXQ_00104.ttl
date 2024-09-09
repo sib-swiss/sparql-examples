@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry (str(?disname) as ?disease) WHERE {
  ?iso :disease ?medannot .
  ?medannot rdfs:comment ?disname; :evidence / :assignedBy source:Orphanet.
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "disease",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

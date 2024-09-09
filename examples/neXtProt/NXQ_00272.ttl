@@ -41,7 +41,7 @@ SELECT DISTINCT ?entry (str(?gen) AS ?gene) ?pathwayname (str(?discom) AS ?disco
  ?med :evidence/:assignedBy ?medsource.
 }
 order by ?entry""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "federated query",
         "pathway",
         "tutorial" ;

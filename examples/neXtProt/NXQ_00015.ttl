@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :region / :term nextprot_cv:DO-00477. #PDZ domain
  ?iso :binaryInteraction/:interactant/:isoform?/:detectedExpression/:term/:childOf nextprot_cv:TS-0095 #brain
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "domain",
         "expression",
         "region",

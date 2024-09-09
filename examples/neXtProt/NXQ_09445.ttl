@@ -5,7 +5,7 @@
 ex:NXQ_09445 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with a keyword in the category "Biological process" that does not apply to human proteins''' ;
-  schema:keyword "QC", "keyword" ;
+  schema:keywords "QC", "keyword" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -17,7 +17,7 @@ select distinct ?entry where {  # Include ?kw if result is not 0 to identify pro
   cv:KW-0006 # Acetoin catabolism
   cv:KW-1178 # Actin-dependent inwards viral transport
   cv:KW-1072 # Activation of host autophagy by virus
-  cv:KW-1073 # Activation of host caspases by virus 
+  cv:KW-1073 # Activation of host caspases by virus
   cv:KW-1074 # Activation of host NF-kappa-B by virus
   cv:KW-0016 # Alginate biosynthesis
   cv:KW-0017 # Alkaloid metabolism
@@ -106,7 +106,7 @@ select distinct ?entry where {  # Include ?kw if result is not 0 to identify pro
   cv:KW-0309 # Germination
   cv:KW-0939 # Gibberellin signaling pathway
   cv:KW-0314 # Glutamate biosynthesis
-  cv:KW-0323 # Glycolate pathway 
+  cv:KW-0323 # Glycolate pathway
   cv:KW-0329 # Glyoxylate bypass
   cv:KW-0353 # Hemolymph clotting
   cv:KW-0354 # Hemolysis

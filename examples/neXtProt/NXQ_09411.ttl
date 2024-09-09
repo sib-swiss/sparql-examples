@@ -5,7 +5,7 @@
 ex:NXQ_09411 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with no chromosome location''' ;
-  schema:keyword "QC", "chromosomal location" ;
+  schema:keywords "QC", "chromosomal location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

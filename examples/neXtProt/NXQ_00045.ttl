@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry ?comment WHERE {
  ?entry :isoform/ :activeSite /rdfs:comment ?comment.
  filter (contains (?comment,'Proton acceptor'))
 }""" ;
-    schema:keyword "active site",
+    schema:keywords "active site",
         "enzyme",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

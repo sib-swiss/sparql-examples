@@ -27,7 +27,7 @@ SELECT DISTINCT ?entry WHERE {
  filter (?kw != nextprot_cv:KW-0656)
  }
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "disease",
         "keyword",
         "subcellular location",

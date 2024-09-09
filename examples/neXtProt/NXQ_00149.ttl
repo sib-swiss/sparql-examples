@@ -11,20 +11,20 @@ ex:NXQ_00149 a sh:SPARQLExecutable,
 PREFIX nextprot: <http://nextprot.org/rdf/entry/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT 
-?pfname 
-(count(?pvlabel) as ?severe_count) 
-(group_concat(?pvlabel;separator=", and ") as ?severe_list) 
+SELECT
+?pfname
+(count(?pvlabel) as ?severe_count)
+(group_concat(?pvlabel;separator=", and ") as ?severe_list)
 WHERE {
  nextprot:NX_P38398 :isoform / :proteoform ?pf .
  ?pf rdfs:label ?pfname .
  ?pf :phenotypicVariation ?pv1 .
  ?pv1 rdfs:comment ?pvlabel .
- ?pv1 :evidence / :severity :Severe . 
+ ?pv1 :evidence / :severity :Severe .
  }
 group by ?pfname having (count(?pvlabel)>=5)
 order by desc(count(?pvlabel)) ?pfname""" ;
-    schema:keyword "phenotype",
+    schema:keywords "phenotype",
         "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .

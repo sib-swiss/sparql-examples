@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  }
  group by ?iso having(count( ?rep) > 12)}
 }""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

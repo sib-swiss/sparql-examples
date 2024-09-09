@@ -24,7 +24,7 @@ SELECT DISTINCT ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
  ?inter :accession "CHEBI:29108"^^xsd:string # binding site interactant Ca(2+)
 }
 order by asc(?ec)""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "small molecule interaction",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

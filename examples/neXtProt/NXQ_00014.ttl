@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  {select ?iso where{?iso :region ?stat2. ?stat2 :term nextprot_cv:DO-00615
  } group by ?iso having(count( ?stat2)=2)}
 } group by ?entry""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

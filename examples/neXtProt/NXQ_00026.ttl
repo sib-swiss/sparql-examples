@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  ?loc :term / :childOf ?mitoloc.
  filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
 }""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

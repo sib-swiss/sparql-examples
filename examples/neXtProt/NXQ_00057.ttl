@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  ?loc :evidence /:assignedBy ?src.
  filter ( ?src not in (source:Human_protein_atlas, source:GFP-cDNAEMBL))
 }""" ;
-    schema:keyword "method",
+    schema:keywords "method",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

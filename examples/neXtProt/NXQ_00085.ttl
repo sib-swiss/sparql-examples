@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :compositionallyBiasedRegion / rdfs:comment ?desc.
  filter (contains(?desc,'Pro residues')).
 }""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

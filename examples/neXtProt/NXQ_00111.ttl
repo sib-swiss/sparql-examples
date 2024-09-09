@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  ?topodom a :TopologicalDomain.
  })
 } group by ?entry having (count( ?tm)=1)""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "topology",
         "transmembrane",

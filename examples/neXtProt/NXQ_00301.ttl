@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :existence :Evidence_at_protein_level .
  ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-1267.
 }""" ;
-    schema:keyword "keyword",
+    schema:keywords "keyword",
         "protein existence",
         "proteomics",
         "tutorial" ;

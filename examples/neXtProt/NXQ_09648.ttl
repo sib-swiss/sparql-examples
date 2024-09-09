@@ -5,7 +5,7 @@
 ex:NXQ_09648 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with the keyword KW-0621 (Polymorphism) that do not have a variant annotation with evidence from UniProt or dbSNP and having a xref starting with "rs" ''' ;
-  schema:keyword "QC", "variant", "keyword" ;
+  schema:keywords "QC", "variant", "keyword" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

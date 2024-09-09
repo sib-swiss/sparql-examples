@@ -5,7 +5,7 @@
 ex:NXQ_09105 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with crosslink annotations with evidence from UniProt of quality SILVER''' ;
-  schema:keyword "QC", "quality", "evidence", "sequence" ;
+  schema:keywords "QC", "quality", "evidence", "sequence" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :mutagenesis ?mut.
 }""" ;
-    schema:keyword "mutagenesis",
+    schema:keywords "mutagenesis",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

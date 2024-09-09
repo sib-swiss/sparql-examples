@@ -16,7 +16,7 @@ SELECT DISTINCT ?src (str(?pathwayname) as ?pw) WHERE {
  ?pathannot rdfs:comment ?pathwayname; :evidence / :assignedBy ?src.
  filter(?src = source:Reactome || ?src = source:KEGG_PTW)
 } order by ?pathwayname""" ;
-    schema:keyword "pathway",
+    schema:keywords "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

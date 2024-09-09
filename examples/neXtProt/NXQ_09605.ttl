@@ -5,7 +5,7 @@
 ex:NXQ_09605 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with GO cellular component annotations with evidence having the evidence code HDA and the quality GOLD''' ;
-  schema:keyword "QC", "quality", "evidence", "cellular component" ;
+  schema:keywords "QC", "quality", "evidence", "cellular component" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

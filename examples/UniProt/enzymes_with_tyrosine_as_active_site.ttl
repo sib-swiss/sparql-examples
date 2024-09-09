@@ -11,7 +11,7 @@ ex:enzyme_with_threonine_as_active_site a sh:SPARQLExecutable,
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
+SELECT
   ?protein
 WHERE {
   ?protein up:annotation ?activeSiteAnnotation .
@@ -20,10 +20,10 @@ WHERE {
   ?range faldo:begin ?begin .
   ?begin faldo:position ?beginPosition ;
     faldo:reference ?sequence .
-  ?sequence rdf:value ?sequenceVal . 
+  ?sequence rdf:value ?sequenceVal .
   FILTER(SUBSTR(?sequenceVal, ?beginPosition, 1) = 'Y')
 }""" ;
-    schema:keyword "active site",
+    schema:keywords "active site",
         "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .

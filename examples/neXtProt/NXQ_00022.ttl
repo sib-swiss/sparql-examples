@@ -25,7 +25,7 @@ SELECT DISTINCT ?entry WHERE {
  }
  filter not exists { ?entry :existence :Uncertain } # Remove PE5 proteins
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

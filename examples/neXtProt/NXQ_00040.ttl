@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :mutagenesis/rdfs:comment ?comment
  filter regex(?comment, '(decrease|abolish).*activity','i')
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "function",
         "mutagenesis",
         "tutorial" ;

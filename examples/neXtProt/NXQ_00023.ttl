@@ -26,7 +26,7 @@ SELECT DISTINCT ?entry WHERE {
  }
  filter not exists { ?iso :uniprotKeyword / :term nextprot_cv:KW-0325 } # not a glycoprotein
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "function",
         "glycosylation",
         "subcellular location",

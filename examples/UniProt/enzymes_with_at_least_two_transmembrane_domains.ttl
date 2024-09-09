@@ -10,7 +10,7 @@ ex:enzymes_with_at_least_two_transmembrane_domains a sh:SPARQLExecutable,
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
+SELECT
   ?protein
 WHERE {
  ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzymeClass ;
@@ -18,7 +18,7 @@ WHERE {
  ?enzymeClass rdfs:subClassOf <http://purl.uniprot.org/enzyme/3.-.-.-> .
  ?transMembraneAnnotation a up:Transmembrane_Annotation .
 } GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMembraneAnnotation) >= 2)""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "membrane" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

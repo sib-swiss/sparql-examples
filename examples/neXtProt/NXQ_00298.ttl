@@ -17,7 +17,7 @@ SELECT DISTINCT ?iso ?name WHERE {
  ?name_entity a :IsoformName; rdfs:label ?name.
 }
 order by asc(?iso)""" ;
-    schema:keyword "isoforms",
+    schema:keywords "isoforms",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

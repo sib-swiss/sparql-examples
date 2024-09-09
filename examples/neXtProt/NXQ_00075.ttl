@@ -20,7 +20,7 @@ values ?pepsources {
  filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:PeptideAtlas_human_Blood_Plasma . }
  filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:MassIVE_human_Blood_Plasma . }
 }""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "proteomics",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

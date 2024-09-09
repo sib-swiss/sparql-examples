@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {
  ?tr rdfs:comment ?trcom; :evidence / :reference ?ref.
  ?ref a :Xref; :accession ?acc .
 } order by ?acc""" ;
-    schema:keyword "cross-reference",
+    schema:keywords "cross-reference",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

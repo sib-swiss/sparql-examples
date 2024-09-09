@@ -5,7 +5,7 @@
 ex:NXQ_00249 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''GO_MF terms associated with proteins binding estradiol and/or similar molecules (substructure search with SMILES)''' ;
-  schema:keyword "GO", "federated query", "function", "interaction", "snorql-only" ;
+  schema:keywords "GO", "federated query", "function", "interaction", "snorql-only" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

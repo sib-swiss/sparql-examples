@@ -13,7 +13,7 @@ PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
 SELECT DISTINCT ?entry WHERE {
  ?entry :isoform /:medical / :term /:related / :childOf nextprot_cv:D002318.
 }""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

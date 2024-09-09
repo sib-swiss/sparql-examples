@@ -15,7 +15,7 @@ select (str(?famlab) as ?familylabel) (count(distinct(?member)) as ?membercnt) w
 } group by ?famlab
 order by desc(?membercnt)
 limit 25""" ;
-    schema:keyword "family",
+    schema:keywords "family",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

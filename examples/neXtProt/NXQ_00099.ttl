@@ -25,7 +25,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :variant /:start ?varpos.
  ?iso :ptm /:start ?varpos.
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "subcellular location",
         "tutorial",
         "variant" ;

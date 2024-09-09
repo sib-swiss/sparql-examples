@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  ?r :provenance db:HGNC ; :accession ?ac.
  filter (regex(?ac,'orf')) .
 }""" ;
-    schema:keyword "gene",
+    schema:keywords "gene",
         "protein existence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

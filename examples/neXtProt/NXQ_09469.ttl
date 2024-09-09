@@ -5,7 +5,7 @@
 ex:NXQ_09469 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with a localization keyword that do not have the corresponding subcellular location annotation and/or GO cellular component annotatio''' ;
-  schema:keyword "QC", "keyword", "cellular component", "subcellular location" ;
+  schema:keywords "QC", "keyword", "cellular component", "subcellular location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -15,7 +15,7 @@ select distinct ?entry ?kw ?subcell ?gocc where {
   ?subcell a :UniprotSubcellularLocationCv.
   ?kw :related ?subcell.
   ?gocc a :GoCellularComponentCv.
-  ?kw :related ?gocc.  
+  ?kw :related ?gocc.
   ?entry :isoform /:goCellularComponent ?comp.
   filter not exists {?comp :negativeEvidence ?negev} # No negative evidence
   filter not exists {?comp :term ?gocc.}

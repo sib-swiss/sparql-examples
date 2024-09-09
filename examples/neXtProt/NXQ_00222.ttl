@@ -25,7 +25,7 @@ SELECT DISTINCT ?entry WHERE {
  ?eviihc :observedExpression :High.
  ?ihctiss :childOf ?rnatiss .
 }""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

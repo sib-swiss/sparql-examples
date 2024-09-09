@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  bind(substr(?seq, ?mstart, ?mlen) as ?mseq)
  filter (!regex (?mseq,'K'))
 }""" ;
-    schema:keyword "processing",
+    schema:keywords "processing",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

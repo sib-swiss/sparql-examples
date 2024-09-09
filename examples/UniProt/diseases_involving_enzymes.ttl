@@ -12,13 +12,13 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
 ?disease ?diseaseLabel
-WHERE { 
+WHERE {
  ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzyme ;
                    up:annotation ?diseaseAnnotation .
  ?diseaseAnnotation a up:Disease_Annotation ;
                     up:disease ?disease .
  ?disease skos:prefLabel ?diseaseLabel .
 }""" ;
-    schema:keyword "enzyme" ;
+    schema:keywords "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

@@ -29,7 +29,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?diseaseTitle ?sampleArticle WHERE {
  ?entry :swissprotPage ?unipage .
  ?entry :gene / :recommendedName / rdfs:label ?gen .
 } order by ?entry""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "federated query",
         "publication",
         "tutorial",

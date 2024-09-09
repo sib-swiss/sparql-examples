@@ -5,7 +5,7 @@
 ex:NXQ_09697 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with GO cellular component annotations with the GO qualifier contributes_to''' ;
-  schema:keyword "QC", "subcellular location" ;
+  schema:keywords "QC", "subcellular location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -15,5 +15,5 @@ select distinct ?entry where {
   ?entry :isoform ?iso.
   ?iso :goCellularComponent ?gocc.
   ?gocc rdfs:comment ?txt.
-  filter (regex(?txt, "^Contributes to"@en))  
+  filter (regex(?txt, "^Contributes to"@en))
 }''' .

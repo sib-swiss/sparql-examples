@@ -24,7 +24,7 @@ SELECT DISTINCT ?entry WHERE {
  ?ev :assignedBy source:Cosmic.
  }
 }""" ;
-    schema:keyword "tutorial",
+    schema:keywords "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

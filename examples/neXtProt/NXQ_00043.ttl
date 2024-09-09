@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists {?iso :uniprotKeyword / :term nextprot_cv:KW-0804} # transcription
  filter not exists {?iso :uniprotKeyword / :term nextprot_cv:KW-0560} # oxidoreductase
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "function",
         "metal binding",
         "tutorial" ;

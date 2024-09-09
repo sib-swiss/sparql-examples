@@ -5,7 +5,7 @@
 ex:NXQ_09025 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with disease annotations with evidence NOT from neXtProt, Orphanet or UniProt''' ;
-  schema:keyword "QC", "provenance", "disease" ;
+  schema:keywords "QC", "provenance", "disease" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

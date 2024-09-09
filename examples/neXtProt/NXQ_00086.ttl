@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  ?gene :band ?band.
  filter (?band >= "p12"@en && ?band <= "p24.2"@en )
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

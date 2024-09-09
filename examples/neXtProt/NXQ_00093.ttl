@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :sequence / :chain ?chain.
  filter ( regex(?chain, "FF.+QYE") )
 }""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

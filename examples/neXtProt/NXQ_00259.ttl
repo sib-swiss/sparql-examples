@@ -27,7 +27,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?genx) ?umlsTerm WHERE {
  ?entry :swissprotPage ?unipage .
  ?entry :gene / :recommendedName / rdfs:label ?gen .
 } order by ?entry""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "federated query",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

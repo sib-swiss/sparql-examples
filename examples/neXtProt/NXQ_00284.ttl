@@ -5,7 +5,7 @@
 ex:NXQ_00284 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Distribution of interaction detection methods for each year (ENYO data)''' ;
-  schema:keyword "PPI", "snorql-only" ;
+  schema:keywords "PPI", "snorql-only" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -16,5 +16,5 @@ select distinct (str(?y) as ?year) (str(?psimi) as ?method) (count (distinct ?it
  ?interaction :evidence ?ev; :entryAnnotationId ?itid .
   ?ev :reference ?publi; :interactionDetectionMethod / rdfs:label ?psimi .
  ?publi :year ?y.
-} group by ?y ?psimi 
+} group by ?y ?psimi
 order by desc(?year) desc(?itcnt)''' .

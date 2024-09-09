@@ -26,7 +26,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists {?isox :functionInfo ?_ } # entries with no function at all
  }
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "expression",
         "function",
         "tutorial" ;

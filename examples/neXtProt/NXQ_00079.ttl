@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :uniprotKeyword / :term nextprot_cv:KW-0597. # Phosphoprotein
  ?iso :pdbMapping ?map.
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "PTM",
         "phosphorylation",
         "tutorial" ;

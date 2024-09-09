@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  # one variant in the homeobox domain
  filter (?varpos >=?start && ?varpos <=?end)
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "tutorial",
         "variant" ;

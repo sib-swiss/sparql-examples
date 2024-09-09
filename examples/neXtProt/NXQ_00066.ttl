@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry WHERE {
  filter (?ptmtype in (nextprot_cv:PTM-0253, nextprot_cv:PTM-0254, nextprot_cv:PTM-0255))
  ?iso :glycosylationSite /:start ?ptmpos.
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "glycosylation",
         "phosphorylation",
         "sequence",

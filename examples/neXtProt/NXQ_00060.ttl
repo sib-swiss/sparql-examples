@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry WHERE {
  bind (substr(?chain, ?tmstart, ?tmend - ?tmstart + 1) as ?tmseq)
  filter (regex(?tmseq, '([DE]+.*[^DE]){1,}')) # Change the 1 for the number of acidic residues required (5 seems to be the max)
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "sequence",
         "topology",

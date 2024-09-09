@@ -33,7 +33,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?pathwayname WHERE {
  ?entry :gene / :recommendedName / rdfs:label ?gen .
 }
 order by ?pathwayname""" ;
-    schema:keyword "federated query",
+    schema:keywords "federated query",
         "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

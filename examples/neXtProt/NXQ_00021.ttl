@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  ?loc :term /:childOf ?peroxiloc. # peroxisomal
  filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
 }""" ;
-    schema:keyword "antibody",
+    schema:keywords "antibody",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

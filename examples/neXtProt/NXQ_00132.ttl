@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  filter(?entry != ?entry2).
  filter not exists{?entry :isoform /:binaryInteraction / :interactant ?entry2.}
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "PPI",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

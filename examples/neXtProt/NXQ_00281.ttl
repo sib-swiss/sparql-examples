@@ -24,7 +24,7 @@ SELECT DISTINCT ?entry ?gene ?entry2 ?gene2 ?commonitcnt ?sampleit WHERE {
 filter(substr(str(?entry),34) < substr(str(?entry2),34)) # ensures only one row by it pair
 }
 order by desc(?commonitcnt)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

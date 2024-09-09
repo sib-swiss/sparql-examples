@@ -5,7 +5,7 @@
 ex:NXQ_09247 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with pharmaceutical annotations with evidence from Uniprot of quality SILVER''' ;
-  schema:keyword "QC", "quality", "evidence", "pharmaceutical" ;
+  schema:keywords "QC", "quality", "evidence", "pharmaceutical" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

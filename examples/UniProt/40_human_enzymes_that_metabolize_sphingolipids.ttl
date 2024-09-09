@@ -14,8 +14,8 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
 
-SELECT DISTINCT 
-  ?protein 
+SELECT DISTINCT
+  ?protein
   ?chemblEntry
 WHERE {
   SERVICE <https://sparql.rhea-db.org/sparql> {
@@ -28,6 +28,6 @@ WHERE {
     rdfs:seeAlso ?chemblEntry .
   ?chemblEntry up:database <http://purl.uniprot.org/database/ChEMBL> .
 }""" ;
-    schema:keyword "enzyme" ;
+    schema:keywords "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

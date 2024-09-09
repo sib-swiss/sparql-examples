@@ -16,7 +16,7 @@ SELECT
 WHERE {
   ?protein a up:Protein ;
   up:organism taxon:9606 ;
-  up:annotation ?disease_annotation , 
+  up:annotation ?disease_annotation ,
                 ?subcellularLocation .
   {
     ?protein up:enzyme [] .
@@ -30,6 +30,6 @@ WHERE {
   ?location up:cellularComponent ?component .
   ?component up:partOf* <http://purl.uniprot.org/locations/173> .
 }""" ;
-    schema:keyword "enzyme" ;
+    schema:keywords "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

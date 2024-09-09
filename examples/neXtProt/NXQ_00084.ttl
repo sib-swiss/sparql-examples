@@ -26,7 +26,7 @@ SELECT DISTINCT ?entry {
  filter (regex(?com, '^phospho|acetyl','i'))
  }
 }""" ;
-    schema:keyword " chromosomal location",
+    schema:keywords " chromosomal location",
         "PTM",
         "glycosylation",
         "method",

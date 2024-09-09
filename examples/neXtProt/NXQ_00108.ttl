@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  bind ( if(?d2<?s2, ?d2, ?s2) - if(?d1>?s1, ?d1, ?s1) as ?overlap) .
  filter (?overlap>50)
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "domain",
         "region",
         "tutorial" ;

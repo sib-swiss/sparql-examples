@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  nextprot_cv:KW-0813 :related ?tra.
  ?iso :generalAnnotation / :term ?tra.
 }""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

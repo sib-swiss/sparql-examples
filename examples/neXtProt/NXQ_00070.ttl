@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
 					} # filters out extracellular exosome only location (2758 entries)
  filter not exists {?iso :signalPeptide ?_}
 }""" ;
-    schema:keyword "signal sequence",
+    schema:keywords "signal sequence",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

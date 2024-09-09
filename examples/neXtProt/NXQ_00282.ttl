@@ -29,7 +29,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?itlen ?coilen (str(?gen2) as ?partn
  filter (?cs >= ?its -15 && ?ce <= ?ite + 15) # overlap
  filter(xsd:float(?itlen) / xsd:float(?coilen) < 2.0) # itlen no more than 2 coilen
 } order by ?entry""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "domain",
         "region",
         "tutorial" ;

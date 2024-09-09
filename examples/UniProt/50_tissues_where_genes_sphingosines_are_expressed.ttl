@@ -18,8 +18,8 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
   DISTINCT
-    ?chebi 
-    ?reaction 
+    ?chebi
+    ?reaction
     ?protein ?ensemblGene
     ?anatomicEntityLabel
     ?anatomicEntity
@@ -46,7 +46,7 @@ WHERE {
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "tissue" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

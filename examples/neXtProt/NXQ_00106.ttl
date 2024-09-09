@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :uniprotKeyword / :term nextprot_cv:KW-0325.
  filter not exists { ?entry :isoform /:glycosylationSite ?_. }
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "glycosylation",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

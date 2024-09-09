@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :variant ?var.
 }""" ;
-    schema:keyword "tutorial",
+    schema:keywords "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

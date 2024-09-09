@@ -19,7 +19,7 @@ filter regex(?comment, "amid","i")
 ?isoform :matureProtein [ :start ?mstart ; :end ?mend]
 filter ((?mend = ?ptmpos) && (?mend-?mstart < 50))
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "processing",
         "sequence",
         "tutorial" ;

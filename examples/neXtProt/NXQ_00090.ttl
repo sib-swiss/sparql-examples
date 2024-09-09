@@ -24,7 +24,7 @@ SELECT DISTINCT ?entry WHERE {
  }
  FILTER NOT EXISTS { ?entry :reference / :provenance db:MGI . }
 }""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "keyword",
         "ortholog",
         "tutorial" ;

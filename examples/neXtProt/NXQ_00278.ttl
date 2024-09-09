@@ -16,7 +16,7 @@ SELECT DISTINCT (str(?auth) AS ?auth1) (count (distinct ?itid) as ?itcnt) WHERE 
  ?interaction :interactant ?interactant; :quality :GOLD; :entryAnnotationId ?itid.
 } group by ?auth having (count (distinct ?itid) > 25000)
 order by desc(?itcnt)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "publication",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

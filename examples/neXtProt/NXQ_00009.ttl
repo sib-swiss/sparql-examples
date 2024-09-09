@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  ?statement a :DisulfideBond.
  filter not exists { ?entry :isoform / :function / :term /:childOf nextprot_cv:GO_0005179. } # GO Hormone activity
 } group by ?entry ?isoform having (count(?statement) =3 )""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

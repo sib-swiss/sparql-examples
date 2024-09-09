@@ -33,9 +33,9 @@ SELECT distinct ?entry (group_concat(distinct str(?gomflab); SEPARATOR = ",") as
 	?entry :isoform ?iso.
 	?iso :goMolecularFunction / :term ?gomf .
 	?gomf rdfs:label ?gomflab .
-} 
+}
 group by ?entry""" ;
-    schema:keyword "federated query",
+    schema:keywords "federated query",
         "function",
         "similarity",
         "small molecule interaction",

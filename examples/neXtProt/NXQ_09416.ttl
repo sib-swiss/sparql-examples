@@ -5,7 +5,7 @@
 ex:NXQ_09416 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries whose gene is located on a band which does NOT start with "p" or "q", is not "unknown" or null''' ;
-  schema:keyword "QC", "chromosomal location" ;
+  schema:keywords "QC", "chromosomal location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -13,7 +13,7 @@ PREFIX cv: <http://nextprot.org/rdf/terminology/>
 select distinct ?entry ?band where {
   ?entry :gene / :band ?band .
    filter (!regex (?band,"^p"))
-   filter (!regex (?band,"^q"))  
-   filter (!regex (?band,"unknown")) 
+   filter (!regex (?band,"^q"))
+   filter (!regex (?band,"unknown"))
    filter (!regex (?band,""))
 }''' .

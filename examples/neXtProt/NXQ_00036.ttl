@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :uniprotKeyword /:term ?kw
  filter( ?kw in (nextprot_cv:KW-0520,nextprot_cv:KW-0521)) # NAD or NADP
 }""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "function",
         "small molecule interaction",
         "tutorial" ;

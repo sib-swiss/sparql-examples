@@ -25,7 +25,7 @@ SELECT DISTINCT ?entry WHERE {
  filter ((?ptmpos >= ?topostart) && (?ptmpos <= ?topoend))
  filter ((?glypos >= ?topostart) && (?glypos <= ?topoend))
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "domain",
         "glycosylation",
         "phosphorylation",

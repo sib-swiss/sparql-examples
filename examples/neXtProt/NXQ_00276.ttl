@@ -39,7 +39,7 @@ SELECT DISTINCT ?entry (str(?umlsTerm) as ?umlsTermSTR) (str(?snpac) as ?varid) 
  ?var :start ?pos ; :original ?orgaa; :variation ?varaa .
  filter(contains(?snpac,str(?variantTitle))) # matches the exact same variant Disgenet returned
 }""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "federated query",
         "tutorial",
         "variant" ;

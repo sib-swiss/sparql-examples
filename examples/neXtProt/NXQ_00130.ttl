@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:SL-0191} # SL for nucleus
  filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:GO_0005634} # GO for nucleus
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "nucleotide binding",
         "region",
         "subcellular location",

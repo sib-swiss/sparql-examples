@@ -5,7 +5,7 @@
 ex:NXQ_09198 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with GO molecular function annotations with evidence from DFLAT of quality SILVER and evidence code not IBA, IEP, HMP, HDA or HEP''' ;
-  schema:keyword "QC", "quality", "evidence", "function" ;
+  schema:keywords "QC", "quality", "evidence", "function" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

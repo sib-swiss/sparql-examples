@@ -10,7 +10,7 @@ ex:enzymes_with_at_least_two_transmembrane_domains_PDB_xray a sh:SPARQLExecutabl
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
+SELECT
   ?protein
 WHERE {
   ?protein a up:Protein ;
@@ -25,7 +25,7 @@ WHERE {
     up:method up:X-Ray_Crystallography .
   ?transmembrane_annotation a up:Transmembrane_Annotation .
 } GROUP BY ?protein HAVING(COUNT(DISTINCT ?transmembrane_annotation ) >= 2)""" ;
-    schema:keyword "3D",
+    schema:keywords "3D",
         "PDB",
         "enzyme",
         "membrane" ;

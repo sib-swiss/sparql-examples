@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
  ?iso :uniprotKeyword/:term nextprot_cv:KW-0007,nextprot_cv:KW-0488. # acetylated and methylated
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

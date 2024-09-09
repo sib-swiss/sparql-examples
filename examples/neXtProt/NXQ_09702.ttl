@@ -5,7 +5,7 @@
 ex:NXQ_09702 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with GO cellular component annotations with evidence from PHI-base of the GO Consortium''' ;
-  schema:keyword "QC", "provenance", "subcellular location" ;
+  schema:keywords "QC", "provenance", "subcellular location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

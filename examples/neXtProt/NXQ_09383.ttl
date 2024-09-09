@@ -5,7 +5,7 @@
 ex:NXQ_09383 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with small molecule interaction annotations with evidence from DrugBank that is negative''' ;
-  schema:keyword "QC", "evidence", "negative", "interaction" ;
+  schema:keywords "QC", "evidence", "negative", "interaction" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

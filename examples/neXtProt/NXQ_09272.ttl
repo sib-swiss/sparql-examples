@@ -5,7 +5,7 @@
 ex:NXQ_09272 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with variant information annotations with evidence from Uniprot of quality SILVER''' ;
-  schema:keyword "QC", "quality", "evidence", "variant" ;
+  schema:keywords "QC", "quality", "evidence", "variant" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

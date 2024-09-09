@@ -28,7 +28,7 @@ SELECT DISTINCT ?entry WHERE {
  }
 
 } group by ?entry ?iso having (count(?interactant) >= 50)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "disease",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

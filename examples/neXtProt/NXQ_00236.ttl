@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry (group_concat(distinct str(?loclab); SEPARATOR = ",") as 
  filter not exists {?locannot :negativeEvidence ?locev .}
 }
 GROUP BY ?entry""" ;
-    schema:keyword "quality",
+    schema:keywords "quality",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

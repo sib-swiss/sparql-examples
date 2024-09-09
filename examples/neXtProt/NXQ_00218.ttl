@@ -35,7 +35,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists {?iso1 :cellularComponent / :term ?locterm}
  }
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "isoforms",
         "subcellular location",
         "tutorial" ;

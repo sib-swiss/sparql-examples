@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :region/rdf:type :CoiledCoilRegion.
  filter not exists { ?iso :region/:term nextprot_cv:DO-00078 } # Bzip domain
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "function",
         "region",
         "tutorial" ;

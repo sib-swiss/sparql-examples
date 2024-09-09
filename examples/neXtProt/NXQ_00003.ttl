@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry WHERE {
 # This groups entries with isoforms having 7 transmembrane regions.
 # Apply the aggregate function (count) to the variable ?statement.
 # This counts the number of transmembrane region statements for each isoform.""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "topology",
         "transmembrane",

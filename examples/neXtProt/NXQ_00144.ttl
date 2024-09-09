@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
 bind(substr(?seq, ?ptmpos-2, 3) as ?modseq)
 filter ( regex(?modseq, "QHP") )
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

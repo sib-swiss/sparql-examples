@@ -24,7 +24,7 @@ SELECT DISTINCT (str(?rlab) as ?rlab1) (count(distinct ?itid) as ?itcnt) WHERE {
  filter(xsd:float(?itlen) / xsd:float(?rlen) < 2.0)
 } group by ?rlab having(count(distinct ?itid) >= 10)
 order by desc(?itcnt)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "domain",
         "region",
         "tutorial" ;

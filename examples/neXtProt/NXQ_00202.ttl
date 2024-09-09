@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :topology ?statement.
  ?statement a :TransmembraneRegion.
 } group by ?entry ?iso having(count( ?statement)>=2 && count( ?statement)<=4)""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "region",
         "topology",
         "transmembrane",

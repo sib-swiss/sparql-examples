@@ -35,7 +35,7 @@ SELECT DISTINCT ?entry WHERE {
 #
 # Exclude negative locatization evidences.
 # This enforces that the protein is located in the cytoplasm.""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "phosphorylation",
         "subcellular location",
         "tutorial" ;

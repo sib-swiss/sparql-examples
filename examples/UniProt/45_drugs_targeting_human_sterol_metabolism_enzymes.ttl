@@ -60,7 +60,7 @@ WHERE {
     FILTER(lang(?wikiChemicalLabel) = 'en')
   }
 }""" ;
-    schema:keyword "drug",
+    schema:keywords "drug",
         "enzyme",
         "metabolite" ;
     schema:target <https://sparql.uniprot.org/sparql/> .

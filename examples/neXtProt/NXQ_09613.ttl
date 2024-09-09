@@ -5,7 +5,7 @@
 ex:NXQ_09613 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with subcellular location note annotations from HPA for which there is no subcellular location annotation from HPA''' ;
-  schema:keyword "QC", "HPA" ;
+  schema:keywords "QC", "HPA" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

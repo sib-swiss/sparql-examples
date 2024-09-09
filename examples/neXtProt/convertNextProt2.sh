@@ -1,9 +1,9 @@
 #! /usr/bin/bash
 for i in nextprot-queries/src/main/resources/nextprot-queries/*.rq;
-do 
+do
 	id=${i:53:-3};
 	if [ ! -f ${id}.ttl ];
-	then 
+	then
 		echo "@prefix ex: <https://sparql.nextprot.org/.well-known/sparql-examples> ." > $id.ttl
 		echo "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> ." >> $id.ttl
 		echo "@prefix schema: <https://schema.org/> ." >> $id.ttl
@@ -11,7 +11,7 @@ do
 		echo "ex:${id} a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;" >> $id.ttl
 		echo "  sh:prefixes _:sparql_examples_prefixes ;" >> $id.ttl
 		grep "#title:" $i | sed -e "s|#title:|  rdfs:comment '''|" -e "s|$|''' ;|" >> $id.ttl
-		grep "#tags:" $i | sed -e 's|#tags:|  schema:keyword "|g' | sed -e 's|,|", "|g' | sed -e 's|$|" ;|' >> $id.ttl
+		grep "#tags:" $i | sed -e 's|#tags:|  schema:keywords "|g' | sed -e 's|,|", "|g' | sed -e 's|$|" ;|' >> $id.ttl
 		echo "  schema:target <https://sparql.nextprot.org/sparql> ;" >> $id.ttl
 		hasSource=$(grep -c "source:" $i)
 		hasDb=$(grep -c "db:" $i)

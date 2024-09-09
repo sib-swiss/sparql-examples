@@ -18,14 +18,14 @@ WHERE {
     a up:Protein ;
     up:reviewed true ;
     rdfs:seeAlso ?transcript .
-  { 
+  {
     ?protein up:annotation/a up:Catalytic_Activity_Annotation ;
   } UNION {
     ?protein up:enzyme ?enzyme .
   }
   ?transcript  a up:Transcript_Resource .
 } GROUP BY ?protein HAVING(COUNT(?transcript) >= 2)""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "mRNA",
         "transcript" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;

@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry ?AAcnt ?seqlen ?AAdensity WHERE {
 }
 order by desc(?AAdensity)
 limit 100 # will bring-up the 100 most relevant cases""" ;
-    schema:keyword "sequence",
+    schema:keywords "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

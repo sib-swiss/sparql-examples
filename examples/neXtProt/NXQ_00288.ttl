@@ -19,7 +19,7 @@ SELECT DISTINCT (str(?pathwayname) as ?unipathway) ?related (str(?pathlabel) as 
  UNION
  {?related a :GoMolecularFunctionCv ; rdfs:label ?pathlabel2 .}
 }""" ;
-    schema:keyword "pathway",
+    schema:keywords "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

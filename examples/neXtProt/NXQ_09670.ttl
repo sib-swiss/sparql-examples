@@ -5,7 +5,7 @@
 ex:NXQ_09670 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with expression profile annotations with evidence from microarray which are NOT from Bgee''' ;
-  schema:keyword "QC", "provenance", "ECO" ;
+  schema:keywords "QC", "provenance", "ECO" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -14,6 +14,6 @@ PREFIX source: <http://nextprot.org/rdf/source/>
 select distinct ?entry where {
   ?entry :isoform ?iso.
   ?iso :expressionProfile /:evidence ?ev.
-  ?ev :evidenceCode cv:ECO_0000104. # microarray  
+  ?ev :evidenceCode cv:ECO_0000104. # microarray
   filter not exists { ?ev :assignedBy source:Bgee }
 }''' .

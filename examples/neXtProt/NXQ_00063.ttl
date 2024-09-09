@@ -32,7 +32,7 @@ SELECT DISTINCT ?entry WHERE {
  values ?pcode { nextprot_cv:ECO_0000501 nextprot_cv:ECO_0000250 }
  }
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "method",
         "nucleotide binding",
         "region",

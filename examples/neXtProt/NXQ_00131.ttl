@@ -32,7 +32,7 @@ SELECT DISTINCT * WHERE {
  # ------------------------------------
  # filter(regex(?label,"peroxisome.*receptor"))
 } limit 20""" ;
-    schema:keyword "term",
+    schema:keywords "term",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

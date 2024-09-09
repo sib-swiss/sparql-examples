@@ -23,7 +23,7 @@ SELECT DISTINCT ?entry WHERE {
  ?pm :start ?pos1 ; :end ?pos2 .
  filter((?pos2 - ?pos1 + 1) >= 9)
  }""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "peptide",
         "protein existence",
         "proteomics",

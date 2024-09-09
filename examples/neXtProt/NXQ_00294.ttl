@@ -38,7 +38,7 @@ SELECT DISTINCT ?start ?stop ?original ?modified WHERE {
  }
 }
 order by asc(?start)""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .

@@ -14,7 +14,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
   ?protein
-  ?rhea 
+  ?rhea
   ?chebi
 WHERE {
   # Use the smiles of dopamine CHEBI:18243
@@ -30,7 +30,7 @@ WHERE {
     up:annotation ?caa .
   ?caa up:catalyticActivity/up:catalyzedReaction ?rhea .
 }""" ;
-    schema:keyword "chemical similarity",
+    schema:keywords "chemical similarity",
         "dopamine",
         "enzyme",
         "idsm",

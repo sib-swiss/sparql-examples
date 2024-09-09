@@ -42,7 +42,7 @@ select ?pathwayname (group_concat(distinct ?gen ; SEPARATOR = ',') as ?gene) WHE
 }
 group by ?pathwayname
 order by ?pathwayname""" ;
-    schema:keyword "federated query",
+    schema:keywords "federated query",
         "pathway",
         "quality",
         "subcellular location",

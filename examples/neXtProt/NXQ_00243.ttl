@@ -13,7 +13,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  ?iso :signalPeptide ?_.
 }""" ;
-    schema:keyword "signal sequence",
+    schema:keywords "signal sequence",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

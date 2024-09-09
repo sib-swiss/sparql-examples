@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  ?modres :term nextprot_cv:PTM-0255.
  ?modres :start ?varpos.
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "chromosomal location",
         "phosphorylation",
         "tutorial",

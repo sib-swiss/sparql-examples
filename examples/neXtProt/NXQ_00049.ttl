@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  UNION
  {?statement :original "R"^^xsd:string;:variation "A"^^xsd:string}
 }""" ;
-    schema:keyword "tutorial",
+    schema:keywords "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

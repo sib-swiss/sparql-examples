@@ -29,7 +29,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) (str(?xlab) as ?itfamily) ?itcnt ?me
 }
 order by desc(?ratio)
 limit 60""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "family",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

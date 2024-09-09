@@ -12,7 +12,7 @@ ex:NXQ_00245 a sh:SPARQLExecutable,
 SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :propeptide ?propep .
 }""" ;
-    schema:keyword "processing",
+    schema:keywords "processing",
         "sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

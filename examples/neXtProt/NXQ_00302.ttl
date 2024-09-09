@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform ?iso.
  filter not exists { ?iso :uniprotKeyword / :term nextprot_cv:KW-1267.}
 }""" ;
-    schema:keyword "keyword",
+    schema:keywords "keyword",
         "protein existence",
         "proteomics",
         "tutorial" ;

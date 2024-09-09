@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry (str(?gen) AS ?gene) ?entry2 (str(?gen2) AS ?gene2) WHERE
  ?entry2 :gene / :recommendedName / rdfs:label ?gen2 .
  filter exists { ?entry2 :isoform / :interactionMapping / :interactant ?entry.}
 } order by ?entry""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

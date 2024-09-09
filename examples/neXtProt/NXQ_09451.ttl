@@ -5,14 +5,14 @@
 ex:NXQ_09451 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with a keyword in the category "Domain" that does not apply to human proteins''' ;
-  schema:keyword "QC", "keyword" ;
+  schema:keywords "QC", "keyword" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
 
 select distinct ?entry where {  # Include ?kw if result is not 0 to identify problem keyword
   values ?kw {
-  cv:KW-0798 # TonB box 
+  cv:KW-0798 # TonB box
   }
   ?entry :isoform /:keyword /:term ?kw.
 }''' .

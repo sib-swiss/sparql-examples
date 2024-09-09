@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :goMolecularFunction ?statement.
  ?statement :negativeEvidence ?ev.
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

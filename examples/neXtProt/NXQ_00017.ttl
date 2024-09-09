@@ -21,7 +21,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :sequence/:length ?len.
  filter (?len>1000)
 }""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "sequence",
         "subcellular location",
         "tutorial" ;

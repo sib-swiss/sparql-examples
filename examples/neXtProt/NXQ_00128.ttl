@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :induction /rdfs:comment ?comment.
  filter(regex (?comment,'IFN|interferon',"i"))
 }""" ;
-    schema:keyword "induction",
+    schema:keywords "induction",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

@@ -18,7 +18,7 @@ SELECT DISTINCT ?entry WHERE {
  ?interactant :isoform? / :domain / :term nextprot_cv:DO-00615. # SH3
 }
 group by ?entry having (count (distinct ?interactant) >= 10)""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "domain",
         "quality",
         "region",

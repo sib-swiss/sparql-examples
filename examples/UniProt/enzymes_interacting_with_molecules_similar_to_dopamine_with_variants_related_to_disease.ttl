@@ -15,7 +15,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT
   ?protein
-  ?rhea 
+  ?rhea
   ?chebi
   ?disease
 WHERE {
@@ -36,7 +36,7 @@ WHERE {
   ?disease_annotation a up:Disease_Annotation ;
      up:disease ?disease .
 }""" ;
-    schema:keyword "chemical similarity",
+    schema:keywords "chemical similarity",
         "dopamine",
         "enzyme",
         "idsm",

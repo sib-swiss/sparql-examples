@@ -14,7 +14,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 SELECT
   ?protein ?mutagenesisBeginPosition ?activeSiteBeginPosition ?mutagenesisRangeEndPosition ?mutagenesisComment
 WHERE {
-  ?protein up:annotation ?activeSiteAnnotation , 
+  ?protein up:annotation ?activeSiteAnnotation ,
       ?mutagenesisAnnotation .
   ?mutagenesisAnnotation a up:Mutagenesis_Annotation ;
      up:range ?mutagenesisRange ;
@@ -24,14 +24,14 @@ WHERE {
   ?activeSiteRange faldo:begin ?activeSiteBegin .
   ?activeSiteBegin faldo:position ?activeSiteBeginPosition ;
     faldo:reference ?sequence .
-  ?mutagenesisRange faldo:begin ?mutagenesisRangeBegin ; 
-    faldo:end ?mutagenesisRangeEnd . 
+  ?mutagenesisRange faldo:begin ?mutagenesisRangeBegin ;
+    faldo:end ?mutagenesisRangeEnd .
   ?mutagenesisRangeBegin faldo:position ?mutagenesisBeginPosition ;
     faldo:reference ?sequence .
   ?mutagenesisRangeEnd faldo:position ?mutagenesisRangeEndPosition .
   FILTER(?mutagenesisBeginPosition <= ?activeSiteBeginPosition && ?activeSiteBeginPosition <= ?mutagenesisRangeEndPosition)
 }""" ;
-    schema:keyword "active site",
+    schema:keywords "active site",
         "enzyme",
         "mutagenesis" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;

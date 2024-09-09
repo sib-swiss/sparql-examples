@@ -20,7 +20,7 @@ select ?entry WHERE {
 }
 group by ?entry
 having (sum(?massive)=0 && sum(?pa)=0 && sum(?other)>0)""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "peptide",
         "proteomics",
         "tutorial" ;

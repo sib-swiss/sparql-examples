@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :antibodyMapping ?abmap.
  ?iso :peptideMapping ?pepmap.
 }""" ;
-    schema:keyword "antibody",
+    schema:keywords "antibody",
         "dataset",
         "proteomics",
         "subcellular location",

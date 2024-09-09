@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :crossLink /rdfs:comment ?comment.
  filter(contains (?comment,'SUMO'))
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

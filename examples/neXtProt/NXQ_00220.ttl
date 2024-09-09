@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :gene ?gene .
  ?gene :chromosome "MT"^^xsd:string; :strand "1"^^xsd:string .
  }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

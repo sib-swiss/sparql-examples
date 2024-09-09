@@ -18,7 +18,7 @@ where {
  ?phvar :evidence / :quality :GOLD .
  ?phvar :impactedObject / :term ?ioTerm .
 }""" ;
-    schema:keyword "phenotype",
+    schema:keywords "phenotype",
         "quality",
         "subcellular location",
         "tutorial",

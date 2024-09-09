@@ -5,7 +5,7 @@
 ex:NXQ_09413 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries whose gene is located on chromosome unknown which does not have AC NX_O00370 NX_Q96PT3 NX_Q96PT4 NX_Q9UN81''' ;
-  schema:keyword "QC", "chromosomal location" ;
+  schema:keywords "QC", "chromosomal location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry WHERE {
  )
  } group by ?entry ?iso having ( count(?ptm) >= 1 )
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "phosphorylation",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

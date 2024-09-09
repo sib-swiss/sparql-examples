@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :lipidationSite / rdfs:comment ?mod.
  filter(contains(?mod,"GPI-anchor")).
 }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "subcellular location",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

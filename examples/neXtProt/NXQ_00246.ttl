@@ -30,7 +30,7 @@ SELECT DISTINCT ?entry WHERE {
  ?x rdfs:label ?xlab .
  ?x skos:exactMatch ?chebi .
 } order by ?entry""" ;
-    schema:keyword "enzyme",
+    schema:keywords "enzyme",
         "federated query",
         "function",
         "tutorial" ;

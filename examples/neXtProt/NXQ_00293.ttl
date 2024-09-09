@@ -5,7 +5,7 @@
 ex:NXQ_00293 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Glycosylation sites annotated by GlyConnect from a list of publications (PMIDs)''' ;
-  schema:keyword "federated", "glycosylation", "PTM", "publication", "sequence", "snorql-only" ;
+  schema:keywords "federated", "glycosylation", "PTM", "publication", "sequence", "snorql-only" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -21,11 +21,11 @@ values ?pmid {"24884609" "10441114"} # pubmed ids, space- or linebreak-separated
 
 bind(IRI(concat("http://www.ncbi.nlm.nih.gov/pubmed/",?pmid)) as ?pubIRI)
 service <https://glyconnect.expasy.org/sparql> {
-  ?ref_conjugate glyco:has_protein_part ?glycoprotein . 
+  ?ref_conjugate glyco:has_protein_part ?glycoprotein .
   ?glycoprotein glyco:glycosylated_at / faldo:location ?glycosite .
   ?glycosite faldo:reference ?isoform ; faldo:position ?position .
   ?ref_conjugate glycan:published_in / foaf:primaryTopicOf ?pubIRI .
  }
-BIND(IRI(replace(str(?isoform),"http://purl.uniprot.org/isoforms/","http://nextprot.org/rdf/isoform/NX_")) AS ?isoNP) . 
+BIND(IRI(replace(str(?isoform),"http://purl.uniprot.org/isoforms/","http://nextprot.org/rdf/isoform/NX_")) AS ?isoNP) .
 ?entry :isoform ?isoNP .
 } order by ?entry ?position''' .

@@ -5,7 +5,7 @@
 ex:NXQ_09660 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries with interaction mapping annotations with evidence NOT from ENYO''' ;
-  schema:keyword "QC", "provenance", "interaction" ;
+  schema:keywords "QC", "provenance", "interaction" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

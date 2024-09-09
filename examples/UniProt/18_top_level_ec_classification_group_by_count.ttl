@@ -20,7 +20,7 @@ WHERE
     ?enzyme rdfs:subClassOf ?ecClass .
 }
 GROUP BY ?ecClass ORDER BY ?ecClass""" ;
-    schema:keyword "ec",
+    schema:keywords "ec",
         "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

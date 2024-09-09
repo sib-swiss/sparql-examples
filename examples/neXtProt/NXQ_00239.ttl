@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry ?iprac WHERE {
  ?ref :provenance db:InterPro.
  ?ref :accession ?iprac}
 order by ?entry ?iprac""" ;
-    schema:keyword "cross-reference",
+    schema:keywords "cross-reference",
         "domain",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

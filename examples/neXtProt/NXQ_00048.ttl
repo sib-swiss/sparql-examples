@@ -27,7 +27,7 @@ SELECT DISTINCT ?entry WHERE {
 
  }
 }""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .

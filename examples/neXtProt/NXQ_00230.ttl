@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?hlen WHERE {
  filter(?hlen > 75)
 }
 order by desc(?hlen)""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "method",
         "sequence",
         "tutorial" ;

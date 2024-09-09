@@ -20,7 +20,7 @@ SELECT DISTINCT ?entry ?varpos ?freq where
  ?ev :alleleFrequency ?freq .
  filter(?freq > 0.1 && ?anb > 100000)
  } order by desc(?freq)""" ;
-    schema:keyword "tutorial",
+    schema:keywords "tutorial",
         "variant" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

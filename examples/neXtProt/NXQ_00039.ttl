@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :activeSite /:start ?actsitePos.
  filter (?mutaPos=?actsitePos)
 }""" ;
-    schema:keyword "active site",
+    schema:keywords "active site",
         "enzyme",
         "mutagenesis",
         "tutorial" ;

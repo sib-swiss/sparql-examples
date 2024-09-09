@@ -23,7 +23,7 @@ filter not exists {
  }
 }
 group by ?entry having(count (distinct ?pepid) >= 2)""" ;
-    schema:keyword "peptide",
+    schema:keywords "peptide",
         "proteomics",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

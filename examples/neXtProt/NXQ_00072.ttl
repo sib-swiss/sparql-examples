@@ -13,7 +13,7 @@ PREFIX db: <http://nextprot.org/rdf/db/>
 SELECT DISTINCT ?entry WHERE {
  ?entry :reference / :provenance db:CCDS.
 }""" ;
-    schema:keyword "cross-reference",
+    schema:keywords "cross-reference",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

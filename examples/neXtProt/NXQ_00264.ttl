@@ -5,7 +5,7 @@
 ex:NXQ_00264 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Proteins with ENV polyprotein domains and matching viral species''' ;
-  schema:keyword "federated query", "ortholog", "snorql-only" ;
+  schema:keywords "federated query", "ortholog", "snorql-only" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
@@ -26,9 +26,9 @@ select distinct ?entry (str(?ipac) AS ?ipacSTR) (group_concat(?taxlab ; SEPARATO
    ?clade a orth:Clade; up:scientificName 'Viruses'.
    ?gene_v up:organism / a ?taxon; orth:xref [a orth:Xref; orth:xrefResource ?ipref].
    ?taxon up:scientificName ?taxlab .
-   } 
+   }
   }
   ?entry a :Entry .
   ?entry :reference ?ref .
-  ?ref a :Xref ; :provenance db:InterPro; :accession ?ipac .  
+  ?ref a :Xref ; :provenance db:InterPro; :accession ?ipac .
 } group by ?entry ?ipac''' .

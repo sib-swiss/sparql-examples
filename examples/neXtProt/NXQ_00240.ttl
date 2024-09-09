@@ -17,7 +17,7 @@ SELECT DISTINCT ?entry ?interactant WHERE {
  filter(?interactant != ?entry) # remove self-interacting proteins
 }
 order by ?entry""" ;
-    schema:keyword "PPI",
+    schema:keywords "PPI",
         "quality",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

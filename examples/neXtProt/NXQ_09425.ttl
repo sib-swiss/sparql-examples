@@ -5,7 +5,7 @@
 ex:NXQ_09425 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
   rdfs:comment '''Check there are no entries which do not have a valid protein existence value''' ;
-  schema:keyword "QC", "protein existence", "PE" ;
+  schema:keywords "QC", "protein existence", "PE" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
 PREFIX cv: <http://nextprot.org/rdf/terminology/>

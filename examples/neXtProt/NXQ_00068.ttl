@@ -12,7 +12,7 @@ ex:NXQ_00068 a sh:SPARQLExecutable,
 SELECT DISTINCT ?entry WHERE {
  ?entry :existence :Evidence_at_transcript_level
 }""" ;
-    schema:keyword "protein existence",
+    schema:keywords "protein existence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

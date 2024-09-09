@@ -31,7 +31,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) WHERE {
     ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-0418. #kinase
     ?entry :gene / :recommendedName / rdfs:label ?gen.
 }""" ;
-    schema:keyword "drug",
+    schema:keywords "drug",
         "enzyme",
         "federated query",
         "function",

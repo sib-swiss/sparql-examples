@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?map :method ?meth
  filter (contains(?meth,'NMR'))
 }""" ;
-    schema:keyword "3D structure",
+    schema:keywords "3D structure",
         "method",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :uniprotKeyword /:term nextprot_cv:KW-0694. #RNA-binding
  filter not exists {?iso :region/:term nextprot_cv:DO-00581} #RRM
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "nucleotide binding",
         "region",
         "tutorial" ;

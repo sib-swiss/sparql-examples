@@ -10,7 +10,7 @@ ex:NXQ_00223 a sh:SPARQLExecutable,
     sh:select """PREFIX : <http://nextprot.org/rdf/>
 PREFIX db: <http://nextprot.org/rdf/db/>
 
-select (str(?publiid) as ?PMID) (str(?tt) as ?title) (count(distinct ?entry) as ?ecnt) 
+select (str(?publiid) as ?PMID) (str(?tt) as ?title) (count(distinct ?entry) as ?ecnt)
 where {
  ?entry a :Entry .
  ?entry :reference ?ref .
@@ -23,7 +23,7 @@ where {
 group by ?publiid ?tt
 order by desc(?ecnt)
 limit 100""" ;
-    schema:keyword "publication",
+    schema:keywords "publication",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

@@ -25,7 +25,7 @@ SELECT DISTINCT ?entry WHERE {
 # Note that we also exclude expression detected in testis.
  filter not exists { ?iso :detectedExpression / :term / :childOf nextprot_cv:TS-1030 }
 }""" ;
-    schema:keyword "expression",
+    schema:keywords "expression",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

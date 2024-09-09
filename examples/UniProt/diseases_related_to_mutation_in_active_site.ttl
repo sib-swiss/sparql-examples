@@ -12,9 +12,9 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT 
+SELECT
   DISTINCT
-   ?disease 
+   ?disease
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;
@@ -39,9 +39,9 @@ WHERE {
   ?natural_variant_begin faldo:position ?natural_variant_begin_position .
   ?natural_variant_end faldo:position ?natural_variant_end_position ;
                        faldo:reference ?sequence .
-  
-  FILTER(?natural_variant_begin_position >= ?active_site_position && ?active_site_position <= ?natural_variant_end_position) 
+
+  FILTER(?natural_variant_begin_position >= ?active_site_position && ?active_site_position <= ?natural_variant_end_position)
 }""" ;
-    schema:keyword "enzyme" ;
+    schema:keywords "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

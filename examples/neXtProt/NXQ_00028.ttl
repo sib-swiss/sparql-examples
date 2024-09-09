@@ -28,7 +28,7 @@ SELECT DISTINCT ?entry WHERE {
 	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # cause of disease
  } )
 }""" ;
-    schema:keyword "disease",
+    schema:keywords "disease",
         "keyword",
         "tutorial",
         "variant" ;

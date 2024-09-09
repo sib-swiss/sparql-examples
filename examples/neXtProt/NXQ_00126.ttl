@@ -39,7 +39,7 @@ order by ?pep
 # overestimated, need additional filter(s)
 # but for instance AELEEVTLDGKPLQALR, AELEEVTLDGKPLQALRVTDLKAALEQR and AELEEVTLDGKPLQALRVTDLKAALEQR in Q9UKV3
 # are N-acetylated and good markers for an additional iso starting at M-59""" ;
-    schema:keyword "isoforms",
+    schema:keywords "isoforms",
         "peptide",
         "proteomics",
         "tutorial" ;

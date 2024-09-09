@@ -14,7 +14,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :isoform / :signalPeptide / rdfs:comment ?comment .
  filter(contains(?comment,"Not cleaved"))
 }""" ;
-    schema:keyword "signal sequence",
+    schema:keywords "signal sequence",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
 

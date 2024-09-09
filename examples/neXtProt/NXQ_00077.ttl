@@ -19,7 +19,7 @@ SELECT DISTINCT ?entry WHERE {
  filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:PeptideAtlas_human_Liver . }
  filter not exists { ?entry :isoform / :peptideMapping / :evidence / :assignedBy source:MassIVE_human_Liver . }
 }""" ;
-    schema:keyword "dataset",
+    schema:keywords "dataset",
         "expression",
         "method",
         "proteomics",

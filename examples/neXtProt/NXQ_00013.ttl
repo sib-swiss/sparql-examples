@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?iso :region /:term nextprot_cv:DO-00529.
  filter not exists { ?iso :enzymeClassification / :term /:childOf nextprot_cv:2_7_-_- }
 }""" ;
-    schema:keyword "domain",
+    schema:keywords "domain",
         "enzyme",
         "function",
         "region",

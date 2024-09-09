@@ -22,7 +22,7 @@ SELECT DISTINCT ?entry ?overlap WHERE {
  bind ( if(?p2<?s2, ?p2, ?s2) - ?p1 as ?overlap) .
  filter(?overlap > 2)
 }""" ;
-    schema:keyword "peptide",
+    schema:keywords "peptide",
         "proteomics",
         "signal sequence",
         "tutorial" ;

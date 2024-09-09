@@ -15,7 +15,7 @@ SELECT DISTINCT ?entry WHERE {
  ?entry :gene / :chromosome "X"^^xsd:string .
  filter not exists { ?entry :reference / :provenance db:MGI . }
 }""" ;
-    schema:keyword "chromosomal location",
+    schema:keywords "chromosomal location",
         "cross-reference",
         "ortholog",
         "tutorial" ;

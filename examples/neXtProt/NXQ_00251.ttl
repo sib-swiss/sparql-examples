@@ -23,7 +23,7 @@ select ?entry (sample(?isopos) as ?samplematch) WHERE {
  filter not exists {?iso1 :peptideMapping/ :peptideName ?pepname.}
  }
 group by ?entry""" ;
-    schema:keyword "isoforms",
+    schema:keywords "isoforms",
         "peptide",
         "proteomics",
         "tutorial" ;

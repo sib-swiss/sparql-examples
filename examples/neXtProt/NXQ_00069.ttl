@@ -28,7 +28,7 @@ SELECT DISTINCT ?entry WHERE {
  #filter regex(?ptmtext, "autophos","i")
  }
  }""" ;
-    schema:keyword "PTM",
+    schema:keywords "PTM",
         "phosphorylation",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .

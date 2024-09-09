@@ -16,7 +16,7 @@ SELECT DISTINCT ?entry WHERE {
  ?p :evidence /:reference ?xref.
  ?xref :provenance db:Reactome; :accession "R-HSA-611105"^^xsd:string.
 }""" ;
-    schema:keyword "function",
+    schema:keywords "function",
         "pathway",
         "tutorial" ;
     schema:target <https://sparql.nextprot.org/sparql> .
