@@ -27,19 +27,9 @@ WHERE {
       rh:side ?reactionSide .
     ?reactionSide
       rh:contains ?participant .
-    ?participant rh:compound ?compound
-    {
-      ?compound rh:chebi ?chebi .
-      ?chebi (rdfs:subClassOf)+ CHEBI:15889
-    } UNION {
-      ?compound rh:chebi ?chebi .
-      ?chebi2 rdfs:subClassOf ?chebiRestriction .
-      ?chebiRestriction
-		a owl:Restriction ;
-		owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 ;
-		owl:someValuesFrom ?chebi .
-      ?chebi2 (rdfs:subClassOf)+ CHEBI:15889
-    }
+    ?participant rh:compound ?compound .
+    ?compound rh:chebi ?chebi .
+    ?chebi (rdfs:subClassOf)+ CHEBI:15889
   }
   # UniProt: retrieve the human (taxid:9606) enzymes catalyzing these Rhea reactions
   ?ca up:catalyzedReaction  ?reaction .
