@@ -84,10 +84,10 @@ java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-
 
 should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
 
-The queries can be executed automatically on all endpoints they apply to using ane extra argument for the Tester `--also-run-slow-tests`:
+The queries can be executed automatically on all endpoints they apply to using an extra argument `--also-run-slow-tests`:
 
 ```bash
-java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples/Bgee --also-run-slow-tests
+java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples/MetaNetX --also-run-slow-tests
 ```
 
 > This does change the queries to add a LIMIT 1 if no limit was set in the query. Then check if there is a result it is fetched.
@@ -102,7 +102,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT DISTINCT ?sq ?comment ?query
 WHERE {
     ?sq a sh:SPARQLExecutable ;
-        rdfs:label|rdfs:comment ?comment ;
+        rdfs:comment ?comment ;
         sh:select|sh:ask|sh:construct|sh:describe ?query .
 } ORDER BY ?sq
 ```
