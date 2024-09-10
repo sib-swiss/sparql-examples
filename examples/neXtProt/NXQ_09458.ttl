@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09458 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with a ptm info annotation referring to ADP-ribosylation that do not have the keyword ADP-ribosylation (KW-0013)''' ;
+  rdfs:comment '''Check there are no entries with a ptm info annotation referring to ADP-ribosylation that do not have the keyword ADP-ribosylation (KW-0013)'''@en ;
   schema:keywords "QC", "keyword" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

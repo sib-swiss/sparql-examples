@@ -6,7 +6,7 @@
 ex:50 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment """Where are the human genes encoding enzymes metabolizing N-acyl
-sphingosines expressed in the human body (federated query, with Rhea and Bgee)""" ;
+sphingosines expressed in the human body (federated query, with Rhea and Bgee)"""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX genex: <http://purl.org/genex#>

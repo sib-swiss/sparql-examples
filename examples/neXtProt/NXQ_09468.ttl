@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09468 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with a subcellular location annotation that do not have the corresponding keyword''' ;
+  rdfs:comment '''Check there are no entries with a subcellular location annotation that do not have the corresponding keyword'''@en ;
   schema:keywords "QC", "keyword", "subcellular location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

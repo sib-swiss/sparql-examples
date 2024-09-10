@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09426 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries which are PE2-PE4 with an expression-info annotation of GOLD quality which has a description which contains "(at protein level)" and evidence assigned by neXtProt''' ;
+  rdfs:comment '''Check there are no entries which are PE2-PE4 with an expression-info annotation of GOLD quality which has a description which contains "(at protein level)" and evidence assigned by neXtProt'''@en ;
   schema:keywords "QC", "protein existence", "PE" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_00100 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Proteins expressed in liver and that have COSMIC variants associated with liver/hepatic cancer''' ;
+  rdfs:comment '''Proteins expressed in liver and that have COSMIC variants associated with liver/hepatic cancer'''@en ;
   schema:keywords "variant", "sequence variation", "disease", "expression" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

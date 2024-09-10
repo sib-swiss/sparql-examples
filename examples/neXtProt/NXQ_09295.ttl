@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09295 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with phenotypic variation annotations from neXtProt for which the evidence code is NOT experimental evidence (ECO:0000006) or sequence similarity evidence used in manual assertion (ECO:0000250)''' ;
+  rdfs:comment '''Check there are no entries with phenotypic variation annotations from neXtProt for which the evidence code is NOT experimental evidence (ECO:0000006) or sequence similarity evidence used in manual assertion (ECO:0000250)'''@en ;
   schema:keywords "QC", "evidence", "ECO", "phenotype" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

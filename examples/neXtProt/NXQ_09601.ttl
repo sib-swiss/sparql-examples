@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09601 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with expression profile annotations with RNA-seq evidence (ECO:0000295) from HPA which is SILVER''' ;
+  rdfs:comment '''Check there are no entries with expression profile annotations with RNA-seq evidence (ECO:0000295) from HPA which is SILVER'''@en ;
   schema:keywords "QC", "quality", "evidence", "expression" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

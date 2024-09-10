@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09282 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with expression profile annotations from HPA for which the evidence code is NOT immunohistochemistry evidence, RNA-seq evidence or single-cell RNA-sequencing evidence''' ;
+  rdfs:comment '''Check there are no entries with expression profile annotations from HPA for which the evidence code is NOT immunohistochemistry evidence, RNA-seq evidence or single-cell RNA-sequencing evidence'''@en ;
   schema:keywords "QC", "evidence", "ECO", "expression" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

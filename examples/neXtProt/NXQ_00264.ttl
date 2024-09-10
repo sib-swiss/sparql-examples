@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_00264 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Proteins with ENV polyprotein domains and matching viral species''' ;
+  rdfs:comment '''Proteins with ENV polyprotein domains and matching viral species'''@en ;
   schema:keywords "federated query", "ortholog", "snorql-only" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

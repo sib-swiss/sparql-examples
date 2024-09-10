@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09406 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with GO cellular component annotations with the evidence code is ND (ECO:0000035)''' ;
+  rdfs:comment '''Check there are no entries with GO cellular component annotations with the evidence code is ND (ECO:0000035)'''@en ;
   schema:keywords "QC", "filtering", "evidence" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

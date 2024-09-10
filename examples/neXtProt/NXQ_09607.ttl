@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09607 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with GO cellular component annotations with evidence having the evidence code HMP and the quality GOLD''' ;
+  rdfs:comment '''Check there are no entries with GO cellular component annotations with evidence having the evidence code HMP and the quality GOLD'''@en ;
   schema:keywords "QC", "quality", "evidence", "cellular component" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

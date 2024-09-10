@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09670 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with expression profile annotations with evidence from microarray which are NOT from Bgee''' ;
+  rdfs:comment '''Check there are no entries with expression profile annotations with evidence from microarray which are NOT from Bgee'''@en ;
   schema:keywords "QC", "provenance", "ECO" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09641 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with a variant annotation with an xref starting with COSM that do not have evidence from COSMIC''' ;
+  rdfs:comment '''Check there are no entries with a variant annotation with an xref starting with COSM that do not have evidence from COSMIC'''@en ;
   schema:keywords "QC", "variant", "xref" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

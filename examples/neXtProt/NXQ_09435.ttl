@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09435 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with an xref to PDBsum and no PDB mapping annotation''' ;
+  rdfs:comment '''Check there are no entries with an xref to PDBsum and no PDB mapping annotation'''@en ;
   schema:keywords "QC", "3D structure" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

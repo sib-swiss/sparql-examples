@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09433 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with an xref to an ENSP but no xref to an ENST''' ;
+  rdfs:comment '''Check there are no entries with an xref to an ENSP but no xref to an ENST'''@en ;
   schema:keywords "QC", "chromosomal location" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

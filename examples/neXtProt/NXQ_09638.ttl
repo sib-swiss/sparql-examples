@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09638 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries where the isoform sequence starts with M and the variant at position 1 does not start with M''' ;
+  rdfs:comment '''Check there are no entries where the isoform sequence starts with M and the variant at position 1 does not start with M'''@en ;
   schema:keywords "QC", "variant" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

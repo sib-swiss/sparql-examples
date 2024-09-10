@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09088 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with variant information annotations with evidence NOT from UniProt''' ;
+  rdfs:comment '''Check there are no entries with variant information annotations with evidence NOT from UniProt'''@en;
   schema:keywords "QC", "provenance", "variant" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

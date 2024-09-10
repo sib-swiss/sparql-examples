@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09100 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with cleavage site annotations with evidence from UniProt of quality SILVER''' ;
+  rdfs:comment '''Check there are no entries with cleavage site annotations with evidence from UniProt of quality SILVER'''@en ;
   schema:keywords "QC", "quality", "evidence", "sequence" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

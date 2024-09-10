@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09202 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with GO molecular function annotations with evidence from GO central of quality SILVER and evidence code not IBA, IEP, HMP, HDA or HEP''' ;
+  rdfs:comment '''Check there are no entries with GO molecular function annotations with evidence from GO central of quality SILVER and evidence code not IBA, IEP, HMP, HDA or HEP'''@en ;
   schema:keywords "QC", "quality", "evidence", "function" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

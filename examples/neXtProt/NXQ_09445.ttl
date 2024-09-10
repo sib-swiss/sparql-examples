@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_09445 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Check there are no entries with a keyword in the category "Biological process" that does not apply to human proteins''' ;
+  rdfs:comment '''Check there are no entries with a keyword in the category "Biological process" that does not apply to human proteins'''@en ;
   schema:keywords "QC", "keyword" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>

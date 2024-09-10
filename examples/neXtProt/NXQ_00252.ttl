@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 ex:NXQ_00252 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
   sh:prefixes _:sparql_examples_prefixes ;
-  rdfs:comment '''Protein kinases involved in cancer pathways according to wikipathways''' ;
+  rdfs:comment '''Protein kinases involved in cancer pathways according to wikipathways'''@en ;
   schema:keywords "federated query", "function", "pathway" ;
   schema:target <https://sparql.nextprot.org/sparql> ;
   sh:select '''PREFIX : <http://nextprot.org/rdf/>
