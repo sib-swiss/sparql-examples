@@ -19,12 +19,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RiotException;
@@ -36,16 +30,6 @@ import org.junit.jupiter.api.function.Executable;
 import swiss.sib.rdf.sparql.examples.FindFiles;
 
 public class ValidateSparqlExamplesTest {
-	private static final String FIND_PREFIXES = """
-			PREFIX sh:<http://www.w3.org/ns/shacl#>
-			SELECT ?s
-			WHERE
-			{
-				?pn sh:prefix ?prefix ;
-					sh:namespace ?namespaceI .
-				BIND(CONCAT('PREFIX ',?prefix, ':<',(STR(?namespaceI)),'>') AS ?s)
-			}
-			""";
 
 	@TestFactory
 	public Stream<DynamicTest> testAllWithJena() throws URISyntaxException, IOException {
@@ -155,20 +139,5 @@ public class ValidateSparqlExamplesTest {
 		} else {
 			return Stream.empty();
 		}
-	}
-
-	private String extractPrefixes(Path prefixes) {
-		Model model = RDFDataMgr.loadModel(prefixes.toUri().toString());
-		StringBuilder prefixesSB = new StringBuilder();
-		Query qry = QueryFactory.create(FIND_PREFIXES);
-		QueryExecution qe = QueryExecutionFactory.create(qry, model);
-		ResultSet rs = qe.execSelect();
-		while (rs.hasNext()) {
-			QuerySolution next = rs.next();
-			prefixesSB.append(next.getLiteral("s").getValue()).append('\n');
-		}
-		rs.close();
-		qe.close();
-		return prefixesSB.toString();
 	}
 }
