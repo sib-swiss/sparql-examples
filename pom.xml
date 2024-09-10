@@ -355,7 +355,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>
-										swiss.sib.rdf.sparql.examples.Converter</mainClass>
+										swiss.sib.rdf.sparql.examples.Sparql</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

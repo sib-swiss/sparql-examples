@@ -73,7 +73,7 @@ public class Tester implements Callable<Integer> {
 	private void test(Stream<Path> list) throws Exception {
 		System.setProperty(Tester.class.getName(), inputDirectory.toString());
 		List<String> standardOptions = List.of("--fail-if-no-tests", "--include-engine", "junit-jupiter",
-				"--select-class", ValidateSparqlExamplesTest.class.getName());
+				"--select-package", ValidateSparqlExamplesTest.class.getPackageName());
 		if (!alsoRunSlowTests) {
 			standardOptions = new ArrayList<>(standardOptions);
 			standardOptions.add("--exclude-tag");
