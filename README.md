@@ -5,7 +5,7 @@ This is a collection of SPARQL examples usable on different SIB related SPARQL e
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
 * ShACL for the relation to the text of the Select/Ask queries, and declaring prefixes
-* RDFS for comments and labels as shown in the user interfaces
+* RDFS for comments and labels as shown in the user interfaces, annotated with a language tag
 * RDF for basic type relations
 * schema.org for the target SPARQL endpoint and tagging relevant keywords
 
@@ -20,7 +20,7 @@ prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:001  # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
-    rdfs:comment """A comment <em>May have HTML in them</em>. Example: Select all taxa from the <a href=\"https://www.uniprot.org/taxonomy/\">UniProt taxonomy</a>"""^^rdf:HTML ;
+    rdfs:comment "Select all taxa from the UniProt taxonomy"@en ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
 SELECT ?taxon
