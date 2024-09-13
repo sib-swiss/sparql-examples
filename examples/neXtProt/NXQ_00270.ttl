@@ -8,7 +8,6 @@ ex:NXQ_00270 a sh:SPARQLExecutable,
     rdfs:comment "Proteins belonging to Rett syndrome pathways, and their subcellular locations (GOLD)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
-PREFIX dc: <http://purl.org/dc/terms/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
@@ -29,7 +28,7 @@ select ?entry (str(?gen) AS ?gene) ?pathwayname (group_concat(distinct str(?locl
  ?pathway a wp:Pathway .
  ?pathway wp:organism ?organism .
  filter(contains(str(?organism),"9606"))
- ?pathway dc:title ?pathwayname .
+ ?pathway dcterms:title ?pathwayname .
  filter(regex(?pathwayname,"rett","i")).
  }
  ?entry a :Entry .

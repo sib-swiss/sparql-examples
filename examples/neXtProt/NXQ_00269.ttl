@@ -8,7 +8,6 @@ ex:NXQ_00269 a sh:SPARQLExecutable,
     rdfs:comment "Proteins with associated cancer pathways in WikiPathways (via Disease Ontology classification)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://nextprot.org/rdf/>
-PREFIX dc: <http://purl.org/dc/terms/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wp: <http://vocabularies.wikipathways.org/wp#>
@@ -26,7 +25,7 @@ SELECT DISTINCT ?entry (str(?gen) as ?gene) ?pathwayname WHERE {
  ?pathway a wp:Pathway .
  ?pathway wp:organism ?organism .
  filter(contains(str(?organism),"9606")) # Human proteins
- ?pathway dc:title ?pathwayname .
+ ?pathway dcterms:title ?pathwayname .
  ?pathway wp:ontologyTag <http://purl.obolibrary.org/obo/DOID_162> . # Parent id for all cancers
  }
  ?entry a :Entry .
