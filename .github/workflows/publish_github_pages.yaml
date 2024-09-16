@@ -32,13 +32,13 @@ jobs:
         java-version: '21'
     
     - name: Install tester
-      run: wget 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar' -O sparql-examples-util-1.0.0-uber.jar
+      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.0/sparql-examples-utils-2.0.0-uber.jar" -O sparql-examples-utils-uber.jar
 
     - name: generate markdown
-      run: java -jar sparql-examples-util-*-uber.jar -i examples/ -m 
+      run: java -jar sparql-examples-utils-uber.jar -i examples/ -m 
     
     - name: generate rq files
-      run: java -jar sparql-examples-util-*-uber.jar -i examples/ -r
+      run: java -jar sparql-examples-utils-uber.jar -i examples/ -r
 
     - name: Setup Pages
       id: pages
