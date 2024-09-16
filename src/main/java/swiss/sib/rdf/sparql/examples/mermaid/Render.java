@@ -41,6 +41,7 @@ import org.eclipse.rdf4j.query.algebra.ProjectionElem;
 import org.eclipse.rdf4j.query.algebra.ProjectionElemList;
 import org.eclipse.rdf4j.query.algebra.Regex;
 import org.eclipse.rdf4j.query.algebra.SameTerm;
+import org.eclipse.rdf4j.query.algebra.Sample;
 import org.eclipse.rdf4j.query.algebra.Service;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.query.algebra.Str;
@@ -434,28 +435,35 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Avg node) throws RuntimeException {
-			sb.append("Average(");
+			sb.append("average(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
 
 		@Override
+		public void meet(Sample node) throws RuntimeException {
+			sb.append("sample(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+		
+		@Override
 		public void meet(Max node) throws RuntimeException {
-			sb.append("Max(");
+			sb.append("max(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
 
 		@Override
 		public void meet(Min node) throws RuntimeException {
-			sb.append("Min(");
+			sb.append("min(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
 
 		@Override
 		public void meet(Sum node) throws RuntimeException {
-			sb.append("Sum(");
+			sb.append("sum(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
@@ -473,7 +481,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(SameTerm node) throws RuntimeException {
-			sb.append("Sameterm(");
+			sb.append("sameterm(");
 			node.getLeftArg().visit(this);
 			sb.append(",");
 			node.getRightArg().visit(this);
@@ -482,13 +490,13 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Not node) throws RuntimeException {
-			sb.append("NOT ");
+			sb.append("not ");
 			node.getArg().visit(this);
 		}
 
 		@Override
 		public void meet(Bound node) throws RuntimeException {
-			sb.append("Bound(");
+			sb.append("bound(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
@@ -515,14 +523,14 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Str node) throws RuntimeException {
-			sb.append("Str(");
+			sb.append("str(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
 
 		@Override
 		public void meet(If node) throws RuntimeException {
-			sb.append("If(");
+			sb.append("if(");
 			node.getCondition().visit(this);
 			sb.append(',');
 			node.getResult().visit(this);
@@ -533,7 +541,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Count node) throws RuntimeException {
-			sb.append("Count(");
+			sb.append("count(");
 			node.getArg().visit(this);
 			sb.append(")");
 		}
@@ -549,7 +557,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 		@Override
 		public void meet(Regex node) throws RuntimeException {
-			sb.append("Regex (");
+			sb.append("regex(");
 			node.getLeftArg().visit(this);
 			sb.append(",");
 			// TODO escape a regex properly so that it does not kill mermaid or jekyll
