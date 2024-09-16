@@ -3,6 +3,8 @@ package swiss.sib.rdf.sparql.examples.mermaid;
 import java.util.Map;
 
 import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.query.algebra.BindingSetAssignment;
+import org.eclipse.rdf4j.query.algebra.ExtensionElem;
 import org.eclipse.rdf4j.query.algebra.Var;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
@@ -41,5 +43,21 @@ public final class NameVariablesAndConstants extends AbstractQueryModelVisitor<R
 			String nextId = prefix + "c" + (constantKeys.size() + 1);
 			constantKeys.put(node.getValue(), nextId);
 		}
+	}
+
+	@Override
+	public void meet(BindingSetAssignment node) throws RuntimeException {
+		super.meet(node);
+		for (String name : node.getBindingNames()) {
+			String nextId = prefix + "v" + (variableKeys.size() + 1);
+			variableKeys.put(name, nextId);
+		}
+	}
+	
+	@Override
+	public void meet(ExtensionElem node)
+	{
+		String nextId = prefix + "v" + (variableKeys.size() + 1);
+		variableKeys.put(node.getName(), nextId);
 	}
 }

@@ -390,7 +390,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 				}
 			}
 		}
-
+		
 		@Override
 		public void meet(Var node) throws RuntimeException {
 			super.meet(node);
