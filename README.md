@@ -40,7 +40,7 @@ We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examp
 First, download the jar file with:
 
 ```bash
-wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v1.0.0/sparql-examples-util-1.0.0-uber.jar'
+wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.0/sparql-examples-utils-2.0.0-uber.jar'
 ```
 
 ### Compile all query files into one file to upload to your endpoint
@@ -56,14 +56,14 @@ java -jar sparql-examples-utils.jar -i examples/ -p UniProt -f ttl > examples_Un
 Or compile for all example folders, as JSON-LD, to the standard output:
 
 ```bash
-java -jar sparql-examples-utils.jar -i examples/ -p all -f jsonld
+java -jar sparql-examples-utils.jar convert -i examples/ -p all -f jsonld
 ```
 
 ### Generate RQ files
 
 For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
 ```bash
-java -jar sparql-examples-utils.jar -i examples/ -p all -r
+java -jar sparql-examples-utils.jar convert -i examples/ -p all -r
 ```
 
 ### Generate markdown file
@@ -71,7 +71,7 @@ java -jar sparql-examples-utils.jar -i examples/ -p all -r
 Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
 
 ```bash
-java -jar sparql-examples-utils.jar -i examples/ -m
+java -jar sparql-examples-utils.jar convert -i examples/ -m
 ```
 
 ### Testing the queries
@@ -79,7 +79,7 @@ java -jar sparql-examples-utils.jar -i examples/ -m
 The queries are parsed and validated but not executed with junit using the Tester
 
 ```bash
-java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples
+java -jar sparql-examples-utils.jar test --input-directory=./examples
 ```
 
 should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
@@ -87,7 +87,7 @@ should return no test failures. RDF4j and Jena are both a lot stricter than virt
 The queries can be executed automatically on all endpoints they apply to using an extra argument `--also-run-slow-tests`:
 
 ```bash
-java -cp sparql-examples-utils.jar swiss.sib.rdf.sparql.examples.Tester --input-directory=./examples/MetaNetX --also-run-slow-tests
+java -jar sparql-examples-utils.jar test --input-directory=./examples/MetaNetX --also-run-slow-tests
 ```
 
 > This does change the queries to add a LIMIT 1 if no limit was set in the query. Then check if there is a result it is fetched.
@@ -112,7 +112,7 @@ WHERE {
 This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"`
 
 ```bash
-java -jar sparql-examples-utils.jar -i examples/ -p all -f ttl > examples_all.ttl
+java -jar sparql-examples-utils.jar convert -i examples/ -p all -f ttl > examples_all.ttl
 
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
