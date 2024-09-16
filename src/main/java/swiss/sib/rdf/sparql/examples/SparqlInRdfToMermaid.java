@@ -68,6 +68,11 @@ public class SparqlInRdfToMermaid {
 				Comparator.comparing(String::length).thenComparing(String::compareTo));
 		gatherCompleteQuery(ex, query, iterator, prefixes, iriPrefixes);
 
+		draw(queryId, rq, query, base, iriPrefixes);
+	}
+
+	private static void draw(Statement queryId, List<String> rq, String query, String base,
+			Map<String, String> iriPrefixes) {
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		try {
 			ParsedQuery pq = parser.parseQuery(query, base);

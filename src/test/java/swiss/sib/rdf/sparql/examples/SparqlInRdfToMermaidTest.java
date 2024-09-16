@@ -52,4 +52,28 @@ public class SparqlInRdfToMermaidTest {
 		return model;
 	}
 
+	
+	String filterIn = """
+	prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/>
+	prefix sh: <http://www.w3.org/ns/shacl#>
+	prefix schema:<https://schema.org/>
+	prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+	prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+	ex:9
+	    a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
+	     sh:select '''
+			PREFIX ex: <http://example.org/>
+			SELECT ?ex 
+			WHERE{
+				[] ex:pred ?ex .
+			    FILTER( ?ex IN ( ex:left , ex:right ))
+			}''' .""";
+
+	@Test
+	public void filterIn() {
+		Model model = parse(filterIn);
+		String res = SparqlInRdfToMermaid.asMermaid(model);
+		assertTrue(res.contains("in"));
+	}
 }

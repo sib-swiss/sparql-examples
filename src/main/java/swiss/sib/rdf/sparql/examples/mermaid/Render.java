@@ -30,7 +30,16 @@ import org.eclipse.rdf4j.query.algebra.Filter;
 import org.eclipse.rdf4j.query.algebra.FunctionCall;
 import org.eclipse.rdf4j.query.algebra.GroupElem;
 import org.eclipse.rdf4j.query.algebra.If;
+import org.eclipse.rdf4j.query.algebra.In;
+import org.eclipse.rdf4j.query.algebra.IsBNode;
+import org.eclipse.rdf4j.query.algebra.IsLiteral;
+import org.eclipse.rdf4j.query.algebra.IsNumeric;
+import org.eclipse.rdf4j.query.algebra.IsResource;
+import org.eclipse.rdf4j.query.algebra.IsURI;
+import org.eclipse.rdf4j.query.algebra.LangMatches;
 import org.eclipse.rdf4j.query.algebra.LeftJoin;
+import org.eclipse.rdf4j.query.algebra.ListMemberOperator;
+import org.eclipse.rdf4j.query.algebra.LocalName;
 import org.eclipse.rdf4j.query.algebra.MathExpr;
 import org.eclipse.rdf4j.query.algebra.Max;
 import org.eclipse.rdf4j.query.algebra.Min;
@@ -171,10 +180,10 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	@Override
 	public void meet(Filter f) throws RuntimeException {
-		ValueExprAsString visitor2 = new ValueExprAsString();
+		String filterId = prefix + "f" + filterCount++;
+		ValueExprAsString visitor2 = new ValueExprAsString(filterId);
 		f.getCondition().visit(visitor2);
 
-		String filterId = prefix + "f" + filterCount++;
 		rq.add(indent() + filterId + "[[\"" + visitor2.sb.toString() + "\"]]");
 		f.getCondition().visit(new FindNodesUsedInFilterOrBind(filterId, prefix));
 		f.getCondition().visit(new FindValues(filterId, "-->", false));
@@ -211,7 +220,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		// TODO Auto-generated method stub
 		String bindId = prefix + "bind" + filterCount++;
 		{
-			ValueExprAsString visitor = new ValueExprAsString();
+			ValueExprAsString visitor = new ValueExprAsString(bindId);
 			node.visitChildren(visitor);
 			rq.add(indent() + bindId + "[/\"" + visitor.sb.toString() + "\"/]");
 		}
@@ -400,7 +409,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			} else {
 				namedVariables.add(node.getName());
 			}
-		}
+		}	
 	}
 
 	private class FindValues extends AbstractQueryModelVisitor<RuntimeException> {
@@ -431,6 +440,65 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	}
 
 	private class ValueExprAsString extends AbstractQueryModelVisitor<RuntimeException> {
+		
+		private final String parentId;
+
+		public ValueExprAsString(String bindId) {
+			this.parentId = bindId;
+		}
+
+		@Override
+		public void meet(IsBNode node) throws RuntimeException {
+			sb.append("isBlank(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(IsLiteral node) throws RuntimeException {
+			sb.append("isLiteral(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(IsNumeric node) throws RuntimeException {
+			sb.append("isNumeric(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(IsResource node) throws RuntimeException {
+			sb.append("isIRI(");
+			node.getArg().visit(this);
+			sb.append(") || isBlank(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(IsURI node) throws RuntimeException {
+			sb.append("isIRI(");
+			node.getArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(LangMatches node) throws RuntimeException {
+			sb.append("langmatch(");
+			node.getLeftArg().visit(this);
+			sb.append(",");
+			node.getRightArg().visit(this);
+			sb.append(")");
+		}
+
+		@Override
+		public void meet(LocalName node) throws RuntimeException {
+			// TODO Auto-generated method stub
+			super.meet(node);
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		@Override
@@ -600,6 +668,29 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		public void meet(ValueConstant node) throws RuntimeException {
 			sb.append(prefix(node.getValue(), iriPrefixes, '\''));
 		}
-	}
 
+		@Override
+		public void meet(ListMemberOperator node) throws RuntimeException {
+			sb.append(" in ");
+		
+			int id = existCount++;
+			String existId = prefix + "list" + id;
+			Map<Value, String> constantKeys = new HashMap<>();
+			Map<String, String> variableKeys = new HashMap<>();
+			Map<String, String> anonymousKeys = new HashMap<>();
+
+			node.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys, existId));
+			addWithLeadingWhiteSpace(
+					constantKeys.entrySet().stream().map(en -> en.getValue()
+							+ "([" + prefix(en.getKey(), iriPrefixes, '"') + "])" + addProjectedClass(en.getKey(), Set.of())),
+					rq);			
+			List<ValueExpr> arguments = node.getArguments();
+			//The first value is skipped because that is the value being filtered against
+			for (int i = 1; i < arguments.size(); i++) {
+				ValueExpr ve = arguments.get(i);
+				String source = constantKeys.get(((ValueConstant) ve).getValue());
+				rq.add(indent() + source + " --o "+ parentId);
+			}
+		}
+	}
 }

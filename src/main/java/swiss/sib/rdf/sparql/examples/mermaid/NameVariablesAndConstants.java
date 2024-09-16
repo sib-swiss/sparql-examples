@@ -5,6 +5,9 @@ import java.util.Map;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.algebra.BindingSetAssignment;
 import org.eclipse.rdf4j.query.algebra.ExtensionElem;
+import org.eclipse.rdf4j.query.algebra.ListMemberOperator;
+import org.eclipse.rdf4j.query.algebra.ValueConstant;
+import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
@@ -60,4 +63,21 @@ public final class NameVariablesAndConstants extends AbstractQueryModelVisitor<R
 		String nextId = prefix + "v" + (variableKeys.size() + 1);
 		variableKeys.put(node.getName(), nextId);
 	}
+
+	@Override
+	public void meet(ListMemberOperator node) throws RuntimeException {
+		for(ValueExpr argument : node.getArguments()) {
+			argument.visit(this);
+		}
+	}
+
+	@Override
+	public void meet(ValueConstant node) throws RuntimeException {
+		if (!constantKeys.containsKey(node.getValue())) {
+			String nextId = prefix + "c" + (constantKeys.size() + 1);
+			constantKeys.put(node.getValue(), nextId);
+		}
+	}
+	
+	
 }
