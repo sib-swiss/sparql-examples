@@ -121,3 +121,19 @@ java -jar target/sparql-examples-util-1.0.0-uber.jar convert --input-directory $
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
 
+# Native executable
+
+The project is ready to be compiled by the native-image tool of the [GraalVM](https://www.graalvm.org/) project.
+To do so set your `JAVA_HOME` to the graalvm location and user maven package -Pnative
+
+e.g. on linux with graalvm installed in your `$HOME/bin` directory
+```bash
+export JAVA_HOME=$HOME/bin/graalvm-jdk-${GRAALVM_VERSION}
+mvn package -Pnative
+
+# Then there is now a local native binary that you can use to convert all entries
+./target/sparql-examples-utils converter -i ${DIRECTORY_WITH_EXAMPLES}
+```
+
+
+
