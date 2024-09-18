@@ -72,10 +72,9 @@ public class Wikidata implements Callable<Integer> {
 
 	@Option(names = { "-h", "--help" }, usageHelp = true, description = "display this help message")
 	private boolean usageHelpRequested;
-	
-	@Option(names = { "--use-cached"}, description = "use prior retrieved files, do not request an update")
+
+	@Option(names = { "--use-cached" }, description = "use prior retrieved files, do not request an update")
 	private boolean useCached;
-	
 
 	private File outputSearchResultDir;
 	private File outputHtmlDir;
@@ -250,7 +249,7 @@ public class Wikidata implements Callable<Integer> {
 
 		if (Files.exists(cacheLocation)
 				&& (useCached || Files.getLastModifiedTime(cacheLocation).toInstant().isAfter(Instant.now()))) {
-			document = Jsoup.parse(cacheLocationF);
+			return Jsoup.parse(cacheLocationF);
 		} else {
 			int tries = 0;
 			do {
@@ -262,6 +261,8 @@ public class Wikidata implements Callable<Integer> {
 					byte[] bodyAsBytes = response.bodyAsBytes();
 					document = response.parse();
 					Files.write(cacheLocation, bodyAsBytes);
+
+					// Wikipedia asks us to sleep for 100ms between requests
 					sleep(100);
 
 					if (response.hasHeader("expires")) {
@@ -270,12 +271,14 @@ public class Wikidata implements Callable<Integer> {
 						Instant expiresInstant = Instant.from(temporal);
 						Files.setLastModifiedTime(cacheLocation, FileTime.from(expiresInstant));
 					}
+					return document;
 				} catch (SocketTimeoutException ste) {
+					// If we had a socket timeout we sleep longer before trying again.
 					sleep(1000);
 				}
 			} while (tries <= 3);
+			return null;
 		}
-		return document;
 	}
 
 	private void sleep(int ms) {
