@@ -177,6 +177,7 @@ public class Wikidata implements Callable<Integer> {
 				}
 				model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
 				model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
+				model.add(iriForQuery, SHACL.PREFIXES, VF.createBNode("wikidata_prefixes"));
 				model.add(iriForQuery, SchemaDotOrg.TARGET, VF.createIRI(wikidatasparql));
 				writeModelToTurtle(model, urlForFileName);
 			}

@@ -24,8 +24,7 @@ public class FixerTest {
 	
 	private final String blazeGraphIncludeExample = """
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-			SELECT ?item ?itemLabel
-			WITH
+			SELECT ?item ?itemLabel WITH
 			{
 			  	SELECT DISTINCT ?itemLabel
 			  	WHERE

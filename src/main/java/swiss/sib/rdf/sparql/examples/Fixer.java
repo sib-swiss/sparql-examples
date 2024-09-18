@@ -203,8 +203,9 @@ public class Fixer implements Callable<Integer> {
 
 	public static String fixMissingPrefixes(String original, Map<String, String> prefixes2) {
 		for (Map.Entry<String, String> entry : prefixes2.entrySet()) {
-			Pattern pattern = Pattern.compile("(^|\\\\W+)(?i:prefix)(\\W+)" + entry.getKey() + ":");
-			if (!pattern.matcher(original).find()) {
+			Pattern prefix = Pattern.compile("(^|\\W+)(?i:prefix)(\\W+)" + entry.getKey() + ":");
+			Pattern prefixInUse = Pattern.compile("(^|\\W+)" + entry.getKey() + ":");
+			if (!prefix.matcher(original).find() && prefixInUse.matcher(original).find()) {
 				original = "PREFIX " + entry.getKey() + ": <" + entry.getValue() + ">\n" + original;
 			}
 		}
@@ -261,18 +262,22 @@ public class Fixer implements Callable<Integer> {
 			if (nsq.annotations().get("namedSet").equals(as)) {
 				SubqueryRoot sqr = new SubqueryRoot((QueryType) bOp.annotations().get("queryType"));
 				sqr.setGraphPattern((GraphPatternGroup<IGroupMemberNode>) bOp.annotations().get("graphPattern"));
-				Matcher m = Pattern.compile("(INCLUDE|include)\s+" + as).matcher(blazeGraphIncludeExample);
+				Matcher m = Pattern.compile("(INCLUDE|include)\\s+" + as).matcher(blazeGraphIncludeExample);
 				if (m.find()) {
 					
 					Pattern asP = Pattern.compile(as.toString(), Pattern.LITERAL);
-					Pattern origP = Pattern.compile("(?:(?:WITH|with)\\s*\\{([\\s\\S]*?)\\}\s+AS\s+" + asP.pattern() + ")",
+					Pattern origP = Pattern.compile("(?:(?:WITH|with)\\s*\\{([\\s\\S]*?)\\}\\s+AS\\s+" + asP.pattern() + ")",
 							Pattern.MULTILINE);
 					Matcher orig = origP.matcher(blazeGraphIncludeExample);
 					if (orig.find()) {
-						String r = m.replaceAll('{' + orig.group(1) + '}');
-						blazeGraphIncludeExample.setLength(0);
-						blazeGraphIncludeExample.append(r);
-						blazeGraphIncludeExample.delete(orig.start(), orig.end());
+						try {
+							String r = m.replaceAll('{' + orig.group(1) + '}');
+							blazeGraphIncludeExample.setLength(0);
+							blazeGraphIncludeExample.append(r);
+							blazeGraphIncludeExample.delete(orig.start(), orig.end());
+						} catch (IllegalArgumentException e) {
+							System.err.println("Can't fix due to regex issue:"+origP.pattern());
+						}
 					}
 				}
 				yield sqr;
