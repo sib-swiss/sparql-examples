@@ -49,8 +49,8 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
-@Command(name = "wikidata", description = "Converts queries from wikidata wiki into sparql-example-files")
-public class Wikidata implements Callable<Integer> {
+@Command(name = "wikibase", description = "Converts queries from wikibase wiki into sparql-example-files")
+public class Wikibase implements Callable<Integer> {
 	@Spec
 	CommandSpec spec;
 
