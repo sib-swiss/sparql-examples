@@ -42,13 +42,11 @@ public class FixerTest {
 	@Test
 	public void simpleIncludeWith() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphIncludeExample);
+			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphIncludeExample, "", null);
 			assertFalse(fix.contains("WITH"));
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(fix, "http://example.org/");
 		} catch (MalformedQueryException e) {
-			fail(e);
-		} catch (org.openrdf.query.MalformedQueryException e) {
 			fail(e);
 		}
 	}
@@ -61,8 +59,6 @@ public class FixerTest {
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(fix, "http://example.org/");
 		} catch (MalformedQueryException e) {
-			fail(e);
-		} catch (org.openrdf.query.MalformedQueryException e) {
 			fail(e);
 		}
 	}

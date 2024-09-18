@@ -10,6 +10,7 @@ public class SIB {
 	public static final IRI BIGDATA_SELECT = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "bigdata_select");
 	
 	public static final IRI FILE_NAME = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "file_name");
+	public static final IRI FILE_PATH = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "file_path");
 	public static final IRI PROJECT = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "project");
 	
 	private SIB() {

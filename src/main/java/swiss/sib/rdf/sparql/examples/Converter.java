@@ -174,6 +174,7 @@ public class Converter implements Callable<Integer>{
 		if (iterator.hasNext()) {
 			Resource subject = iterator.next().getSubject();
 			allForProject.add(VF.createStatement(subject, SIB.FILE_NAME, VF.createLiteral(p.getFileName().toString())));
+			allForProject.add(VF.createStatement(subject, SIB.FILE_PATH, VF.createLiteral(p.toFile().toString())));
 			allForProject.add(VF.createStatement(subject, SIB.PROJECT, VF.createLiteral(p.getParent().getFileName().toString())));
 		}
 	
@@ -232,6 +233,7 @@ public class Converter implements Callable<Integer>{
 		IRI pAsIri = VF.createIRI(p.toUri().toString());
 		temp.getStatements(null, RDF.TYPE, null).forEach(s -> {
 			temp.add(VF.createStatement(s.getSubject(), SIB.FILE_NAME, pAsIri));
+			temp.add(VF.createStatement(s.getSubject(), SIB.FILE_PATH, VF.createLiteral(p.toFile().toString())));
 		});
 		model.addAll(temp);
 	}
