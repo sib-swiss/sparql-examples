@@ -90,6 +90,7 @@ public class Fixer implements Callable<Integer> {
 			Map<String, String> prefixes = loadPrefixes();
 			try (Stream<Path> sparqlExamples = FindFiles.sparqlExamples(inputDirectory)){
 					sparqlExamples.forEach(ttl -> {
+						System.out.println("Looking at:" + ttl);
 						try (FileInputStream in = new FileInputStream(ttl.toFile())) {
 							Model model = Rio.parse(in, RDFFormat.TURTLE);
 							IRI queryIri = null;
@@ -110,7 +111,8 @@ public class Fixer implements Callable<Integer> {
 							if (queryIri != null && query != null) {
 								fix(queryIri, query, ttl, model, prefixes);
 							}
-						} catch (IOException e) {
+						} catch (IOException | RDFParseException e) {
+							System.err.println("RDF error in " + ttl);
                             Failure.CANT_READ_EXAMPLE.exit(e);
                         }
 					});
@@ -167,49 +169,58 @@ public class Fixer implements Callable<Integer> {
 		String queryIriStr = queryIri.stringValue();
 		String queryStr = query.stringValue();
 		
-		System.err.println("Looking at:" + file);
+
 		String fixedPrefixes = Fixer.fixMissingPrefixes(queryStr, prefixes2);
-		String fix = Fixer.fixBlazeGraphIncludeWith(fixedPrefixes, queryIriStr, file);
-		boolean fixed = false;
+		String fix = null;
+		if (fixedPrefixes != null) {
+			System.out.println("Fixed prefixes " + queryIriStr + " in file " + file);
+			model.remove(queryIri, SHACL.SELECT, query);
+			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixedPrefixes));
+			writeFixedModel(file, model);
+			queryStr = fixedPrefixes;
+		}
+		fix = Fixer.fixBlazeGraphIncludeWith(queryStr, queryIriStr, file);
+	
 		if (fix != null) {
 			System.out.println("Fixed " + queryIriStr + " in file " + file);
 			model.remove(queryIri, SHACL.SELECT, query);
 			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fix));
 			model.add(queryIri, SIB.BIGDATA_SELECT, query);
-			fixed = true;
-		} else if (!fixedPrefixes.equals(queryStr)) {
-			System.out.println("Fixed prefixes " + queryIriStr + " in file " + file);
-			model.remove(queryIri, SHACL.SELECT, query);
-			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixedPrefixes));
-			fixed = true;
+			writeFixedModel(file, model);
+			return;
+		} 
+		if (fixedPrefixes == null) {
+			System.out.println("No change to:" + file);
 		}
-		if (fixed) {
-			try (OutputStream out = Files.newOutputStream(file, StandardOpenOption.TRUNCATE_EXISTING)) {
-				model.getNamespaces().add(SHACL.NS);
-				model.getNamespaces().add(RDF.NS);
-				model.getNamespaces().add(RDFS.NS);
-				model.getNamespaces().add(SchemaDotOrg.NS);
-				model.getNamespaces().add(DCTERMS.NS);
-				Rio.write(model, out, RDFFormat.TURTLE);
-				
-			} catch (RDFHandlerException | IOException e) {
-				Failure.CANT_WRITE_FIXED_EXAMPLE.exit(e);
-			}
-		} else {
-			System.err.println("No change to:" + file);
-		}
+	}
 
+	private void writeFixedModel(Path file, Model model) {
+		try (OutputStream out = Files.newOutputStream(file, StandardOpenOption.TRUNCATE_EXISTING)) {
+			model.getNamespaces().add(SHACL.NS);
+			model.getNamespaces().add(RDF.NS);
+			model.getNamespaces().add(RDFS.NS);
+			model.getNamespaces().add(SchemaDotOrg.NS);
+			model.getNamespaces().add(DCTERMS.NS);
+			Rio.write(model, out, RDFFormat.TURTLE);
+			
+		} catch (RDFHandlerException | IOException e) {
+			Failure.CANT_WRITE_FIXED_EXAMPLE.exit(e);
+		}
 	}
 
 	public static String fixMissingPrefixes(String original, Map<String, String> prefixes2) {
+		StringBuilder changed = new StringBuilder(original);
 		for (Map.Entry<String, String> entry : prefixes2.entrySet()) {
 			Pattern prefix = Pattern.compile("(^|\\W+)(?i:prefix)(\\W+)" + entry.getKey() + ":");
 			Pattern prefixInUse = Pattern.compile("(^|\\W+)" + entry.getKey() + ":");
 			if (!prefix.matcher(original).find() && prefixInUse.matcher(original).find()) {
-				original = "PREFIX " + entry.getKey() + ": <" + entry.getValue() + ">\n" + original;
+				changed.insert(0, "PREFIX " + entry.getKey() + ": <" + entry.getValue() + ">\n");
 			}
 		}
-		return original;
+		if (changed.length() == original.length())
+			return null;
+		else
+			return changed.toString();
 	}
 
 	public static String fixBlazeGraphIncludeWith(String original, String queryIriStr, Path fileStr) {
@@ -230,7 +241,7 @@ public class Fixer implements Callable<Integer> {
 			}
 			return null;
 		} catch (MalformedQueryException e) {
-			System.out.println("Failed to fix " + queryIriStr + " in " + fileStr);
+			System.out.println("Failed to fix include " + queryIriStr + " in " + fileStr);
 			return null;
 		}
 	}
@@ -276,7 +287,7 @@ public class Fixer implements Callable<Integer> {
 							blazeGraphIncludeExample.append(r);
 							blazeGraphIncludeExample.delete(orig.start(), orig.end());
 						} catch (IllegalArgumentException e) {
-							System.err.println("Can't fix due to regex issue:"+origP.pattern());
+							System.out.println("Can't fix due to regex issue:"+origP.pattern());
 						}
 					}
 				}
