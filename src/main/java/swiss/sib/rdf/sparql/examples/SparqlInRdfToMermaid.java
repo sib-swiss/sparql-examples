@@ -74,29 +74,22 @@ public class SparqlInRdfToMermaid {
 	private static void draw(Statement queryId, List<String> rq, String query, String base,
 			Map<String, String> iriPrefixes) {
 		QueryParser parser = new SPARQLParserFactory().getParser();
-		try {
-			ParsedQuery pq = parser.parseQuery(query, base);
-			TupleExpr tq = pq.getTupleExpr();
+		
+		ParsedQuery pq = parser.parseQuery(query, base);
+		TupleExpr tq = pq.getTupleExpr();
 
-			Map<Value, String> constantKeys = new HashMap<>();
-			Map<String, String> variableKeys = new HashMap<>();
-			Map<String, String> anonymousKeys = new HashMap<>();
-			Set<Value> usedAsNode = new HashSet<>();
+		Map<Value, String> constantKeys = new HashMap<>();
+		Map<String, String> variableKeys = new HashMap<>();
+		Map<String, String> anonymousKeys = new HashMap<>();
+		Set<Value> usedAsNode = new HashSet<>();
 
-			tq.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys));
-			tq.visit(new FindWhichConstantsAreNotOnlyUsedAsPredicates(usedAsNode));
+		tq.visit(new NameVariablesAndConstants(constantKeys, variableKeys, anonymousKeys));
+		tq.visit(new FindWhichConstantsAreNotOnlyUsedAsPredicates(usedAsNode));
 
-
-			Render visitor = new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq, tq);
-			visitor.addStyles();
-			visitor.renderVariables();
-			tq.visit(
-					visitor);
-
-		} catch (MalformedQueryException e) {
-			String queryS = queryId.getSubject().stringValue();
-			Failure.CANT_PARSE_EXAMPLE.exit(queryS, e);
-		}
+		Render visitor = new Render(variableKeys, iriPrefixes, constantKeys, usedAsNode, anonymousKeys, rq, tq);
+		visitor.addStyles();
+		visitor.renderVariables();
+		tq.visit(visitor);
 	}
 
 

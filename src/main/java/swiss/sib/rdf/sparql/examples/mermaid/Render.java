@@ -274,7 +274,12 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	@Override
 	public void meet(Service s) throws RuntimeException {
 		Value sv = s.getServiceRef().getValue();
-		String serviceIri = sv.stringValue();
+		String serviceIri;
+		if (sv !=null) {
+			serviceIri = sv.stringValue();
+		} else {
+			serviceIri = "ERROR: Bad value";;
+		}
 		String key = serviceKeys.computeIfAbsent(sv, (t) -> prefix + "s" + (serviceKeys.size() + 1));
 		rq.add(indent() + "subgraph " + key + "[\"" + serviceIri + "\"]");
 		indent += 2;
@@ -316,8 +321,10 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			return prefix(i, iriPrefixes, s);
 		else if (v instanceof Literal l)
 			return prefix(l, iriPrefixes, s);
-		else
+		else if (v != null)
 			return v.stringValue();
+		else
+			return "ERROR: Bad value";
 	}
 
 	private static String prefix(String stringValue, Map<String, String> iriPrefixes, char s) {
@@ -610,7 +617,11 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		@Override
 		public void meet(Count node) throws RuntimeException {
 			sb.append("count(");
-			node.getArg().visit(this);
+			if (node.getArg() != null) {
+				node.getArg().visit(this);
+			} else {
+				sb.append("*");
+			}
 			sb.append(")");
 		}
 
@@ -688,8 +699,12 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 			//The first value is skipped because that is the value being filtered against
 			for (int i = 1; i < arguments.size(); i++) {
 				ValueExpr ve = arguments.get(i);
-				String source = constantKeys.get(((ValueConstant) ve).getValue());
-				rq.add(indent() + source + " --o "+ parentId);
+				if (ve instanceof ValueConstant vc) {
+					String source = constantKeys.get((vc).getValue());
+					rq.add(indent() + source + " --o "+ parentId);
+				} else if (ve instanceof Var va){
+					rq.add(indent() + asString(va) + " --o "+ parentId);
+				}
 			}
 		}
 	}

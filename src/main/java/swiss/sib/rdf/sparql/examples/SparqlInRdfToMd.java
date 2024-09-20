@@ -13,6 +13,7 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
+import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.jsoup.Jsoup;
 
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
@@ -44,9 +45,14 @@ public class SparqlInRdfToMd {
 
 		});
 		rq.add("");
-		rq.add("```mermaid");
-		rq.add(SparqlInRdfToMermaid.asMermaid(ex));
-		rq.add("```");
+		try {
+			String asMermaid = SparqlInRdfToMermaid.asMermaid(ex);
+			rq.add("```mermaid");
+			rq.add(asMermaid);
+			rq.add("```");
+		} catch (MalformedQueryException e) {
+			//Ignore malformed queries don't have mermaid
+		}
 		return rq;
 	}
 
