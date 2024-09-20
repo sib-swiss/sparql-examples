@@ -6,9 +6,11 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +29,7 @@ import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.parser.sparql.SPARQLParser;
 import org.eclipse.rdf4j.repository.RepositoryException;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.repository.sail.SailRepositoryConnection;
@@ -38,17 +41,31 @@ import org.eclipse.rdf4j.sail.memory.MemoryStore;
 import org.openrdf.query.MalformedQueryException;
 
 import com.bigdata.bop.BOp;
+import com.bigdata.journal.TemporaryStore;
+import com.bigdata.rdf.sail.sparql.ASTVisitorBase;
 import com.bigdata.rdf.sail.sparql.Bigdata2ASTSPARQLParser;
 import com.bigdata.rdf.sail.sparql.BigdataParsedQuery;
+import com.bigdata.rdf.sail.sparql.ast.ASTGraphPatternGroup;
+import com.bigdata.rdf.sail.sparql.ast.VisitorException;
 import com.bigdata.rdf.sparql.ast.GraphPatternGroup;
+import com.bigdata.rdf.sparql.ast.GroupNodeBase;
 import com.bigdata.rdf.sparql.ast.IGroupMemberNode;
+import com.bigdata.rdf.sparql.ast.IJoinNode;
+import com.bigdata.rdf.sparql.ast.IQueryNode;
 import com.bigdata.rdf.sparql.ast.JoinGroupNode;
 import com.bigdata.rdf.sparql.ast.NamedSubqueriesNode;
 import com.bigdata.rdf.sparql.ast.NamedSubqueryInclude;
 import com.bigdata.rdf.sparql.ast.NamedSubqueryRoot;
+import com.bigdata.rdf.sparql.ast.QueryBase;
+import com.bigdata.rdf.sparql.ast.QueryHints;
+import com.bigdata.rdf.sparql.ast.QueryNodeWithBindingSet;
 import com.bigdata.rdf.sparql.ast.QueryRoot;
 import com.bigdata.rdf.sparql.ast.QueryType;
+import com.bigdata.rdf.sparql.ast.StatementPatternNode;
 import com.bigdata.rdf.sparql.ast.SubqueryRoot;
+import com.bigdata.rdf.sparql.ast.eval.AST2BOpContext;
+import com.bigdata.rdf.sparql.ast.optimizers.ASTQueryHintOptimizer;
+import com.bigdata.rdf.store.AbstractTripleStore;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
@@ -180,12 +197,13 @@ public class Fixer implements Callable<Integer> {
 			writeFixedModel(file, model);
 			queryStr = fixedPrefixes;
 		}
-		fix = Fixer.fixBlazeGraphIncludeWith(queryStr, queryIriStr, file);
+		fix = Fixer.fixBlazeGraph(queryStr, queryIriStr, file);
 	
 		if (fix != null) {
-			System.out.println("Fixed " + queryIriStr + " in file " + file);
+			System.out.println("Fixed blaze graph " + queryIriStr + " in file " + file);
 			model.remove(queryIri, SHACL.SELECT, query);
 			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fix));
+			model.remove(queryIri, SIB.BIGDATA_SELECT, null);
 			model.add(queryIri, SIB.BIGDATA_SELECT, query);
 			writeFixedModel(file, model);
 			return;
@@ -223,7 +241,34 @@ public class Fixer implements Callable<Integer> {
 		else
 			return changed.toString();
 	}
-
+	public static String fixBlazeGraph(String original, String queryIriStr, Path fileStr) {
+		String fix = fixBlazeGraphIncludeWith(original, queryIriStr, fileStr);
+		if (fix != null) {
+			original = fix;
+		}
+		return fixBlazeGraphHints(original, queryIriStr, fileStr);
+	}
+	public static String fixBlazeGraphHints(String original, String queryIriStr, Path fileStr) {
+		if (original.contains("hint:")) {
+			try {
+				new SPARQLParser().parseQuery(original, QueryHints.NAMESPACE);
+			} catch (org.eclipse.rdf4j.query.MalformedQueryException e) {
+				String testQ = "PREFIX hint:<" + QueryHints.NAMESPACE + ">\n"+original;
+				try {
+					new SPARQLParser().parseQuery(testQ, QueryHints.NAMESPACE);
+					//we now know we have hints that are in the query and we need to remove them.
+					return original.replaceAll("hint:([^.;,])+[.;,]", "");
+					
+				} catch (org.eclipse.rdf4j.query.MalformedQueryException e2) {
+					return null;
+				}
+			}
+			
+		}
+		return null;
+		
+	}
+	
 	public static String fixBlazeGraphIncludeWith(String original, String queryIriStr, Path fileStr) {
 		Bigdata2ASTSPARQLParser blzp = new Bigdata2ASTSPARQLParser();
 		try {
@@ -297,6 +342,48 @@ public class Fixer implements Callable<Integer> {
 			yield nsq;
 		}
 		default -> astContainer;
+		};
+	}
+	
+	private static boolean hasHints(QueryBase astContainer, StringBuilder blazeGraphIncludeExample) {
+		if (astContainer.getQueryHints() != null) 
+		{
+			return true;
+		} else if (astContainer.annotations().containsKey("graphPattern")) {
+			IQueryNode gp = (IQueryNode) astContainer.annotations().get("graphPattern");
+			return hasHints(gp) !=null;
+		}
+		return false;
+	}
+	
+	private static BOp hasHints(IQueryNode bOp) {
+		return switch (bOp) {
+		case QueryRoot qr -> {
+			yield hasHints(qr.getGraphPattern());
+		}
+		case GroupNodeBase<?> jgn -> {
+			for (var n:jgn.getChildren()) {
+				if (hasHints(n) != null)
+					yield jgn;
+			}
+			
+//			nq.setLeftArg(visit(nq.getChildren(), bOp));
+//			nq.setRightArg(visit(nq.getRightArg(), bOp));
+			yield jgn;
+		}
+		
+		case StatementPatternNode spn -> {
+			yield spn;
+		}
+		case IJoinNode ijn -> {
+			for (var n:ijn.args()) {
+				if (hasHints((IQueryNode) n) != null)
+					yield ijn;
+			}
+			hasHints((IQueryNode) ijn.getProperty("graphPattern"));
+			yield ijn;
+		}
+		default -> bOp;
 		};
 	}
 }
