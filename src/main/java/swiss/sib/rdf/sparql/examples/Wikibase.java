@@ -35,6 +35,7 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -107,7 +108,10 @@ public class Wikibase implements Callable<Integer> {
 	}
 
 	private enum NamedTemplate {
-		SPARQL("SPARQL", ".mw-highlight-lang-sparql"), SPARQL2("SPARQL2", ".mw-highlight-lang-sparql");
+		SPARQL("SPARQL", ".mw-highlight-lang-sparql"), 
+//		WDQUERY("Wdquery", ".mw-highlight-lang-sparql"),
+//		SPARQL_INLINE("SPARQL_Inline/doc", ".mw-highlight-lang-sparql"),
+		SPARQL2("SPARQL2", ".mw-highlight-lang-sparql"),;
 
 		private final String name;
 		private final String cssClass;
@@ -261,7 +265,7 @@ public class Wikibase implements Callable<Integer> {
 						return parseAndCacheSuccefullResponse(cacheLocation, response);
 					}
 					sleep(100);
-				} catch (SocketTimeoutException ste) {
+				} catch (SocketTimeoutException | HttpStatusException ste) {
 					// If we had a socket timeout we sleep longer before trying again.
 					sleep(1000);
 				}
