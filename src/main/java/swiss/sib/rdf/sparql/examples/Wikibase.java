@@ -246,8 +246,6 @@ public class Wikibase implements Callable<Integer> {
 		}
 		File cacheLocationF = new File(output, urlForFileName);
 		Path cacheLocation = cacheLocationF.toPath();
-		Document document = null;
-
 		if (Files.exists(cacheLocation)
 				&& (useCached || Files.getLastModifiedTime(cacheLocation).toInstant().isAfter(Instant.now()))) {
 			return Jsoup.parse(cacheLocationF);
@@ -259,20 +257,10 @@ public class Wikibase implements Callable<Integer> {
 					Connection connect = Jsoup.connect(url);
 					connect.userAgent(yourEmail).method(Method.GET);
 					Response response = connect.execute();
-					byte[] bodyAsBytes = response.bodyAsBytes();
-					document = response.parse();
-					Files.write(cacheLocation, bodyAsBytes);
-
-					// Wikipedia asks us to sleep for 100ms between requests
-					sleep(100);
-
-					if (response.hasHeader("expires")) {
-						String expires = response.header("expires");
-						TemporalAccessor temporal = DateTimeFormatter.RFC_1123_DATE_TIME.parse(expires);
-						Instant expiresInstant = Instant.from(temporal);
-						Files.setLastModifiedTime(cacheLocation, FileTime.from(expiresInstant));
+					if (response.statusCode() == 200) {
+						return parseAndCacheSuccefullResponse(cacheLocation, response);
 					}
-					return document;
+					sleep(100);
 				} catch (SocketTimeoutException ste) {
 					// If we had a socket timeout we sleep longer before trying again.
 					sleep(1000);
@@ -280,6 +268,23 @@ public class Wikibase implements Callable<Integer> {
 			} while (tries <= 3);
 			return null;
 		}
+	}
+
+	private Document parseAndCacheSuccefullResponse(Path cacheLocation, Response response) throws IOException {
+		Document document;
+		byte[] bodyAsBytes = response.bodyAsBytes();
+		document = response.parse();
+		Files.write(cacheLocation, bodyAsBytes);
+
+		// Wikipedia asks us to sleep for 100ms between requests
+
+		if (response.hasHeader("expires")) {
+			String expires = response.header("expires");
+			TemporalAccessor temporal = DateTimeFormatter.RFC_1123_DATE_TIME.parse(expires);
+			Instant expiresInstant = Instant.from(temporal);
+			Files.setLastModifiedTime(cacheLocation, FileTime.from(expiresInstant));
+		}
+		return document;
 	}
 
 	private void sleep(int ms) {
