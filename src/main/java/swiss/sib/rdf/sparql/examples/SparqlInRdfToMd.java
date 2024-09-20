@@ -3,6 +3,7 @@ package swiss.sib.rdf.sparql.examples;
 import static swiss.sib.rdf.sparql.examples.SparqlInRdfToRq.streamOf;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
@@ -42,6 +44,15 @@ public class SparqlInRdfToMd {
 					.flatMap(qt -> streamOf(ex, queryId, qt, null)).map(Statement::getObject).map(o -> o.stringValue())
 					.forEach(q -> rq.add(q));
 			rq.add("```");
+			Iterator<Statement> iterator = streamOf(ex, queryId, DCTERMS.IS_PART_OF, null).iterator();
+			if (iterator.hasNext()) {
+				rq.add("## Query found at ");
+				while(iterator.hasNext()) {
+					String obj = iterator.next().getObject().stringValue();
+					rq.add(" * ["+obj+"]("+obj+")");
+				}
+			}
+			
 
 		});
 		rq.add("");
