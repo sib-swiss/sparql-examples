@@ -167,7 +167,8 @@ public class Fixer implements Callable<Integer> {
 
 	private void fix(IRI queryIri, Value query, Path file, Model model, Map<String, String> prefixes2) {
 		String queryIriStr = queryIri.stringValue();
-		String queryStr = query.stringValue();
+		String queryStr = query.stringValue()
+				.replace("\\\"", "\"");
 		
 
 		String fixedPrefixes = Fixer.fixMissingPrefixes(queryStr, prefixes2);

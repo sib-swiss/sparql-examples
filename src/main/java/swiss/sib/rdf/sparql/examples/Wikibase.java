@@ -81,6 +81,8 @@ public class Wikibase implements Callable<Integer> {
 	private File outputHtmlDir;
 	private static final ValueFactory VF = SimpleValueFactory.getInstance();
 
+	private static final IRI WIKIDATA_PREFIXES = VF.createIRI("https://example.org/to_decide/wikidata_prefixes");
+
 	private static final IRI CC_BY_4 = VF.createIRI("https://creativecommons.org/licenses/by-sa/4.0/");
 
 	public Integer call() {
@@ -108,7 +110,7 @@ public class Wikibase implements Callable<Integer> {
 	}
 
 	private enum NamedTemplate {
-		SPARQL("SPARQL", ".mw-highlight-lang-sparql"), 
+		SPARQL("SPARQL", ".mw-highlight-lang-sparql"),
 //		WDQUERY("Wdquery", ".mw-highlight-lang-sparql"),
 //		SPARQL_INLINE("SPARQL_Inline/doc", ".mw-highlight-lang-sparql"),
 		SPARQL2("SPARQL2", ".mw-highlight-lang-sparql"),;
@@ -129,7 +131,7 @@ public class Wikibase implements Callable<Integer> {
 			String url = wikidatawiki + "w/index.php?title=Special:WhatLinksHere/Template:" + nt.name;
 
 			try {
-				while (url != null) {
+				while (url != null && !url.equals(wikidatawiki)) {
 					Document searchResultDocument = retrieveAndCacheResult(url, outputSearchResultDir);
 					Elements ulWhatLinksHereList = searchResultDocument.select("#mw-whatlinkshere-list li > a");
 					for (Element link : ulWhatLinksHereList) {
@@ -150,7 +152,8 @@ public class Wikibase implements Callable<Integer> {
 		String pageLinkingToSparqlTemplate = link.attr("href");
 		if (pageLinkingToSparqlTemplate.startsWith("/")) {
 			pageLinkingToSparqlTemplate = wikidatawiki + pageLinkingToSparqlTemplate;
-		}
+		} else if (pageLinkingToSparqlTemplate == null || pageLinkingToSparqlTemplate.isBlank())
+			return null;
 		return pageLinkingToSparqlTemplate;
 	}
 
@@ -167,24 +170,31 @@ public class Wikibase implements Callable<Integer> {
 
 			Elements sparqlTemplates = htmlPageDocument.select(nt.cssClass);
 			for (Element sparqlTemplate : sparqlTemplates) {
-				String query = sparqlTemplate.select("pre").eachText().stream().collect(Collectors.joining("\n"));
+				//Concat the SPARQL string undo " escaping.
+				String query = sparqlTemplate.select("pre").eachText().stream().collect(Collectors.joining("\n"))
+						.replace("\\\"", "\"");
 				LinkedHashModel model = new LinkedHashModel();
 
 				String urlForFileName = new MD5().evaluate(VF, VF.createLiteral(query)).stringValue();
 				IRI iriForQuery = VF.createIRI(wikidatawiki + "#query-" + urlForFileName);
 				addQueryStringToModel(query, model, iriForQuery);
-				StringBuilder sb = makeThePreviosSiblingNodesTheLabel(sparqlTemplate);
-				if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
-					model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
-				} else if (!sb.isEmpty()) {
-					model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString()));
-				}
+				model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", "en"));
+//				extractComment(languageInHtml, sparqlTemplate, model, iriForQuery);
 				model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
 				model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
-				model.add(iriForQuery, SHACL.PREFIXES, VF.createBNode("wikidata_prefixes"));
+				model.add(iriForQuery, SHACL.PREFIXES, WIKIDATA_PREFIXES);
 				model.add(iriForQuery, SchemaDotOrg.TARGET, VF.createIRI(wikidatasparql));
 				writeModelToTurtle(model, urlForFileName);
 			}
+		}
+	}
+
+	private void extractComment(String languageInHtml, Element sparqlTemplate, LinkedHashModel model, IRI iriForQuery) {
+		StringBuilder sb = makeThePreviosSiblingNodesTheLabel(sparqlTemplate);
+		if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
+			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
+		} else if (!sb.isEmpty()) {
+			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString()));
 		}
 	}
 
