@@ -236,7 +236,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	@Override
 	public void meet(Union u) throws RuntimeException {
-		rq.add(indent() + "%%or");
+//		rq.add(indent() + "%%or");
 		String thisUnionId = prefix + unionCount++;
 		rq.add(indent() + "subgraph union" + thisUnionId + "[\" Union \"]");
 		rq.add(indent() + "subgraph union" + thisUnionId + "l[\" \"]");
@@ -262,7 +262,7 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 		s.getLeftArg().visit(this);
 		optional = true;
 		String optionalId = prefix + optionalCount++;
-		rq.add(indent() + "%%optional");
+//		rq.add(indent() + "%%optional");
 		rq.add(indent() + "subgraph optional" + optionalId + "[\"(optional)\"]");
 		rq.add(indent() + "style optional" + optionalId + " fill:#bbf,stroke-dasharray: 5 5;");
 		indent += 2;
