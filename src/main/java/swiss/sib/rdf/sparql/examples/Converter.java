@@ -1,5 +1,6 @@
 package swiss.sib.rdf.sparql.examples;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -14,7 +15,6 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
@@ -154,10 +154,10 @@ public class Converter implements Callable<Integer>{
 	private void renderAllExamplesInAProject(String extension, Function<Model, List<String>> convertPerProject,
 			Path pro, Model allForProject) {
 		String prqfn = "index."+extension;
-		Path prq = pro.resolve(prqfn);
+		Path indexMd = pro.resolve(prqfn);
 		try {
 			List<String> rq = convertPerProject.apply(allForProject);
-			Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(indexMd, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
 			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
 			throw new RuntimeException(e);
@@ -172,10 +172,7 @@ public class Converter implements Callable<Integer>{
 		allForProject.addAll(ex);
 		Iterator<Statement> iterator = ex.getStatements(null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).iterator();
 		if (iterator.hasNext()) {
-			Resource subject = iterator.next().getSubject();
-			allForProject.add(VF.createStatement(subject, SIB.FILE_NAME, VF.createLiteral(p.getFileName().toString())));
-			allForProject.add(VF.createStatement(subject, SIB.FILE_PATH, VF.createLiteral(p.toFile().toString())));
-			allForProject.add(VF.createStatement(subject, SIB.PROJECT, VF.createLiteral(p.getParent().getFileName().toString())));
+			addTriplesUsedDuringBuild(allForProject, p, iterator.next().getSubject());
 		}
 	
 		String pfn = p.getFileName().toString();
@@ -188,6 +185,14 @@ public class Converter implements Callable<Integer>{
 			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected static void addTriplesUsedDuringBuild(Model allForProject, Path p, Resource subject) {
+		
+		File file = p.toFile();
+		allForProject.add(VF.createStatement(subject, SIB.FILE_NAME, VF.createLiteral(file.getName())));
+		allForProject.add(VF.createStatement(subject, SIB.FILE_PATH, VF.createLiteral(file.toString())));
+		allForProject.add(VF.createStatement(subject, SIB.PROJECT, VF.createLiteral(p.getParent().getFileName().toString())));
 	}
 
 	private Model prefixModel(Optional<Path> findFirst) {
@@ -230,10 +235,8 @@ public class Converter implements Callable<Integer>{
 		} catch (IOException e) {
 			Failure.CANT_READ_EXAMPLE.exit(e);
 		}
-		IRI pAsIri = VF.createIRI(p.toUri().toString());
-		temp.getStatements(null, RDF.TYPE, null).forEach(s -> {
-			temp.add(VF.createStatement(s.getSubject(), SIB.FILE_NAME, pAsIri));
-			temp.add(VF.createStatement(s.getSubject(), SIB.FILE_PATH, VF.createLiteral(p.toFile().toString())));
+		temp.getStatements(null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).forEach(s -> {
+			addTriplesUsedDuringBuild(temp, p, s.getSubject());
 		});
 		model.addAll(temp);
 	}
