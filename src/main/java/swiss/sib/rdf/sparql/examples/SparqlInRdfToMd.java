@@ -18,12 +18,14 @@ import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
 public class SparqlInRdfToMd {
-
+	private static final Logger log = LoggerFactory.getLogger(SparqlInRdfToMd.class);
 	public static List<String> asMD(Model ex) {
 		List<String> rq = new ArrayList<>();
 
@@ -62,8 +64,8 @@ public class SparqlInRdfToMd {
 			rq.add("```mermaid");
 			rq.add(asMermaid);
 			rq.add("```");
-		} catch (MalformedQueryException e) {
-			//Ignore malformed queries don't have mermaid
+		} catch (MalformedQueryException | IllegalArgumentException e) {
+			log.debug("Could not convert to mermaid", e);
 		}
 		return rq;
 	}
