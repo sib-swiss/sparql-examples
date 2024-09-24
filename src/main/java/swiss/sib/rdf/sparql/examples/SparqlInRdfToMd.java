@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
@@ -27,7 +28,7 @@ public class SparqlInRdfToMd {
 		List<String> rq = new ArrayList<>();
 
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> {
-			rq.add("# " + queryId.stringValue() + "\n");
+			rq.add("# " + ((IRI) queryId).getLocalName() + "\n");
 			streamOf(ex, queryId, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
 			streamOf(ex, queryId, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
