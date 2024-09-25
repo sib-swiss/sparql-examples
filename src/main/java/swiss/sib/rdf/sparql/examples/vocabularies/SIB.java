@@ -5,7 +5,7 @@ import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 
 public class SIB {
-	public static final String NAMESPACE = "http://example.org/";
+	public static final String NAMESPACE = "https://purl.expasy.org/sparql-examples/ontology#";
 	public static final IRI DESCRIBE = SimpleValueFactory.getInstance().createIRI(SHACL.NAMESPACE, "describe");
 	public static final IRI BIGDATA_SELECT = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "bigdata_select");
 	

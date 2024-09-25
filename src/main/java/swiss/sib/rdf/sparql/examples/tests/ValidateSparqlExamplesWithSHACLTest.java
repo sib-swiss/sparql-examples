@@ -38,9 +38,10 @@ public class ValidateSparqlExamplesWithSHACLTest {
 			PREFIX schema:<https://schema.org/>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			PREFIX spex: <https://purl.expasy.org/sparql-examples/ontology#>
 			[] sh:targetClass sh:SPARQLExecutable ;
 				sh:property [
-					sh:path [ sh:alternativePath ( sh:select sh:ask sh:describe sh:construct ) ] ;
+					sh:path [ sh:alternativePath ( sh:select sh:ask spex:describe sh:construct ) ] ;
 					sh:maxCount 1 ;
 					sh:minCount 1
 				] , 
