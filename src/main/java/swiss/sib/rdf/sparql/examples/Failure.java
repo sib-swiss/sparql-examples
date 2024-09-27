@@ -4,7 +4,7 @@ import org.eclipse.rdf4j.query.MalformedQueryException;
 
 public enum Failure {
 	CANT_READ_INPUT_DIRECTORY(1), CANT_PARSE_EXAMPLE(2), CANT_READ_EXAMPLE(3), CANT_WRITE_EXAMPLE_RQ(4), JUNIT(5),
-	CONNECTION_TO_WIKIDATA_WIKI_FAIL(6), CANT_WRITE_FIXED_EXAMPLE(7), CANT_PARSE_PREFIXES(8);
+	CONNECTION_TO_WIKIDATA_WIKI_FAIL(6), CANT_WRITE_FIXED_EXAMPLE(7), CANT_PARSE_PREFIXES(8), DID_NOTHING(9);
 
 	private final int exitCode;
 
@@ -23,6 +23,11 @@ public enum Failure {
 		e.printStackTrace();
 		System.exit(exitCode);
 
+	}
+
+	int exitCode() {
+		
+		return exitCode;
 	}
 
 }

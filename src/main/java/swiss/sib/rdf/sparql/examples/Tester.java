@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.platform.console.ConsoleLauncher;
+import org.junit.platform.console.ConsoleLauncherExecutionResult;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -44,18 +45,18 @@ public class Tester implements Callable<Integer> {
 		} else if (commandLine.isVersionHelpRequested()) {
 			commandLine.printVersionHelp(System.out);
 		} else {
-			test();
+			return test();
 		}
 		return 0;
 	}
 
 	private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);
 
-	private void test() {
+	private int test() {
 
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
-				test(list);
+				return test(list);
 			} catch (IOException e) {
 				Failure.CANT_READ_INPUT_DIRECTORY.exit(e);
 			} catch (Exception e) {
@@ -63,14 +64,15 @@ public class Tester implements Callable<Integer> {
 			}
 		} else {
 			try (Stream<Path> list = COMMA.splitAsStream(projects).map(inputDirectory::resolve)) {
-				test(list);
+				return test(list);
 			} catch (Exception e) {
 				Failure.JUNIT.exit(e);
 			}
 		}
+		return Failure.DID_NOTHING.exitCode();
 	}
 
-	private void test(Stream<Path> list) throws Exception {
+	private int test(Stream<Path> list) throws Exception {
 		System.setProperty(Tester.class.getName(), inputDirectory.toString());
 		List<String> standardOptions = List.of("--fail-if-no-tests", "--include-engine", "junit-jupiter",
 				"--select-package", ValidateSparqlExamplesTest.class.getPackageName());
@@ -79,7 +81,8 @@ public class Tester implements Callable<Integer> {
 			standardOptions.add("--exclude-tag");
 			standardOptions.add("SlowTest");
 		}
-		ConsoleLauncher.execute(System.out, System.err, (String[]) standardOptions.toArray(new String[0]));
+		return ConsoleLauncher.execute(System.out, System.err, (String[]) standardOptions.toArray(new String[0])).getExitCode();
+		
 	}
 
 }
