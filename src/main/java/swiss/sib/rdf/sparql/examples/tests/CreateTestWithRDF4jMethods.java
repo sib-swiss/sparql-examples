@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.model.IRI;
@@ -21,6 +22,7 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.BooleanQuery;
 import org.eclipse.rdf4j.query.GraphQuery;
@@ -249,5 +251,41 @@ public class CreateTestWithRDF4jMethods {
 			}
 		}
 
+	}
+
+	static void testQueryAnnotatedWithFederatesWith(Path p) {
+		assertTrue(Files.exists(p));
+		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
+		Model model = new LinkedHashModel();
+		rdfParser.setRDFHandler(new StatementCollector(model));
+		try (InputStream newInputStream = Files.newInputStream(p)) {
+			rdfParser.parse(newInputStream);
+		} catch (RDFParseException | RDFHandlerException | IOException e) {
+			fail(e);
+		}
+		assertFalse(model.isEmpty());
+		Set<String> serviceEndpoints = extractServiceEndpoints(model).collect(Collectors.toSet());
+
+		serviceEndpoints.forEach(endpoint -> {
+			boolean test = model.contains(null, SIB.FEDERATES_WITH,
+					SimpleValueFactory.getInstance().createIRI(endpoint));
+			assertTrue(test, p + " expected to be annotated with spex:federatesWith <" + endpoint + ">");
+		});
+		Iterator<Statement> iterator = model.getStatements(null, SIB.FEDERATES_WITH, null).iterator();
+		while (iterator.hasNext()) {
+			String expectedEndpoint = iterator.next().getObject().stringValue();
+			assertTrue(serviceEndpoints.contains(expectedEndpoint),
+					p + " annotated with sparql-examples:federates_with <" + expectedEndpoint + "> not in query");
+		}
+
+	}
+
+	private static Stream<String> extractServiceEndpoints(Model model) {
+		QueryParser parser = new SPARQLParserFactory().getParser();
+
+		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
+				.map(s -> model.getStatements(null, s, null)).map(Iterable::iterator).map(i -> {
+					return collectServiceIrisInFromOneExample(parser, i);
+				}).flatMap(Set::stream);
 	}
 }

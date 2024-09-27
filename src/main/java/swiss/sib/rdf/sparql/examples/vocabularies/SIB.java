@@ -13,6 +13,8 @@ public class SIB {
 	public static final IRI FILE_PATH = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "file_path");
 	public static final IRI PROJECT = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "project");
 	
+	public static final IRI FEDERATES_WITH = SimpleValueFactory.getInstance().createIRI(NAMESPACE, "federatesWith");
+	
 	private SIB() {
 		
 	}

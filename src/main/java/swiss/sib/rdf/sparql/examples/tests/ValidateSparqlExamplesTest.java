@@ -114,6 +114,14 @@ public class ValidateSparqlExamplesTest {
 			}
 		}));
 	}
+	
+	@TestFactory
+    public Stream<DynamicTest> testAllServicesAnnotated() throws URISyntaxException, IOException {
+
+            Function<Path, Executable> tester = (p) -> () -> CreateTestWithRDF4jMethods.testQueryAnnotatedWithFederatesWith(p);
+            return testAll(tester);
+    }
+
 
 	private DynamicTest createTest(Function<Path, Executable> tester, Path projectPath, Path specificExamplePath) {
 		String testName = pathToTestName(specificExamplePath);
