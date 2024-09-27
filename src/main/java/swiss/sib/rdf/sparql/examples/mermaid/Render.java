@@ -147,6 +147,8 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 
 	public void addStyles() {
 		rq.add("classDef projected fill:lightgreen;");
+		rq.add("classDef literal fill:orange;");
+		rq.add("classDef iri fill:yellow;");
 	}
 
 	private void addWithLeadingWhiteSpace(Stream<String> map, List<String> rq) {
@@ -379,6 +381,10 @@ public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	private static String addProjectedClass(Value v, Set<Value> variables) {
 		if (variables.contains(v)) {
 			return ":::projected ";
+		} else if (v.isLiteral()) {
+			return ":::literal ";
+		} else if (v.isIRI()) {
+			return ":::iri ";
 		}
 		return "";
 	}
