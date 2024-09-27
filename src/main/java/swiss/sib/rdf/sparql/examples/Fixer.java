@@ -6,8 +6,10 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
@@ -175,7 +177,7 @@ public class Fixer implements Callable<Integer> {
 		String fix = null;
 		if (fixedPrefixes != null) {
 			System.out.println("Fixed prefixes " + queryIriStr + " in file " + file);
-			model.remove(queryIri, SHACL.SELECT, query);
+			model.remove(queryIri, SHACL.SELECT, null);
 			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixedPrefixes));
 			writeFixedModel(file, model);
 			queryStr = fixedPrefixes;
@@ -184,7 +186,7 @@ public class Fixer implements Callable<Integer> {
 
 		if (fix != null) {
 			System.out.println("Fixed blaze graph " + queryIriStr + " in file " + file);
-			model.remove(queryIri, SHACL.SELECT, query);
+			model.remove(queryIri, SHACL.SELECT, null);
 			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fix));
 			model.remove(queryIri, SIB.BIGDATA_SELECT, null);
 			model.add(queryIri, SIB.BIGDATA_SELECT, query);
@@ -270,32 +272,62 @@ public class Fixer implements Callable<Integer> {
 			NamedSubqueriesNode nsq = origAst.getNamedSubqueries();
 			if (nsq != null) {
 				StringBuilder sb = new StringBuilder(original);
+				attachOriginalInclude(nsq, sb);
+				for (int i = 0; i < nsq.size(); i++) {
+					NamedSubqueryRoot bOp = (NamedSubqueryRoot) nsq.get(i);
+					for (int j = 0; j < nsq.size(); j++) {
+						if (j != i) {
+							NamedSubqueryRoot bOpO = (NamedSubqueryRoot) nsq.get(j);
+							BOp fixed = replaceIncludes(bOp.getGraphPattern(), bOpO, sb);
+						}
+					}
+				}
+				
+				
+				pq = blzp.parseQuery(sb.toString(), "https://example.org/");
+
+				origAst = pq.getASTContainer().getOriginalAST();
+				nsq = origAst.getNamedSubqueries();
+				List<String> toRemove = attachOriginalInclude(nsq, sb);
 				for (int i = 0; i < nsq.size(); i++) {
 					NamedSubqueryRoot bOp = (NamedSubqueryRoot) nsq.get(i);
 
 					origAst.clearProperty("namedSubqueries");
 					
-					Pattern asP = Pattern.compile(bOp.getName() + "\\s");
-					Matcher matcher = asP.matcher(sb);
-
-					if (matcher.find()) {
-						int startAsP = matcher.start();
-						int lastClosingBracket = sb.lastIndexOf("}", startAsP);
-						int openingBracket = findBlockInMatchingBrackets(sb, lastClosingBracket - 1);
-						int withStart = findWithJustBeforeOpenBracket(sb, openingBracket);
-						String toInclude = sb.substring(openingBracket, lastClosingBracket + 1);
-						bOp.annotations().put("original", toInclude);
-						sb.delete(withStart, matcher.end());
-					}
+					
 					BOp fixed = replaceIncludes(origAst, bOp, sb);
 				}
-				return sb.toString();
+				String string = sb.toString();
+				for (String remove:toRemove) {
+					string = string.replace(remove, "");
+				}
+				return string;
 			}
 			return null;
 		} catch (MalformedQueryException e) {
 			System.out.println("Failed to fix include " + queryIriStr + " in " + fileStr);
 			return null;
 		}
+	}
+
+	private static List<String> attachOriginalInclude(NamedSubqueriesNode nsq, StringBuilder sb) {
+		List<String> originalIncludes = new ArrayList<>();
+		for (int i = 0; i < nsq.size(); i++) {
+			NamedSubqueryRoot bOp = (NamedSubqueryRoot) nsq.get(i);
+			Pattern asP = Pattern.compile(bOp.getName() + "\\s");
+			Matcher matcher = asP.matcher(sb);
+
+			if (matcher.find()) {
+				int startAsP = matcher.start();
+				int lastClosingBracket = sb.lastIndexOf("}", startAsP);
+				int openingBracket = findBlockInMatchingBrackets(sb, lastClosingBracket - 1);
+				int withStart = findWithJustBeforeOpenBracket(sb, openingBracket);
+				String toInclude = sb.substring(openingBracket, lastClosingBracket + 1);
+				bOp.annotations().put("original", toInclude);
+				originalIncludes.add(sb.substring(withStart, matcher.end()));
+			}
+		}
+		return originalIncludes;
 	}
 	
 	private static final Pattern WITH = Pattern.compile("with", Pattern.CASE_INSENSITIVE);
@@ -309,6 +341,10 @@ public class Fixer implements Callable<Integer> {
 			yield nq;
 		}
 		case SubqueryRoot sqb -> {
+			replaceIncludes(sqb.getGraphPattern(), bOp, blazeGraphIncludeExample);
+			yield sqb;
+		}
+		case NamedSubqueryRoot sqb -> {
 			replaceIncludes(sqb.getGraphPattern(), bOp, blazeGraphIncludeExample);
 			yield sqb;
 		}

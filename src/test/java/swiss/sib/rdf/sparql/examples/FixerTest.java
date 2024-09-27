@@ -71,6 +71,33 @@ public class FixerTest {
 			  INCLUDE %get_labels2
 			  ?item a rdfs:Class .
 			}""";
+	
+	
+	private final String includingInclude = """
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT ?item ?itemLabel WITH
+			{
+			  	SELECT DISTINCT ?itemLabel
+			  	WHERE
+			  	{
+			    	?item rdfs:label ?itemLabel .
+			    }
+			} AS %get_labels
+			WITH
+			{
+			  	SELECT DISTINCT ?itemType
+			  	WHERE
+			  	{
+			  		INCLUDE %get_labels
+			    	?item rdfs:type ?itemType .
+			    }
+			} AS %get_labels2
+
+			WHERE
+			{
+			  INCLUDE %get_labels2
+			  ?item a rdfs:Class .
+			}""";
 
 	private final String blazeGraphWithoutIncludeExample = """
 						PREFIX wikibase: <http://wikiba.se/ontology#>
@@ -261,6 +288,18 @@ public class FixerTest {
 	public void doubleIncludeWith() {
 		try {
 			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphIncludeExample2, "", null);
+			assertFalse(fix.contains("WITH"));
+			QueryParser parser = new SPARQLParserFactory().getParser();
+			parser.parseQuery(fix, "http://example.org/");
+		} catch (MalformedQueryException e) {
+			fail(e);
+		}
+	}
+	
+	@Test
+	public void innerIncludeWith() {
+		try {
+			String fix = Fixer.fixBlazeGraphIncludeWith(includingInclude, "", null);
 			assertFalse(fix.contains("WITH"));
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(fix, "http://example.org/");
