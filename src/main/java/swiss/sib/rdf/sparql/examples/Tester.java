@@ -10,13 +10,12 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.junit.platform.console.ConsoleLauncher;
-import org.junit.platform.console.ConsoleLauncherExecutionResult;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
-import picocli.CommandLine.Model.CommandSpec;
 import swiss.sib.rdf.sparql.examples.tests.ValidateSparqlExamplesTest;
 
 @Command(name = "test", description = "Tests the example files")
