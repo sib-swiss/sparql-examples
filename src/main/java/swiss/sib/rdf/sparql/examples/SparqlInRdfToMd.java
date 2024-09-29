@@ -30,7 +30,11 @@ public class SparqlInRdfToMd {
 		List<String> rq = new ArrayList<>();
 
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> {
-			rq.add("# " + ((IRI) queryId).getLocalName() + "\n");
+			String ln = ((IRI) queryId).getLocalName();
+			rq.add("# " + ln + "\n");
+			rq.add("");
+			rq.add("[rq](" + ln + ".rq) [turtle/ttl](" + ln + ".ttl)");
+			rq.add("");
 			streamOf(ex, queryId, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
 			streamOf(ex, queryId, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
