@@ -3,6 +3,7 @@ package swiss.sib.rdf.sparql.examples;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Map;
@@ -12,6 +13,10 @@ import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.query.parser.QueryParser;
 import org.eclipse.rdf4j.query.parser.sparql.SPARQLParserFactory;
 import org.junit.jupiter.api.Test;
+
+import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
+import swiss.sib.rdf.sparql.examples.fixes.Blazegraph;
+import swiss.sib.rdf.sparql.examples.fixes.Prefixes;
 
 public class FixerTest {
 
@@ -275,10 +280,10 @@ public class FixerTest {
 	@Test
 	public void simpleIncludeWith() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphIncludeExample, "", null);
-			assertFalse(fix.contains("WITH"));
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphIncludeExample), "", null);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -287,10 +292,10 @@ public class FixerTest {
 	@Test
 	public void doubleIncludeWith() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphIncludeExample2, "", null);
-			assertFalse(fix.contains("WITH"));
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphIncludeExample2), "", null);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -299,10 +304,10 @@ public class FixerTest {
 	@Test
 	public void innerIncludeWith() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(includingInclude, "", null);
-			assertFalse(fix.contains("WITH"));
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, includingInclude), "", null);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -311,10 +316,10 @@ public class FixerTest {
 	@Test
 	public void failingExample() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(failing, "", null);
-			assertFalse(fix.contains("WITH"));
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, failing), "", null);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -324,10 +329,10 @@ public class FixerTest {
 	@Test
 	public void failingExample2() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(failing2, "", null);
-			assertFalse(fix.contains("WITH"));
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, failing2), "", null);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -336,11 +341,11 @@ public class FixerTest {
 	@Test
 	public void failingExample3() {
 		try {
-			String fix = Fixer.fixBlazeGraph(failing3, "", null);
+			Fixed fix = Blazegraph.fixBlazeGraph(new Fixed(false, null, failing3), "", null);
 			assertNotNull(fix);
-			assertFalse(fix.contains("with"));
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -349,11 +354,12 @@ public class FixerTest {
 	@Test
 	public void failingExample4() {
 		try {
-			String fix = Fixer.fixBlazeGraph(failing4, "", null);
+			Fixed fix = Blazegraph.fixBlazeGraph(new Fixed(false, null, failing4), "", null);
 			assertNotNull(fix);
-			assertFalse(fix.contains("WITH"));
+			assertTrue(fix.changed());
+			assertFalse(fix.fixed().contains("WITH"));
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}
@@ -362,8 +368,9 @@ public class FixerTest {
 	@Test
 	public void real() {
 		try {
-			String fix = Fixer.fixBlazeGraph(blazeGraphWithoutIncludeExample, "", null);
-			assertNull(fix);
+			Fixed fix = Blazegraph.fixBlazeGraph(new Fixed(false, null, blazeGraphWithoutIncludeExample), "", null);
+			assertFalse(fix.changed());
+			assertNull(fix.fixed());
 
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(blazeGraphWithoutIncludeExample, "http://example.org/");
@@ -375,9 +382,10 @@ public class FixerTest {
 	@Test
 	public void hintsAndInclude() {
 		try {
-			String fix = Fixer.fixBlazeGraphIncludeWith(blazeGraphWithHintsAndInclude, "", null);
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphWithHintsAndInclude), "", null);
 			assertNotNull(fix);
-			fix = Fixer.fixBlazeGraphHints(fix, "", null);
+			assertTrue(fix.changed());
+			fix = Blazegraph.fixBlazeGraphHints(new Fixed(false, null, fix.fixed()), "", null);
 			assertNotNull(fix);
 
 			QueryParser parser = new SPARQLParserFactory().getParser();
@@ -390,10 +398,10 @@ public class FixerTest {
 	@Test
 	public void simpleMissingPrefix() {
 		try {
-			String fix = Fixer.fixMissingPrefixes(missingPrefix, PREFIXES);
-
+			Fixed fix = Prefixes.fixMissingPrefixes(missingPrefix, PREFIXES);
+			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(fix, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}

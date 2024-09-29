@@ -114,22 +114,29 @@ public class CreateTestWithRDF4jMethods {
 		while (i.hasNext()) {
 			Value obj = i.next().getObject();
 
-			try {
-				ParsedQuery query = parser.parseQuery(obj.stringValue(), "https://example.org/");
-				query.getTupleExpr().visit(new AbstractQueryModelVisitor<RuntimeException>() {
-
-					@Override
-					public void meet(Service node) throws RuntimeException {
-						serviceIris.add(node.getServiceRef().getValue().stringValue());
-						super.meet(node);
-					}
-
-				});
-			} catch (MalformedQueryException qe) {
-				//Ignore as tested by above;
-			}
+			extractedServiceIRIsFromOneQuery(parser, serviceIris, obj.stringValue());
 		}
 		return serviceIris;
+	}
+
+	public static void extractedServiceIRIsFromOneQuery(QueryParser parser, Set<String> serviceIris, String obj) {
+		try {
+			ParsedQuery query = parser.parseQuery(obj, "https://example.org/");
+			query.getTupleExpr().visit(new AbstractQueryModelVisitor<RuntimeException>() {
+
+				@Override
+				public void meet(Service node) throws RuntimeException {
+					Value value = node.getServiceRef().getValue();
+					if (value != null) {
+						serviceIris.add(value.stringValue());
+					}
+					super.meet(node);
+				}
+
+			});
+		} catch (MalformedQueryException qe) {
+			//Ignore as tested by above;
+		}
 	}
 
 	private static void testAllQueryStringsInModel(QueryParser parser, Iterator<Statement> i) {
@@ -280,7 +287,7 @@ public class CreateTestWithRDF4jMethods {
 
 	}
 
-	private static Stream<String> extractServiceEndpoints(Model model) {
+	public static Stream<String> extractServiceEndpoints(Model model) {
 		QueryParser parser = new SPARQLParserFactory().getParser();
 
 		return Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
