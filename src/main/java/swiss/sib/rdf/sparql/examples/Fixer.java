@@ -20,6 +20,7 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.impl.TreeModel;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
@@ -89,7 +90,7 @@ public class Fixer implements Callable<Integer> {
 				sparqlExamples.forEach(ttl -> {
 					System.out.println("Looking at:" + ttl);
 					try (FileInputStream in = new FileInputStream(ttl.toFile())) {
-						Model model = parseIntoLinkedHashModel(in);
+						Model model = parseIntoModel(in);
 						IRI queryIri = null;
 						Value query = null;
 						Statement select = has(model, SHACL.SELECT);
@@ -119,8 +120,8 @@ public class Fixer implements Callable<Integer> {
 		}
 	}
 
-	public Model parseIntoLinkedHashModel(FileInputStream in) throws IOException {
-		Model model = new LinkedHashModel();
+	public Model parseIntoModel(FileInputStream in) throws IOException {
+		Model model = new TreeModel();
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
 		rdfParser.setRDFHandler(new StatementCollector(model));
 		rdfParser.parse(in);
@@ -185,8 +186,8 @@ public class Fixer implements Callable<Integer> {
 		if (fixBlz.changed()) {
 			System.out.println("Fixed blaze graph " + queryIriStr + " in file " + file);
 			model.remove(queryIri, SHACL.SELECT, null);
-			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixBlz.fixed()));
 			model.remove(queryIri, SIB.BIGDATA_SELECT, null);
+			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixBlz.fixed()));
 			model.add(queryIri, SIB.BIGDATA_SELECT, query);
 			writeFixedModel(file, model);
 			return;
