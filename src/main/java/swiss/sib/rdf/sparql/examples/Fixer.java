@@ -75,7 +75,7 @@ public class Fixer implements Callable<Integer> {
 		}
 		return 0;
 	}
-	
+
 	public record Fixed(boolean changed, String fixed, String original, Set<String> servicePartners) {
 		public Fixed(boolean changed, String fixed, String original) {
 			this(changed, fixed, original, null);
@@ -191,19 +191,26 @@ public class Fixer implements Callable<Integer> {
 			writeFixedModel(file, model);
 			return;
 		}
-		if (!fixedPrefixes.changed() || !fixBlz.changed()) {
-			System.out.println("No change to:" + file);
-		}
+		boolean serviceWithChanged = false;
 		Fixed fixFederatedWith = Federation.fix(fixBlz, queryIriStr);
-		if (fixFederatedWith.servicePartners() != null && !fixFederatedWith.servicePartners().isEmpty()
-				&& !model.filter(queryIri, SIB.FEDERATES_WITH, null).isEmpty()) {
-			boolean removed = model.remove(queryIri, SIB.FEDERATES_WITH, null);
-			for (String fedWith:fixFederatedWith.servicePartners()) {
-				model.add(queryIri, SIB.FEDERATES_WITH, VF.createIRI(fedWith));
+		if (fixFederatedWith.servicePartners() != null && !fixFederatedWith.servicePartners().isEmpty()) {
+			Model filter = model.filter(queryIri, SIB.FEDERATES_WITH, null);
+			if (filter.size() > fixFederatedWith.servicePartners().size()) {
+				model.remove(queryIri, SIB.FEDERATES_WITH, null);
 			}
-			if (removed) {
+			boolean present = true;
+			for (String fedWith : fixFederatedWith.servicePartners()) {
+				if (model.add(queryIri, SIB.FEDERATES_WITH, VF.createIRI(fedWith))) {
+					present = false;
+				}
+			}
+			if (!present) {
 				writeFixedModel(file, model);
+				serviceWithChanged = true;
 			}
+		}
+		if (!fixedPrefixes.changed() && !fixBlz.changed() && !serviceWithChanged) {
+			System.out.println("No change to:" + file);
 		}
 	}
 
