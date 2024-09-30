@@ -178,8 +178,8 @@ public class Wikibase implements Callable<Integer> {
 				String urlForFileName = new MD5().evaluate(VF, VF.createLiteral(query)).stringValue();
 				IRI iriForQuery = VF.createIRI(wikidatawiki + "#query-" + urlForFileName);
 				addQueryStringToModel(query, model, iriForQuery);
-				model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", "en"));
-//				extractComment(languageInHtml, sparqlTemplate, model, iriForQuery);
+//				model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", "en"));
+				extractComment(languageInHtml, sparqlTemplate, model, iriForQuery, nt);
 				model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
 				model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
 				model.add(iriForQuery, SHACL.PREFIXES, WIKIDATA_PREFIXES);
@@ -189,16 +189,16 @@ public class Wikibase implements Callable<Integer> {
 		}
 	}
 
-	private void extractComment(String languageInHtml, Element sparqlTemplate, LinkedHashModel model, IRI iriForQuery) {
-		StringBuilder sb = makeThePreviosSiblingNodesTheLabel(sparqlTemplate);
+	private void extractComment(String languageInHtml, Element sparqlTemplate, LinkedHashModel model, IRI iriForQuery, NamedTemplate nt) {
+		StringBuilder sb = makeThePreviousSiblingNodesTheLabel(sparqlTemplate, nt);
 		if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
 			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
 		} else if (!sb.isEmpty()) {
 			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString()));
 		}
 	}
-
-	private StringBuilder makeThePreviosSiblingNodesTheLabel(Element sparqlTemplate) {
+//
+	private StringBuilder makeThePreviousSiblingNodesTheLabel(Element sparqlTemplate, NamedTemplate nt) {
 		Element parent = sparqlTemplate.parent();
 		List<Node> childNodes = parent.childNodes();
 		StringBuilder sb = new StringBuilder();
@@ -209,6 +209,9 @@ public class Wikibase implements Callable<Integer> {
 				if (childNode instanceof TextNode tn) {
 					sb.append(tn.text());
 				} else if (childNode instanceof Element e) {
+					if (!e.getElementsByClass(nt.cssClass).isEmpty()) {
+						return sb;
+					}
 					sb.append(e.text());
 				}
 			}
