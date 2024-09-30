@@ -176,7 +176,7 @@ public class Blazegraph {
 			if (nsq.annotations().get("namedSet").equals(as)) {
 				SubqueryRoot sqr = new SubqueryRoot((QueryType) bOp.annotations().get("queryType"));
 				sqr.setGraphPattern((GraphPatternGroup<IGroupMemberNode>) bOp.annotations().get("graphPattern"));
-				Pattern includeAs = Pattern.compile("(INCLUDE|include)\\s+" + as+"\\s");
+				Pattern includeAs = Pattern.compile("(INCLUDE|include)\\s+" + as+"[\\s|\\.]");
 				Matcher m = includeAs.matcher(blazeGraphIncludeExample);
 				if (m.find()) {
 					do {
