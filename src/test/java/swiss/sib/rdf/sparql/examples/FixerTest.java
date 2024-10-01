@@ -295,6 +295,7 @@ public class FixerTest {
 			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 			PREFIX wd: <http://www.wikidata.org/entity/>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			PREFIX wdsubgraph:<https://query.wikidata.org/subgraph/>
 			SELECT ?thesisType ?thesisTypeLabel (COUNT(DISTINCT ?thesis) AS ?count) 
 			WHERE {
 			 hint:Query hint:optimizer \"None\" .
@@ -303,7 +304,7 @@ public class FixerTest {
 			  SERVICE wdsubgraph:wikidata_main { ?thesisType rdfs:label ?thesisTypeLabel .
 			    FILTER (LANG(?thesisTypeLabel) = 'en')  
 			  }
-			}  
+			} GROUP BY ?thesisType ?thesisTypeLabel
 
 			""";
 	@Test
