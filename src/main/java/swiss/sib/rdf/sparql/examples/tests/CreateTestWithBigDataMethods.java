@@ -42,7 +42,7 @@ public class CreateTestWithBigDataMethods {
 		assertFalse(model.isEmpty());
 
 
-		Iterable<Statement> statements = model.getStatements(null, SIB.BIGDATA_SELECT, null);
+		Iterable<Statement> statements = model.getStatements(null, SIB.BIGDATA_QUERY, null);
 		testAllQueryStringsInModel(new Bigdata2ASTSPARQLParser(), statements.iterator());
 	}
 

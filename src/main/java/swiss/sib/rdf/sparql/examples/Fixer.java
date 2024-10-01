@@ -18,7 +18,6 @@ import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.impl.TreeModel;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
@@ -38,6 +37,8 @@ import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
@@ -51,7 +52,7 @@ import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
 @CommandLine.Command(name = "fix", description = "Attempts to fixes example files")
 public class Fixer implements Callable<Integer> {
-
+	private static final Logger log = LoggerFactory.getLogger(Fixer.class);
 	private static final ValueFactory VF = SimpleValueFactory.getInstance();
 
 	@Spec
@@ -88,29 +89,38 @@ public class Fixer implements Callable<Integer> {
 			Map<String, String> prefixes = loadPrefixes();
 			try (Stream<Path> sparqlExamples = FindFiles.sparqlExamples(inputDirectory)) {
 				sparqlExamples.forEach(ttl -> {
-					System.out.println("Looking at:" + ttl);
+					log.info("Looking at:" + ttl);
 					try (FileInputStream in = new FileInputStream(ttl.toFile())) {
 						Model model = parseIntoModel(in);
 						IRI queryIri = null;
 						Value query = null;
+						IRI type=null;
 						Statement select = has(model, SHACL.SELECT);
 						Statement construct = has(model, SHACL.CONSTRUCT);
 						Statement ask = has(model, SHACL.ASK);
+						Statement describe = has(model, SIB.DESCRIBE);
 						if (select != null) {
 							queryIri = (IRI) select.getSubject();
 							query = select.getObject();
+							type=SHACL.SELECT;
 						} else if (construct != null) {
 							queryIri = (IRI) construct.getSubject();
 							query = construct.getObject();
+							type=SHACL.CONSTRUCT;
 						} else if (ask != null) {
 							queryIri = (IRI) ask.getSubject();
 							query = ask.getObject();
+							type=SHACL.ASK;
+						} else if (describe != null) {
+							queryIri = (IRI) describe.getSubject();
+							query = describe.getObject();
+							type=SIB.DESCRIBE;
 						}
 						if (queryIri != null && query != null) {
-							fix(queryIri, query, ttl, model, prefixes);
+							fix(queryIri, query, ttl, model, prefixes, type);
 						}
 					} catch (IOException | RDFParseException e) {
-						System.err.println("RDF error in " + ttl);
+						log.error("RDF error in " + ttl);
 						Failure.CANT_READ_EXAMPLE.exit(e);
 					}
 				});
@@ -171,28 +181,49 @@ public class Fixer implements Callable<Integer> {
 		return prefixes;
 	}
 
-	static void fix(IRI queryIri, Value query, Path file, Model model, Map<String, String> prefixes2) {
+	static void fix(IRI queryIri, Value query, Path file, Model model, Map<String, String> prefixes2, IRI type) {
 		String queryIriStr = queryIri.stringValue();
 
-		Fixed fixedPrefixes = Prefixes.fixMissingPrefixes(query.stringValue(), prefixes2);
-		if (fixedPrefixes.changed()) {
-			System.out.println("Fixed prefixes " + queryIriStr + " in file " + file);
-			model.remove(queryIri, SHACL.SELECT, null);
-			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixedPrefixes.fixed()));
-			writeFixedModel(file, model);
+		Fixed fixedPrefixes = fixPrefixes(queryIri, query, file, model, prefixes2, type, queryIriStr);
+		Fixed fixBlz = fixBlazeGraph(queryIri, query, file, model, type, queryIriStr, fixedPrefixes);
+		if (fixBlz.changed()) {
+			fixBlz = fixBlazeGraph(queryIri, query, file, model, type, queryIriStr, fixBlz);
 		}
+		boolean serviceWithChanged = fixMarkupFederationPartners(queryIri, file, model, queryIriStr, fixBlz);
+		if (!fixedPrefixes.changed() && !fixBlz.changed() && !serviceWithChanged) {
+			log.debug("No change to:" + file);
+		}
+	}
+
+	public static Fixed fixBlazeGraph(IRI queryIri, Value query, Path file, Model model, IRI type, String queryIriStr,
+			Fixed fixedPrefixes) {
 		Fixed fixBlz = Blazegraph.fixBlazeGraph(fixedPrefixes, queryIriStr, file);
 
 		if (fixBlz.changed()) {
-			System.out.println("Fixed blaze graph " + queryIriStr + " in file " + file);
-			model.remove(queryIri, SHACL.SELECT, null);
-			model.remove(queryIri, SIB.BIGDATA_SELECT, null);
-			model.add(queryIri, SHACL.SELECT, VF.createLiteral(fixBlz.fixed()));
-			model.add(queryIri, SIB.BIGDATA_SELECT, query);
+			log.debug("Fixed blaze graph " + queryIriStr + " in file " + file);
+			model.remove(queryIri, type, null);
+			model.remove(queryIri, SIB.BIGDATA_QUERY, null);
+			model.add(queryIri, type, VF.createLiteral(fixBlz.fixed()));
+			model.add(queryIri, SIB.BIGDATA_QUERY, query);
 			writeFixedModel(file, model);
-			return;
 		}
-		boolean serviceWithChanged = false;
+		return fixBlz;
+	}
+
+	public static Fixed fixPrefixes(IRI queryIri, Value query, Path file, Model model, Map<String, String> prefixes2,
+			IRI type, String queryIriStr) {
+		Fixed fixedPrefixes = Prefixes.fixMissingPrefixes(query.stringValue(), prefixes2);
+		if (fixedPrefixes.changed()) {
+			log.debug("Fixed prefixes " + queryIriStr + " in file " + file);
+			model.remove(queryIri, type, null);
+			model.add(queryIri, type, VF.createLiteral(fixedPrefixes.fixed()));
+			writeFixedModel(file, model);
+		}
+		return fixedPrefixes;
+	}
+
+	public static boolean fixMarkupFederationPartners(IRI queryIri, Path file, Model model, String queryIriStr,
+			Fixed fixBlz) {
 		Fixed fixFederatedWith = Federation.fix(fixBlz, queryIriStr);
 		if (fixFederatedWith.servicePartners() != null && !fixFederatedWith.servicePartners().isEmpty()) {
 			Model filter = model.filter(queryIri, SIB.FEDERATES_WITH, null);
@@ -207,12 +238,10 @@ public class Fixer implements Callable<Integer> {
 			}
 			if (!present) {
 				writeFixedModel(file, model);
-				serviceWithChanged = true;
+				return true;
 			}
 		}
-		if (!fixedPrefixes.changed() && !fixBlz.changed() && !serviceWithChanged) {
-			System.out.println("No change to:" + file);
-		}
+		return false;
 	}
 
 	private static void writeFixedModel(Path file, Model model) {

@@ -277,6 +277,35 @@ public class FixerTest {
 				} ORDER BY DESC(?cnt_refs) DESC(xsd:integer(STRBEFORE(?ratio, '%')))
 			""";
 	
+	private final String hintToRemove = """
+			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+			PREFIX wd: <http://www.wikidata.org/entity/>
+			SELECT DISTINCT ?item {
+			  ?item wdt:P27 wd:Q142 .
+			# ?item wdt:P19 [] .
+			  FILTER NOT EXISTS {
+			    ?item wdt:P19 ?place .
+			    ?place wdt:P131*  wd:Q142 .
+			    hint:Prior hint:gearing \"forward\"
+			  }
+			} LIMIT 1200
+			""";
+	
+	private final String hintToRemove2 = """
+			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+			PREFIX wd: <http://www.wikidata.org/entity/>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT ?thesisType ?thesisTypeLabel (COUNT(DISTINCT ?thesis) AS ?count) 
+			WHERE {
+			 hint:Query hint:optimizer \"None\" .
+			 ?thesis wdt:P4101 wd:Q1048626;
+			         wdt:P31 ?thesisType.
+			  SERVICE wdsubgraph:wikidata_main { ?thesisType rdfs:label ?thesisTypeLabel .
+			    FILTER (LANG(?thesisTypeLabel) = 'en')  
+			  }
+			}  
+
+			""";
 	@Test
 	public void simpleIncludeWith() {
 		try {
@@ -387,9 +416,38 @@ public class FixerTest {
 			assertTrue(fix.changed());
 			fix = Blazegraph.fixBlazeGraphHints(new Fixed(false, null, fix.fixed()), "", null);
 			assertNotNull(fix);
-
+			assertTrue(fix.changed());
+			assertFalse(fix.fixed().contains("hint:"));
 			QueryParser parser = new SPARQLParserFactory().getParser();
-			parser.parseQuery(blazeGraphWithoutIncludeExample, "http://example.org/");
+			parser.parseQuery(fix.fixed(), "http://example.org/");
+		} catch (MalformedQueryException e) {
+			fail(e);
+		}
+	}
+	
+	@Test
+	public void hintToRemove() {
+		try {
+			Fixed fix = Blazegraph.fixBlazeGraphHints(new Fixed(false, null, hintToRemove), "", null);
+			assertNotNull(fix);
+			assertTrue(fix.changed());
+			assertFalse(fix.fixed().contains("hint:"));
+			QueryParser parser = new SPARQLParserFactory().getParser();
+			parser.parseQuery(fix.fixed(), "http://example.org/");
+		} catch (MalformedQueryException e) {
+			fail(e);
+		}
+	}
+	
+	@Test
+	public void hintToRemove2() {
+		try {
+			Fixed fix = Blazegraph.fixBlazeGraphHints(new Fixed(false, null, hintToRemove2), "", null);
+			assertNotNull(fix);
+			assertTrue(fix.changed());
+			assertFalse(fix.fixed().contains("hint:"));
+			QueryParser parser = new SPARQLParserFactory().getParser();
+			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {
 			fail(e);
 		}

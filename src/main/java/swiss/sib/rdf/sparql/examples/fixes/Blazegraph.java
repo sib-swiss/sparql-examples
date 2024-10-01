@@ -33,6 +33,7 @@ public class Blazegraph {
 		
 	}
 
+	private static final Pattern HINT_REMOVE = Pattern.compile("(hint:([^.;,\\}])+[\\.;,\\}]?)");
 	public static Fixer.Fixed fixBlazeGraphHints(Fixed prior, String queryIriStr, Path fileStr) {
 		String original;
 		if (prior.changed()) {
@@ -41,39 +42,50 @@ public class Blazegraph {
 			original = prior.original();
 		}
 		if (original.contains("hint:")) {
+			SPARQLParser sparqlParser = new SPARQLParser();
 			try {
-				new SPARQLParser().parseQuery(original, QueryHints.NAMESPACE);
+				sparqlParser.parseQuery(original, QueryHints.NAMESPACE);
 			} catch (org.eclipse.rdf4j.query.MalformedQueryException e) {
 				String testQ = "PREFIX hint:<" + QueryHints.NAMESPACE + ">\n" + original;
 				try {
-					new SPARQLParser().parseQuery(testQ, QueryHints.NAMESPACE);
+					sparqlParser.parseQuery(testQ, QueryHints.NAMESPACE);
 					// we now know we have hints that are in the query and we need to remove them.
-					return new Fixer.Fixed(true, original.replaceAll("hint:([^.;,])+[.;,]", ""), original);
+					StringBuilder temp = new StringBuilder(original);
+					Matcher matcher = HINT_REMOVE.matcher(temp);
+					while (matcher.find()) {
+						int gl = matcher.group(1).length();
+						if (matcher.group(1).endsWith("}")) {
+							temp.delete(matcher.start(), matcher.start() + gl - 1);	
+						} else {
+							temp.delete(matcher.start(), matcher.start() + gl);
+						}
+						matcher.reset(temp);
+					}
+					return new Fixed(true, temp.toString(), original);
 	
 				} catch (org.eclipse.rdf4j.query.MalformedQueryException e2) {
 					return prior;
 				}
 			}
-	
 		}
 		return prior;
 	}
 
 	public static Fixed fixBlazeGraphIncludeWith(Fixed prior, String queryIriStr, Path fileStr) {
-		String original;
+		String toFix;
 		if (prior.changed()) {
-			original = prior.fixed();
+			toFix = prior.fixed();
 		} else {
-			original = prior.original();
+			toFix = prior.original();
 		}
 		Bigdata2ASTSPARQLParser blzp = new Bigdata2ASTSPARQLParser();
 		try {
-			BigdataParsedQuery pq = blzp.parseQuery(original, "https://example.org/");
+			BigdataParsedQuery pq = blzp.parseQuery(toFix, "https://example.org/");
 	
 			QueryRoot origAst = pq.getASTContainer().getOriginalAST();
 			NamedSubqueriesNode nsq = origAst.getNamedSubqueries();
 			if (nsq != null) {
-				StringBuilder sb = new StringBuilder(original);
+				StringBuilder sb = new StringBuilder(toFix);
 				attachOriginalInclude(nsq, sb);
 				for (int i = 0; i < nsq.size(); i++) {
 					NamedSubqueryRoot bOp = (NamedSubqueryRoot) nsq.get(i);
@@ -99,11 +111,11 @@ public class Blazegraph {
 					
 					BOp fixed = replaceIncludes(origAst, bOp, sb);
 				}
-				String string = sb.toString();
+				String withoutInclude = sb.toString();
 				for (String remove:toRemove) {
-					string = string.replace(remove, "");
+					withoutInclude = withoutInclude.replace(remove, "");
 				}
-				return new Fixer.Fixed(true, string, original);
+				return new Fixed(true, withoutInclude, toFix);
 			}
 			return prior;
 		} catch (MalformedQueryException e) {
@@ -114,11 +126,7 @@ public class Blazegraph {
 
 	public static Fixed fixBlazeGraph(Fixed original, String queryIriStr, Path fileStr) {
 		Fixed fix = fixBlazeGraphIncludeWith(original, queryIriStr, fileStr);
-		if (fix.changed()) {
-			return fixBlazeGraphHints(fix, queryIriStr, fileStr);
-		} else {
-			return fixBlazeGraphHints(original, queryIriStr, fileStr);
-		}
+		return fixBlazeGraphHints(fix, queryIriStr, fileStr);
 	}
 	
 	public static List<String> attachOriginalInclude(NamedSubqueriesNode nsq, StringBuilder sb) {
@@ -176,11 +184,15 @@ public class Blazegraph {
 			if (nsq.annotations().get("namedSet").equals(as)) {
 				SubqueryRoot sqr = new SubqueryRoot((QueryType) bOp.annotations().get("queryType"));
 				sqr.setGraphPattern((GraphPatternGroup<IGroupMemberNode>) bOp.annotations().get("graphPattern"));
-				Pattern includeAs = Pattern.compile("(INCLUDE|include)\\s+" + as+"[\\s|\\.]");
+				Pattern includeAs = Pattern.compile("(INCLUDE|include)\\s+" + as+"[\\s|\\.\\}]");
 				Matcher m = includeAs.matcher(blazeGraphIncludeExample);
 				if (m.find()) {
 					do {
-						blazeGraphIncludeExample.delete(m.start(), m.end());
+						if (m.group().endsWith("}")) {
+							blazeGraphIncludeExample.delete(m.start(), m.end() - 1);
+						} else {
+							blazeGraphIncludeExample.delete(m.start(), m.end());
+						}
 						blazeGraphIncludeExample.insert(m.start(), bOp.annotations().get("original"));
 						m = includeAs.matcher(blazeGraphIncludeExample);
 					} while (m.find()); 

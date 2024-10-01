@@ -3,14 +3,14 @@ package swiss.sib.rdf.sparql.examples.fixes;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import swiss.sib.rdf.sparql.examples.Fixer;
+import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
 
 public class Prefixes {
 	private Prefixes() {
 		
 	}
 
-	public static Fixer.Fixed fixMissingPrefixes(String original, Map<String, String> prefixes2) {
+	public static Fixed fixMissingPrefixes(String original, Map<String, String> prefixes2) {
 		StringBuilder changed = new StringBuilder(original);
 		for (Map.Entry<String, String> entry : prefixes2.entrySet()) {
 			Pattern prefix = Pattern.compile("(^|\\W+)(?i:prefix)(\\W+)" + entry.getKey() + ":");
@@ -20,8 +20,8 @@ public class Prefixes {
 			}
 		}
 		if (changed.length() == original.length())
-			return new Fixer.Fixed(false, null, original);
+			return new Fixed(false, null, original);
 		else
-			return new Fixer.Fixed(true, changed.toString(), original);
+			return new Fixed(true, changed.toString(), original);
 	}
 }

@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.impl.TreeModel;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
@@ -42,16 +42,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
+import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
 @Command(name = "wikibase", description = "Converts queries from wikibase wiki into sparql-example-files")
 public class Wikibase implements Callable<Integer> {
+	private static final Logger log = LoggerFactory.getLogger(Wikibase.class);
 	@Spec
 	CommandSpec spec;
 
@@ -87,7 +91,7 @@ public class Wikibase implements Callable<Integer> {
 
 	public Integer call() {
 		CommandLine commandLine = spec.commandLine();
-		System.err.println("outputDirectory: " + outputDirectory);
+		log.debug("outputDirectory: " + outputDirectory);
 
 		if (commandLine.isUsageHelpRequested()) {
 			commandLine.usage(System.out);
@@ -136,7 +140,7 @@ public class Wikibase implements Callable<Integer> {
 					Elements ulWhatLinksHereList = searchResultDocument.select("#mw-whatlinkshere-list li > a");
 					for (Element link : ulWhatLinksHereList) {
 						String pageLinkingToSparqlTemplate = makeAbsoluteUrl(link);
-						System.err.println(pageLinkingToSparqlTemplate);
+						log.info(pageLinkingToSparqlTemplate);
 						extractSparqlQueriesFromPage(pageLinkingToSparqlTemplate, nt);
 					}
 					Element nextLink = searchResultDocument.select(".mw-nextlink").first();
@@ -160,6 +164,7 @@ public class Wikibase implements Callable<Integer> {
 	private static final Pattern SELECT = Pattern.compile("SELECT", Pattern.CASE_INSENSITIVE);
 	private static final Pattern CONSTRUCT = Pattern.compile("CONSTRUCT", Pattern.CASE_INSENSITIVE);
 	private static final Pattern ASK = Pattern.compile("ASK", Pattern.CASE_INSENSITIVE);
+	private static final Pattern DESRIBE = Pattern.compile("DESCRIBE", Pattern.CASE_INSENSITIVE);
 
 	private void extractSparqlQueriesFromPage(String pageLinkingToSparqlTemplate, NamedTemplate nt) throws IOException {
 		Document htmlPageDocument = retrieveAndCacheResult(pageLinkingToSparqlTemplate, outputHtmlDir);
@@ -172,23 +177,26 @@ public class Wikibase implements Callable<Integer> {
 			for (Element sparqlTemplate : sparqlTemplates) {
 				//Concat the SPARQL string undo " escaping.
 				String query = sparqlTemplate.select("pre").eachText().stream().collect(Collectors.joining("\n"))
-						.replace("\\\"", "\"");
-				LinkedHashModel model = new LinkedHashModel();
-
-				String urlForFileName = new MD5().evaluate(VF, VF.createLiteral(query)).stringValue();
-				IRI iriForQuery = VF.createIRI(wikidatawiki + "#query-" + urlForFileName);
-				addQueryStringToModel(query, model, iriForQuery);
-				extractComment(languageInHtml, sparqlTemplate, model, iriForQuery, nt);
-				model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
-				model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
-				model.add(iriForQuery, SHACL.PREFIXES, WIKIDATA_PREFIXES);
-				model.add(iriForQuery, SchemaDotOrg.TARGET, VF.createIRI(wikidatasparql));
-				writeModelToTurtle(model, urlForFileName);
+						.replace("\\\"", "\"").replace("<nowiki>", "").replace("</nowiki>", "");
+				if (query != null && !query.isBlank()) {
+					Model model = new TreeModel();
+					String urlForFileName = new MD5().evaluate(VF, VF.createLiteral(query)).stringValue();
+					IRI iriForQuery = VF.createIRI(wikidatawiki + "#query-" + urlForFileName);
+					//If we can't add a query string we should not try to store it, as there is nothing to show.
+					if (addQueryStringToModel(query, model, iriForQuery)) {
+						extractComment(languageInHtml, sparqlTemplate, model, iriForQuery, nt);
+						model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
+						model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
+						model.add(iriForQuery, SHACL.PREFIXES, WIKIDATA_PREFIXES);
+						model.add(iriForQuery, SchemaDotOrg.TARGET, VF.createIRI(wikidatasparql));
+						writeModelToTurtle(model, urlForFileName);
+					}
+				}
 			}
 		}
 	}
 
-	private void extractComment(String languageInHtml, Element sparqlTemplate, LinkedHashModel model, IRI iriForQuery, NamedTemplate nt) {
+	private void extractComment(String languageInHtml, Element sparqlTemplate, Model model, IRI iriForQuery, NamedTemplate nt) {
 		StringBuilder sb = makeThePreviousSiblingNodesTheLabel(sparqlTemplate, nt);
 //		if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
 //			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
@@ -232,7 +240,7 @@ public class Wikibase implements Callable<Integer> {
 		return sb;
 	}
 
-	private void writeModelToTurtle(LinkedHashModel model, String urlForFileName)
+	private void writeModelToTurtle(Model model, String urlForFileName)
 			throws IOException, FileNotFoundException {
 		File turtleDestination = new File(outputDirectory.toFile(),
 				urlForFileName + "." + RDFFormat.TURTLE.getDefaultFileExtension());
@@ -254,7 +262,7 @@ public class Wikibase implements Callable<Integer> {
 		}
 	}
 
-	private void addQueryStringToModel(String query, LinkedHashModel model, IRI iriForQuery) {
+	private boolean addQueryStringToModel(String query, Model model, IRI iriForQuery) {
 		model.add(iriForQuery, RDF.TYPE, SHACL.SPARQL_EXECUTABLE);
 		if (SELECT.matcher(query).find()) {
 			model.add(iriForQuery, RDF.TYPE, SHACL.SPARQL_SELECT_EXECUTABLE);
@@ -265,7 +273,13 @@ public class Wikibase implements Callable<Integer> {
 		} else if (ASK.matcher(query).find()) {
 			model.add(iriForQuery, RDF.TYPE, SHACL.SPARQL_ASK_EXECUTABLE);
 			model.add(iriForQuery, SHACL.ASK, VF.createLiteral(query));
+		} else if (DESRIBE.matcher(query).find()) {
+			model.add(iriForQuery, RDF.TYPE, SIB.SPARQL_DESCRIBE_EXECUTABLE);
+			model.add(iriForQuery, SIB.DESCRIBE, VF.createLiteral(query));
+		} else {
+			return false;
 		}
+		return true;
 	}
 
 	private Document retrieveAndCacheResult(String url, File output) throws IOException {
