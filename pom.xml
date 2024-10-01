@@ -353,6 +353,22 @@
 					<groupId>com.blazegraph</groupId>
 					<artifactId>bigdata-client</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.apache.lucene</groupId>
+					<artifactId>lucene-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.blazegraph</groupId>
+					<artifactId>bigdata-ganglia</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.semarglproject</groupId>
+					<artifactId>semargl-sesame</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.blazegraph</groupId>
+					<artifactId>junit-ext</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 	</dependencies>
