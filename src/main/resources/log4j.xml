@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="console"
+		class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%t %d{yy-MM-dd HH:mm:ss Z} %c%n  %p: %m%n" />
+		</layout>
+	</appender>
+	
+	<logger name="swiss.sib">
+		<level value="debug" />
+	</logger>
+	<logger name="org.eclipse.rdf4j">
+		<level value="debug" />
+	</logger>
+	<logger name="com.bigdata">
+		<level value="warn" />
+	</logger>
+	<root>
+		<level value="debug" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

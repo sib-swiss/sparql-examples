@@ -178,7 +178,6 @@ public class Wikibase implements Callable<Integer> {
 				String urlForFileName = new MD5().evaluate(VF, VF.createLiteral(query)).stringValue();
 				IRI iriForQuery = VF.createIRI(wikidatawiki + "#query-" + urlForFileName);
 				addQueryStringToModel(query, model, iriForQuery);
-//				model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", "en"));
 				extractComment(languageInHtml, sparqlTemplate, model, iriForQuery, nt);
 				model.add(iriForQuery, DCTERMS.IS_PART_OF, VF.createIRI(pageLinkingToSparqlTemplate));
 				model.add(iriForQuery, DCTERMS.LICENSE, CC_BY_4);
@@ -191,11 +190,13 @@ public class Wikibase implements Callable<Integer> {
 
 	private void extractComment(String languageInHtml, Element sparqlTemplate, LinkedHashModel model, IRI iriForQuery, NamedTemplate nt) {
 		StringBuilder sb = makeThePreviousSiblingNodesTheLabel(sparqlTemplate, nt);
-		if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
-			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
-		} else if (!sb.isEmpty()) {
-			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString()));
-		}
+//		if (!sb.isEmpty() && languageInHtml != null && !languageInHtml.isBlank()) {
+//			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString(), languageInHtml));
+//		} else if (!sb.isEmpty()) {
+//			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb.toString()));
+//		} else {
+			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", "en"));
+//		}
 	}
 //
 	private StringBuilder makeThePreviousSiblingNodesTheLabel(Element sparqlTemplate, NamedTemplate nt) {
@@ -210,11 +211,23 @@ public class Wikibase implements Callable<Integer> {
 					sb.append(tn.text());
 				} else if (childNode instanceof Element e) {
 					if (!e.getElementsByClass(nt.cssClass).isEmpty()) {
+						return clean(sb);
+					} else if (e.nameIs("h1") || e.nameIs("h2") || e.nameIs("h3") || e.nameIs("h4") || e.nameIs("h5") || e.nameIs("h6")) {
+						sb.append(e.text());
 						return sb;
 					}
 					sb.append(e.text());
 				}
 			}
+		}
+		return clean(sb);
+	}
+
+	//From the template sparql2 we don't want this part of the text.
+	private StringBuilder clean(StringBuilder sb) {
+		int indexOf = sb.indexOf("The following query uses these:");
+		if (indexOf > 0) {
+			sb.setLength(indexOf);
 		}
 		return sb;
 	}
