@@ -40,7 +40,7 @@ We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examp
 First, download the jar file with:
 
 ```bash
-wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.0/sparql-examples-utils-2.0.0-uber.jar'
+wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.7/sparql-examples-utils-2.0.7-uber.jar'
 ```
 
 ### Compile all query files into one file to upload to your endpoint
@@ -48,7 +48,7 @@ wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-
 Compile all query files for a specific example folder, into a local file including the prefixes/namespaces definitions:
 
 ```bash
-java -jar sparql-examples-utils.jar -i examples/ -p UniProt -f ttl > examples_UniProt.ttl
+java -jar sparql-examples-utils.jar convert -i examples/ -p UniProt -f ttl > examples_UniProt.ttl
 ```
 
 > You can then load this file to this project SPARQL endpoint! We recommend to upload it to a named graph: your endpoint URL + `/.well-known/sparql-examples`
