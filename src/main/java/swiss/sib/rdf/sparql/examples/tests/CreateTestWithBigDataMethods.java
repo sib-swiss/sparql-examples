@@ -10,11 +10,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParseException;
@@ -41,9 +45,11 @@ public class CreateTestWithBigDataMethods {
 		}
 		assertFalse(model.isEmpty());
 
-
-		Iterable<Statement> statements = model.getStatements(null, SIB.BIGDATA_QUERY, null);
-		testAllQueryStringsInModel(new Bigdata2ASTSPARQLParser(), statements.iterator());
+		
+		Stream<IRI> of = Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE);
+		Iterator<Statement> iterator = of.map(t -> model.getStatements(null, t, null).spliterator()).flatMap(sp -> StreamSupport.stream(sp, false)).iterator();
+		
+		testAllQueryStringsInModel(new Bigdata2ASTSPARQLParser(), iterator);
 	}
 
 
