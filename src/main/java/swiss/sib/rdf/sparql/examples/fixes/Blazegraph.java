@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import org.eclipse.rdf4j.query.parser.sparql.SPARQLParser;
 import org.openrdf.query.MalformedQueryException;
 
@@ -24,7 +23,6 @@ import com.bigdata.rdf.sparql.ast.QueryRoot;
 import com.bigdata.rdf.sparql.ast.QueryType;
 import com.bigdata.rdf.sparql.ast.SubqueryRoot;
 
-import swiss.sib.rdf.sparql.examples.Fixer;
 import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
 
 
@@ -32,15 +30,10 @@ public class Blazegraph {
 	private Blazegraph() {
 		
 	}
-
+	
 	private static final Pattern HINT_REMOVE = Pattern.compile("(hint:([^.;,\\}])+[\\.;,\\}]?)");
-	public static Fixer.Fixed fixBlazeGraphHints(Fixed prior, String queryIriStr, Path fileStr) {
-		String original;
-		if (prior.changed()) {
-			original = prior.fixed();
-		} else {
-			original = prior.original();
-		}
+	public static Fixed fixBlazeGraphHints(Fixed prior, String queryIriStr, Path fileStr) {
+		String original = queryStringToFix(prior);
 		if (original.contains("hint:")) {
 			SPARQLParser sparqlParser = new SPARQLParser();
 			try {
@@ -71,13 +64,18 @@ public class Blazegraph {
 		return prior;
 	}
 
-	public static Fixed fixBlazeGraphIncludeWith(Fixed prior, String queryIriStr, Path fileStr) {
-		String toFix;
+	public static String queryStringToFix(Fixed prior) {
+		String original;
 		if (prior.changed()) {
-			toFix = prior.fixed();
+			original = prior.fixed();
 		} else {
-			toFix = prior.original();
+			original = prior.original();
 		}
+		return original;
+	}
+
+	public static Fixed fixBlazeGraphIncludeWith(Fixed prior, String queryIriStr, Path fileStr) {
+		String toFix = queryStringToFix(prior);
 		Bigdata2ASTSPARQLParser blzp = new Bigdata2ASTSPARQLParser();
 		try {
 			BigdataParsedQuery pq = blzp.parseQuery(toFix, "https://example.org/");

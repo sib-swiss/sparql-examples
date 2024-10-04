@@ -16,15 +16,14 @@ import org.junit.jupiter.api.Test;
 
 import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
 import swiss.sib.rdf.sparql.examples.fixes.Blazegraph;
+import swiss.sib.rdf.sparql.examples.fixes.NodeTypes;
 import swiss.sib.rdf.sparql.examples.fixes.Prefixes;
 
 public class FixerTest {
 
-	private static final Map<String, String> PREFIXES = Map.of("skos", SKOS.NAMESPACE,
-			"wikibase", "http://wikiba.se/ontology#",
-			"wdt", "http://www.wikidata.org/prop/direct/",
-			"wd", "http://www.wikidata.org/entity/",
-			"bd", "http://www.bigdata.com/rdf#>");
+	private static final Map<String, String> PREFIXES = Map.of("skos", SKOS.NAMESPACE, "wikibase",
+			"http://wikiba.se/ontology#", "wdt", "http://www.wikidata.org/prop/direct/", "wd",
+			"http://www.wikidata.org/entity/", "bd", "http://www.bigdata.com/rdf#>");
 
 	private final String missingPrefix = """
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -76,8 +75,7 @@ public class FixerTest {
 			  INCLUDE %get_labels2
 			  ?item a rdfs:Class .
 			}""";
-	
-	
+
 	private final String includingInclude = """
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			SELECT ?item ?itemLabel WITH
@@ -223,7 +221,7 @@ public class FixerTest {
 			}
 			} group by ?country ?countryLabel  ?creationDate ?dissolutionDate
 						""";
-	
+
 	private String failing3 = """
 				PREFIX wikibase: <http://wikiba.se/ontology#>
 				PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -232,7 +230,7 @@ public class FixerTest {
 				PREFIX bd: <http://www.bigdata.com/rdf#>
 				SELECT ?item ?itemLabel ?aliases with {
 				  select ?item (group_concat(distinct ?alias;separator=\", \") as ?aliases)
-				  WHERE 
+				  WHERE
 				  {
 				    values ?occ {wd:Q482980 wd:Q36180}
 				    ?item wdt:P106 ?occ.
@@ -276,7 +274,7 @@ public class FixerTest {
 				  SERVICE wikibase:label { bd:serviceParam wikibase:language 'en' }
 				} ORDER BY DESC(?cnt_refs) DESC(xsd:integer(STRBEFORE(?ratio, '%')))
 			""";
-	
+
 	private final String hintToRemove = """
 			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 			PREFIX wd: <http://www.wikidata.org/entity/>
@@ -290,23 +288,46 @@ public class FixerTest {
 			  }
 			} LIMIT 1200
 			""";
-	
+
 	private final String hintToRemove2 = """
 			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 			PREFIX wd: <http://www.wikidata.org/entity/>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			PREFIX wdsubgraph:<https://query.wikidata.org/subgraph/>
-			SELECT ?thesisType ?thesisTypeLabel (COUNT(DISTINCT ?thesis) AS ?count) 
+			SELECT ?thesisType ?thesisTypeLabel (COUNT(DISTINCT ?thesis) AS ?count)
 			WHERE {
-			 hint:Query hint:optimizer \"None\" .
+			 hint:Query hint:optimizer "None" .
 			 ?thesis wdt:P4101 wd:Q1048626;
 			         wdt:P31 ?thesisType.
 			  SERVICE wdsubgraph:wikidata_main { ?thesisType rdfs:label ?thesisTypeLabel .
-			    FILTER (LANG(?thesisTypeLabel) = 'en')  
+			    FILTER (LANG(?thesisTypeLabel) = 'en')
 			  }
 			} GROUP BY ?thesisType ?thesisTypeLabel
 
 			""";
+
+	private final String datetimeInsteadOfDate = """
+			PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+			PREFIX wd: <http://www.wikidata.org/entity/>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT DISTINCT ?item ?itemLabel ?itemdesc (URI(CONCAT(\"https://data.cerl.org/thesaurus/\",?cerlid))as ?cerlurl) #?datainizio ?datafine
+			WHERE
+			{ ?item wdt:P1871 ?cerlid; 
+				wdt:P106 ?activity; 
+			        {?item wdt:P2031 ?datainizio} UNION {?item wdt:P569 ?datainizio}
+			        {?item wdt:P2032 ?datafine} UNION {?item wdt:P570 ?datafine}
+			  values ?activity { wd:Q175151 wd:Q1229025 wd:Q998550 wd:Q2516866 wd:Q40881196 }
+
+			      FILTER ("1620-01-01"^^xsd:dat > ?datafine)
+			      FILTER ("1480-01-01"^^xsd:dateTime < ?datainizio)
+
+			        FILTER((LANG(?itemdesc)) = "it")
+			        FILTER(CONTAINS(STR(?itemdesc), "italiano"))
+
+			  MINUS {{ ?item wdt:P5493 ?edit16} UNION {?item wdt:P5492 ?edit16. }}
+			}
+			""";
+
 	@Test
 	public void simpleIncludeWith() {
 		try {
@@ -322,7 +343,8 @@ public class FixerTest {
 	@Test
 	public void doubleIncludeWith() {
 		try {
-			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphIncludeExample2), "", null);
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphIncludeExample2), "",
+					null);
 			assertTrue(fix.changed());
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(fix.fixed(), "http://example.org/");
@@ -330,7 +352,7 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
+
 	@Test
 	public void innerIncludeWith() {
 		try {
@@ -354,7 +376,6 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
 
 	@Test
 	public void failingExample2() {
@@ -367,7 +388,7 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
+
 	@Test
 	public void failingExample3() {
 		try {
@@ -380,7 +401,7 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
+
 	@Test
 	public void failingExample4() {
 		try {
@@ -412,7 +433,8 @@ public class FixerTest {
 	@Test
 	public void hintsAndInclude() {
 		try {
-			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphWithHintsAndInclude), "", null);
+			Fixed fix = Blazegraph.fixBlazeGraphIncludeWith(new Fixed(false, null, blazeGraphWithHintsAndInclude), "",
+					null);
 			assertNotNull(fix);
 			assertTrue(fix.changed());
 			fix = Blazegraph.fixBlazeGraphHints(new Fixed(false, null, fix.fixed()), "", null);
@@ -425,7 +447,7 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
+
 	@Test
 	public void hintToRemove() {
 		try {
@@ -439,7 +461,7 @@ public class FixerTest {
 			fail(e);
 		}
 	}
-	
+
 	@Test
 	public void hintToRemove2() {
 		try {
@@ -459,6 +481,19 @@ public class FixerTest {
 		try {
 			Fixed fix = Prefixes.fixMissingPrefixes(missingPrefix, PREFIXES);
 			assertTrue(fix.changed());
+			QueryParser parser = new SPARQLParserFactory().getParser();
+			parser.parseQuery(fix.fixed(), "http://example.org/");
+		} catch (MalformedQueryException e) {
+			fail(e);
+		}
+	}
+	
+	@Test
+	public void simpleDatetimeInsteadOfDate() {
+		try {
+			Fixed fix = NodeTypes.fix(new Fixed(false, null, datetimeInsteadOfDate), null);
+			assertTrue(fix.changed());
+			assertFalse(fix.fixed().contains("dateTime"));
 			QueryParser parser = new SPARQLParserFactory().getParser();
 			parser.parseQuery(fix.fixed(), "http://example.org/");
 		} catch (MalformedQueryException e) {

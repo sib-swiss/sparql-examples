@@ -46,6 +46,7 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
 import swiss.sib.rdf.sparql.examples.fixes.Blazegraph;
 import swiss.sib.rdf.sparql.examples.fixes.Federation;
+import swiss.sib.rdf.sparql.examples.fixes.NodeTypes;
 import swiss.sib.rdf.sparql.examples.fixes.Prefixes;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
@@ -190,9 +191,21 @@ public class Fixer implements Callable<Integer> {
 			fixBlz = fixBlazeGraph(queryIri, query, file, model, type, queryIriStr, fixBlz);
 		}
 		boolean serviceWithChanged = fixMarkupFederationPartners(queryIri, file, model, queryIriStr, fixBlz);
-		if (!fixedPrefixes.changed() && !fixBlz.changed() && !serviceWithChanged) {
+		Fixed fixedDatatypes = fixDatatypes(queryIri, file, model, type, queryIriStr, fixBlz);
+		if (!fixedPrefixes.changed() && !fixBlz.changed() && !serviceWithChanged && !fixedDatatypes.changed()) {
 			log.debug("No change to:" + file);
 		}
+	}
+
+	public static Fixed fixDatatypes(IRI queryIri, Path file, Model model, IRI type, String queryIriStr, Fixed fixBlz) {
+		Fixed fixedDatatypes = NodeTypes.fix(fixBlz, queryIriStr);
+		if (fixedDatatypes.changed()) {
+			log.debug("Fixed datatypes " + queryIriStr + " in file " + file);
+			model.remove(queryIri, type, null);
+			model.add(queryIri, type, VF.createLiteral(fixedDatatypes.fixed()));
+			writeFixedModel(file, model);
+		}
+		return fixedDatatypes;
 	}
 
 	public static Fixed fixBlazeGraph(IRI queryIri, Value query, Path file, Model model, IRI type, String queryIriStr,
