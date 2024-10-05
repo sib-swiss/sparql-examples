@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.NumberFormat;
@@ -191,16 +190,16 @@ public class Tester implements Callable<Integer> {
 		long passed = tes.getTestsSucceededCount();
 		w.append("| found | ").append(Long.toString(found)).append(NC).append("100%|");
 		w.newLine();
-		w.append("| failed | ").append(Long.toString(failed)).append(NC).append(percentage(found - failed, found))
+		w.append("| failed | ").append(Long.toString(failed)).append(NC).append(percentage(failed, found))
 				.append(NC);
 		w.newLine();
-		w.append("| aborted | ").append(Long.toString(aborted)).append(NC).append(percentage(found - aborted, found))
+		w.append("| aborted | ").append(Long.toString(aborted)).append(NC).append(percentage(aborted, found))
 				.append(NC);
 		w.newLine();
-		w.append("| skipped | ").append(Long.toString(skipped)).append(NC).append(percentage(found - skipped, found))
+		w.append("| skipped | ").append(Long.toString(skipped)).append(NC).append(percentage(skipped, found))
 				.append(NC);
 		w.newLine();
-		w.append("| passed | ").append(Long.toString(passed)).append(NC).append(percentage(found - passed, found))
+		w.append("| passed | ").append(Long.toString(passed)).append(NC).append(percentage(passed, found))
 				.append(NC);
 		w.newLine();
 		w.newLine();
