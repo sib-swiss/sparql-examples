@@ -55,9 +55,6 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sweble.wikitext.parser.WikitextParser;
-import org.sweble.wikitext.parser.nodes.WtNode;
-import org.sweble.wikitext.parser.utils.SimpleParserConfig;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -66,7 +63,6 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Spec;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
-import xtc.parser.ParseException;
 
 @Command(name = "wikibase", description = "Converts queries from wikibase wiki into sparql-example-files")
 public class Wikibase implements Callable<Integer> {
@@ -234,19 +230,6 @@ public class Wikibase implements Callable<Integer> {
 			languageInHtml = languages.first().attr("lang");
 		}
 		return languageInHtml;
-	}
-
-	private static final WikitextParser WIKITEXT_PARSER = new WikitextParser(new SimpleParserConfig());
-
-	public static WtNode parseWikiText(String title, String content) {
-		try {
-			WtNode article = WIKITEXT_PARSER.parseArticle(content, title);
-			return article;
-		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	static void extractComment(String languageInHtml, Element sparqlTemplate, Model model, IRI iriForQuery,
