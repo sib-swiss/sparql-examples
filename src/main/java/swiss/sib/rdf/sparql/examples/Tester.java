@@ -113,7 +113,7 @@ public class Tester implements Callable<Integer> {
 							return ti.getUniqueId();
 						}));
 				printMarkdownSummary(w, tes);
-				w.append("# Summary regarding test failures");
+				w.append("# Summary test failures compared to bigdata");
 				w.newLine();
 				if (collect.containsKey("testAllWithBigData()")) {
 					List<TestExecutionSummary.Failure> bigdata = collect.get("testAllWithBigData()");
@@ -152,22 +152,22 @@ public class Tester implements Callable<Integer> {
 					w.newLine();
 					for (var failure : gf.getValue()) {
 						String dn = failure.getTestIdentifier().getDisplayName();
-						w.append("|[").append(dn).append("](examples/").append(dn).append(")|");
+						w.append("| [").append(dn).append("](examples/").append(dn).append(") | ");
 						String em = failure.getException().getMessage();
 						if (em == null) {
 							w.append(" ");
 						} else {
-							em = em.replace('\n', ' ').replace('\r', ' ');
+							em = em.replace('\n', ' ').replace('\r', ' ').replace("|", "\\_");
 							if (em.length() > 80) {
 								w.append(em, 0, 80).append("...");
 							} else {
 								w.append(em);
 							}
 						}
-						w.append("|");
+						w.append(NC);
 						w.newLine();
 					}
-
+					w.newLine();
 				}
 			}
 		}
