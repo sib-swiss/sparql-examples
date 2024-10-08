@@ -20,12 +20,12 @@ public class WikibaseTest {
 		Element selectFirst = document.selectFirst(NamedTemplate.SPARQL2.cssClass);
 		String comment = Wikibase.makeThePreviousSiblingNodesTheLabel(selectFirst, NamedTemplate.SPARQL2);
 		assertNotNull(comment);
-		assertEquals(comment, "SPARQL 5");
+		assertEquals("SPARQL 5", comment);
 		
 		Element selectSecond = document.select(NamedTemplate.SPARQL2.cssClass).get(1);
 		comment = Wikibase.makeThePreviousSiblingNodesTheLabel(selectSecond, NamedTemplate.SPARQL2);
 		assertNotNull(comment);
-		assertEquals(comment, "Sparql no tiltle");
+		assertEquals("Sparql no tiltle", comment);
 	}
 	
 	

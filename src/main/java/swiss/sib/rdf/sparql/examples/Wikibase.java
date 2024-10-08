@@ -224,9 +224,9 @@ public class Wikibase implements Callable<Integer> {
 
 	public String detectLanguageOfPage(Document htmlPageDocument) {
 		String languageInHtml = htmlPageDocument.child(0).attr("lang");
-		//Look to see if there is a translate bucket.
+		// Look to see if there is a translate bucket.
 		Elements languages = htmlPageDocument.select(".mw-pt-languages-selected");
-		if (languages != null && ! languages.isEmpty()) {
+		if (languages != null && !languages.isEmpty()) {
 			languageInHtml = languages.first().attr("lang");
 		}
 		return languageInHtml;
@@ -237,12 +237,14 @@ public class Wikibase implements Callable<Integer> {
 		String sb = makeThePreviousSiblingNodesTheLabel(sparqlTemplate, nt);
 		String commentInQuery = commentInQuery(queryParts);
 		if (!commentInQuery.isBlank()) {
-	    	model.remove(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", languageInHtml));
-			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(commentInQuery, languageInHtml));
-	    } else if (!sb.isEmpty()) {
 			model.remove(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", languageInHtml));
-			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb, languageInHtml)); 
-		} else if (! model.getStatements(iriForQuery, RDFS.COMMENT, null).iterator().hasNext()){ //Don't add a TODO if we already have something
+			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(commentInQuery, languageInHtml));
+		} else if (!sb.isEmpty()) {
+			model.remove(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", languageInHtml));
+			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral(sb, languageInHtml));
+		} else if (!model.getStatements(iriForQuery, RDFS.COMMENT, null).iterator().hasNext()) { // Don't add a TODO if
+																									// we already have
+																									// something
 			model.add(iriForQuery, RDFS.COMMENT, VF.createLiteral("TODO", languageInHtml));
 		}
 	}
@@ -252,28 +254,17 @@ public class Wikibase implements Callable<Integer> {
 				.filter(s -> !s.contains("defaultView:")).collect(Collectors.joining(" "));
 	}
 
-//
 	static String makeThePreviousSiblingNodesTheLabel(Element sparqlTemplate, NamedTemplate nt) {
-		Element grandParent = sparqlTemplate.parent().parent();
 		StringBuilder sb = new StringBuilder();
+		Element grandParent = sparqlTemplate.parent().parent();
 		if (grandParent.hasClass("wdt-sparql-container")) {
-			Node parent = grandParent;
-			while (parent.previousSibling() != null) {
-				
-				Node prev = parent.previousSibling();
-				List<Node> prevC = prev.childNodes();
-				if(stop(prev)) {
-					break;
-				}
-				if(! extractFromNodes(sparqlTemplate, nt, prevC, sb)) {
-					parent = prev;
-				} else {
-					break;
-				}
-			}
-			return clean(sb);
+			return extractCommentFrom(sparqlTemplate, nt, sb, grandParent);
 		} else {
 			Node parent = sparqlTemplate;
+			if (parent.previousSibling() == null) {
+				// We have no sibling so we are going to go up one level
+				parent = sparqlTemplate.parent();
+			}
 			while (parent.previousSibling() != null) {
 				if (!extractFromNodes(sparqlTemplate, nt, parent.previousSibling().childNodes(), sb)) {
 					parent = parent.previousSibling();
@@ -285,38 +276,58 @@ public class Wikibase implements Callable<Integer> {
 		}
 	}
 
-	static boolean stop(Node prev){
+	static String extractCommentFrom(Element sparqlTemplate, NamedTemplate nt, StringBuilder sb, Node parent) {
+		while (parent.previousSibling() != null) {
+
+			Node prev = parent.previousSibling();
+			List<Node> prevC = prev.childNodes();
+			if (stop(prev)) {
+				break;
+			}
+			if (!extractFromNodes(sparqlTemplate, nt, prevC, sb)) {
+				parent = prev;
+			} else {
+				break;
+			}
+		}
+		return clean(sb);
+	}
+
+	static boolean stop(Node prev) {
 		if (prev instanceof Element e) {
-		return e.hasClass("wdt-sparql-container") || e.hasClass("mw-highlight-lang-sparql");
+			return e.hasClass("wdt-sparql-container") || e.hasClass("mw-highlight-lang-sparql");
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean extractFromNodes(Element sparqlTemplate, NamedTemplate nt, List<Node> childNodes, StringBuilder sb) {
+	public static boolean extractFromNodes(Element sparqlTemplate, NamedTemplate nt, List<Node> childNodes,
+			StringBuilder sb) {
 
 		for (Node childNode : childNodes) {
 			if (childNode.equals(sparqlTemplate)) {
 				return true;
 			} else {
 				if (childNode instanceof TextNode tn) {
-					if (! tn.text().equals("Try it!")) {
+					if (!tn.text().equals("Try it!")) {
 						sb.insert(0, tn.text());
 					}
 				} else if (childNode instanceof Element e) {
 					String text = e.text();
-					if (text.contains("Items used") || text.contains("Properties used") || text.contains("Features used")) {
-						//Skip form SPARQL2
+					if (text.contains("Items used") || text.contains("Properties used")
+							|| text.contains("Features used")) {
+						// Skip form SPARQL2
 					} else if (!e.getElementsByClass(nt.cssClass).isEmpty()) {
 						return true;
-					} else if(e.hasClass("wdt-sparql-container") || e.hasClass("mw-highlight-lang-sparql")) {
+					} else if (e.hasClass("wdt-sparql-container") || e.hasClass("mw-highlight-lang-sparql")
+							|| e.nameIs("hr")) {
 						return true;
 					} else if (e.nameIs("h1") || e.nameIs("h2") || e.nameIs("h3") || e.nameIs("h4") || e.nameIs("h5")
 							|| e.nameIs("h6") || e.hasClass("mw-heading")) {
 						sb.insert(0, e.text());
 						return true;
 					} else {
-						if(extractFromNodes(sparqlTemplate, nt, e.childNodes(), sb))
+						if (extractFromNodes(sparqlTemplate, nt, e.childNodes(), sb))
 							return true;
 					}
 //					if (fromNodes)
