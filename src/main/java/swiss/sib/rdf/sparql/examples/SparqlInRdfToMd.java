@@ -33,7 +33,9 @@ public class SparqlInRdfToMd {
 			String ln = ((IRI) queryId).getLocalName();
 			rq.add("# " + ln + "\n");
 			rq.add("");
-			rq.add("[rq](" + ln + ".rq) [turtle/ttl](" + ln + ".ttl)");
+			streamOf(ex, null, SIB.FILE_NAME, null).map(s -> s.getObject().stringValue())
+					.map(s -> s.replaceAll(".ttl", ""))
+					.map(s -> "[rq](" + s + ".rq) [turtle/ttl](" + s + ".ttl)").forEach(rq::add);
 			rq.add("");
 			streamOf(ex, queryId, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
@@ -81,16 +83,18 @@ public class SparqlInRdfToMd {
 		rq.add("");
 		
 		streamOf(ex, null, SIB.FILE_NAME, null).flatMap(s -> streamOf(ex, s.getSubject(), RDFS.COMMENT, null)
-				.map(Statement::getObject).map(asNiceLink(s.getObject().stringValue()))).sorted().forEach(rq::add);
+				.map(Statement::getObject).map(asNiceLink(s.getObject().stringValue(), ".md"))).sorted().forEach(rq::add);
 		return rq;
 	}
 
-	private static Function<Value, String> asNiceLink(String fileName) {
+	private static Function<Value, String> asNiceLink(String fileName, String extension) {
 		return v -> {
-			String comment = Jsoup.parse(v.stringValue()).text();
-
-			String fileNameOfMdFile = fileName.substring(0, fileName.length() - 4) + ".md)";
-			return " - [" + comment + "](./" + fileNameOfMdFile;
+			String comment = Jsoup.parse(v.stringValue()).text().replace("[", " ").replace("]", " ").strip();
+			if (comment.length() > 75) {
+				comment = comment.substring(0, 75)+"...";
+			}
+			String fileNameOfMdFile = fileName.substring(0, fileName.length() - 4) + extension;
+			return " - [" + comment + "](./" + fileNameOfMdFile + ")";
 		};
 	}
 }

@@ -211,7 +211,7 @@ public class Converter implements Callable<Integer>{
 				Failure.CANT_READ_EXAMPLE.exit(e);
 				throw new RuntimeException(e);
 			}
-		})).filter(Files::exists).forEach(p -> {
+		})).filter(Files::exists).parallel().forEach(p -> {
 			parseTurtleFileIntoModel(model, p);
 		});
 	}
