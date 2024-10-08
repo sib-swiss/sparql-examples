@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>swiss.sib.rdf</groupId>
 	<artifactId>sparql-examples-utils</artifactId>
-	<version>2.0.9</version>
+	<version>2.0.10</version>
 	<packaging>jar</packaging>
 	<name>Test and package the sparql examples</name>
 	<description>An simple package to help with managing the sparql examples,
@@ -373,6 +373,14 @@
 				<exclusion>
 					<groupId>com.blazegraph</groupId>
 					<artifactId>junit-ext</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.jini</groupId>
+					<artifactId>jini-ext</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.blazegraph</groupId>
+					<artifactId>dsi-utils</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
