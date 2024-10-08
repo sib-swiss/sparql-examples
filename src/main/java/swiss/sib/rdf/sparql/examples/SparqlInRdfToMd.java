@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
@@ -94,7 +95,11 @@ public class SparqlInRdfToMd {
 				comment = comment.substring(0, 75)+"...";
 			}
 			String fileNameOfMdFile = fileName.substring(0, fileName.length() - 4) + extension;
-			return " - [" + comment + "](./" + fileNameOfMdFile + ")";
+			if(v instanceof Literal l && l.getLanguage().isPresent()) {
+				return " - [" + comment + "@" + l.getLanguage().get() + "](./" + fileNameOfMdFile + ")";
+			}else {
+				return " - [" + comment + "](./" + fileNameOfMdFile + ")";
+			}
 		};
 	}
 }
