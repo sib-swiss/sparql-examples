@@ -13,7 +13,7 @@ ex:NXQ_00095 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 PREFIX cv: <http://nextprot.org/rdf/terminology/>
 
 select distinct ?entry where {
-  service <http://drugbank.bio2rdf.org/sparql> {
+  SERVICE <http://drugbank.bio2rdf.org/sparql> {
     select distinct ?uniprot WHERE {
     ?drug <http://bio2rdf.org/drugbank_vocabulary:category> ?drugCat .
 	?drug <http://bio2rdf.org/drugbank_vocabulary:target> ?drugTarget .

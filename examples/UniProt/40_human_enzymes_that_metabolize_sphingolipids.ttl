@@ -14,10 +14,7 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-
-SELECT DISTINCT
-  ?protein
-  ?chemblEntry
+SELECT DISTINCT ?protein ?chemblEntry
 WHERE {
   SERVICE <https://sparql.rhea-db.org/sparql> {
     ?rhea rdfs:subClassOf rh:Reaction ;

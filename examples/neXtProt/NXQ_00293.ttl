@@ -18,17 +18,16 @@ PREFIX glycan:<http://purl.jp/bio/12/glyco/glycan#>
 PREFIX glyco:<http://purl.jp/bio/12/glyco/conjugate#>
 
 select distinct ?entry ?isoNP ?position where {
+  values ?pmid {"24884609" "10441114"} # pubmed ids, space- or linebreak-separated
 
-values ?pmid {"24884609" "10441114"} # pubmed ids, space- or linebreak-separated
-
-bind(IRI(concat("http://www.ncbi.nlm.nih.gov/pubmed/",?pmid)) as ?pubIRI)
-service <https://glyconnect.expasy.org/sparql> {
-  ?ref_conjugate glyco:has_protein_part ?glycoprotein .
-  ?glycoprotein glyco:glycosylated_at / faldo:location ?glycosite .
-  ?glycosite faldo:reference ?isoform ; faldo:position ?position .
-  ?ref_conjugate glycan:published_in / foaf:primaryTopicOf ?pubIRI .
- }
-BIND(IRI(replace(str(?isoform),"http://purl.uniprot.org/isoforms/","http://nextprot.org/rdf/isoform/NX_")) AS ?isoNP) .
-?entry :isoform ?isoNP .
+  bind(IRI(concat("http://www.ncbi.nlm.nih.gov/pubmed/",?pmid)) as ?pubIRI)
+  SERVICE <https://glyconnect.expasy.org/sparql> {
+    ?ref_conjugate glyco:has_protein_part ?glycoprotein .
+    ?glycoprotein glyco:glycosylated_at / faldo:location ?glycosite .
+    ?glycosite faldo:reference ?isoform ; faldo:position ?position .
+    ?ref_conjugate glycan:published_in / foaf:primaryTopicOf ?pubIRI .
+  }
+  BIND(IRI(replace(str(?isoform),"http://purl.uniprot.org/isoforms/","http://nextprot.org/rdf/isoform/NX_")) AS ?isoNP) .
+  ?entry :isoform ?isoNP .
 } order by ?entry ?position''' ;
   spex:federatesWith <https://glyconnect.expasy.org/sparql> .
