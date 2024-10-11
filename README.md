@@ -1,6 +1,6 @@
 # SPARQL examples
 
-This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder. 
+This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder.
 
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
@@ -19,7 +19,7 @@ The following illustrates an example to retrieve retrieve human enzymes that met
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:040 # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
-	a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ; 
+	a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
     rdfs:comment "Retrieve human enzymes that metabolize sphingolipids and are annotated in ChEMBL"@en ;
     sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
@@ -128,18 +128,19 @@ java -jar sparql-examples-utils.jar convert -i examples/ -p all -f ttl > example
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
 
-# How to cite this work
+## How to cite this work
 
-If you reuse any part of this work, please cite [the Arxiv paper](http://arxiv.org/abs/2410.06010):
+If you reuse any part of this work, please cite [the arXiv paper](http://arxiv.org/abs/2410.06010):
 
 ```
 @misc{largecollectionsparqlquestionquery,
-      title={A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications}, 
+      title={A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
       author={Jerven Bolleman and Vincent Emonet and Adrian Altenhoff and Amos Bairoch and Marie-Claude Blatter and Alan Bridge and Severine Duvaud and Elisabeth Gasteiger and Dmitry Kuznetsov and Sebastien Moretti and Pierre-Andre Michel and Anne Morgat and Marco Pagni and Nicole Redaschi and Monique Zahn-Zabal and Tarcisio Mendes de Farias and Ana Claudia Sima},
       year={2024},
+      doi={10.48550/arXiv.2410.06010},
       eprint={2410.06010},
       archivePrefix={arXiv},
       primaryClass={cs.DB},
-      url={https://arxiv.org/abs/2410.06010}, 
+      url={https://arxiv.org/abs/2410.06010},
 }
 ```
