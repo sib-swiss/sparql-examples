@@ -3,7 +3,7 @@
 This is a set of tools to convert, test and help maintain SPARQL query examples.
 
 
-The code comes from the [SIB SPARQL Examples](https://github.com/sib-swiss/sparql-examples/) project. 
+The code comes from the [SIB SPARQL Examples](https://github.com/sib-swiss/sparql-examples/) project.
 
 For this code to work each query should be in a turtle file.
 
@@ -18,9 +18,9 @@ The following illustrates an example to retrieve all taxa from the UniProt SPARQ
 
 ```sparql
 prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/>  # <!-- change per dataset
-prefix sh: <http://www.w3.org/ns/shacl#> 
+prefix sh: <http://www.w3.org/ns/shacl#>
 prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 ex:1  # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
     a sh:SPARQLSelectExecutable, sh:SPARQLExecutable ;
     sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
@@ -39,24 +39,27 @@ WHERE
 
 If you want to add a label to a query please use the [schema.org keywords](https://schema.org/keywords).
 
-# Running the code
+## Running the code
 
 If using a release:
+
 ```bash
 mkdir target
-wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.0/sparql-examples-utils-2.0.0-uber.jar" 
-mv sparql-examples-utils-2.0.0-uber.jar target
+wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.10/sparql-examples-utils-2.0.10-uber.jar"
+mv sparql-examples-utils-2.0.10-uber.jar target
 
 # This target directory is only so that the commands in the examples match as if the code was build locally.
 # basically target/ can be remove from all examples below
 ```
+
 If building locally in this git repository:
+
 ```bash
 mvn package
 ```
 
 
-# Quality Assurance (QA).
+## Quality Assurance (QA)
 
 To test your examples pass the folder/directory containing your examples as an argument (`--input-directory` to the `test` subcommand, e.g.:
 
@@ -74,7 +77,7 @@ java -jar target/sparql-examples-utils-*-uber.jar test --input-directory=../spar
 >
 > All CLI commands provided in this readme expects you have the [`sparql-examples`](https://github.com/sib-swiss/sparql-examples) folder cloned in the same directory alongside this `sparql-examples-utils` project folder. Feel free to change them for your own example folder and path.
 
-# Conversion for upload in SPARQL endpoint
+## Conversion for upload in SPARQL endpoint
 
 Before loading the examples into a SPARQL endpoint they should be concatenated into one file, including the prefixes/namespaces definitions.
 
@@ -105,17 +108,18 @@ Generate markdown files with the query and a mermaid diagram of the queries, to 
 java -jar target/sparql-examples-utils-*-uber.jar convert -i ../sparql-examples/examples -m
 ```
 
-# Querying for queries
+## Querying for queries
 
 As the SPARQL examples are themselves RDF, they can be queried for as soon as they are loaded in a SPARQL endpoint.
 ```sparql
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX spex: <https://purl.expasy.org/sparql-examples/ontology#>
 SELECT DISTINCT ?sq ?comment ?query
 WHERE {
     ?sq a sh:SPARQLExecutable ;
         rdfs:comment ?comment ;
-        sh:select|sh:ask|sh:construct|sh:describe ?query .
+        sh:select|sh:ask|sh:construct|spex:describe ?query .
 } ORDER BY ?sq
 ```
 
@@ -127,9 +131,9 @@ java -jar target/sparql-examples-utils-*-uber.jar convert --input-directory ../s
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
 
-# Native executable
+## Native executable
 
-The project is ready to be compiled by the native-image tool of the [GraalVM](https://www.graalvm.org/) project. 
+The project is ready to be compiled by the native-image tool of the [GraalVM](https://www.graalvm.org/) project.
 
 To do so set your `JAVA_HOME` to the graalvm location and user maven package -Pnative
 
@@ -142,5 +146,19 @@ mvn package -Pnative
 ./target/sparql-examples-utils converter -i ${DIRECTORY_WITH_EXAMPLES}
 ```
 
+## How to cite this work
 
+If you reuse any part of this work, please cite [the arXiv paper](http://arxiv.org/abs/2410.06010):
 
+```
+@misc{largecollectionsparqlquestionquery,
+      title={A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
+      author={Jerven Bolleman and Vincent Emonet and Adrian Altenhoff and Amos Bairoch and Marie-Claude Blatter and Alan Bridge and Severine Duvaud and Elisabeth Gasteiger and Dmitry Kuznetsov and Sebastien Moretti and Pierre-Andre Michel and Anne Morgat and Marco Pagni and Nicole Redaschi and Monique Zahn-Zabal and Tarcisio Mendes de Farias and Ana Claudia Sima},
+      year={2024},
+      doi={10.48550/arXiv.2410.06010},
+      eprint={2410.06010},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB},
+      url={https://arxiv.org/abs/2410.06010},
+}
+```
