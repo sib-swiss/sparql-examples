@@ -128,3 +128,18 @@ java -jar sparql-examples-utils.jar convert -i examples/ -p all -f ttl > example
 sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
 ```
 
+# How to cite this work
+
+If you reuse any part of this work, please cite [the Arxiv paper](http://arxiv.org/abs/2410.06010):
+
+```
+@misc{largecollectionsparqlquestionquery,
+      title={A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications}, 
+      author={Jerven Bolleman and Vincent Emonet and Adrian Altenhoff and Amos Bairoch and Marie-Claude Blatter and Alan Bridge and Severine Duvaud and Elisabeth Gasteiger and Dmitry Kuznetsov and Sebastien Moretti and Pierre-Andre Michel and Anne Morgat and Marco Pagni and Nicole Redaschi and Monique Zahn-Zabal and Tarcisio Mendes de Farias and Ana Claudia Sima},
+      year={2024},
+      eprint={2410.06010},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB},
+      url={https://arxiv.org/abs/2410.06010}, 
+}
+```
