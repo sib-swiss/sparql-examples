@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ex:enzymes_related_to_protein a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment '''Select Enzyme Classification (EC) classes that have a Protein associated to them'''@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT
+  DISTINCT ?enzyme
+WHERE {
+  ?protein a up:Protein .
+  {
+    ?protein up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:annotation ?caa .
+    ?caa a up:Catalytic_Activity_Annotation .
+    ?caa up:catalyticActivity ?ca .
+    ?ca up:enzymeClass ?enzyme
+  }
+}""" ;
+    schema:keywords "enzyme" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
+
