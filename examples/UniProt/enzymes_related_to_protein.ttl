@@ -21,6 +21,10 @@ WHERE {
     ?caa a up:Catalytic_Activity_Annotation .
     ?caa up:catalyticActivity ?ca .
     ?ca up:enzymeClass ?enzyme
+  } UNION {
+    ?protein up:component/up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:domain/up:enzyme ?enzyme .
   }
 }""" ;
     schema:keywords "enzyme" ;
