@@ -1,0 +1,19 @@
+name: Check SPARQL queries
+on: [push, pull_request, workflow_call, workflow_dispatch]
+
+jobs:
+
+  check:
+    name: Run SPARQL checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Install and run checks
+      run: mvn test
