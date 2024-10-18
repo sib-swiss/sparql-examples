@@ -7,7 +7,7 @@ git clone https://github.com/MetaNetX/MNXtools.git MNXtools
 cd MNXtools/perl
 perl -e 'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()' > prefixes.ttl
 ```
-**Nota Bene**: There are often two prefixes for the same entity. One corresponds to 
+**Nota Bene**: There are often two prefixes and two IRIs for the same entity. One corresponds to 
 the IRI used by the RDF community at SIB, and often starts with "http://purl.". It
 is the recommended prefix. The other prefix corresponds to the "MIRIAM" prefixes 
 which were adopted by the Systems Biology community (https://sbml.org/documents/elaborations/miriam_annotation_syntax/), 
