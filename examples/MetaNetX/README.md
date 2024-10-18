@@ -1,9 +1,9 @@
-`prefix.ttl` was automatically generated as follow:
+# MetaNetX prefixes generation
 
-```{bash}
+⚠️ `prefixes.ttl` is automatically generated as follow:
+
+```bash
 git clone https://github.com/MetaNetX/MNXtools.git MNXtools
 cd MNXtools/perl
-perl -e 'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()' > prefix.ttl
+perl -e 'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()' > prefixes.ttl
 ```
-
-
