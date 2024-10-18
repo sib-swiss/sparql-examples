@@ -15,5 +15,5 @@ and typically starts with "https://identifiers.org/". Very unfortunately, identi
 has promoted the usage of the short form of IRIs in SBML annotations, and is maintaining 
 a list of "official" MIRIAM prefixes at https://registry.identifiers.org. To ensure 
 interoperability with the Systems Biology community and avoid namespace clashes, MetaNetX 
-has to respects the MIRIAM prefixe nomenclature, and has no other choice than to define 
+has to respects the MIRIAM nomenclature for prefixes, and has no other choice than to define 
 ad hoc prefixes for those not covered by MIRIAM.   
