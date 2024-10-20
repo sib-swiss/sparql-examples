@@ -132,6 +132,7 @@ public class Wikibase implements Callable<Integer> {
 
 	enum NamedTemplate {
 		SPARQL("SPARQL", ".mw-highlight-lang-sparql"),
+		SPARQL_MIX_CASE("Sparql", "pre"),
 //		WDQUERY("Wdquery", ".mw-highlight-lang-sparql"),
 //		SPARQL_INLINE("SPARQL_Inline/doc", ".mw-highlight-lang-sparql"),
 		SPARQL2("SPARQL2", ".mw-highlight-lang-sparql"),;
