@@ -103,113 +103,129 @@ public class Tester implements Callable<Integer> {
 			try (BufferedWriter w = Files.newBufferedWriter(statusMarkdown.toPath(),
 					StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE)) {
 				TestExecutionSummary tes = execute.getTestExecutionSummary().get();
-				Map<String, List<TestExecutionSummary.Failure>> collect = tes.getFailures().stream()
-						.collect(Collectors.groupingBy((f) -> {
-							TestIdentifier ti = f.getTestIdentifier();
-							Optional<UniqueId> opid = ti.getParentIdObject();
-							if (opid.isPresent()) {
-								return opid.get().getLastSegment().getValue();
-							}
-							return ti.getUniqueId();
-						}));
-				printMarkdownSummary(w, tes);
-				w.append("# Summary test failures compared to bigdata");
-				w.newLine();
-				if (collect.containsKey("testAllWithBigData()")) {
-					List<TestExecutionSummary.Failure> bigdata = collect.get("testAllWithBigData()");
-					w.append("| test group | failed | compared to blazegraph |");
-					w.newLine();
-					w.append("| ---- | ---- | ---- |");
-					w.newLine();
-					for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
-						if (!gf.getKey().equals("testAllWithBigData()") && gf.getKey().startsWith("testAllWith")) {
-							w.append(NC);
-							w.append(gf.getKey());
-							w.append(NC);
-							w.append(Integer.toString(gf.getValue().size()));
-							w.append(NC);
-							w.append(percentage(gf.getValue().size(), bigdata.size()));
-							w.append(NC);
-							w.newLine();
-						}
-					}
-				} else {
-					for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
-						w.append("# Summary " + gf.getKey() + " (" + gf.getValue().size() + ")");
-						w.newLine();
-						w.append("");
-						w.newLine();
-					}
-				}
-				w.newLine();
-				w.newLine();
-				for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
-					w.append("# Failures " + gf.getKey() + " (" + gf.getValue().size() + ")");
-					w.newLine();
-					w.append("| test name | exception |");
-					w.newLine();
-					w.append("| ---- | ---- |");
-					w.newLine();
-					for (var failure : gf.getValue()) {
-						String dn = failure.getTestIdentifier().getDisplayName();
-						w.append("| [").append(dn).append("](examples/").append(dn).append(") | ");
-						String em = failure.getException().getMessage();
-						if (em == null) {
-							w.append(" ");
-						} else {
-							em = em.replace('\n', ' ').replace('\r', ' ').replace("|", "\\_");
-							if (em.length() > 80) {
-								w.append(em, 0, 80).append("...");
-							} else {
-								w.append(em);
-							}
-						}
-						w.append(NC);
-						w.newLine();
-					}
-					w.newLine();
-				}
+				new TestExecutionAsSummaryMarkdownWriter().print(tes, w);
 			}
 		}
 		return execute.getExitCode();
 
 	}
 
-	public void printMarkdownSummary(BufferedWriter w, TestExecutionSummary tes) throws IOException {
-		w.append("# Summary regarding test failures");
-		w.newLine();
-		w.newLine();
-		w.append("| total | tests | percentage");
-		w.newLine();
-		w.append("| ---- | ---- | ---- |");
-		w.newLine();
-		long found = tes.getTestsFoundCount();
-		long failed = tes.getTestsFailedCount();
-		long aborted = tes.getTestsAbortedCount();
-		long skipped = tes.getTestsSkippedCount();
-		long passed = tes.getTestsSucceededCount();
-		w.append("| found | ").append(Long.toString(found)).append(NC).append("100%|");
-		w.newLine();
-		w.append("| failed | ").append(Long.toString(failed)).append(NC).append(percentage(failed, found))
-				.append(NC);
-		w.newLine();
-		w.append("| aborted | ").append(Long.toString(aborted)).append(NC).append(percentage(aborted, found))
-				.append(NC);
-		w.newLine();
-		w.append("| skipped | ").append(Long.toString(skipped)).append(NC).append(percentage(skipped, found))
-				.append(NC);
-		w.newLine();
-		w.append("| passed | ").append(Long.toString(passed)).append(NC).append(percentage(passed, found))
-				.append(NC);
-		w.newLine();
-		w.newLine();
-	}
+	private static class TestExecutionAsSummaryMarkdownWriter {
+		public void print(TestExecutionSummary tes, BufferedWriter w) throws IOException {
+			Map<String, List<TestExecutionSummary.Failure>> collect = tes.getFailures().stream()
+					.collect(Collectors.groupingBy((f) -> {
+						TestIdentifier ti = f.getTestIdentifier();
+						Optional<UniqueId> opid = ti.getParentIdObject();
+						if (opid.isPresent()) {
+							return opid.get().getLastSegment().getValue();
+						}
+						return ti.getUniqueId();
+					}));
+			printMarkdownSummary(w, tes);
+			printFailureRateComparedToBlazeGraph(w, collect);
+			printFailures(w, collect);
+		}
 
-	public String percentage(long part, long whole) {
-		if (part > 0) {
-			return NumberFormat.getPercentInstance().format((part / (double) whole));
-		} else {
-			return "-";
+		public void printFailures(BufferedWriter w, Map<String, List<TestExecutionSummary.Failure>> collect)
+				throws IOException {
+			for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
+				w.append("# Failures " + gf.getKey() + " (" + gf.getValue().size() + ")");
+				w.newLine();
+				w.append("| test name | exception |");
+				w.newLine();
+				w.append("| ---- | ---- |");
+				w.newLine();
+				for (var failure : gf.getValue()) {
+					String dn = failure.getTestIdentifier().getDisplayName();
+					w.append("| [").append(dn).append("](examples/").append(dn).append(") | ");
+					String em = failure.getException().getMessage();
+					if (em == null) {
+						w.append(" ");
+					} else {
+						em = em.replace('\n', ' ').replace('\r', ' ').replace("|", "\\_");
+						if (em.length() > 80) {
+							w.append(em, 0, 80).append("...");
+						} else {
+							w.append(em);
+						}
+					}
+					w.append(NC);
+					w.newLine();
+				}
+				w.newLine();
+			}
+		}
+
+		public void printFailureRateComparedToBlazeGraph(BufferedWriter w,
+				Map<String, List<TestExecutionSummary.Failure>> collect) throws IOException {
+			w.append("# Summary test failures compared to blazegraph");
+			w.newLine();
+			if (collect.containsKey("testAllWithBigData()")) {
+				List<TestExecutionSummary.Failure> bigdata = collect.get("testAllWithBigData()");
+				w.append("| test group | failed | compared to blazegraph |");
+				w.newLine();
+				w.append("| ---- | ---- | ---- |");
+				w.newLine();
+				for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
+					if (!gf.getKey().equals("testAllWithBigData()") && gf.getKey().startsWith("testAllWith")) {
+						w.append(NC);
+						w.append(gf.getKey());
+						w.append(NC);
+						w.append(Integer.toString(gf.getValue().size()));
+						w.append(NC);
+						w.append(percentage(gf.getValue().size(), bigdata.size()));
+						w.append(NC);
+						w.newLine();
+					}
+				}
+			} else {
+				for (Map.Entry<String, List<TestExecutionSummary.Failure>> gf : collect.entrySet()) {
+					w.append("# Summary " + gf.getKey() + " (" + gf.getValue().size() + ")");
+					w.newLine();
+					w.append("");
+					w.newLine();
+				}
+			}
+			w.newLine();
+			w.newLine();
+		}
+
+		public void printMarkdownSummary(BufferedWriter w, TestExecutionSummary tes) throws IOException {
+			w.append("# Summary regarding test failures");
+			w.newLine();
+			w.newLine();
+			w.append("| total | tests | percentage");
+			w.newLine();
+			w.append("| ---- | ---- | ---- |");
+			w.newLine();
+			long found = tes.getTestsFoundCount();
+			long failed = tes.getTestsFailedCount();
+			long aborted = tes.getTestsAbortedCount();
+			long skipped = tes.getTestsSkippedCount();
+			long passed = tes.getTestsSucceededCount();
+			w.append("| found | ").append(Long.toString(found)).append(NC).append("100%|");
+			w.newLine();
+			w.append("| failed | ").append(Long.toString(failed)).append(NC).append(percentage(failed, found))
+					.append(NC);
+			w.newLine();
+			w.append("| aborted | ").append(Long.toString(aborted)).append(NC).append(percentage(aborted, found))
+					.append(NC);
+			w.newLine();
+			w.append("| skipped | ").append(Long.toString(skipped)).append(NC).append(percentage(skipped, found))
+					.append(NC);
+			w.newLine();
+			w.append("| passed | ").append(Long.toString(passed)).append(NC).append(percentage(passed, found))
+					.append(NC);
+			w.newLine();
+			w.newLine();
+		}
+
+		public String percentage(long part, long whole) {
+			if (part > 0) {
+				return NumberFormat.getPercentInstance().format((part / (double) whole));
+			} else {
+				return "-";
+			}
 		}
 	}
 }
