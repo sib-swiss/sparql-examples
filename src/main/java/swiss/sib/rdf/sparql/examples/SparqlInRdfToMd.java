@@ -102,10 +102,12 @@ public class SparqlInRdfToMd {
 				comment = comment.substring(0, 75)+"...";
 			}
 			String fileNameOfMdFile = fileName.substring(0, fileName.length() - 4) + extension;
-			if(v instanceof Literal l && l.getLanguage().isPresent()) {
-				return " - [" + comment + "@" + l.getLanguage().get() + "](./" + fileNameOfMdFile + ")";
-			}else {
-				return " - [" + comment + "](./" + fileNameOfMdFile + ")";
+			if (v instanceof Literal l && l.getLanguage().isPresent()) {
+				// Escape "@" symbol in the link text
+				return " - [" + comment.replace("@", "\\@") + "@" + l.getLanguage().get().replace("@", "\\@") + "](./" + fileNameOfMdFile + ")";
+			} else {
+				// Escape "@" symbol in the link text
+				return " - [" + comment.replace("@", "\\@") + "](./" + fileNameOfMdFile + ")";
 			}
 		};
 	}
