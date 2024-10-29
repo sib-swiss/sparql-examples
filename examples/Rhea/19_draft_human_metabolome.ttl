@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:draft_human_metabolome a sh:SPARQLExecutable,
+ex:19_draft_human_metabolome a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Generate a draft human metabolome"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

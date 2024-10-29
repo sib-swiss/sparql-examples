@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:search_chemical_names_in_japanese a sh:SPARQLExecutable,
+ex:20_search_chemical_names_in_japanese a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Search for Chemical names starting in Japanese, translated to english using allie"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
