@@ -28,5 +28,6 @@ WHERE
     }
   }
 }""" ;
+    schema:keywords "list" , "disease" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
