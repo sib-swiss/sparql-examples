@@ -21,6 +21,7 @@ WHERE
         ?annotation rdfs:comment ?text .
         FILTER (CONTAINS(?text, 'loss of function'))
 }""" ;
+    schema:keywords "variant" , "variant annotation" ;
     schema:potentialAction [ schema:description "UniProtKB rest search with sparql" ;
             schema:target <https://www.uniprot.org/sparql/> ] ;
     schema:target <https://sparql.uniprot.org/sparql/> .
