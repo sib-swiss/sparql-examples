@@ -23,5 +23,6 @@ WHERE
         ?annotation a up:Disease_Annotation .
         ?annotation rdfs:comment ?text
 }""" ;
+    schema:keyword "gene name" , "disease" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
