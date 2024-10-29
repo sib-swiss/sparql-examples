@@ -19,6 +19,6 @@ WHERE {
  ?transMembraneAnnotation a up:Transmembrane_Annotation .
 } GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMembraneAnnotation) >= 2)""" ;
     schema:keywords "enzyme",
-        "membrane" ;
+        "transmembrane" , "count" , "enzyme classification" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
