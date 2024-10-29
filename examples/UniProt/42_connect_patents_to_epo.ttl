@@ -23,6 +23,7 @@ WHERE
     ?application patent:publicationNumber ?applicationNo
   }
 }""" ;
+    schema:keywords "EPO" , "cross-reference" , "entry history" , "patent" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://data.epo.org/linked-data/query> .
 
