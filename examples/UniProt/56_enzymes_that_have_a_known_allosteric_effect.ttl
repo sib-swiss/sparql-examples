@@ -25,6 +25,6 @@ WHERE {
      rdfs:label ?ligandName .
    FILTER(REGEX(?ligandNote, "allosteric", "i"))
 }""" ;
-    schema:keywords "enzyme" , "binding site"
+    schema:keywords "enzyme" , "binding site" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
