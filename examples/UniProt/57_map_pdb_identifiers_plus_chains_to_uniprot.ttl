@@ -5,7 +5,7 @@
 
 ex:57 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Map PDB identifiers plus chains to UniProt"@en ;
+    rdfs:comment "Map a selection of PDB identifiers plus chains to UniProt"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -32,5 +32,6 @@ WHERE
   # Filter those that match.
   FILTER(CONTAINS(?chain, ?pdbChain))
 }""" ;
+    schema:keywords "mapping" , "PDB" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
