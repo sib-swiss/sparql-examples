@@ -41,6 +41,7 @@ WHERE
     ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
   }
 }""" ;
+    schema:keywords "ortholog" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.orthodb.org/sparql> .
 
