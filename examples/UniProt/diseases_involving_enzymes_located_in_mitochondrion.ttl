@@ -30,6 +30,6 @@ WHERE {
   ?location up:cellularComponent ?component .
   ?component up:partOf* <http://purl.uniprot.org/locations/173> .
 }""" ;
-    schema:keywords "enzyme" ;
+    schema:keywords "enzyme" , "disease" , "subcellular location" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
