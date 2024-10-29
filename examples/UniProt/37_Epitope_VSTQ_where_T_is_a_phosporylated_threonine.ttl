@@ -5,7 +5,7 @@
 
 ex:37 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the human protein which contains an Epitope VSTQ, where T is a phosporylated threonine"@en ;
+    rdfs:comment "Find the human protein which contains an epitope VSTQ, where T is a phosporylated threonine"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -34,5 +34,6 @@ WHERE
   FILTER (SUBSTR(?aaSequence, ?begin -2 , 4) = "VSTQ")     
   FILTER (CONTAINS(?comment, "Phosphothreonine"))
 }""" ;
+    schema:keywords "PTM" , "phosphorylation" , "search within sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
