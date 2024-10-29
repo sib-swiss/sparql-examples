@@ -41,6 +41,7 @@ WHERE {
         FILTER(lang(?assembly) = "en")
   } 
 }""" ;
+    schema:keywords "chromosome location" , "gene" , "Wikidata" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 
