@@ -18,5 +18,6 @@ WHERE
             up:mnemonic ?mnemonic .
     }
 }""" ;
+    schema:keywords "identifier" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
