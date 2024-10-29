@@ -23,5 +23,6 @@ WHERE
 	}
 	GROUP BY ?protein ORDER BY DESC(?linksToPdbPerEntry)
 }""" ;
+    schema:keywords "cross-reference" , "count" , "PDB" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
