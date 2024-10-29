@@ -34,6 +34,6 @@ WHERE
 } 
 GROUP BY ?comment1 ?comment2 
 ORDER BY DESC(COUNT(?comment1))""" ;
-    schema:keyword "transmembrane" , "topology" , "count" ;
+    schema:keywords "transmembrane" , "topology" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
