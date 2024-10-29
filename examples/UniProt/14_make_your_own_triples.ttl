@@ -19,5 +19,6 @@ WHERE
 	?protein up:organism taxon:9606
 }""" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:keywords "triples" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
