@@ -28,6 +28,7 @@ WHERE {
     schema:keywords "enzyme",
         "mRNA",
         "transcript" ;
+    schema:keywords "enzyme" , "cross-reference" ,  "count" , "Ensembl" , "sequence origin" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .
 
