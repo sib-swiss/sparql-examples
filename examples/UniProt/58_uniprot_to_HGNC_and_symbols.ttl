@@ -5,7 +5,7 @@
 
 ex:58 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Map UniProt to HGNC identifiers and Symbols"@en ;
+    rdfs:comment "Map a selection of UniProt accession numbers (ACs) to HGNC identifiers and symbols"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
@@ -24,5 +24,6 @@ WHERE
   ?hgnc up:database <http://purl.uniprot.org/database/HGNC> ;
        rdfs:comment ?hgncSymbol .
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+schema:keywords "mapping" , "HGNC" ;    
+schema:target <https://sparql.uniprot.org/sparql/> .
 
