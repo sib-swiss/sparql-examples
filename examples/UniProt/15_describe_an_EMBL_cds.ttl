@@ -7,5 +7,6 @@
 ex:15 a sh:SPARQLExecutable ;
     rdfs:comment "Select all triples that relate to the EMBL CDS entry AA089367.1: "@en ;
     spex:describe "DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>" ;
+    schema:keywords "cross-reference" , "triples" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
