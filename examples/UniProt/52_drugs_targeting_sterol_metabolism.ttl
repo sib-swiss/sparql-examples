@@ -81,6 +81,7 @@ WHERE
     schema:keywords "drug",
         "enzyme",
         "metabolite" ;
+    schema:keywords "enzyme" , "drug" , "pathway" , "Rhea" , "federated query" , "ChEMBL" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql>, <https://idsm.elixir-czech.cz/sparql/endpoint/idsm> .
 
