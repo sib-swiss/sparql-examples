@@ -17,5 +17,6 @@ WHERE
     ?protein rdfs:seeAlso ?db .
     ?db up:database <http://purl.uniprot.org/database/PDB>
 }""" ;
+    schema:keywords "mapping" , "PDB" , "cross-reference" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
