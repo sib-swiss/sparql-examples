@@ -22,5 +22,6 @@ WHERE
         }
     } GROUP BY ?sequence
 } ORDER BY DESC(?entries)""" ;
+    schema:keywords "cross-references" , "UniParc" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
