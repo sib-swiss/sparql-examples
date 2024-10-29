@@ -27,6 +27,7 @@ WHERE
    ?chebi chebislash:smiles ?smiles ;
           chebislash:inchikey ?inchiKey .
 }""" ;
+    schema:keywords "enzyme" , "small molecule" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql> .
 
