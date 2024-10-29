@@ -13,5 +13,6 @@ ex:16 a sh:SPARQLExecutable,
 DESCRIBE taxon:9606 
 FROM <http://sparql.uniprot.org/taxonomy>""" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:keywords "taxonomy" , "triples" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
