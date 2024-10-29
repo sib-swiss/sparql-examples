@@ -5,7 +5,7 @@
 
 ex:diseases_involving_enzymes a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find Diseases that are thought to be related to Enzymes"@en ;
+    rdfs:comment "Find diseases that are thought to be related to enzymes"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -19,6 +19,6 @@ WHERE {
                     up:disease ?disease .
  ?disease skos:prefLabel ?diseaseLabel .
 }""" ;
-    schema:keywords "enzyme" ;
+    schema:keywords "enzyme" , "disease" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
