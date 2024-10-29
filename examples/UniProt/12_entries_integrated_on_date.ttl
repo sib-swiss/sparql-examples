@@ -16,5 +16,6 @@ WHERE
 	?protein a up:Protein . 
 	?protein up:created '2010-11-30'^^xsd:date
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+schema:keywords "entry history" , "date" ;    
+schema:target <https://sparql.uniprot.org/sparql/> .
 
