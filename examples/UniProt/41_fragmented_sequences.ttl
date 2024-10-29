@@ -17,5 +17,6 @@ WHERE {
     up:sequence ?sequence .
   MINUS { ?sequence up:fragment [] }
 }""" ;
+    schema:keywords "protein fragment" , "sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
