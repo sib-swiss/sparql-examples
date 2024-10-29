@@ -16,5 +16,6 @@ WHERE
 	?protein up:created '2013-01-09'^^xsd:date
 }""" ;
     sh:prefixes _:sparql_examples_prefixes ;
+    schema:keywords "entry history" , "date" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
