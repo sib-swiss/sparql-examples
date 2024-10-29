@@ -5,7 +5,7 @@
 
 ex:25 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find any uniprot entry which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en ;
+    rdfs:comment "Find UniProt entry which has a protein name 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -18,5 +18,6 @@ WHERE
 		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B alpha chain" .
 		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+schema:keywords "protein name" ;    
+schema:target <https://sparql.uniprot.org/sparql/> .
 
