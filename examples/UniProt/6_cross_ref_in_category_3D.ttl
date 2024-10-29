@@ -21,5 +21,6 @@ WHERE
     ?link up:database ?db .
     ?db up:category '3D structure databases'
 }""" ;
+    schema:keywords "cross-reference" , "3D structure" , "keyword" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
