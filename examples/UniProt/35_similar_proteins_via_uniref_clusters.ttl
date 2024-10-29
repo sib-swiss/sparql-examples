@@ -24,5 +24,6 @@ WHERE
     FILTER(!sameTerm(?similar, ?protein))
 } 
 ORDER BY DESC(?identity)""" ;
+    schema:keyword "similarity" , "UniRef" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
