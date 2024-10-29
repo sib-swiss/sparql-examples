@@ -33,5 +33,6 @@ WHERE {
     ?attribution up:evidence ?evidence .
   }
 }""" ;
+    schema:keywords "enzyme" , "evidence tag" , "entry status" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
