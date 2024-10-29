@@ -16,5 +16,6 @@ WHERE
     ?protein a up:Protein .
     ?protein up:mnemonic 'A4_HUMAN'
 }""" ;
+    schema:keywords "identifier" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
