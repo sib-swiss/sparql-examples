@@ -23,5 +23,6 @@ WHERE {
   ?ca up:catalyzedReaction ?rhea .
   ?ensemblTranscript up:transcribedFrom ?ensemblGene 
 }""" ;
+    schema:keywords "federated query" , "Ensembl" , "Rhea" , "enzyme", "gene name" , "protein name" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
