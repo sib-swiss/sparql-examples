@@ -23,8 +23,7 @@ WHERE {
   ?sequence rdf:value ?sequenceVal .
   FILTER(SUBSTR(?sequenceVal, ?beginPosition, 1) = 'Y')
 }""" ;
-    schema:keywords "active site",
-        "enzyme" ;
+    schema:keywords "active site", "enzyme" , "search within sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .
 
