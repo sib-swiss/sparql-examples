@@ -42,6 +42,6 @@ WHERE {
 
   FILTER(?natural_variant_begin_position >= ?active_site_position && ?active_site_position <= ?natural_variant_end_position)
 }""" ;
-    schema:keywords "enzyme" ;
+    schema:keywords "enzyme" , "disease" , "variant" , "search within sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
