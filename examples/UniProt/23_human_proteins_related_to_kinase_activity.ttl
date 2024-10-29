@@ -22,5 +22,6 @@ WHERE
         up:organism taxon:9606 ;
         up:classifiedWith|(up:classifiedWith/rdfs:subClassOf) GO:0016301 .
 }""" ;
+    schema:keywords "entry status", "gene ontology" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
