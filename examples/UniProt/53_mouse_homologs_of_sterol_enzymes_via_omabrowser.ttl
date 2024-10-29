@@ -6,7 +6,7 @@
 
 ex:53 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find mouse homologs in OMABrowser of human enzymes that catalyze reactions involving Sterols (CHEBI:15889). Federating with Rhea-DB and OMABrowser."@en ;
+    rdfs:comment "Find mouse homologs in OMABrowser of human enzymes that catalyze reactions involving sterols (CHEBI:15889). Federating with Rhea and OMABrowser."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX lscr: <http://purl.org/lscr#>
@@ -48,5 +48,6 @@ WHERE {
     ?orthoProtein1 orth:organism/<http://purl.obolibrary.org/obo/RO_0002162> taxon:10090 . 
   }
 }""" ;
+    schema:keywords "enzyme" , "ortholog" , "small molecule" , "federated query" , "OMA" , "Rhea"  ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql> , <https://sparql.omabrowser.org/sparql> .
