@@ -13,5 +13,6 @@ WHERE
 {
     [] <http://purl.org/pav/version> ?version
 }""" ;
+    schema:keywords "release number" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
