@@ -27,5 +27,6 @@ WHERE
   BIND(IF(CONTAINS(STR(?annotation), "#SIP"), SUBSTR(STR(?annotation),33), SUBSTR(STR(?annotation),36))AS?annotation_acc)
   BIND(SUBSTR(STR(?source),35) AS ?pubmed)
 }""" ;
+    schema:keywords "variant annotation" , "evidence tag" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
