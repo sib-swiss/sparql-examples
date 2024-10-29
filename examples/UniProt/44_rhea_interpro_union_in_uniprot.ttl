@@ -5,7 +5,7 @@
 
 ex:44 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find the Rhea and Interpro combinations in UniProtKB entries."@en ;
+    rdfs:comment "Find the Rhea and InterPro combinations in UniProtKB entries."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -22,5 +22,6 @@ WHERE
   ?protein rdfs:seeAlso ?interpro .
   ?interpro up:database <http://purl.uniprot.org/database/InterPro> .
 } ORDER BY ?rhea""" ;
+    schema:keywords "enzyme" , "domain" , "InterPro" , "Rhea" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
