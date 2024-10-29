@@ -18,5 +18,6 @@ WHERE
             up:oldMnemonic ?obsoleteMnemonic .
     }
 }""" ;
+    schema:keywords "identifier" , "list" , "entry history" ; 
     schema:target <https://sparql.uniprot.org/sparql/> .
 
