@@ -33,7 +33,7 @@ WHERE {
 }""" ;
     schema:keywords "active site",
         "enzyme",
-        "mutagenesis" ;
+        "mutagenesis" , "search within sequence" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     schema:subjectOf <https://education.expasy.org/cours/SIB_UniProtKB_Enzymes_2024/> .
 
