@@ -23,5 +23,6 @@ WHERE
     ?subcellAnnotation up:locatedIn/up:cellularComponent ?cellcmpt .
     ?cellcmpt skos:prefLabel ?location_inside_cell .
 }""" ;
+    schema:keywords "disease" , "subcellular location" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
