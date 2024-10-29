@@ -23,5 +23,6 @@ WHERE
     ?protein up:sequence ?isoform .
     ?isoform rdf:value ?sequence .
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+schema:keywords "taxonomy" , "isoform" ;    
+schema:target <https://sparql.uniprot.org/sparql/> .
 
