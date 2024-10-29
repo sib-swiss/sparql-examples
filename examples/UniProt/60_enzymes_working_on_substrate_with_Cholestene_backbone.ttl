@@ -7,7 +7,7 @@
 
 ex:60 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find Human proteins that catalyze reactions where substrates or product have a <a href=\"https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35516\">Cholestane skeleton</a>"^^rdf:HTML ;
+    rdfs:comment "Find human proteins that catalyze reactions where substrates or product have a <a href=\"https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35516\">Cholestane skeleton</a>"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>
@@ -45,6 +45,7 @@ WHERE {
      ?omim up:database <http://purl.uniprot.org/database/MIM>
    }
 }""" ;
+    schema:keywords "enzyme" , "substructure search" , "ChEBI" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> ,  <https://sparql.rhea-db.org/sparql> .
 
