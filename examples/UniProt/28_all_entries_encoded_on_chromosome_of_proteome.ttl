@@ -22,5 +22,6 @@ WHERE
 }""" ;
     schema:potentialAction [ schema:description "UniProtKB rest search with sparql" ;
             schema:target <https://www.uniprot.org/sparql/> ] ;
+    schema:keywords "proteome" , "chromosome" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
