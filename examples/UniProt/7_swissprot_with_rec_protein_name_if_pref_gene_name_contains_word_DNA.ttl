@@ -21,5 +21,6 @@ WHERE
         ?gene skos:prefLabel ?text .
         FILTER CONTAINS(?text, 'DNA')
 }""" ;
-    schema:target <https://sparql.uniprot.org/sparql/> .
+schema:keywords "protein name" , "gene name" , "entry status" ;    
+schema:target <https://sparql.uniprot.org/sparql/> .
 
