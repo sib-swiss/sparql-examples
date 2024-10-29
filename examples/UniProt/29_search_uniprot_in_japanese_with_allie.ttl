@@ -33,6 +33,7 @@ WHERE {
     ?structuredName ?anyKindOfName  ?englishLabelStr .
     ?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
 }""" ;
+    schema:keywords "language" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://data.allie.dbcls.jp/sparql> .
 
