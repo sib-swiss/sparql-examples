@@ -23,5 +23,6 @@ WHERE
   ?protein up:organism ?taxon ;
            up:classifiedWith keywords:952 .
 } GROUP BY ?taxon ORDER BY ?taxon""" ;
+    schema:keywords "taxonomy" , "keyword" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
