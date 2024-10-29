@@ -47,8 +47,7 @@ WHERE {
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
-    schema:keywords "enzyme",
-        "tissue" ;
+    schema:keywords "enzyme", "tissue specificity" , "federated query" , Ensembl" , "Bgee" ,  " Rhea" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql> .
 
