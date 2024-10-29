@@ -22,5 +22,6 @@ WHERE
 GROUP BY ?ecClass ORDER BY ?ecClass""" ;
     schema:keywords "ec",
         "enzyme" ;
+    schema:keywords "enzyme" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
