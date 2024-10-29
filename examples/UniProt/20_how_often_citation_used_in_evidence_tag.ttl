@@ -24,5 +24,6 @@ WHERE
         ?attribution up:source ?source .
         ?source a up:Journal_Citation .
 } GROUP BY ?source ORDER BY DESC(COUNT(?attribution))""" ;
+    schema:keywords "publication" , "evidence tag" , "sorting" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
