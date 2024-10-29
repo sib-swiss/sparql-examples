@@ -19,5 +19,6 @@ WHERE {
     ?CatalyticActivity up:enzymeClass ?EC .
   }
 }""" ;
+    schema:keyowrds "Rhea" , "enzyme classification" , "list" , "enzyme" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
