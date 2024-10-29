@@ -21,5 +21,6 @@ WHERE
   ?protein up:sequence ?sequence .
   ?protein up:proteome/^skos:narrower proteome:UP000005640 .
 }""" ;
+    schema:keyword "proteome" , "isoform" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
