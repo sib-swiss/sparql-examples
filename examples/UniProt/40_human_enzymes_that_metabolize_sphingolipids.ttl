@@ -26,7 +26,7 @@ WHERE {
     rdfs:seeAlso ?chemblEntry .
   ?chemblEntry up:database <http://purl.uniprot.org/database/ChEMBL> .
 }""" ;
-    schema:keywords "enzyme" ;
+    schema:keywords "enzyme" , "small molecule" , " cross-reference" , "ChEMBL" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql> .
 
