@@ -20,5 +20,6 @@ WHERE
 	?range faldo:begin/faldo:position ?begin .
 	?range faldo:end/faldo:position ?end
 }""" ;
+    schema:keywords "transmembrane annotation" , "search within sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
