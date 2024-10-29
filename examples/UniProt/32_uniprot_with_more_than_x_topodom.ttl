@@ -24,5 +24,6 @@ WHERE
 } 
 GROUP BY ?protein 
 HAVING (COUNT(?annotation) > 1)""" ;
+    schema:keyword "transmembrane" , "topology" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
