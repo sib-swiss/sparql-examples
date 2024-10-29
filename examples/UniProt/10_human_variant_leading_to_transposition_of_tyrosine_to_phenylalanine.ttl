@@ -29,5 +29,6 @@ WHERE
         BIND (substr(?value, ?begin, 1) as ?original) .
         FILTER(?original = 'Y' && ?substitution = 'F') .
 }""" ;
+    schema:keywords "variant annotation" , "search within sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
