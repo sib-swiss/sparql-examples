@@ -22,5 +22,6 @@ WHERE
   ?ann up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?rhea .
 }""" ;
+    schema:keyowrd "transport reaction" , "Rhea" , "entry status" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
