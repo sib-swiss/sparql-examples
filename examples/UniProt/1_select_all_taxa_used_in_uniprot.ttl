@@ -16,5 +16,6 @@ WHERE
 {
     ?taxon a up:Taxon .
 }""" ;
+    schema:keywords "taxonomy" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
