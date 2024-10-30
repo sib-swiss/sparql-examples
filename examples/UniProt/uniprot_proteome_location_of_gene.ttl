@@ -5,7 +5,7 @@
 
 ex:uniprot_proteome_location_of_gene a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List UniProt proteins with genetic replicon that they are encoded on using the Proteome data."@en ;
+    rdfs:comment "List UniProtKB proteins with genetic replicon that they are encoded on using the Proteome data."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -24,5 +24,6 @@ WHERE {
   BIND( strbefore( str(?proteomeData), "#" ) as ?proteome )
   BIND( strafter( str(?proteomeData), "#" ) as ?replicon )
 }""" ;
+    schema:keywords "proteome" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
