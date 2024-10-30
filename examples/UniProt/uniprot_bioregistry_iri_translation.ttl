@@ -22,7 +22,7 @@ WHERE {
         ?protein owl:sameAs ?otherIdentifier .
     }
 }""" ;
-   schema:keyword "mapping" , "identifier" ;
+    schema:keywords "mapping" , "identifier" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://bioregistry.io/sparql> .
 
