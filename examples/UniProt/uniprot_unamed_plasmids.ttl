@@ -5,7 +5,7 @@
 
 ex:uniprot_unamed_plasmids a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Sometimes it is known that a gene encoding a protein UniProtKB is located on a plasmid, but the name of the plasmid is unknown."@en ;
+    rdfs:comment "Sometimes it is known that a gene encoding a protein UniProtKB is located on a plasmid or an organelle, but the name of the plasmid is unknown."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -21,5 +21,6 @@ WHERE {
         ?plasmidOrOrganelle rdfs:label ?label .
     }
 }""" ;
+    schema:keywords "gene location" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
