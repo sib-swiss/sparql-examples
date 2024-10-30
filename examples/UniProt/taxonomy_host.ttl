@@ -16,5 +16,6 @@ SELECT
 WHERE {
     ?virus up:host ?host .
 }""" ;
+    schema:keywords "taxonomy" , "host" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
