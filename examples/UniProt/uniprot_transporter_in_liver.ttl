@@ -39,6 +39,7 @@ WHERE
     ?organism obo:RO_0002162 taxon:9606 .
   }
 }""" ;
+    schema:keywords "federated query" , "Bgee" , "UBERON" , "tissue specificity" , "transport reaction" , "Rhea" ; 
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://www.bgee.org/sparql> .
 
