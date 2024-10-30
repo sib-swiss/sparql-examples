@@ -6,7 +6,7 @@
 
 ex:uniprot_potential_isoforms a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all Human UniProt entries and their computationaly potential isoforms.."^^rdf:HTML ;
+    rdfs:comment "List all human UniProt entries and their computationaly mapped potential isoforms."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -23,5 +23,6 @@ WHERE {
         up:potentialSequence ?sequence .
   }
 }""" ;
+    schema:keywords "isoform" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
