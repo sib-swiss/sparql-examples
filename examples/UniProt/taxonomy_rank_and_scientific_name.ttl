@@ -21,5 +21,6 @@ WHERE {
     ?taxon up:rank ?rank
   }
 }""" ;
+    schema:keywords "taxonomy" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
