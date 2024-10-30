@@ -5,7 +5,7 @@
 
 ex:uniprot_encoding_gene_name_alternative_name a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List UniProt proteins with their associated gene and the gene's names that are used in the field, but not recommeded for use by UniProt"@en ;
+    rdfs:comment "List UniProtKB proteins with their associated gene and the gene's names that are used in the field, but not recommended for use by UniProt"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -17,5 +17,6 @@ WHERE {
            up:encodedBy ?gene .
   ?gene skos:altLabel ?altGeneName .
 }""" ;
+    schema:keywords "list" , "gene name" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
