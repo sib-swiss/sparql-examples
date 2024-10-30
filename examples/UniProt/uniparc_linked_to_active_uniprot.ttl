@@ -21,5 +21,6 @@ WHERE {
     ?uniprot a up:Protein .
   }
 }""" ;
+    schema:keywords "UniParc" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
