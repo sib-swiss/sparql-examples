@@ -6,8 +6,7 @@
 
 ex:taxonomy_with_at_least_one_swissprot a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find taxon records for which one reviewed UniProtKB (Swiss-Prot) entry exists"^^rdf:HTML ,
-    "Give the list of all species found in UniProtKB/Swiss-Prot" ;
+    rdfs:comment "Find taxon records for which one reviewed UniProtKB (Swiss-Prot) entry exists. We might expect species, strains, subspecies and isolates in the taxon list."^^rdf:HTML ,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
