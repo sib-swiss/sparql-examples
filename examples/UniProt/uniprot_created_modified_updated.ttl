@@ -20,5 +20,6 @@ WHERE {
            up:modified ?modified ;
            up:version ?version .
 }""" ;
+    schema:keywords "entry history" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
