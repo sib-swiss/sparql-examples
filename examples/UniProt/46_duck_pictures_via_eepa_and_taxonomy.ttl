@@ -36,6 +36,7 @@ WHERE
            <http://xmlns.com/foaf/0.1/depiction> ?image .
     }
 }""" ;
+    schema:keywords "taxonomy" , "image" , "federated query" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://semantic.eea.europa.eu/sparql> .
 

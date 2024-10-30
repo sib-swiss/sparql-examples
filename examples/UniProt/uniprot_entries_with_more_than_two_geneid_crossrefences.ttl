@@ -5,7 +5,7 @@
 
 ex:uniprot_entries_with_more_than_two_geneid_crossrefences a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find GeneID's crosslinked to more than one Human or Mouse UniProt entry"@en ;
+    rdfs:comment "Find GeneID's crosslinked to more than one human or mouse UniProtKB entry"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -22,5 +22,6 @@ WHERE
            up:organism ?organism
 } GROUP BY ?geneid ?organism HAVING (COUNT(?protein) > 1) ORDER BY ?organism ?geneid
 """ ;
+    schema:keywords "cross-reference " , "mapping" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

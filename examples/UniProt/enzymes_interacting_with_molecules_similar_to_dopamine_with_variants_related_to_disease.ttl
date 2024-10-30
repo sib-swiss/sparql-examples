@@ -38,11 +38,11 @@ WHERE {
      up:disease ?disease .
 }""" ;
     schema:keywords "chemical similarity",
-        "dopamine",
         "enzyme",
         "idsm",
         "rhea",
-        "sachem" ;
+        "sachem" , 
+        "small molecule" , "federated query" ,  "variant" , "disease" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> .
 

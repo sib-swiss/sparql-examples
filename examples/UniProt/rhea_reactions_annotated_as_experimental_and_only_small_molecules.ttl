@@ -40,5 +40,6 @@ WHERE {
         up:source ?source .
   ?source a up:Citation .
 }""" ;
+    schema:keywords "small molecule" , "Rhea" , "evidence tag"  ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

@@ -16,5 +16,6 @@ WHERE {
            up:recommendedName ?recommendedName .
   ?recommendedName up:shortName ?fullName .
 }""" ;
+    schema:keywords "protein name" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 

@@ -6,7 +6,7 @@
 
 ex:uniprot_identifiers_org_translation a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Translate the global unique identifier for a UniProt record into other options using the identifiers.org translating endpoint."@en ;
+    rdfs:comment "Translate a selection of UniProtKB accession numbers into other options using the identifiers.org translating endpoint."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
@@ -22,6 +22,7 @@ WHERE {
         ?protein owl:sameAs ?otherIdentifier .
     }
 }""" ;
+    schema:keywords "identifier" , "mapping" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.api.identifiers.org/sparql> .
 

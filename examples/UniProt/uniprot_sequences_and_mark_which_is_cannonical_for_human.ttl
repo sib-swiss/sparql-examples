@@ -6,7 +6,7 @@
 
 ex:uniprot_sequences_and_mark_which_is_cannonical_for_human a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all Human UniProt entries and their sequences, marking if the sequence listed is the cannonical sequence of the matching entry."^^rdf:HTML ;
+    rdfs:comment "List all human UniProtKB entries and their sequences, marking if the sequence listed is the cannonical sequence of the matching entry."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -38,5 +38,6 @@ WHERE {
       BIND(IF(?isComplicated, STRENDS(STR(?entry), STRBEFORE(SUBSTR(STR(?sequence), 34),'-')),?likelyIsCanonical) AS ?isCanonical)
   }
 }""" ;
+    schema:keywords "isoform" , "sequence" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
