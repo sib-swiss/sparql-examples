@@ -15,5 +15,6 @@ WHERE {
   ?protein a up:Protein ;
            up:encodedBy ?gene .
 }""" ;
+    schema:keywords "list" , "gene name" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
