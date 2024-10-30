@@ -23,5 +23,6 @@ WHERE {
   ?genus a up:Taxon ;
          up:rank up:Genus .
 }""" ;
+    schema:keywords "taxonomy" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
