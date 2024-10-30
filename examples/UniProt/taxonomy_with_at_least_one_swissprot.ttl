@@ -34,6 +34,6 @@ WHERE {
                  } .
   ?taxid rdfs:subClassOf ?domain .
 }""" ;
-    schema:keyowrds "taxonomy" , "entry status" , "list" ;
+    schema:keywords "taxonomy" , "entry status" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
