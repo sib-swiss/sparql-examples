@@ -15,5 +15,6 @@ SELECT
 WHERE { 
   <http://purl.uniprot.org/uniparc/UPI000012A0AD> ?predicate ?object
 }""" ;
+    schema:keywords "UniParc" , "triples" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
