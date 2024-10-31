@@ -34,7 +34,7 @@ WHERE {
   ?uniprot up:recommendedName/up:fullName ?recname .
   OPTIONAL {?uniprot up:encodedBy/skos:prefLabel ?gene .}
 }""" ;
-    schema:keywords "small molecule" , "ChEBI" ;
+    schema:keywords "small molecule" , "ChEBI" , "federated query" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://sparql.rhea-db.org/sparql> .
 
