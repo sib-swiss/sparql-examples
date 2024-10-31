@@ -6,7 +6,7 @@
 
 ex:rhea_reactions_annotated_as_experimental_and_only_small_molecules a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find all rhea (only small molecule) that are used in UniProt where the annotation has a paper and is tagged having experimental evidence."^^rdf:HTML ;
+    rdfs:comment "Find all Rhea (only small molecule) that are used in UniProtKB where the annotation has a paper and is tagged having experimental evidence."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX ECO: <http://purl.obolibrary.org/obo/ECO_>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
