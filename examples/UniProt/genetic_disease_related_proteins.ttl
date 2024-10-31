@@ -5,7 +5,7 @@
 
 ex:genetic_disease_related_proteins a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all UniProt proteins annotated to be related to a genetic disease."@en ;
+    rdfs:comment "List all UniProtKB proteins annotated to be related to a genetic disease."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
