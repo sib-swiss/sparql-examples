@@ -5,7 +5,7 @@
 
 ex:5 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select a mapping of UniProt to PDB entries using the UniProt cross-references to the <a href=\"https://www.uniprot.org/database/DB-0070\">PDB</a> database"@en ;
+    rdfs:comment "Select a mapping of UniProtKB to PDB entries using the UniProtKB cross-references to the <a href=\"https://www.uniprot.org/database/DB-0070\">PDB</a> database"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
