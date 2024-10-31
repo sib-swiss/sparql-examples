@@ -5,7 +5,7 @@
 
 ex:uniprot_reviewed_or_not a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all UniProt protein and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)"@en ;
+    rdfs:comment "List all UniProtKB proteins and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
@@ -16,5 +16,6 @@ WHERE {
   ?protein a up:Protein . 
   ?protein up:reviewed ?reviewed . 
 }""" ;
+    schema:keywords "entry status" , "list" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
