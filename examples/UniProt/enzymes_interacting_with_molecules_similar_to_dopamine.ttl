@@ -32,7 +32,7 @@ WHERE {
   ?caa up:catalyticActivity/up:catalyzedReaction ?rhea .
 }""" ;
     schema:keywords "chemical similarity",
-        "dopamine",
+        "small molecule",
         "enzyme",
         "idsm",
         "rhea",
