@@ -5,7 +5,7 @@
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select the number of UniProt entries for each of the EC (Enzyme Commission) top level categories"@en ;
+    rdfs:comment "Select the number of UniProtKB entries for each of the EC (Enzyme Commission) top level categories"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX ec: <http://purl.uniprot.org/enzyme/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -22,6 +22,6 @@ WHERE
 GROUP BY ?ecClass ORDER BY ?ecClass""" ;
     schema:keywords "ec",
         "enzyme" ;
-    schema:keywords "enzyme" , "count" ;
+    schema:keywords "enzyme" , "count" , "enzyme classification" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
