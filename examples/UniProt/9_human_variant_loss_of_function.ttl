@@ -5,7 +5,7 @@
 
 ex:9 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all human UniProt entries with a sequence variant that leads to a 'loss of function'"@en ;
+    rdfs:comment "Select all human UniProtKB entries with a sequence variant that leads to a 'loss of function'"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
