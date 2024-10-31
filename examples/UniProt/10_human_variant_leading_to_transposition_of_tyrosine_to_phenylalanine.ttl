@@ -5,7 +5,7 @@
 
 ex:10 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all human UniProt entries with a sequence variant that leads to a tyrosine to phenylalanine substitution"@en ;
+    rdfs:comment "Select all human UniProtKB entries with a sequence variant that leads to a tyrosine to phenylalanine substitution"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
