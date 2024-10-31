@@ -5,7 +5,7 @@
 
 ex:12 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all UniProt entries that were integrated on the 30th of November 2010"@en ;
+    rdfs:comment "Select all UniProtKB entries that were integrated on the 30th of November 2010"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
