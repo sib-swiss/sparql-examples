@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_primary_accession a sh:SPARQLExecutable,
+ex:102_uniprot_primary_accession a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Extracting an UniProtKB primary accession from our IRIs. Is done with a bit of string manipulation. While UniProt primary accession are unique within UniProtKB they may be reused by accident or itentionally by other data sources. If we provided them as strings (not IRI) and if you used them in a query that way, you might accidentaly retrieve completely wrong records."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

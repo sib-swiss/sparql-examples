@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_reviewed_or_not a sh:SPARQLExecutable,
+ex:106_uniprot_reviewed_or_not a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List all UniProtKB proteins and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

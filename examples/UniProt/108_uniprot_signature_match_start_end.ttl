@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_signature_match_start_end a sh:SPARQLExecutable,
+ex:108_uniprot_signature_match_start_end a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List all InterPro member database signature match start and end for a specific UniProtKB protein."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

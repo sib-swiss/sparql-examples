@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:enzymes_with_mutagenesis_affecting_active_site a sh:SPARQLExecutable,
+ex:76_enzymes_with_mutagenesis_affecting_active_site a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find enzymes, where the active site is a region affected by mutagenesis and show the comment regarding mutagenesis effect."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

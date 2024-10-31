@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:uniprot_affected_by_metabolic_diseases_using_MeSH a sh:SPARQLExecutable,
+ex:90_uniprot_affected_by_metabolic_diseases_using_MeSH a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Proteins involved in metabolic diseases in UniProtKB. Using the MeSH concept as a root to find metabolic diseases in UniProt."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

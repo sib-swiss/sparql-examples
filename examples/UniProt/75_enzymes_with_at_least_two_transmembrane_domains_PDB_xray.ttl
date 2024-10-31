@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:enzymes_with_at_least_two_transmembrane_domains_PDB_xray a sh:SPARQLExecutable,
+ex:75_enzymes_with_at_least_two_transmembrane_domains_PDB_xray a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find enzymes that have at least two transmembrane domains, whose 3D structure is elucidated through X-Ray analysis"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

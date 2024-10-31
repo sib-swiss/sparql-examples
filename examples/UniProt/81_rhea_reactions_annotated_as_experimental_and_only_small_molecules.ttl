@@ -4,7 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:rhea_reactions_annotated_as_experimental_and_only_small_molecules a sh:SPARQLExecutable,
+ex:81_rhea_reactions_annotated_as_experimental_and_only_small_molecules a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find all Rhea (only small molecule) that are used in UniProtKB where the annotation has a paper and is tagged having experimental evidence."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

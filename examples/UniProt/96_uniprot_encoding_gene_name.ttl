@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_encoding_gene_name a sh:SPARQLExecutable,
+ex:96_uniprot_encoding_gene_name a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List UniProtKB proteins with their associated gene and the gene's preffered name"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
