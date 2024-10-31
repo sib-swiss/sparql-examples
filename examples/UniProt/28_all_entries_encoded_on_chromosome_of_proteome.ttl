@@ -6,7 +6,7 @@
 
 ex:28 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Get the list of uniprot entries for the chromosome of proteome <a href=\"https://www.uniprot.org/proteomes/UP000000625\">UP000000625</a>"^^rdf:HTML ;
+    rdfs:comment "Get the list of UniProtKB entries for the chromosome of proteome <a href=\"https://www.uniprot.org/proteomes/UP000000625\">UP000000625</a>"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
