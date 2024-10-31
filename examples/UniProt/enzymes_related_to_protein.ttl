@@ -6,7 +6,7 @@
 
 ex:enzymes_related_to_protein a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment '''Select Enzyme Classification (EC) classes that have a Protein associated to them'''@en ;
+    rdfs:comment '''Select Enzyme Classification (EC) classes that have a protein associated to them'''@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -27,6 +27,6 @@ WHERE {
     ?protein up:domain/up:enzyme ?enzyme .
   }
 }""" ;
-    schema:keywords "enzyme" ;
+    schema:keywords "enzyme" , "enzyme classification" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
