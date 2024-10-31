@@ -5,8 +5,8 @@
 
 ex:26 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find UniProt entry, or an UniProt entries domain or component which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en ,
-"Find UniProt proteins which are cleaved and contain a domain or component named 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en;
+    rdfs:comment "Find UniProtKB entry, or an UniProtKB entries domain or component which has a name 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en ,
+"Find UniProtKB proteins which are cleaved and contain a domain or component named 'HLA class I histocompatibility antigen, B-73 alpha chain'"@en;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
