@@ -38,7 +38,7 @@ WHERE {
       up:ligand/rdfs:subClassOf ?ligand .
 }
 ORDER BY DESC(?ligandSimilarityScore)""" ;
-    schema:keywords "binding site" , "substructure search" ;
+    schema:keywords "binding site" , "chemical similarity" , "idms" , "sachem" , "federated query" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> .
 
