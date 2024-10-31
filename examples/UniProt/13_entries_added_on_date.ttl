@@ -5,7 +5,7 @@
 
 ex:13 a sh:SPARQLAskExecutable,
         sh:SPARQLExecutable ;
-    rdfs:comment "Was any UniProt entry integrated on the 9th of January 2013"@en ;
+    rdfs:comment "Was any UniProtKB entry integrated on the 9th of January 2013"@en ;
     sh:ask """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
