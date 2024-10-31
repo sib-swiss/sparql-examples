@@ -28,6 +28,7 @@ WHERE
   BIND(year(?grantDate) AS ?grantYear)
   FILTER(?grantYear < ?thisYearMinusTwenty)
 } ORDER BY ?grantYear""" ;
+    schema:keywords "EPO" , "cross-reference" , "patent" , "federated query", "entry history" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://data.epo.org/linked-data/query> .
 
