@@ -19,6 +19,6 @@ WHERE
 		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B-73 alpha chain" .
 		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
 }""" ;
-schema:keywords "protein name" , "cleaved protein" ;    
+schema:keywords "protein name" , "peptide name" ;    
 schema:target <https://sparql.uniprot.org/sparql/> .
 
