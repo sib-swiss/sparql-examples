@@ -6,7 +6,7 @@
 
 ex:4 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select the UniProt entry with the <a href=\"https://www.uniprot.org/manual/entry_name\">mnemonic</a> 'A4_HUMAN'"^^rdf:HTML ;
+    rdfs:comment "Select the UniProtKB entry with the <a href=\"https://www.uniprot.org/manual/entry_name\">mnemonic</a> 'A4_HUMAN'"^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
