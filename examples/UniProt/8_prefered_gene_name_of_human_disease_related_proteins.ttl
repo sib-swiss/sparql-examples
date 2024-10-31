@@ -5,7 +5,7 @@
 
 ex:8 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select the preferred gene name and disease annotation of all human UniProt entries that are known to be involved in a disease"@en ;
+    rdfs:comment "Select the preferred gene name and disease annotation of all human UniProtKB entries that are known to be involved in a disease"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
