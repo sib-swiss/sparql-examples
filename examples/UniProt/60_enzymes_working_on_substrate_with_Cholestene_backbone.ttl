@@ -45,7 +45,7 @@ WHERE {
      ?omim up:database <http://purl.uniprot.org/database/MIM>
    }
 }""" ;
-    schema:keywords "enzyme" , "substructure search" , "ChEBI" ;
+    schema:keywords "enzyme" , "substructure search" , "ChEBI" , "idsm" , "sachem" , "federated query" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
     spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> ,  <https://sparql.rhea-db.org/sparql> .
 
