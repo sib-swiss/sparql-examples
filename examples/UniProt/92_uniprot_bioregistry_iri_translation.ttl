@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:uniprot_bioregistry_iri_translation a sh:SPARQLExecutable,
+ex:92_uniprot_bioregistry_iri_translation a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Translate the global unique identifier for a UniProtKB record into other options using the bioregistry translating endpoint."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

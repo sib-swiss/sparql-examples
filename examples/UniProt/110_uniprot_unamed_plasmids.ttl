@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_unamed_plasmids a sh:SPARQLExecutable,
+ex:110_uniprot_unamed_plasmids a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Sometimes it is known that a gene encoding a protein UniProtKB is located on a plasmid or an organelle, but the name of the plasmid is unknown."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

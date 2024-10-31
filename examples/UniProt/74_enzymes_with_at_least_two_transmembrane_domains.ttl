@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:enzymes_with_at_least_two_transmembrane_domains a sh:SPARQLExecutable,
+ex:74_enzymes_with_at_least_two_transmembrane_domains a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find Hydrolases (enzymes that catalyse the hydrolysis of various bonds) that have at least two transmembrane domains"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

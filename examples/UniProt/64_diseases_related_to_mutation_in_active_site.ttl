@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:diseases_related_to_mutation_in_active_site a sh:SPARQLExecutable,
+ex:64_diseases_related_to_mutation_in_active_site a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find (Human Genetic) diseases, that are related to a natural variant on the active site of an enzyme."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

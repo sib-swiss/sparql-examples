@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-ex:enzymes_mapping_to_PDB a sh:SPARQLExecutable,
+ex:72_enzymes_mapping_to_PDB a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment '''Select a mapping of UniProtKB enzymes to PDB entries using the UniProtKB cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database.'''^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

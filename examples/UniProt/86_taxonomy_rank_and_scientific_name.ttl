@@ -4,7 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:taxonomy_rank_and_scientific_name a sh:SPARQLExecutable,
+ex:86_taxonomy_rank_and_scientific_name a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Retrieve the rank and the scientific name of an taxonomic record. Not all taxonomic records have a <a href=\"http://purl.uniprot.org/core/rank\">rank</a> associated with them."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

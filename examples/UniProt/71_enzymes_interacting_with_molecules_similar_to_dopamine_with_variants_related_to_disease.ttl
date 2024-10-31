@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease a sh:SPARQLExecutable,
+ex:71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Look for enzymes catalyzing reactions with molecules similar to dopamine, with natural variants related to a disease."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

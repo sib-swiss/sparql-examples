@@ -5,7 +5,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:uniprot_transporter_in_liver a sh:SPARQLExecutable,
+ex:109_uniprot_transporter_in_liver a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find human transporter proteins in reviewed UniProtKB/Swiss-Prot, that are expressed in the liver (Uses Bgee and UBERON)."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

@@ -4,7 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:taxonomy_hierarchy a sh:SPARQLExecutable,
+ex:84_taxonomy_hierarchy a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find all taxonomic records that describe species of the genus <a href=\"http://purl.uniprot.org/taxonomy/9605\">Homo<a>."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

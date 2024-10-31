@@ -4,7 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_sequences_and_mark_which_is_cannonical_for_human a sh:SPARQLExecutable,
+ex:107_uniprot_sequences_and_mark_which_is_cannonical_for_human a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List all human UniProtKB entries and their sequences, marking if the sequence listed is the cannonical sequence of the matching entry."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

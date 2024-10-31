@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:mnemonic_also_known_as_id a sh:SPARQLExecutable,
+ex:79_mnemonic_also_known_as_id a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List all UniProtKB protein ID (mnemonic) for current UniProtKB entries."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

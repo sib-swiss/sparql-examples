@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:diseases_involving_enzymes a sh:SPARQLExecutable,
+ex:62_diseases_involving_enzymes a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find diseases that are thought to be related to enzymes"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

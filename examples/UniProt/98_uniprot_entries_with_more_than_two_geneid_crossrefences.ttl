@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_entries_with_more_than_two_geneid_crossrefences a sh:SPARQLExecutable,
+ex:98_uniprot_entries_with_more_than_two_geneid_crossrefences a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find GeneID's crosslinked to more than one human or mouse UniProtKB entry"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

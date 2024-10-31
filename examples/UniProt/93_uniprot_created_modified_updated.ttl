@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniprot_created_modified_updated a sh:SPARQLExecutable,
+ex:93_uniprot_created_modified_updated a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List the created, last modified, and last sequence update dates for UniProtKB proteins."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

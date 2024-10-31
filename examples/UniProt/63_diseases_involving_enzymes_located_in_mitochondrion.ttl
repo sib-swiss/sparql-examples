@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:diseases_involving_enzymes_located_in_mitochondrion a sh:SPARQLExecutable,
+ex:63_diseases_involving_enzymes_located_in_mitochondrion a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Find (Human genetic) diseases that are thought to be related to Enzymes, known to be located in the Mitochondrion"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

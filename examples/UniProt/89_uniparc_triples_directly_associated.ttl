@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:uniparc_triples_directly_associated a sh:SPARQLExecutable,
+ex:89_uniparc_triples_directly_associated a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Predicates and objects, for a given UniParc accession as a subject"@en ;
     sh:prefixes _:sparql_examples_prefixes ;

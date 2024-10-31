@@ -4,7 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:distinct_rhea_transport_in_reviewed_uniprot a sh:SPARQLExecutable,
+ex:66_distinct_rhea_transport_in_reviewed_uniprot a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Count number of unique Rhea transport reactions annotated in reviewed UniProtKB entries."^^rdf:HTML ;
     sh:prefixes _:sparql_examples_prefixes ;

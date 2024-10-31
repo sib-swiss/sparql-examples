@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
-ex:uniprot_identifiers_org_translation a sh:SPARQLExecutable,
+ex:99_uniprot_identifiers_org_translation a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Translate a selection of UniProtKB accession numbers into other options using the identifiers.org translating endpoint."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
