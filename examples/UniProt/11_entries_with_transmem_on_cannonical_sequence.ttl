@@ -5,7 +5,7 @@
 
 ex:11 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Select all UniProt entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence"@en ;
+    rdfs:comment "Select all UniProtKB entries with annotated transmembrane regions and the regions' begin and end coordinates on the canonical sequence"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX up: <http://purl.uniprot.org/core/>
