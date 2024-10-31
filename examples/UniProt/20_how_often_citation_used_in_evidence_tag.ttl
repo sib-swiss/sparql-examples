@@ -5,7 +5,7 @@
 
 ex:20 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find how often an article in pubmed was used in an evidence tag in a human protein (ordered by most used to least)"@en ;
+    rdfs:comment "Find how often an article in PubMed was used in an evidence tag in a human protein (ordered by most used to least)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
@@ -24,6 +24,6 @@ WHERE
         ?attribution up:source ?source .
         ?source a up:Journal_Citation .
 } GROUP BY ?source ORDER BY DESC(COUNT(?attribution))""" ;
-    schema:keywords "publication" , "evidence tag" , "sorting" , "count" ;
+    schema:keywords "publication" , "evidence tag" , "sorting" , "count" , "PubMed" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
