@@ -5,7 +5,7 @@
 
 ex:39 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve entries and Catalytic activities in the reviewed (Swiss-Prot) section that have experimental evidences,"@en ;
+    rdfs:comment "Retrieve entries and catalytic activities in the reviewed (UniProtKB/Swiss-Prot) section that have experimental evidences,"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX up: <http://purl.uniprot.org/core/>
