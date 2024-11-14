@@ -47,6 +47,7 @@ public class SparqlInRdfToMd {
 			rq.add("");
 			streamOf(ex, queryId, SchemaDotOrg.KEYWORDS, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
+			rq.add("");
 			streamOf(ex, queryId, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
 					.forEach(rq::add);
 
