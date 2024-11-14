@@ -33,7 +33,7 @@ public class SparqlInRdfToRq {
 					streamOf(ex, s, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
 							.map(o -> "#+ description: " + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
 					// rq.add("\n");
-					String keywords = streamOf(ex, s, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
+					String keywords = streamOf(ex, s, SchemaDotOrg.KEYWORDS, null).map(Statement::getObject).map(Value::stringValue)
 							.collect(Collectors.joining("\n#+   - "));
 					if (!keywords.isEmpty()) {
 						rq.add("#+ tags:");

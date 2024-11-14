@@ -7,7 +7,7 @@ import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 
 public class SchemaDotOrg {
 	public static final Namespace NS = new SimpleNamespace("schema", "https://schema.org/");
-	public static final IRI KEYWORD = SimpleValueFactory.getInstance().createIRI("https://schema.org/keyword");
+	public static final IRI KEYWORDS = SimpleValueFactory.getInstance().createIRI("https://schema.org/keywords");
 	public static final IRI TARGET = SimpleValueFactory.getInstance().createIRI("https://schema.org/target");
 
 	private SchemaDotOrg() {

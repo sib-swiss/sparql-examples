@@ -45,7 +45,7 @@ public class SparqlInRdfToMd {
 					.map(s -> s.replaceAll(".ttl", ""))
 					.map(s -> "[rq](" + s + ".rq) [turtle/ttl](" + s + ".ttl)").forEach(rq::add);
 			rq.add("");
-			streamOf(ex, queryId, SchemaDotOrg.KEYWORD, null).map(Statement::getObject).map(Value::stringValue)
+			streamOf(ex, queryId, SchemaDotOrg.KEYWORDS, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * " + k).forEach(rq::add);
 			streamOf(ex, queryId, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
 					.forEach(rq::add);
