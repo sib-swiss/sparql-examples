@@ -162,3 +162,20 @@ If you reuse any part of this work, please cite [the arXiv paper](http://arxiv.o
       url={https://arxiv.org/abs/2410.06010},
 }
 ```
+
+
+## Extracting queries from wikibase
+
+These utils have a mode to extract queries from wikibase instances.
+
+For example to extract the queries from factgrid into a separate example 
+directory.
+
+```sh
+java -jar target/sparql-examples-utils-*-uber.jar \
+    wikibase \
+    -e YOUR@EMAIL.real \
+    -o $HOME/git/wikibase-sparql-examples/examples/FactGrid \
+    -s https://database.factgrid.de/sparql \
+    -u https://database.factgrid.de/
+```
