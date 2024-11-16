@@ -34,6 +34,9 @@ public class SparqlInRdfToMd {
 			String ln = ((IRI) queryId).getLocalName();
 			rq.add("# " + ln + "\n");
 			rq.add("");
+			streamOf(ex, queryId, DCTERMS.LICENSE, null).map(Statement::getObject).map(Value::stringValue)
+					.map(k -> " * License: [" + k + "](" + k + ")").forEach(rq::add);
+			rq.add("");
 			streamOf(ex, null, SIB.FILE_NAME, null).map(s -> s.getObject().stringValue())
 					.map(s -> s.replaceAll(".ttl", ""))
 					.map(s -> "[rq](" + s + ".rq) [turtle/ttl](" + s + ".ttl)").forEach(rq::add);
