@@ -13,6 +13,7 @@ import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.vocabulary.DC;
 import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
@@ -33,6 +34,9 @@ public class SparqlInRdfToMd {
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> {
 			String ln = ((IRI) queryId).getLocalName();
 			rq.add("# " + ln + "\n");
+			rq.add("");
+			streamOf(ex, queryId, DC.CONTRIBUTOR, null).map(Statement::getObject).map(Value::stringValue)
+					.map(k -> " * Contributor: " + k).forEach(rq::add);
 			rq.add("");
 			streamOf(ex, queryId, DCTERMS.LICENSE, null).map(Statement::getObject).map(Value::stringValue)
 					.map(k -> " * License: [" + k + "](" + k + ")").forEach(rq::add);
