@@ -50,6 +50,6 @@ WHERE {
         } GROUP BY ?extract ORDER BY DESC(?count_of_selected_class)
     }
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 

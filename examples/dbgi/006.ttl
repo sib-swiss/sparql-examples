@@ -74,6 +74,6 @@ WHERE {
     }
 } GROUP BY ?family_name ?genus_name ?species_name ?wd_sp ?feature ?sub_rt ?sub_parent_mass ?count
 ORDER BY DESC(?count)""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 

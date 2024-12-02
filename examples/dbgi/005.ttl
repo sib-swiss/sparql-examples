@@ -30,5 +30,5 @@ WHERE {
             emi:hasChemicalStructure ?isdb_ik2d .
     FILTER(?isdb_ik2d = ?sirius_ik2d) .
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
 

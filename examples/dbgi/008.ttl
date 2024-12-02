@@ -33,5 +33,5 @@ WHERE {
         }
     }
 } GROUP BY ?feature ?massive_doi ORDER BY DESC(?count)""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
 

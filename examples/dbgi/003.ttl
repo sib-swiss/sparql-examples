@@ -47,5 +47,5 @@ WHERE {
     FILTER(((?rt - ?rt_tol) < ?rt_opp) && ((?rt + ?rt_tol) > ?rt_opp))
     FILTER((?pm_opp > ((?pm - 2.014) - ((?ppm * 0.000001) * (?pm - 2.014)))) && (?pm_opp < ((?pm - 2.014) + ((?ppm * 0.000001) * (?pm - 2.014)))))
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
 
