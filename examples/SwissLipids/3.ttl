@@ -23,7 +23,7 @@ WHERE
   ?startId rdfs:label ?startLabel .
  
   ?id rdfs:subClassOf+ ?startId .  
-  VALUES ?rank { SWISSLIPID:Isomeric_Subspecie SWISSLIPID:Molecular_Subspecies SWISSLIPID:Structural_Subspecies}
+  VALUES ?rank { SWISSLIPID:Isomeric_Subspecies SWISSLIPID:Molecular_Subspecies SWISSLIPID:Structural_Subspecies}
   ?id SWISSLIPID:rank ?rank ;
 	  rdfs:label ?name ;
       SWISSLIPID:citation ?citation .
