@@ -1,4 +1,4 @@
-@prefix ex: <https://sib-swiss.github.io/sparql-examples/examples/dbgi/> .
+@prefix ex: <https://biosoda.unil.ch/emi/sparql/.well-known/sparql-examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -20,7 +20,7 @@ WHERE {
     ?material sosa:hasSample ?extract ;
         sosa:isSampleOf ?organe .
     ?organe emi:inTaxon ?wd_sp .
-    OPTIONAL {
+    #OPTIONAL {
         SERVICE <https://query.wikidata.org/sparql> {
             ?wd_sp wdt:P225 ?species_name .
             ?family wdt:P31 wd:Q16521 ;
@@ -32,7 +32,7 @@ WHERE {
                 wdt:P225 ?genus_name ;
                 ^wdt:P171* ?wd_sp .
         }
-    }
+    #}
     {
         SELECT ?extract (COUNT(DISTINCT ?feature) AS ?count_of_selected_class)
         WHERE {
@@ -50,6 +50,6 @@ WHERE {
         } GROUP BY ?extract ORDER BY DESC(?count_of_selected_class)
     }
 }""" ;
-    schema:target <https://biosoda.unil.ch/graphdb/repositories/emi-dbgi> ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 
