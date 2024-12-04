@@ -1,4 +1,4 @@
-@prefix ex: <https://sib-swiss.github.io/sparql-examples/examples/dbgi/> .
+@prefix ex: <https://biosoda.unil.ch/emi/sparql/.well-known/sparql-examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
