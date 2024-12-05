@@ -6,7 +6,7 @@
 
 ex:90_uniprot_affected_by_metabolic_diseases_using_MeSH a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Proteins involved in metabolic diseases in UniProtKB. Using the MeSH concept as a root to find metabolic diseases in UniProt."@en ;
+    rdfs:comment "Find UniProtKB proteins involved in metabolic diseases using the MeSH concept for 'Metabolic Diseases'."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
@@ -16,7 +16,7 @@ SELECT
 WHERE {
   SERVICE<https://id.nlm.nih.gov/mesh/sparql> {
     GRAPH <http://id.nlm.nih.gov/mesh> {
-      # Mesh M0013493 is a meaningless gathering about the concept 'Metabolic Diseases'
+      # Mesh M0013493 represents the concept 'Metabolic Diseases'
 	  ?mesh <http://id.nlm.nih.gov/mesh/vocab#broaderDescriptor>* ?broader .
       ?broader <http://id.nlm.nih.gov/mesh/vocab#preferredConcept> <http://id.nlm.nih.gov/mesh/M0013493> .
     }
