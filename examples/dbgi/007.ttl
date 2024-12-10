@@ -16,14 +16,8 @@ PREFIX emi: <https://purl.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 
 SELECT DISTINCT ?ik ?wd_id ?taxon ?taxon_name
-WHERE {
-    SERVICE <https://query.wikidata.org/sparql> {
-        ?wd_id wdt:P31 wd:Q113145171 ;
-            wdt:P703 ?taxon .
-        ?taxon wdt:P225 ?taxon_name .
-    }
-    {
-        SELECT DISTINCT ?ik ?chemblid ?name ?type ?value ?wd_id
+WHERE { 
+    {SELECT  ?ik ?wd_id
         WHERE {
             ?sample a emi:ExtractSample ;
                 sosa:isSampleOf* ?organe ;
@@ -50,7 +44,12 @@ WHERE {
             ?ik2d emi:hasSMILES ?smiles ;
                 emi:isInChIKey2DOf ?ik .
             ?ik emi:isInChIKeyOf ?wd_id .
-        }
+        } LIMIT 50
+    }
+  SERVICE <https://query.wikidata.org/sparql> {
+        ?wd_id wdt:P31 wd:Q113145171 ;
+            wdt:P703 ?taxon .
+        ?taxon wdt:P225 ?taxon_name .
     }
 }""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
