@@ -74,6 +74,11 @@ _:prefix_faldo
   sh:prefix "faldo" ;
   sh:namespace "http://biohackathon.org/resource/faldo#"^^xsd:anyURI .
 
+_:sparql_examples_prefixes sh:declare _:prefix_prov .
+_:prefix_prov
+  sh:prefix "prov" ;
+  sh:namespace "http://www.w3.org/ns/prov#"^^xsd:anyURI .
+
 _:sparql_examples_prefixes sh:declare _:prefix_GO .
 _:prefix_GO
   sh:prefix "GO" ;
