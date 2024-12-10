@@ -50,7 +50,7 @@ WHERE
                     ?wd_id wdt:P703 ?childtaxa
                 }
            # }
-        }
+        } LIMIT 100
     }
 }""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
