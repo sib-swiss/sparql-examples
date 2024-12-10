@@ -40,9 +40,9 @@ WHERE {
     ?feature_opp emi:hasRetentionTime ?rt_opp ;
         emi:hasAnnotation ?sirius_opp .
     ?sirius_opp a emi:StructuralAnnotation ;
-        prov:wasGeneratedBy ?activity_opp ;
+    #    prov:wasGeneratedBy ?activity_opp ;
         emi:hasChemicalStructure ?ik2d .
-    ?activity_opp prov:wasAssociatedWith <https://bio.informatik.uni-jena.de/software/sirius> .
+    #?activity_opp prov:wasAssociatedWith <https://bio.informatik.uni-jena.de/software/sirius> .
     FILTER(((?rt - ?rt_tol) < ?rt_opp) && ((?rt + ?rt_tol) > ?rt_opp))
 }""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> .
