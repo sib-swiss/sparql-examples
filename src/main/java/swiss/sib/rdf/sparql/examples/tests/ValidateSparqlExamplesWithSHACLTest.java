@@ -60,6 +60,8 @@ public class ValidateSparqlExamplesWithSHACLTest {
 					sh:minCount 1 ] , [
 				sh:path schema:keyword;  # Typo not allowed
 					sh:maxCount 0 ] , [
+				sh:path schema:keyowrds;  # Typo not allowed
+					sh:maxCount 0 ] , [
 				sh:path schema:keywords; # Encouraged but not required.
 					sh:minCount 0 ] .
 			""";
