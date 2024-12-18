@@ -18,3 +18,7 @@ _:prefix_dbgi_emi sh:prefix "emi" ;
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_enpkg .
 _:prefix_dbgi_enpkg sh:prefix "enpkg" ;
   sh:namespace "https://enpkg.commons-lab.org/kg/"^^xsd:anyURI .
+
+_:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_npc .
+_:prefix_dbgi_npc sh:prefix "npc" ;
+  sh:namespace "https://purl.org/npc#"^^xsd:anyURI .
