@@ -55,4 +55,6 @@ ex:012 a sh:SPARQLExecutable,
 			}}
   		} LIMIT 1000
 		""" ;
-    schema:target <https://purl.org/emi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+
