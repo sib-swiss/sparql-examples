@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:015 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -58,4 +59,5 @@ ex:015 a sh:SPARQLExecutable,
 		      BIND(IRI(?targetNameX) AS ?targetNameURI)
                 }  
 """ ;
-    schema:target <https://purl.org/emi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
