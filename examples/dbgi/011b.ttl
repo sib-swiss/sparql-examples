@@ -33,4 +33,4 @@ ex:011b a sh:SPARQLExecutable,
 			BIND(REPLACE(STR(?source_trySpName), "%20", " ") AS ?sourceNameX) 		#remove percent-encoding for trySpName
 			BIND(IRI(?sourceNameX) AS ?sourceNameURI)
 		}""" ;
-    schema:target <https://purl.org/emi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
