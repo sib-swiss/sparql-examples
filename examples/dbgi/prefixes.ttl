@@ -22,3 +22,19 @@ _:prefix_dbgi_enpkg sh:prefix "enpkg" ;
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_npc .
 _:prefix_dbgi_npc sh:prefix "npc" ;
   sh:namespace "https://purl.org/npc#"^^xsd:anyURI .
+
+_:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_wgs .
+_:prefix_dbgi_wgs sh:prefix "wgs" ;
+  sh:namespace "http://www.w3.org/2003/01/geo/wgs84_pos#"^^xsd:anyURI .
+
+_:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_wd .
+_:prefix_dbgi_wd sh:prefix "wd" ;
+  sh:namespace "http://www.wikidata.org/entity/"^^xsd:anyURI .
+
+_:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_wdt .
+_:prefix_dbgi_wdt sh:prefix "wdt" ;
+  sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI .
+
+_:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_prov .
+_:prefix_dbgi_prov sh:prefix "prov" ;
+  sh:namespace "http://www.w3.org/ns/prov#"^^xsd:anyURI .
