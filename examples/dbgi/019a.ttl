@@ -60,4 +60,4 @@ WHERE {
 	BIND(IRI(?hostPlantNameX) AS ?hostPlantNameURI)
 } LIMIT 1000
 """ ;
-    schema:target <https://purl.org/emi> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
