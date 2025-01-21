@@ -57,7 +57,7 @@ WHERE {
 		
 		VALUES ?hostPlant_WD { wd:Q25408 }						#filter on the host plant Achillea millefolium wikidata-id
 		
-	}} LIMIT 1000
+	} LIMIT 1000} 
 	
 	{ SELECT DISTINCT ?hostPlant_WD ?wd_chem ?structure_inchikey ?npcClass WHERE {		#retrieve metabolite data
         	?material sosa:hasSample ?extract ;
