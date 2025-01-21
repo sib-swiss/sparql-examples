@@ -19,7 +19,6 @@ ex:018 a sh:SPARQLExecutable,
                 PREFIX dcterms: <http://purl.org/dc/terms/>
                 PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
-		PREFIX wd: <http://www.wikidata.org/entity/>
                
 		SELECT DISTINCT ?sourceWD ?sourceNameURI ?intxnName ?targetWD ?targetNameURI WHERE {
 		{ SELECT DISTINCT ?wd_chem WHERE {				#retrieve metabolite data for sourceWD
