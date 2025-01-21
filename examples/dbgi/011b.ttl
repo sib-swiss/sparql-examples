@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:011b a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -28,9 +29,10 @@ ex:011b a sh:SPARQLExecutable,
 				 qudt:hasUnit ?unit .							#retrieve units for Trait data
 			OPTIONAL {?tryData rdfs:comment ?unitComment .}					#retrieve comments (containing original unprocessed unit information - necessary for understanding some data) for Trait data
 			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-                 		?source_wd wdt:P141 wd:Q719675 ;						#filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
+                 		?source_wd wdt:P141 wd:Q719675 .						#filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
                     	}
 			BIND(REPLACE(STR(?source_trySpName), "%20", " ") AS ?sourceNameX) 		#remove percent-encoding for trySpName
 			BIND(IRI(?sourceNameX) AS ?sourceNameURI)
 		}""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
