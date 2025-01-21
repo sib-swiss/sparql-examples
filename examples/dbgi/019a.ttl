@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:019a a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -60,4 +61,5 @@ WHERE {
 	BIND(IRI(?hostPlantNameX) AS ?hostPlantNameURI)
 } LIMIT 1000
 """ ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
