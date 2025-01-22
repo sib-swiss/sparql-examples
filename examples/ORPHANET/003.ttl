@@ -15,7 +15,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 SELECT ?gene ?geneLab ?nbD
 WHERE{
-        SELECT ?g (COUNT(?d) as ?nbD)
+        { SELECT ?g (COUNT(?d) as ?nbD)
         WHERE {
             ?r owl:onProperty ?rel.
             ?g w3:label ?gLabel.
@@ -24,6 +24,7 @@ WHERE{
             ?class w3:subClassOf ?sc.
             filter (?sc = ordo:Orphanet_C010)
             ?r owl:someValuesFrom ?d.
+        }
 }
 GROUP BY ?g
 }
