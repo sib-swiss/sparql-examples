@@ -1,0 +1,20 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ordo:<http://www.orpha.net/ORDO/> .
+@prefix w3: <http://www.w3.org/2000/01/rdf-schema#>
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Getting a concept label from ORPHAcode."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX ordo:<http://www.orpha.net/ORDO/>
+PREFIX w3: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?label
+WHERE {
+ordo:Orphanet_558 w3:label ?label
+}""" ;
+    schema:target <https://sparql.uniprot.org/sparql/>,
+        <https://www.bgee.org/sparql/>, <https://sparql.omabrowser.org/sparql/> .
+
