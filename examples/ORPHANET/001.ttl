@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix ordo:<http://www.orpha.net/ORDO/> .
-@prefix w3: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
 
 ex:001 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
