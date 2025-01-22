@@ -5,5 +5,5 @@ for different projects within ERDERA.
 
 In this github pages we have a HTML rendering for all them.
 
- * [Bgee](./examples/Bgee/)
+ * [ORPHANET](./examples/ORPHANET/)
 
