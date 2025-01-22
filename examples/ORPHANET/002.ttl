@@ -7,13 +7,15 @@
 
 ex:001 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Getting a concept label from ORPHAcode."@en ;
+    rdfs:comment "Getting a concept label and alternative term from ORPHAcode."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX ordo:<http://www.orpha.net/ORDO/>
+PREFIX ebi: <http://www.ebi.ac.uk/efo/>
 PREFIX w3: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT ?label
+SELECT ?label ?alternativeterm
 WHERE {
-ordo:Orphanet_558 w3:label ?label
-}""" ;
+        ordo:Orphanet_1187 w3:label ?label.
+        ordo:Orphanet_1187 ebi:alternative_term ?alternativeterm
+        }""" ;
     schema:target <https://www.orpha.net/sparql> .
 

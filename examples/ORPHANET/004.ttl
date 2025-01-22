@@ -1,0 +1,29 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ordo:<http://www.orpha.net/ORDO/> .
+@prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:001 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Getting the label and mapping information about a concept."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX Orphanet_: <http://www.orpha.net/ORDO/Orphanet_#>
+PREFIX ORDO: <http://www.orpha.net/ORDO/>
+select ?s ?p ?o WHERE {
+        ?s ?p ?o.
+        optional {?o ?m ?v.
+        ?v rdfs:label ?e}.
+        filter (?s = ORDO:Orphanet_558)
+        }
+ORDER BY ?o""" ;
+    schema:target <https://www.orpha.net/sparql> .
+
