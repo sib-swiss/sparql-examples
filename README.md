@@ -1,6 +1,6 @@
 # SPARQL examples
 
-This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder.
+This is a collection of SPARQL examples usable on different ERDERA related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/erdera/sparql-examples/tree/master/examples) folder.
 
 Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
 
