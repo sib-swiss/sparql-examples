@@ -5,7 +5,7 @@
 @prefix ordo:<http://www.orpha.net/ORDO/> .
 @prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:004 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Getting the label and mapping information about a concept."@en ;
     sh:prefixes _:sparql_examples_prefixes ;

@@ -5,7 +5,7 @@
 @prefix ordo:<http://www.orpha.net/ORDO/> .
 @prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:002 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Getting a concept label and alternative term from ORPHAcode."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
@@ -17,5 +17,7 @@ WHERE {
         ordo:Orphanet_1187 w3:label ?label.
         ordo:Orphanet_1187 ebi:alternative_term ?alternativeterm
         }""" ;
+    schema:keyword "ORPHANET"@en, "ORPHANET"@fr, "OPRHANET" ;
+    schema:keyword
     schema:target <https://www.orpha.net/sparql> .
 

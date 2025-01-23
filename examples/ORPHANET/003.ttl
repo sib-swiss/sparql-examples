@@ -5,7 +5,7 @@
 @prefix ordo:<http://www.orpha.net/ORDO/> .
 @prefix w3: <http://www.w3.org/2000/01/rdf-schema#> .
 
-ex:001 a sh:SPARQLExecutable,
+ex:003 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Getting the genetic material linked to more than 10 disorders.."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
