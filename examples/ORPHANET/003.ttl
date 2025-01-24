@@ -9,28 +9,32 @@ ex:003 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Getting the genetic material linked to more than 10 disorders.."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX ordo:<http://www.orpha.net/ORDO/>
-PREFIX w3: <http://www.w3.org/2000/01/rdf-schema#>
+    sh:select """PREFIX ordo: <http://www.orpha.net/ORDO/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 SELECT ?gene ?geneLab ?nbD
-WHERE{
-        { SELECT ?g (COUNT(?d) as ?nbD)
-        WHERE {
-            ?r owl:onProperty ?rel.
-            ?g w3:label ?gLabel.
-            ?g w3:subClassOf ?r.
-            ?g w3:subClassOf ?class.
-            ?class w3:subClassOf ?sc.
-            filter (?sc = ordo:Orphanet_C010)
-            ?r owl:someValuesFrom ?d.
-        }
-}
-GROUP BY ?g
-}
-filter (?nbD > 10)
-BIND (?g as ?gene)
-?gene w3:label ?geneLab.
+WHERE {
+  # Subquery to calculate the count of diseases (?nbD) for each gene (?g)
+  {
+    SELECT ?g (COUNT(?d) AS ?nbD)
+    WHERE {
+      ?r owl:onProperty ?rel.
+      ?g rdfs:label ?gLabel.
+      ?g rdfs:subClassOf ?r.
+      ?g rdfs:subClassOf ?class.
+      ?class rdfs:subClassOf ?sc.
+      FILTER (?sc = ordo:Orphanet_C010)
+      ?r owl:someValuesFrom ?d.
+    }
+    GROUP BY ?g
+  }
+  # Filter genes with more than 10 diseases
+  FILTER (?nbD > 10)
+
+  # Additional bindings in the outer query
+  BIND (?g AS ?gene)
+  ?gene rdfs:label ?geneLab.
 }
 ORDER BY DESC(?nbD)""" ;
     schema:target <https://www.orpha.net/sparql> .
