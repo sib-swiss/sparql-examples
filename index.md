@@ -2,7 +2,6 @@
 title: "ERDERA SPARQL Examples"
 layout: default
 description: "A collection of SPARQL examples for various ERDERA projects."
-permalink: /erdera-sparql-examples/
 author: 
   name: "Andra Waagmeester" # Replace with the actual author's name
   orcid: "0000-0001-9773-4008"
