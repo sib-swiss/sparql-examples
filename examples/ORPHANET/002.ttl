@@ -17,7 +17,6 @@ WHERE {
         ordo:Orphanet_1187 w3:label ?label.
         ordo:Orphanet_1187 ebi:alternative_term ?alternativeterm
         }""" ;
-    schema:keyword "ORPHANET"@en ;
 
     schema:target <https://www.orpha.net/sparql> .
 
