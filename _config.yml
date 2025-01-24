@@ -1,4 +1,4 @@
-theme: jekyll-theme-primer
+theme: jekyll-theme-just-the-docs
 exclude:
   - "README.md"
 markdown: GFM
