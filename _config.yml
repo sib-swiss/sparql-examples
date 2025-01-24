@@ -1,4 +1,4 @@
-theme: jekyll-theme-leap-primer
+theme: jekyll-theme-primer
 exclude:
   - "README.md"
 markdown: GFM
