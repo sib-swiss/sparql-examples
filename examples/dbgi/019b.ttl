@@ -57,29 +57,10 @@ WHERE {
 		
 		VALUES ?hostPlant_WD { wd:Q25408 }						#filter on the host plant Achillea millefolium wikidata-id
 		
-	} LIMIT 1000} 
-	
-	{ SELECT DISTINCT ?hostPlant_WD ?wd_chem ?structure_inchikey ?npcClass WHERE {		#retrieve metabolite data
-        	?material sosa:hasSample ?extract ;
-                	  sosa:isSampleOf ?organe .
-                ?organe emi:inTaxon ?hostPlant_WD .						#filter metabolite data which is found in wikidata-ids oh the host plant
-                ?extract sosa:isFeatureOfInterestOf ?lcms .
-                ?lcms sosa:hasResult ?feature_list .
-                ?feature_list emi:hasLCMSFeature ?feature .
-                ?feature emi:hasAnnotation ?sirius_annotation .
-                ?sirius_annotation a emi:StructuralAnnotation ;
-                		emi:hasChemicalStructure ?ik2d .
-                ?ik2d emi:hasSMILES ?smiles ;
-                      emi:isInChIKey2DOf ?structure_inchikey ;
-                      emi:hasClass ?npcClass .
-                ?structure_inchikey emi:isInChIKeyOf ?wd_chem .					#retrieve wikidata-ids for metabolites
-		FILTER (REGEX(STR(?npcClass), "TERPEN"))					#keep if the class of metabolite is terpenes matches "TERPEN"
-         }} UNION										#union with data from lotus (integrated in wikidata)
-	 { SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	} LIMIT 1000}
+	 { SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {				#get metabolites and their inchikey from lotus (integrated in wikidata)
 		 ?wd_chem wdt:P235 ?structure_inchikey ;
-               		  wdt:P703 ?hostPlant_WD ; 
-                          ((wdt:P31|wdt:P279)/(wdt:P279*)) ?class .				#retrieve the class of the metabolite
-                 VALUES ?class { wd:Q212364 wd:Q426694 }					#keep if the class of metabolite is terpenes (wd:Q212364) or terpenoids(wd:Q426694)
+               		  wdt:P703 ?parasitoidX_WD .
 	 }}
 }
 """ ;
