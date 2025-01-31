@@ -4,7 +4,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ex:102_cl_cnt_by_category a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-  rdfs:comment "Count of cell lines by cell line type"@en ;
+  rdfs:comment "Count of cell lines by cell line category"@en ;
   sh:prefixes _:sparql_examples_prefixes ;
   sh:select """PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX xref: <https://purl.expasy.org/cellosaurus/rdf/xref/>
@@ -55,5 +55,5 @@ select ?class_name (count(?cl) as ?cnt) where {
 group by ?class_name
 order by desc(count(*))
 """ ;
-  schema:keywords "cell line type" ;
+  schema:keywords "cell type category" ;
   schema:target <http://localhost/sparql/service> .
