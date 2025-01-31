@@ -1,0 +1,59 @@
+@prefix ex: <http://localhost/sparql/service/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:102_cl_cnt_by_category a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  rdfs:comment "Count of cell lines by cell line type"@en ;
+  sh:prefixes _:sparql_examples_prefixes ;
+  sh:select """PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX xref: <https://purl.expasy.org/cellosaurus/rdf/xref/>
+PREFIX widoco: <https://w3id.org/widoco/vocab#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX vann: <http://purl.org/vocab/vann/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX schema: <https://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pubmed: <https://www.ncbi.nlm.nih.gov/pubmed/>
+PREFIX pub: <https://purl.expasy.org/cellosaurus/rdf/pub/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX orga: <https://purl.expasy.org/cellosaurus/rdf/orga/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX help: <https://api.cellosaurus.org/>
+PREFIX fabio: <http://purl.org/spar/fabio/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX db: <https://purl.expasy.org/cellosaurus/rdf/db/>
+PREFIX cvcl: <https://purl.expasy.org/cellosaurus/rdf/cvcl/>
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX ORDO: <http://www.orpha.net/ORDO/Orphanet_>
+PREFIX OMIT: <http://purl.obolibrary.org/obo/OMIT_>
+PREFIX OBI: <http://purl.obolibrary.org/obo/OBI_>
+PREFIX NCIt: <http://purl.obolibrary.org/obo/NCIT_>
+PREFIX IAO: <http://purl.org/ontology/IAO_>
+PREFIX GENO: <http://purl.obolibrary.org/obo/GENO_>
+PREFIX FBcv: <http://purl.obolibrary.org/obo/FBcv_>
+PREFIX EDAM: <http://edamontology.org/>
+PREFIX CLO: <http://purl.obolibrary.org/obo/CLO_>
+PREFIX CL: <http://purl.obolibrary.org/obo/CL_>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX CARO: <http://purl.obolibrary.org/obo/CARO_>
+PREFIX BTO: <http://purl.obolibrary.org/obo/BTO_>
+PREFIX BFO: <http://purl.obolibrary.org/obo/BFO_>
+PREFIX BAO: <http://www.bioassayontology.org/bao#BAO_>
+
+select ?class_name (count(?cl) as ?cnt) where { 
+  ?class rdfs:subClassOf* cello:CellLine . # cell line generic class
+  ?class rdfs:label ?class_name .
+  optional {?cl rdf:type ?class. }
+}
+group by ?class_name
+order by desc(count(*))
+""" ;
+  schema:keywords "cell line type" ;
+  schema:target <http://localhost/sparql/service> .
