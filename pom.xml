@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>swiss.sib.rdf</groupId>
 	<artifactId>sparql-examples-utils</artifactId>
-	<version>2.0.12-SNAPSHOT</version>
+	<version>2.0.12</version>
 	<packaging>jar</packaging>
 	<name>Test and package the sparql examples</name>
 	<description>An simple package to help with managing the sparql examples,
@@ -35,7 +33,7 @@
 		<profile>
 			<id>allTests</id>
 			<properties>
-				<project.tests.exclude></project.tests.exclude>
+				<project.tests.exclude />
 			</properties>
 		</profile>
 		<profile>
@@ -389,7 +387,8 @@
 		<connection>scm:git:git://github.com:sib-swiss/sparql-examples-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:sib-swiss/sparql-examples-utils.git</developerConnection>
 		<url>https://github.com/sib-swiss/sparql-examples-utils</url>
-	</scm>
+	  <tag>2.0.12</tag>
+  </scm>
 	<build>
 		<plugins>
 			<plugin>
@@ -441,10 +440,8 @@
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>uber</shadedClassifierName>
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>
 										swiss.sib.rdf.sparql.examples.Sparql</mainClass>
 								</transformer>
