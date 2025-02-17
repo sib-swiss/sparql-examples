@@ -1,10 +1,14 @@
 package swiss.sib.rdf.sparql.examples.statistics;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.rdf4j.query.algebra.Add;
 import org.eclipse.rdf4j.query.algebra.AggregateFunctionCall;
+import org.eclipse.rdf4j.query.algebra.AggregateOperator;
 import org.eclipse.rdf4j.query.algebra.And;
 import org.eclipse.rdf4j.query.algebra.ArbitraryLengthPath;
 import org.eclipse.rdf4j.query.algebra.Avg;
@@ -115,6 +119,7 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	@Override
 	public void meet(Avg node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
 	}
 
@@ -181,6 +186,7 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	@Override
 	public void meet(Count node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
 	}
 
@@ -257,6 +263,7 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	@Override
 	public void meet(AggregateFunctionCall node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
 	}
 
@@ -269,6 +276,7 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	@Override
 	public void meet(GroupConcat node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
 	}
 
@@ -328,8 +336,6 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(IsNumeric node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -368,16 +374,12 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(Lang node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(LangMatches node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -400,40 +402,32 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(Load node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(LocalName node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(MathExpr node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(Max node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(Min node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -448,16 +442,12 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(Move node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(MultiProjection node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -551,9 +541,8 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	@Override
 	public void meet(Sample node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -592,13 +581,12 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(Str node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(Sum node) throws RuntimeException{
 		add(node.getClass());
+		add(AggregateOperator.class);
 		super.meet(node);
 
 
@@ -608,8 +596,6 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(Union node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
@@ -624,36 +610,32 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 	public void meet(ListMemberOperator node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(Var node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meet(ZeroLengthPath node) throws RuntimeException{
 		add(node.getClass());
 		super.meet(node);
-
-
 	}
 
 	@Override
 	public void meetOther(QueryModelNode node) throws RuntimeException{
 		add(node.getClass());
 		super.meetOther(node);
-
-
 	}
 
 	public int getCount(Class<? extends QueryModelNode> class1) {
 		return counters.getOrDefault(class1, 0);
+	}
+	
+	public Map<Class<? extends QueryModelNode>, Integer> getCounts() {
+		return Map.copyOf(counters);
 	}
 
 }

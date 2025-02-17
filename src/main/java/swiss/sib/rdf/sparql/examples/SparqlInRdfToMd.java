@@ -19,6 +19,12 @@ import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.MalformedQueryException;
+import org.eclipse.rdf4j.query.algebra.Avg;
+import org.eclipse.rdf4j.query.algebra.Count;
+import org.eclipse.rdf4j.query.algebra.GroupConcat;
+import org.eclipse.rdf4j.query.algebra.Max;
+import org.eclipse.rdf4j.query.algebra.Min;
+import org.eclipse.rdf4j.query.algebra.Sum;
 import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.parser.ParsedQuery;
 import org.eclipse.rdf4j.query.parser.QueryParser;
@@ -131,7 +137,7 @@ public class SparqlInRdfToMd {
 		
 		rq.add("| Type | Count | AVG |");
 		rq.add("|------|-------|-----|");
-		add(rq, "BGP", counter.getBasicPatterns(), counter.getQueries());
+		add(rq, "Statement patterns", counter.getBasicPatterns(), counter.getQueries());
 		add(rq, "Filter", counter.getFilters(), counter.getQueries());
 		add(rq, "Optional", counter.getOptionals(), counter.getQueries());
 		add(rq, "Property paths", counter.getPropertyPaths(), counter.getQueries());
@@ -139,6 +145,16 @@ public class SparqlInRdfToMd {
 		add(rq, "Unions", counter.getUnions(), counter.getQueries());
 		add(rq, "Minus", counter.getMinus(), counter.getQueries());
 		add(rq, "Exists", counter.getExists(), counter.getQueries());
+		add(rq, "Group", counter.getGroups(), counter.getQueries());
+		add(rq, "Order", counter.getOrder(), counter.getQueries());
+		add(rq, "Aggregate", counter.getAggregates(), counter.getQueries());
+
+		add(rq, " - Sum", counter.getSums(), counter.getQueries());
+		add(rq, " - Average", counter.getAverages(), counter.getQueries());
+		add(rq, " - Max", counter.getMaxs(), counter.getQueries());
+		add(rq, " - Min", counter.getMins(), counter.getQueries());	
+		add(rq, " - Count", counter.getCount(), counter.getQueries());
+		add(rq, " - GroupConcat", counter.getGroupConcat(), counter.getQueries());
 		return rq;
 	}
 
