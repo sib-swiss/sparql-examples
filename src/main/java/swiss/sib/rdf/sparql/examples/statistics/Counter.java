@@ -17,6 +17,7 @@ import org.eclipse.rdf4j.query.algebra.Max;
 import org.eclipse.rdf4j.query.algebra.Min;
 import org.eclipse.rdf4j.query.algebra.Order;
 import org.eclipse.rdf4j.query.algebra.QueryModelNode;
+import org.eclipse.rdf4j.query.algebra.Sample;
 import org.eclipse.rdf4j.query.algebra.Service;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.query.algebra.Sum;
@@ -113,6 +114,10 @@ public class Counter {
 	
 	public int getGroupConcat() {
 		return counts.getOrDefault(GroupConcat.class, 0);
+	}
+
+	public int getSample() {
+		return counts.getOrDefault(Sample.class, 0);
 	}
 	
 }

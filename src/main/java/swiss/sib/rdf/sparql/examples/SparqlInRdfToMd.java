@@ -148,13 +148,13 @@ public class SparqlInRdfToMd {
 		add(rq, "Group", counter.getGroups(), counter.getQueries());
 		add(rq, "Order", counter.getOrder(), counter.getQueries());
 		add(rq, "Aggregate", counter.getAggregates(), counter.getQueries());
-
-		add(rq, " - Sum", counter.getSums(), counter.getQueries());
 		add(rq, " - Average", counter.getAverages(), counter.getQueries());
-		add(rq, " - Max", counter.getMaxs(), counter.getQueries());
-		add(rq, " - Min", counter.getMins(), counter.getQueries());	
 		add(rq, " - Count", counter.getCount(), counter.getQueries());
 		add(rq, " - GroupConcat", counter.getGroupConcat(), counter.getQueries());
+		add(rq, " - Max", counter.getMaxs(), counter.getQueries());
+		add(rq, " - Min", counter.getMins(), counter.getQueries());	
+		add(rq, " - Sample", counter.getSample(), counter.getQueries());
+		add(rq, " - Sum", counter.getSums(), counter.getQueries());
 		return rq;
 	}
 
