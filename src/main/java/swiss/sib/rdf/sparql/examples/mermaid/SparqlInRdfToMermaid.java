@@ -1,4 +1,4 @@
-package swiss.sib.rdf.sparql.examples;
+package swiss.sib.rdf.sparql.examples.mermaid;
 
 import static swiss.sib.rdf.sparql.examples.SparqlInRdfToRq.queryContainsPrefix;
 import static swiss.sib.rdf.sparql.examples.SparqlInRdfToRq.streamOf;
@@ -26,17 +26,20 @@ import org.eclipse.rdf4j.query.parser.ParsedQuery;
 import org.eclipse.rdf4j.query.parser.QueryParser;
 import org.eclipse.rdf4j.query.parser.sparql.SPARQLParserFactory;
 
-import swiss.sib.rdf.sparql.examples.mermaid.FindWhichConstantsAreNotOnlyUsedAsPredicates;
-import swiss.sib.rdf.sparql.examples.mermaid.NameVariablesAndConstants;
-import swiss.sib.rdf.sparql.examples.mermaid.Render;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
-public class SparqlInRdfToMermaid {
+/**
+ * A class to draw SPARQL queries in RDF as a mermaid diagram.
+ */
+ public class SparqlInRdfToMermaid {
 
-
+	private SparqlInRdfToMermaid() {
+		
+	}	
+	
 	/**
-	 * {@link https://mermaid.js.org}
+	 * {@see https://mermaid.js.org}
 	 *
 	 * @param ex the model containing all prefixes and query
 	 * @return a a mermaid string
@@ -45,10 +48,10 @@ public class SparqlInRdfToMermaid {
 		List<String> rq = new ArrayList<>();
 		rq.add("graph TD");
 
-		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(s -> {
+		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(s -> 
 			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE).flatMap(qt -> streamOf(ex, s, qt, null))
-					.forEach(q -> draw(q, ex, rq));
-		});
+					.forEach(q -> draw(q, ex, rq))
+		);
 		return rq.stream().collect(Collectors.joining("\n"));
 	}
 
@@ -67,10 +70,10 @@ public class SparqlInRdfToMermaid {
 				Comparator.comparing(String::length).thenComparing(String::compareTo));
 		gatherCompleteQuery(ex, query, iterator, prefixes, iriPrefixes);
 
-		draw(queryId, rq, query, base, iriPrefixes);
+		draw(rq, query, base, iriPrefixes);
 	}
 
-	private static void draw(Statement queryId, List<String> rq, String query, String base,
+	private static void draw(List<String> rq, String query, String base,
 			Map<String, String> iriPrefixes) {
 		QueryParser parser = new SPARQLParserFactory().getParser();
 		
@@ -102,7 +105,8 @@ public class SparqlInRdfToMermaid {
 
 			if (queryContainsPrefix(query, nos)) {
 				streamOf(ex, ns, SHACL.NAMESPACE_PROP, null).map(Statement::getObject).map(Value::stringValue)
-						.peek(s -> iriPrefixes.put(s, nos)).map(s -> "PREFIX " + nos + '<' + s + ">\n")
+						.peek(s -> iriPrefixes.put(s, nos))
+						.map(s -> "PREFIX " + nos + '<' + s + ">\n")
 						.forEach(prefixes::append);
 			}
 		}

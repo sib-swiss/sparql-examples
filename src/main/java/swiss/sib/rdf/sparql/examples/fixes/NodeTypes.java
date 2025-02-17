@@ -6,10 +6,19 @@ import java.util.regex.Pattern;
 
 import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
 
+/**
+ * A class to fix node types. e.g. dates that should be years
+ */
 public class NodeTypes {
 	private static final Pattern DATE_TIME_THAT_SHOULD_BE_DATE = Pattern.compile("(\"\\d{4}-\\d{2}-\\d{2}\"\\^\\^xsd:date)Time");
 	private static final Pattern DAT_THAT_SHOULD_BE_DATE = Pattern.compile("(\"\\d{4}-\\d{2}-\\d{2}\"\\^\\^xsd:dat)[\\s,\\.]");
 	
+	/**
+	 * A method to fix node types in the query.
+	 * @param prior a prior Fixed object.
+	 * @param queryIri the query IRI.
+	 * @return a Fixed object (either original or changed).
+	 */
 	public static Fixed fix(Fixed prior, String queryIri) {
 		String original;
 		if (prior.changed()) {

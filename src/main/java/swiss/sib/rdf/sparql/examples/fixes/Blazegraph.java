@@ -25,13 +25,23 @@ import com.bigdata.rdf.sparql.ast.SubqueryRoot;
 
 import swiss.sib.rdf.sparql.examples.Fixer.Fixed;
 
-
+/**
+ * A class to fix BlazeGraph queries.
+ */
 public class Blazegraph {
 	private Blazegraph() {
 		
 	}
 	
 	private static final Pattern HINT_REMOVE = Pattern.compile("(hint:([^.;,\\}])+[\\.;,\\}]?)");
+	
+	/**
+	 * A method to fix BlazeGraph queries.
+	 * @param prior a prior Fixed object.
+	 * @param queryIriStr the query IRI.
+	 * @param fileStr the file path, to which we may add a new triple.
+	 * @return a Fixed object (either original or changed).
+	 */
 	public static Fixed fixBlazeGraphHints(Fixed prior, String queryIriStr, Path fileStr) {
 		String original = queryStringToFix(prior);
 		if (original.contains("hint:")) {
@@ -64,6 +74,10 @@ public class Blazegraph {
 		return prior;
 	}
 
+	/**
+	 * @param prior a prior Fixed object.
+	 * @return a query string that may have been fixed for other issues already.
+	 */
 	public static String queryStringToFix(Fixed prior) {
 		String original;
 		if (prior.changed()) {
@@ -74,6 +88,13 @@ public class Blazegraph {
 		return original;
 	}
 
+	/**
+	 * A method to fix BlazeGraph includes
+	 * @param prior a prior Fixed object.
+	 * @param queryIriStr the query IRI.
+	 * @param fileStr the file path, to which we may add add triples
+	 * @return a Fixed object (either original or changed).
+	 */
 	public static Fixed fixBlazeGraphIncludeWith(Fixed prior, String queryIriStr, Path fileStr) {
 		String toFix = queryStringToFix(prior);
 		Bigdata2ASTSPARQLParser blzp = new Bigdata2ASTSPARQLParser();
@@ -122,11 +143,25 @@ public class Blazegraph {
 		}
 	}
 
+	/**
+	 * A method to fix BlazeGraph queries.
+	 * @param original a prior Fixed object.
+	 * @param queryIriStr the query IRI.
+	 * @param fileStr the file path, to which we may add a new triple.
+	 * @return a Fixed object (either original or changed)
+	 */
 	public static Fixed fixBlazeGraph(Fixed original, String queryIriStr, Path fileStr) {
 		Fixed fix = fixBlazeGraphIncludeWith(original, queryIriStr, fileStr);
 		return fixBlazeGraphHints(fix, queryIriStr, fileStr);
 	}
 	
+	/**
+	 * A method to attach original includes.
+	 * 
+	 * @param nsq the named subqueries.
+	 * @param sb  the string builder.
+	 * @return a list of original includes.
+	 */
 	public static List<String> attachOriginalInclude(NamedSubqueriesNode nsq, StringBuilder sb) {
 		List<String> originalIncludes = new ArrayList<>();
 		for (int i = 0; i < nsq.size(); i++) {
@@ -149,7 +184,7 @@ public class Blazegraph {
 	
 	private static final Pattern WITH = Pattern.compile("with", Pattern.CASE_INSENSITIVE);
 
-	public static BOp replaceIncludes(BOp astContainer, BOp bOp, StringBuilder blazeGraphIncludeExample) {
+	static BOp replaceIncludes(BOp astContainer, BOp bOp, StringBuilder blazeGraphIncludeExample) {
 		return switch (astContainer) {
 		case QueryRoot qr -> {
 			var nq = new QueryRoot(qr);

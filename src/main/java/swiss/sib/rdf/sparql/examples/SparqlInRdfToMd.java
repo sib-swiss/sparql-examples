@@ -27,6 +27,7 @@ import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import swiss.sib.rdf.sparql.examples.mermaid.SparqlInRdfToMermaid;
 import swiss.sib.rdf.sparql.examples.statistics.Counter;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;

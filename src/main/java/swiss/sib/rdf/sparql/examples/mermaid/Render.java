@@ -61,6 +61,9 @@ import org.eclipse.rdf4j.query.algebra.ValueExpr;
 import org.eclipse.rdf4j.query.algebra.Var;
 import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
+/**
+ * Render the RDF4j algebra as a mermaid diagram.
+ */
 public final class Render extends AbstractQueryModelVisitor<RuntimeException> {
 	private int existCount = 0;
 

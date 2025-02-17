@@ -19,9 +19,17 @@ import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
+/**
+ * Convert SPARQL queries in RDF to RQ format.
+ * Adding grlc.io metadata.
+ */
 public class SparqlInRdfToRq {
+	private SparqlInRdfToRq() {
+
+	}
+
 	/**
-	 * {@link https://grlc.io/}
+	 * {@see https://grlc.io/}
 	 * @param ex the model containing all prefixes and query
 	 * @return a rq formatted list of strings that should be concatenated later.
 	 */
@@ -31,8 +39,8 @@ public class SparqlInRdfToRq {
 		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct()
 				.peek(s -> rq.add("#+ id: " + s.stringValue())).forEach(s -> {
 					streamOf(ex, s, RDFS.COMMENT, null).map(Statement::getObject).map(Value::stringValue)
-							.map(o -> "#+ description: " + o.replaceAll("\n", " ").replaceAll("\r", "")).forEach(rq::add);
-					// rq.add("\n");
+							.map(o -> "#+ description: " + o.replace("\n", " ").replace("\r", "")).forEach(rq::add);
+
 					String keywords = streamOf(ex, s, SchemaDotOrg.KEYWORDS, null).map(Statement::getObject).map(Value::stringValue)
 							.collect(Collectors.joining("\n#+   - "));
 					if (!keywords.isEmpty()) {
@@ -44,7 +52,7 @@ public class SparqlInRdfToRq {
 						.map(o -> "#+ endpoint: " + o).findFirst().ifPresent(rq::add);
 					Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
 							.flatMap(qt -> streamOf(ex, s, qt, null)).map(Statement::getObject)
-							.map(o -> o.stringValue()).map(q -> {
+							.map(Value::stringValue).map(q -> {
 								ArrayList<String> l = new ArrayList<>();
 								l.add(q);
 								return l.stream().collect(Collectors.joining("\n"));
@@ -83,7 +91,7 @@ public class SparqlInRdfToRq {
 		rq.add(query);
 	}
 
-	static boolean queryContainsPrefix(String query, String prefix) {
+	public static boolean queryContainsPrefix(String query, String prefix) {
 		int indexOf = query.indexOf(prefix);
 		if (indexOf == 0) {
 			return true;
@@ -105,7 +113,7 @@ public class SparqlInRdfToRq {
 		return cb == '\t' || cb == ' ' || cb == '/' || cb == ')' || cb == '|' || cb == '(' || cb == '=' || cb == '^';
 	}
 
-	static Stream<Statement> streamOf(Model ex, Resource s, IRI p, Value o) {
+	public static Stream<Statement> streamOf(Model ex, Resource s, IRI p, Value o) {
 		return StreamSupport.stream(ex.getStatements(s, p, o).spliterator(), false);
 	}
 }

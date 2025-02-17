@@ -101,8 +101,7 @@ public class ValidateSparqlExamplesWithSHACLTest {
 	 * Use shacl to test all the turtle files contain at least one rdfs:comment and one query.
 	 * Also makes a test that all example IRIs are unique.
 	 * 
-	 * @param paths
-	 * @return
+	 * @return a test for each file.
 	 * @throws URISyntaxException
 	 * @throws IOException
 	 */

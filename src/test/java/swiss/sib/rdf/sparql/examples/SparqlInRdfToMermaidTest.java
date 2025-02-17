@@ -18,6 +18,8 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 import org.junit.jupiter.api.Test;
 
+import swiss.sib.rdf.sparql.examples.mermaid.SparqlInRdfToMermaid;
+
 public class SparqlInRdfToMermaidTest {
 
 	@Test
