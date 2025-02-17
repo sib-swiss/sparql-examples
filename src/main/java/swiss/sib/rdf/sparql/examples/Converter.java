@@ -83,10 +83,9 @@ public class Converter implements Callable<Integer>{
 		} else {
 			try {
 				if (outputMd) {
-					convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
-					// TODO Auto-generated catch block
+					convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD, SparqlInRdfToMd::asStatisticsMD);
 				} else if (outputRq) {
-					convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
+					convertPerSingle("rq", SparqlInRdfToRq::asRq, null, null);
 				} else {
 					convertToRdf();
 				}
@@ -121,7 +120,7 @@ public class Converter implements Callable<Integer>{
 		return model;
 	}
 
-	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject) throws NeedToStopException{
+	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject, Function<Model, List<String>> converterForAll) throws NeedToStopException{
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
 				convertProjectsPerSingle(list, extension, converter, converterPerProject);
@@ -132,6 +131,40 @@ public class Converter implements Callable<Integer>{
 			try (Stream<Path> list = COMMA.splitAsStream(projects).map(inputDirectory::resolve)) {
 				convertProjectsPerSingle(list, extension, converter, converterPerProject);
 			}
+		}
+		if (converterForAll != null) {
+			Model all = collectAllIntoSingleModel();
+			String prqfn = "algebra-statistics."+extension;
+			Path indexMd = inputDirectory.resolve(prqfn);
+			try {
+				List<String> rq = converterForAll.apply(all);
+				Files.write(indexMd, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+			} catch (IOException e) {
+				throw Failure.CANT_WRITE_EXAMPLE_RQ.tothrow(e);
+			}
+		}
+	}
+
+	private Model collectAllIntoSingleModel() {
+		try (Stream<Path> list = Files.list(inputDirectory)) {
+			Optional<Path> findCommonPrefixes = FindFiles.prefixFile(inputDirectory).findFirst();
+			Model all = new LinkedHashModel();
+			Model commonPrefixes = prefixModel(findCommonPrefixes);
+			all.addAll(commonPrefixes);
+			list.filter(Files::isDirectory).forEach(pro -> {
+				Optional<Path> findProjectPrefixes = FindFiles.prefixFile(pro).findFirst();
+				Model projectPrefixes = prefixModel(findProjectPrefixes);
+				all.addAll(projectPrefixes);
+				try {
+					FindFiles.sparqlExamples(pro).forEach(p -> parseAndRenderSingleExample(null, null,
+							commonPrefixes, projectPrefixes, all, p));
+				} catch (IOException e) {
+					throw Failure.CANT_READ_INPUT_DIRECTORY.tothrow(e);
+				}
+			});
+			return all;
+		} catch (IOException e) {
+			throw Failure.CANT_READ_INPUT_DIRECTORY.tothrow(e);
 		}
 	}
 
@@ -178,15 +211,17 @@ public class Converter implements Callable<Integer>{
 		if (iterator.hasNext()) {
 			addTriplesUsedDuringBuild(allForProject, p, iterator.next().getSubject());
 		}
-	
-		String pfn = p.getFileName().toString();
-		String prqfn = pfn.substring(0, pfn.indexOf('.')) + "."+extension;
-		Path prq = p.getParent().resolve(prqfn);
-		try {
-			List<String> rq = converter.apply(ex);
-			Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-		} catch (IOException e) {
-			throw Failure.CANT_WRITE_EXAMPLE_RQ.tothrow(e);
+		
+		if (converter != null) {
+			String pfn = p.getFileName().toString();
+			String prqfn = pfn.substring(0, pfn.indexOf('.')) + "."+extension;
+			Path prq = p.getParent().resolve(prqfn);
+			try {
+				List<String> rq = converter.apply(ex);
+				Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+			} catch (IOException e) {
+				throw Failure.CANT_WRITE_EXAMPLE_RQ.tothrow(e);
+			}
 		}
 	}
 
