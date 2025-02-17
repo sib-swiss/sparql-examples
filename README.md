@@ -179,3 +179,20 @@ java -jar target/sparql-examples-utils-*-uber.jar \
     -s https://database.factgrid.de/sparql \
     -u https://database.factgrid.de/
 ```
+
+
+# Next release
+
+Make sure JavaDoc has no ERRORs
+```
+mvn org.apache.maven.plugins:maven-javadoc-plugin:3.11.2:jar
+```
+
+Prepare release, remember tag starts with 'v' e.g. 'v2.0.12'
+
+
+```
+mvn release:prepare
+mvn release:perform
+```
+
