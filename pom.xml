@@ -10,12 +10,12 @@
 	<name>Test and package the sparql examples</name>
 	<description>An simple package to help with managing the sparql examples,
 		provided by SIB</description>
-	<url>https://www.gitub.org/sib-swiss/sparql-examples</url>
+	<url>https://www.gitub.org/sib-swiss/sparql-examples-utils</url>
 	<inceptionYear>2023</inceptionYear>
 	<organization>
 		<name>SIB Swiss Institute of Bioinformatics</name>
-		<url>https://www.eclipse.org/</url>
-	</organization>
+		<url>https://www.sib.swiss/</url>
+    </organization>
 	<properties>
 		<java.version>21</java.version>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
@@ -386,10 +386,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:git:git://github.com:sib-swiss/sparql-examplesj.git</connection>
-		<developerConnection>
-			scm:git:git@github.com:sib-swiss/sparql-examples.git</developerConnection>
-		<url>https://github.com/sib-swiss/sparql-examples</url>
+		<connection>scm:git:git://github.com:sib-swiss/sparql-examples-utils.git</connection>
+		<developerConnection>scm:git:git@github.com:sib-swiss/sparql-examples-utils.git</developerConnection>
+		<url>https://github.com/sib-swiss/sparql-examples-utils</url>
 	</scm>
 	<build>
 		<plugins>
