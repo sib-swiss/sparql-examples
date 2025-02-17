@@ -12,17 +12,16 @@ public enum Failure {
 		this.exitCode = i;
 	}
 
-	void exit(Exception e) {
-		System.err.println(e.getMessage());
-		e.printStackTrace();
-		System.exit(exitCode);
+	NeedToStopException tothrow(Exception e) {
+		return new NeedToStopException(e, this);
+	}
+	
+	void exit(Exception e) throws NeedToStopException{
+		throw new NeedToStopException(e, this);
 	}
 
-	void exit(String queryS, MalformedQueryException e) {
-		System.err.println(queryS + "." + e.getMessage());
-		e.printStackTrace();
-		System.exit(exitCode);
-
+	void exit(String queryS, MalformedQueryException e) throws NeedToStopException {
+		throw new NeedToStopException(e, this, queryS + "." + e.getMessage());
 	}
 
 	int exitCode() {

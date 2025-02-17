@@ -81,12 +81,18 @@ public class Converter implements Callable<Integer>{
 			commandLine.printVersionHelp(System.out);
 			return 0;
 		} else {
-            if (outputMd) {
-				convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
-            } else if (outputRq) {
-				convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
-			} else {
-				convertToRdf();
+			try {
+				if (outputMd) {
+					convertPerSingle("md", SparqlInRdfToMd::asMD, SparqlInRdfToMd::asIndexMD);
+					// TODO Auto-generated catch block
+				} else if (outputRq) {
+					convertPerSingle("rq", SparqlInRdfToRq::asRq, null);
+				} else {
+					convertToRdf();
+				}
+			} catch (NeedToStopException e) {
+				System.err.println(e.getMessage());
+				return e.getFailure().exitCode();
 			}
 		}
 		return 0;
@@ -94,12 +100,12 @@ public class Converter implements Callable<Integer>{
 
 	private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);
 
-	private void convertToRdf() {
+	private void convertToRdf() throws NeedToStopException {
 		Model model = parseExampleFilesIntoModel(projects, inputDirectory);
 		print(model);
 	}
 
-	static Model parseExampleFilesIntoModel(String projects, Path inputDirectory) {
+	static Model parseExampleFilesIntoModel(String projects, Path inputDirectory) throws NeedToStopException {
 		Model model = new LinkedHashModel();
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
@@ -115,7 +121,7 @@ public class Converter implements Callable<Integer>{
 		return model;
 	}
 
-	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject){
+	private void convertPerSingle(String extension, Function<Model, List<String>> converter, Function<Model, List<String>> converterPerProject) throws NeedToStopException{
 		if ("all".equals(projects)) {
 			try (Stream<Path> list = Files.list(inputDirectory)) {
 				convertProjectsPerSingle(list, extension, converter, converterPerProject);
@@ -145,8 +151,7 @@ public class Converter implements Callable<Integer>{
 					renderAllExamplesInAProject(extension, convertPerProject, pro, allForProject);
 				}
 			} catch (IOException e) {
-				Failure.CANT_PARSE_EXAMPLE.exit(e);
-				throw new RuntimeException(e);
+				throw Failure.CANT_PARSE_EXAMPLE.tothrow(e);
 			}
 		});
 	}
@@ -159,13 +164,12 @@ public class Converter implements Callable<Integer>{
 			List<String> rq = convertPerProject.apply(allForProject);
 			Files.write(indexMd, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
-			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
-			throw new RuntimeException(e);
+			throw Failure.CANT_WRITE_EXAMPLE_RQ.tothrow(e);
 		}
 	}
 
 	private void parseAndRenderSingleExample(String extension, Function<Model, List<String>> converter,
-			Model commonPrefixes, Model projectPrefixes, Model allForProject, Path p) {
+			Model commonPrefixes, Model projectPrefixes, Model allForProject, Path p) throws NeedToStopException {
 		Model ex = parseSingle(p);
 		ex.addAll(commonPrefixes);
 		ex.addAll(projectPrefixes);
@@ -182,8 +186,7 @@ public class Converter implements Callable<Integer>{
 			List<String> rq = converter.apply(ex);
 			Files.write(prq, rq, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
-			Failure.CANT_WRITE_EXAMPLE_RQ.exit(e);
-			throw new RuntimeException(e);
+			throw Failure.CANT_WRITE_EXAMPLE_RQ.tothrow(e);
 		}
 	}
 
@@ -208,22 +211,21 @@ public class Converter implements Callable<Integer>{
 			try {
 				return Stream.concat(FindFiles.prefixFile(arg0), FindFiles.sparqlExamples(arg0));
 			} catch (IOException e) {
-				Failure.CANT_READ_EXAMPLE.exit(e);
-				throw new RuntimeException(e);
+				throw Failure.CANT_READ_EXAMPLE.tothrow(e);
 			}
 		})).filter(Files::exists).parallel().forEach(p -> {
 			parseTurtleFileIntoModel(model, p);
 		});
 	}
 
-	private Model parseSingle(Path path) {
+	private Model parseSingle(Path path) throws NeedToStopException {
 		Model model = new LinkedHashModel();
 		parseTurtleFileIntoModel(model, path);
 		
 		return model;
 	}
 
-	static void parseTurtleFileIntoModel(Model model, Path p) {
+	static void parseTurtleFileIntoModel(Model model, Path p) throws NeedToStopException {
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
 		Model temp = new LinkedHashModel();
 		rdfParser.setRDFHandler(new StatementCollector(temp));
