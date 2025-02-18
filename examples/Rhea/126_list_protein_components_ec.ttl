@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh:<http://www.w3.org/ns/shacl#> .
+
+ex:126_list_protein_components_ec a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """list = protein - components -ec"""@en ;
+  sh:select """
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+SELECT
+  distinct
+    ?enzyme
+WHERE
+{
+  ?protein up:reviewed true .
+  ?protein up:mnemonic ?mnemonic .
+  ?protein up:domain ?domain .
+  ?domain up:enzyme ?enzyme .
+}
+""";
+ schema:target <https://sparql.rhea-db.org/sparql> .

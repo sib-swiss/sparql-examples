@@ -1,0 +1,35 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh:<http://www.w3.org/ns/shacl#> .
+
+ex:128_list_EC_numbers_not_linked_to_UniProt_entries a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """list = EC numbers not linked to UniProt entries"""@en ;
+  sh:select """PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  (count(distinct ?ecNumber) as ?ecCount)
+WHERE
+{
+  ?ecNumber rdfs:subClassOf up:Enzyme .
+  FILTER (NOT EXISTS {?ecNumber up:obsolete true .} )
+  FILTER (!regex(?ecNumber,'-')) .
+
+  FILTER (NOT EXISTS {
+    ?protein up:enzyme ?ecNumber .
+    ?protein up:reviewed true .
+  })
+  FILTER (NOT EXISTS {
+    ?protein up:domain/up:enzyme ?ecNumber .
+    ?protein up:reviewed true .
+  })
+  FILTER (NOT EXISTS {
+    ?protein up:reviewed true .
+    ?protein up:component/up:enzyme ?ecNumber .
+  })
+}
+""";
+ schema:target <https://sparql.rhea-db.org/sparql> .
