@@ -2,6 +2,7 @@ package swiss.sib.rdf.sparql.examples;
 
 import static swiss.sib.rdf.sparql.examples.SparqlInRdfToRq.streamOf;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.vocabulary.DC;
@@ -19,12 +21,6 @@ import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.model.vocabulary.SHACL;
 import org.eclipse.rdf4j.query.MalformedQueryException;
-import org.eclipse.rdf4j.query.algebra.Avg;
-import org.eclipse.rdf4j.query.algebra.Count;
-import org.eclipse.rdf4j.query.algebra.GroupConcat;
-import org.eclipse.rdf4j.query.algebra.Max;
-import org.eclipse.rdf4j.query.algebra.Min;
-import org.eclipse.rdf4j.query.algebra.Sum;
 import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.parser.ParsedQuery;
 import org.eclipse.rdf4j.query.parser.QueryParser;
@@ -38,7 +34,16 @@ import swiss.sib.rdf.sparql.examples.statistics.Counter;
 import swiss.sib.rdf.sparql.examples.vocabularies.SIB;
 import swiss.sib.rdf.sparql.examples.vocabularies.SchemaDotOrg;
 
+/**
+ * Generate markdown from RDF containing SPARQL queries.
+ * 
+ * Includes index and algebra statistics.
+ */
 public class SparqlInRdfToMd {
+	
+	private SparqlInRdfToMd() {
+		
+	}
 	private static final Logger log = LoggerFactory.getLogger(SparqlInRdfToMd.class);
 
 	public static List<String> asMD(Model ex) {
@@ -72,8 +77,8 @@ public class SparqlInRdfToMd {
 			rq.add("");
 			rq.add("```sparql");
 			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
-					.flatMap(qt -> streamOf(ex, queryId, qt, null)).map(Statement::getObject).map(o -> o.stringValue())
-					.forEach(q -> rq.add(q));
+					.flatMap(qt -> streamOf(ex, queryId, qt, null)).map(Statement::getObject).map(Value::stringValue)
+					.forEach(rq::add);
 			rq.add("```");
 			Iterator<Statement> iterator = streamOf(ex, queryId, DCTERMS.IS_PART_OF, null).iterator();
 			if (iterator.hasNext()) {
@@ -113,53 +118,77 @@ public class SparqlInRdfToMd {
 		List<String> rq = new ArrayList<>();
 
 		Counter counter = new Counter();
-		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> {
+		streamOf(ex, null, RDF.TYPE, SHACL.SPARQL_EXECUTABLE).map(Statement::getSubject).distinct().forEach(queryId -> 
 			Stream.of(SHACL.ASK, SHACL.SELECT, SHACL.CONSTRUCT, SIB.DESCRIBE)
-					.flatMap(qt -> streamOf(ex, queryId, qt, null)).forEach(q -> {
-
-						String base = streamOf(ex, q.getSubject(), SchemaDotOrg.TARGET, null).map(Statement::getObject)
-								.map(Value::stringValue).findFirst().orElse("https://example.org/");
-						QueryParser parser = new SPARQLParserFactory().getParser();
-						String query = q.getObject().stringValue();
-
-						ParsedQuery pq = parser.parseQuery(query, base);
-						TupleExpr tq = pq.getTupleExpr();
-						counter.count(tq);
-					});
-		});
+					.flatMap(qt -> streamOf(ex, queryId, qt, null)).forEach(q -> countInEachQuery(ex, counter, queryId, q))
+		);
 		rq.add("# Statistics for SPARQL algebra features in use");
 		rq.add("");
 		rq.add("""
 				Some basic statisics on SPARQL algebra features, as determined after parsing with RDF4j.
 				""");
-		rq.add("Statitics are collected over " +counter.getQueries() + " queries.");
+		NumberFormat f = NumberFormat.getNumberInstance();
+		f.setMaximumFractionDigits(2);
+		rq.add("Statitics are collected over " + counter.getQueries() + " queries. Using "
+				+ avg(f, counter.getBasicPatterns().perFeature(), counter.getQueries()) + " statement patterns per query.");
 		rq.add("");
 		
-		rq.add("| Type | Count | AVG |");
+		rq.add("| Type | Count | Queries |");
 		rq.add("|------|-------|-----|");
-		add(rq, "Statement patterns", counter.getBasicPatterns(), counter.getQueries());
-		add(rq, "Filter", counter.getFilters(), counter.getQueries());
-		add(rq, "Optional", counter.getOptionals(), counter.getQueries());
-		add(rq, "Property paths", counter.getPropertyPaths(), counter.getQueries());
-		add(rq, "Service", counter.getServiceClauses(), counter.getQueries());
-		add(rq, "Unions", counter.getUnions(), counter.getQueries());
-		add(rq, "Minus", counter.getMinus(), counter.getQueries());
-		add(rq, "Exists", counter.getExists(), counter.getQueries());
-		add(rq, "Group", counter.getGroups(), counter.getQueries());
-		add(rq, "Order", counter.getOrder(), counter.getQueries());
-		add(rq, "Aggregate", counter.getAggregates(), counter.getQueries());
-		add(rq, " - Average", counter.getAverages(), counter.getQueries());
-		add(rq, " - Count", counter.getCount(), counter.getQueries());
-		add(rq, " - GroupConcat", counter.getGroupConcat(), counter.getQueries());
-		add(rq, " - Max", counter.getMaxs(), counter.getQueries());
-		add(rq, " - Min", counter.getMins(), counter.getQueries());	
-		add(rq, " - Sample", counter.getSample(), counter.getQueries());
-		add(rq, " - Sum", counter.getSums(), counter.getQueries());
+		add(rq, "Statement patterns", counter.getBasicPatterns());
+		add(rq, "Filter", counter.getFilters());
+		add(rq, "Optional", counter.getOptionals());
+		add(rq, "Property path", counter.getPropertyPaths());
+		add(rq, "Service", counter.getServiceClauses());
+		add(rq, "Union", counter.getUnions());
+		add(rq, "Minus", counter.getMinus());
+		add(rq, "Exists", counter.getExists());
+		add(rq, "Group", counter.getGroups());
+		add(rq, "Order", counter.getOrder());
+		add(rq, "Aggregate", counter.getAggregates());
+		add(rq, " - Average", counter.getAverages());
+		add(rq, " - Count", counter.getCount());
+		add(rq, " - GroupConcat", counter.getGroupConcat());
+		add(rq, " - Max", counter.getMaxs());
+		add(rq, " - Min", counter.getMins());	
+		add(rq, " - Sample", counter.getSample());
+		add(rq, " - Sum", counter.getSums());
+		rq.add("");
+		rq.add("""
+				Note describe queries may have zero statement patterns.
+				
+				# Statistics for SPARQL variables and constants
+				
+				This is distinct constants and variables. Two uses of the same IRI predicate in multiple triple paterns count as one constant.
+				""");
+		rq.add("");
+		rq.add("|  | Count | Avg |");
+		rq.add("|------|-------|-----|");
+		rq.add("| Variables | " + counter.getVariables() + " | " + avg(f, counter.getVariables(), counter.getQueries())
+				+ " |");
+		rq.add("| Constants | " + counter.getConstants() + " | " + avg(f, counter.getConstants(), counter.getQueries())
+				+ " |");
+		rq.add("");
 		return rq;
 	}
 
-	private static void add(List<String> rq, String string, int basicPatterns, int queries) {
-		rq.add("| " + string + " | " + basicPatterns + " | " + (queries == 0 ? 0 : basicPatterns / queries) + " |");
+	private static void countInEachQuery(Model ex, Counter counter, Resource queryId, Statement q) {
+		String base = streamOf(ex, q.getSubject(), SchemaDotOrg.TARGET, null).map(Statement::getObject)
+				.map(Value::stringValue).findFirst().orElse("https://example.org/");
+		QueryParser parser = new SPARQLParserFactory().getParser();
+		String query = q.getObject().stringValue();
+
+		ParsedQuery pq = parser.parseQuery(query, base);
+		TupleExpr tq = pq.getTupleExpr();
+		counter.count(tq, queryId);
+	}
+
+	private static String avg(NumberFormat f, int perFeature, int queries) {
+		return f.format((float) perFeature / (float) queries);
+	}
+
+	private static void add(List<String> rq, String string, Counter.CountResult c) {
+		rq.add("| " + string + " | " + c.perFeature() + " | " + c.perQuery() + " |");
 	}
 
 	private static Function<Value, String> asNiceLink(String fileName, String extension) {

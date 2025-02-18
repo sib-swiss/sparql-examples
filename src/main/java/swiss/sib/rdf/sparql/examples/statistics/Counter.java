@@ -3,6 +3,7 @@ package swiss.sib.rdf.sparql.examples.statistics;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.query.algebra.AggregateOperator;
 import org.eclipse.rdf4j.query.algebra.ArbitraryLengthPath;
 import org.eclipse.rdf4j.query.algebra.Avg;
@@ -24,100 +25,129 @@ import org.eclipse.rdf4j.query.algebra.Sum;
 import org.eclipse.rdf4j.query.algebra.TupleExpr;
 import org.eclipse.rdf4j.query.algebra.Union;
 import org.eclipse.rdf4j.query.algebra.ZeroLengthPath;
+import org.slf4j.LoggerFactory;
 
 /**
  * Count basic algebra statistics of a queries.
  */
 public class Counter {
-	private final Map<Class<? extends QueryModelNode>, Integer> counts = new HashMap<>();
+	
+	public static record CountResult(int perFeature, int perQuery) {
+		
+	}
+	
+	private final Map<Class<? extends QueryModelNode>, Integer> countsOfFeatureInUse = new HashMap<>();
+	private final Map<Class<? extends QueryModelNode>, Integer> countsOfQueriesUseingFeature = new HashMap<>();
 	private int queries;
-
-	public void count(TupleExpr te) {
+	private int variables;
+	private int constants;
+	
+	public void count(TupleExpr te, Resource queryId) {
 		queries++;
+		
 		CounterVisitor visitor = new CounterVisitor();
 		te.visit(visitor);
+		if (visitor.getCount(StatementPattern.class) == 0) {
+			LoggerFactory.getLogger(Counter.class).debug("No statement patterns in query, {}", queryId);
+		}
 		add(visitor.getCounts());
-
+		variables += visitor.getVariables();
+		constants += visitor.getConstantVariables();
 	}
 
 	private void add(Map<Class<? extends QueryModelNode>, Integer> newCounts) {
-		newCounts.forEach((k, v) -> counts.put(k, counts.getOrDefault(k, 0) + v));
+		newCounts.forEach((k, v) -> countsOfFeatureInUse.put(k, countsOfFeatureInUse.getOrDefault(k, 0) + v));
+		newCounts.forEach((k, v) -> countsOfQueriesUseingFeature.put(k, countsOfQueriesUseingFeature.getOrDefault(k, 0) + 1));
 	}
 
 	public int getQueries() {
 		return queries;
 	}
 
-	public int getBasicPatterns() {
-		return counts.getOrDefault(StatementPattern.class, 0);
+	public CountResult getBasicPatterns() {
+		return count(StatementPattern.class);
 	}
 
-	public int getPropertyPaths() {
-		return counts.getOrDefault(ArbitraryLengthPath.class, 0) + counts.getOrDefault(ZeroLengthPath.class, 0);
+	public CountResult getPropertyPaths() {
+		int ppf = countsOfFeatureInUse.getOrDefault(ArbitraryLengthPath.class, 0) + countsOfFeatureInUse.getOrDefault(ZeroLengthPath.class, 0);
+		int ppq = countsOfQueriesUseingFeature.getOrDefault(ArbitraryLengthPath.class, 0) + countsOfQueriesUseingFeature.getOrDefault(ZeroLengthPath.class, 0);
+		return new CountResult(ppf, ppq);
 	}
 
-	public int getUnions() {
-		return counts.getOrDefault(Union.class, 0);
+	public CountResult getUnions() {
+		return count(Union.class);
 	}
 
-	public int getServiceClauses() {
-		return counts.getOrDefault(Service.class, 0);
+	public CountResult getServiceClauses() {
+		return count(Service.class);
 	}
 
-	public int getOptionals() {
-		return counts.getOrDefault(LeftJoin.class, 0);
+	public CountResult getOptionals() {
+		return count(LeftJoin.class);
 	}
 
-	public int getFilters() {
-		return counts.getOrDefault(Filter.class, 0);
+	public CountResult getFilters() {
+		return count(Filter.class);
 	}
 
-	public int getExists() {
-		return counts.getOrDefault(Exists.class, 0);
+	public CountResult getExists() {
+		return count(Exists.class);
 	}
 
-	public int getMinus() {
-		return counts.getOrDefault(Difference.class, 0);
+	public CountResult getMinus() {
+		return count(Difference.class);
 	}
 	
-	public int getGroups() {
-		return counts.getOrDefault(Group.class, 0);
+	public CountResult getGroups() {
+		return count(Group.class);
 	}
 	
-	public int getOrder() {
-		return counts.getOrDefault(Order.class, 0);
+	public CountResult getOrder() {
+		return count(Order.class);
 	}
 
-	public int getAggregates() {
-		return counts.getOrDefault(AggregateOperator.class, 0);
+	public CountResult getAggregates() {
+		return count(AggregateOperator.class);
 	}
 	
-	public int getSums() {
-		return counts.getOrDefault(Sum.class, 0);
+	public CountResult getSums() {
+		return count(Sum.class);
 	}
 	
-	public int getAverages() {
-		return counts.getOrDefault(Avg.class, 0);
+	public CountResult getAverages() {
+		return count(Avg.class);
 	}
 	
-	public int getMaxs() {
-		return counts.getOrDefault(Max.class, 0);
+	public CountResult getMaxs() {
+		return count(Max.class);
 	}
 	
-	public int getMins() {
-		return counts.getOrDefault(Min.class, 0);
+	public CountResult getMins() {
+		return count(Min.class);
 	}
 	
-	public int getCount() {
-		return counts.getOrDefault(Count.class, 0);
+	public CountResult getCount() {
+		return count(Count.class);
 	}
 	
-	public int getGroupConcat() {
-		return counts.getOrDefault(GroupConcat.class, 0);
+	public CountResult getGroupConcat() {
+		return count(GroupConcat.class);
 	}
 
-	public int getSample() {
-		return counts.getOrDefault(Sample.class, 0);
+	public CountResult getSample() {
+		return count(Sample.class);
 	}
 	
+	private CountResult count(Class<? extends QueryModelNode> clazz) {
+		return new CountResult(countsOfFeatureInUse.getOrDefault(clazz, 0),
+				countsOfQueriesUseingFeature.getOrDefault(clazz, 0));
+	}
+
+	public int getVariables() {
+		return variables;
+	}
+	
+	public int getConstants() {
+		return constants;
+	}
 }

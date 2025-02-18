@@ -1,6 +1,5 @@
 package swiss.sib.rdf.sparql.examples.statistics;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -89,7 +88,8 @@ import org.eclipse.rdf4j.query.algebra.helpers.AbstractQueryModelVisitor;
 
 public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> {
 	private Map<Class<? extends QueryModelNode>, Integer> counters = new HashMap<>();
-	
+	private Set<Var> vars = new HashSet<>();
+
 	@Override
 	public void meet(Add add) throws RuntimeException {
 		add(Add.class);
@@ -614,6 +614,7 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 
 	@Override
 	public void meet(Var node) throws RuntimeException{
+		vars.add(node);
 		add(node.getClass());
 		super.meet(node);
 	}
@@ -638,4 +639,12 @@ public class CounterVisitor extends AbstractQueryModelVisitor<RuntimeException> 
 		return Map.copyOf(counters);
 	}
 
+	public int getConstantVariables() {
+		return (int) vars.stream().filter(Var::isConstant).count();
+	}
+	
+	public int getVariables() {
+		return vars.size();
+	}
+	
 }
