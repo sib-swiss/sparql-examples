@@ -5,7 +5,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:65_Distribution:_number_of_reaction_participants_per_reaction_Side a sh:SPARQLExecutable,
+ex:65_Number_of_reaction_participants_per_reaction_side a sh:SPARQLExecutable,
     sh:SPARQLSelectExecutable;
   rdfs:comment "Distribution: number of reaction participants per reaction Side"@en ;
   sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
