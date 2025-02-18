@@ -1,0 +1,48 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:116_Retrieve_the_set_of_reactions_catalyzed_by_human_enzymes_reactions_EC_proteins_from_HUMAN_reference_proteome
+  a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Retrieve the set of reactions catalyzed by human enzymes (reactions - EC - proteins from HUMAN reference proteome)"@en;
+  sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
+PREFIX keywords:<http://purl.uniprot.org/keywords/>
+
+SELECT
+  ?protein
+  ?ecNumber
+  ?reaction
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:ec ?ecNumber .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  # ?compound rh:chebi CHEBI:57970 .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:18059 .
+
+
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    ?protein a up:Protein ;
+    up:reviewed true ;
+    up:organism taxon:83333 ;
+    up:classifiedWith keywords:1185 .
+      {?protein up:enzyme ?ecNumber}
+    UNION
+      {?protein up:domain/up:enzyme ?ecNumber}
+    UNION
+      {?protein up:component/up:enzyme ?ecNumber} .
+  }
+}""";
+  <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.uniprot.org/sparql>;
+  schema:target <https://sparql.rhea-db.org/sparql> .
