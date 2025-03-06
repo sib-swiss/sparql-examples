@@ -25,7 +25,7 @@ WHERE {
   ?startId rdfs:label ?startLabel . 
   # Corresponding Isomeric subspecies
   ?id rdfs:subClassOf+ ?startId .  
-  ?id SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecie ;
+  ?id SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies ;
 	  rdfs:label ?name .
   # Mapped ChEBI
   ?id owl:equivalentClass ?chebi .  
