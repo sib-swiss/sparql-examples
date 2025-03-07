@@ -100,6 +100,20 @@ For easier use by other tools we can also generate [`.rq`](https://www.w3.org/TR
 java -jar target/sparql-examples-utils-*-uber.jar convert -i ../sparql-examples/examples -p all -r
 ```
 
+## Conversion from RQ files
+
+If you already have a set of sparql examples in '*.rq' files then one can try to import then with:
+
+```bash
+java -jar target/sparql-examples-utils-*-uber.jar import-rq -i ../${DIRECTORY_WITH_EXAMPLES_IN_RQ_FILES} -b ${BASE_IRI} 
+```
+
+This attempts to extract metadata as expressed using the [grlc.io](https://grlc.io) approach.
+Prefixes are collected as map, which might lead to issues if they are not unique in the set.
+
+The base IRI should be the space where you will store the examples and where they can be dereferenced.
+
+
 ## Generate markdown file
 
 Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
