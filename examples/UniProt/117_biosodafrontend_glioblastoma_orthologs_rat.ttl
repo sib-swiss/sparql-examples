@@ -51,5 +51,5 @@ SELECT DISTINCT ?protein ?orthologous_protein ?gene ?annotation_text WHERE {
 	}
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql> ;
-    spex:federatesWith <https://sparql.omabrowser.org/sparql>, <https://www.bgee.org/sparql/> .
+    spex:federatesWith <https://sparql.omabrowser.org/sparql/>, <https://www.bgee.org/sparql/> .
 
