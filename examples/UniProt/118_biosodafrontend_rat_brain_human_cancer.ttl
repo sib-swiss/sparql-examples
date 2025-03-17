@@ -51,5 +51,5 @@ SELECT ?gene ?orthologous_protein2 WHERE {
   }
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql> ;
-    spex:federatesWith <https://sparql.omabrowser.org/sparql>, <https://www.bgee.org/sparql/> .
+    spex:federatesWith <https://sparql.omabrowser.org/sparql/>, <https://www.bgee.org/sparql/> .
 

@@ -33,5 +33,5 @@ SELECT DISTINCT ?PROTEIN_1 ?PROTEIN_2 ?UNIPROT_XREF_1 ?UNIPROT_XREF_2 WHERE {
 	}
 }""" ;
     schema:target <https://sparql.uniprot.org/sparql> ;
-    spex:federatesWith <https://sparql.omabrowser.org/sparql> .
+    spex:federatesWith <https://sparql.omabrowser.org/sparql/> .
 
