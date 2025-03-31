@@ -43,13 +43,13 @@ WHERE {
     ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
   }
   # federated query to Bgee (expression data)
-  SERVICE <https://www.bgee.org/sparql> {
+  SERVICE <https://www.bgee.org/sparql/> {
     ?gene genex:isExpressedIn ?anatomicEntity .
     ?gene lscr:xrefEnsemblGene ?ensemblGene .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""";
   <https://purl.expasy.org/sparql-examples/ontology#federatesWith>
-    <https://www.bgee.org/sparql> ,
+    <https://www.bgee.org/sparql/> ,
     <https://sparql.uniprot.org/sparql> ;
   schema:target <https://sparql.rhea-db.org/sparql> .
