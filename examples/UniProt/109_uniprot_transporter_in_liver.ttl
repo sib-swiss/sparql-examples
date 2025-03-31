@@ -32,7 +32,7 @@ WHERE
   ?ann up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?rhea .
   BIND(uberon:0002107 AS ?anat)
-  SERVICE <https://www.bgee.org/sparql> {
+  SERVICE <https://www.bgee.org/sparql/> {
     ?seq genex:isExpressedIn ?anat .
     ?seq lscr:xrefUniprot ?protein .
     ?seq orth:organism ?organism .
@@ -41,5 +41,5 @@ WHERE
 }""" ;
     schema:keywords "federated query" , "Bgee" , "UBERON" , "tissue specificity" , "transport reaction" , "Rhea" ; 
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    spex:federatesWith <https://www.bgee.org/sparql> .
+    spex:federatesWith <https://www.bgee.org/sparql/> .
 

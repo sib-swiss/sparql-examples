@@ -41,7 +41,7 @@ WHERE {
   ?ca up:catalyzedReaction ?reaction .
   ?protein rdfs:seeAlso / up:transcribedFrom ?ensemblGene .
 
-  SERVICE  <https://www.bgee.org/sparql> {
+  SERVICE  <https://www.bgee.org/sparql/> {
     ?gene genex:isExpressedIn ?anatomicEntity .
     ?gene lscr:xrefEnsemblGene ?ensemblGene .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
@@ -49,5 +49,5 @@ WHERE {
 }""" ;
     schema:keywords "enzyme", "tissue specificity" , "federated query" , "Ensembl" , "Bgee" ,  " Rhea" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    spex:federatesWith <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql> .
+    spex:federatesWith <https://sparql.rhea-db.org/sparql> , <https://www.bgee.org/sparql/> .
 
