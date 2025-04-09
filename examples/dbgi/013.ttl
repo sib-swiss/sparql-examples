@@ -9,52 +9,53 @@ ex:013 a sh:SPARQLExecutable,
     rdfs:comment "List all metabolites produced by species with near threatened (wd:Q719675) IUCN status (wdt:P141) and with values available (or greater than a specific value) for trait 'Seed dry mass'."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX emi: <https://purl.org/emi#>
-		PREFIX wd: <http://www.wikidata.org/entity/>
-		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-		PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
-		PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-		PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-		PREFIX sosa: <http://www.w3.org/ns/sosa/>
-		PREFIX dcterms: <http://purl.org/dc/terms/>
-		PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-		
-		SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
-
-			?trySpObs sosa:isSampleOf ?trySpName ;					#retrieve trait/non-trait data for trySpName (scientific name of plant species as listed in trydb)
-				  rdfs:label ?sourceName ;
-				  sosa:isFeatureOfInterestOf ?tryObId .
-			?tryObId sosa:hasResult ?tryData .
-			?trySpName emi:inTaxon ?source_wdx .						#retrieve wikidata-ids wdx for trySpName
-			?tryData rdfs:label ?tryDataLab ;					
-				 rdf:type emi:Trait ;						#retrieve data which is labelled as 'Trait'
-				 rdf:value ?tryDataVal .					#retrieve values for Trait data
-			FILTER (STR(?tryDataLab) = 'Seed dry mass' )					#filter on data label 'Seed dry mass'
-			FILTER (?tryDataVal >= 100)						#filter on data value >= 100
-		 	SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-                   		?source_wdx wdt:P141 wd:Q719675 .					#filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
-                    	}
-		 
-		      { SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {			#retrieve metabolite data
-				?material sosa:hasSample ?extract ;				
-		        		  sosa:isSampleOf ?organe .	
-			    	?organe emi:inTaxon ?source_wdx .					#filter metabolite data which is found in wikidata-ids wdx 
-			    	?extract sosa:isFeatureOfInterestOf ?lcms .
-		    		?lcms sosa:hasResult ?feature_list .
-				?feature_list emi:hasLCMSFeature ?feature .
-				?feature emi:hasAnnotation ?sirius_annotation .
-			    	?sirius_annotation a emi:StructuralAnnotation ;
-						emi:hasChemicalStructure ?ik2d .
-				?ik2d emi:hasSMILES ?smiles ;
-		    		      emi:isInChIKey2DOf ?structure_inchikey .
-				?structure_inchikey emi:isInChIKeyOf ?wd_chem .			#retrieve wikidata-ids for metabolites
-			}}
-			UNION									#union with data from lotus (integrated in wikidata)
-			{ SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
-			 	?wd_chem wdt:P235 ?structure_inchikey;				
-   			 		 wdt:P703 ?source_wdx .	
-			}}
-  		}
-		""" ;
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
+	# trait data
+	?trySpObs sosa:isSampleOf ?trySpName ; # trait/non-trait data for trySpName (scientific name of plant species as listed in trydb)
+		rdfs:label ?sourceName ;
+		sosa:isFeatureOfInterestOf ?tryObId .
+	?tryObId sosa:hasResult ?tryData .
+	?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName
+	?tryData rdfs:label ?tryDataLab ;					
+		rdf:type emi:Trait ; #retrieve data which is labelled as 'Trait' and its values
+		rdf:value ?tryDataVal .
+	FILTER (STR(?tryDataLab) = 'Seed dry mass' ) #filter on data label 'Seed dry mass'
+	FILTER (?tryDataVal >= 100)						
+	SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+        	?source_wdx wdt:P141 wd:Q719675 . # filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
+        }	
+	# metabolite data
+	{ 
+		SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {	
+			?material sosa:hasSample ?extract ;				
+		        	sosa:isSampleOf ?organe .	
+			?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx 
+			?extract sosa:isFeatureOfInterestOf ?lcms .
+		    	?lcms sosa:hasResult ?feature_list .
+			?feature_list emi:hasLCMSFeature ?feature .
+			?feature emi:hasAnnotation ?sirius_annotation .
+			?sirius_annotation a emi:StructuralAnnotation ;
+				emi:hasChemicalStructure ?ik2d .
+			?ik2d emi:hasSMILES ?smiles ;
+		    		emi:isInChIKey2DOf ?structure_inchikey .
+			?structure_inchikey emi:isInChIKeyOf ?wd_chem .	# wikidata-ids for metabolites
+		}
+	}
+	UNION # union with data from lotus (integrated in wikidata)
+	{
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
+			?wd_chem wdt:P235 ?structure_inchikey;				
+   				wdt:P703 ?source_wdx .	
+		}
+	}
+  } LIMIT 1000""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
-

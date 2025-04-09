@@ -7,53 +7,55 @@ ex:021 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "## List possible interactions of plants that can produce Norhyocyamine (wd:Q27107545), a plant secondary metabolite."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """
-  		PREFIX wd: <http://www.wikidata.org/entity/>
-                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-                PREFIX emi: <https://purl.org/emi#>
-                PREFIX sosa: <http://www.w3.org/ns/sosa/>
-                PREFIX dcterms: <http://purl.org/dc/terms/>
-                PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-                PREFIX prov: <http://www.w3.org/ns/prov#>
-                PREFIX wd: <http://www.wikidata.org/entity/>
-		SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnId ?targetWD ?targetName
-                WHERE
-                    {{
-                            ?intxn emi:hasSource ?xOrg ;		#retrieve interaction-pairs
-                                   emi:hasTarget ?yOrg ;
-                                   emi:isClassifiedWith ?intxnId .
-                            ?intxnId rdfs:label ?intxnName .
-                            ?xOrg emi:inTaxon ?sourceWD ;
-			 	  rdfs:label ?sourceName .
-			    ?yOrg emi:inTaxon ?targetWD ;
-				  rdfs:label ?targetName .
-                      }
-		      FILTER (?xWD = ?sourceWD || ?xWD = ?targetWD)	#ensure that xWD can be both source/target from the interaction-pairs retrieved before
+    sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX emi: <https://purl.org/emi#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnId ?targetWD ?targetName WHERE {
+	# interaction data
+	{
+        	?intxn emi:hasSource ?xOrg ; # retrieve interaction-pairs
+                	emi:hasTarget ?yOrg ;
+                        emi:isClassifiedWith ?intxnId .
+                ?intxnId rdfs:label ?intxnName .
+                ?xOrg emi:inTaxon ?sourceWD ;
+			rdfs:label ?sourceName .
+		?yOrg emi:inTaxon ?targetWD ;
+			rdfs:label ?targetName .
+        }
 
-                      #retrieve metabolites for xWD
-                      {SELECT DISTINCT ?xWD ?wd_chem WHERE {
-                        	?material sosa:hasSample ?extract ;
-                        	        sosa:isSampleOf ?organe .
-                        	?organe emi:inTaxon ?xWD .
-                        	?extract sosa:isFeatureOfInterestOf ?lcms .
-                        	?lcms sosa:hasResult ?feature_list .
-                        	?feature_list emi:hasLCMSFeature ?feature .
-                        	?feature emi:hasAnnotation ?sirius_annotation .
-                        	?sirius_annotation a emi:StructuralAnnotation ;
-                        	        emi:hasChemicalStructure ?ik2d .
-                        	?ik2d emi:hasSMILES ?smiles ;
-                        	        emi:isInChIKey2DOf ?ik .
-                        	?ik emi:isInChIKeyOf ?wd_chem .
-                        	VALUES ?wd_chem { wd:Q27107545 }
-                      }}  UNION						#union with data from wikidata (lotus)
-		      { SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-				?wd_chem wdt:P235 ?ik ;
-   					wdt:P703 ?xWD .
-				VALUES ?wd_chem { wd:Q27107545 }
-		      }}
+	# metabolite data
+	FILTER (?xWD = ?sourceWD || ?xWD = ?targetWD)	# ensure that xWD can be both source/target from the interaction-pairs retrieved before
+        {
+		SELECT DISTINCT ?xWD ?wd_chem WHERE {
+                	?material sosa:hasSample ?extract ;
+                        	sosa:isSampleOf ?organe .
+                        ?organe emi:inTaxon ?xWD .
+                        ?extract sosa:isFeatureOfInterestOf ?lcms .
+                        ?lcms sosa:hasResult ?feature_list .
+                        ?feature_list emi:hasLCMSFeature ?feature .
+                        ?feature emi:hasAnnotation ?sirius_annotation .
+                        ?sirius_annotation a emi:StructuralAnnotation ;
+                        	emi:hasChemicalStructure ?ik2d .
+                        ?ik2d emi:hasSMILES ?smiles ;
+                        	emi:isInChIKey2DOf ?ik .
+                        ?ik emi:isInChIKeyOf ?wd_chem .
+                        VALUES ?wd_chem { wd:Q27107545 }
+                }
+	}  UNION # union with data from wikidata (lotus)
+	{ 
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+			?wd_chem wdt:P235 ?ik ;
+   				wdt:P703 ?xWD .
+			VALUES ?wd_chem { wd:Q27107545 }
+		}
 	}
-""" ;
+}""" ;
     schema:target <https://purl.org/emi> .

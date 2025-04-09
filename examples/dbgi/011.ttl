@@ -9,36 +9,36 @@ ex:011 a sh:SPARQLExecutable,
     rdfs:comment "List interactions of all species which have an IUCN status (wdt:P141) of near threatened (wd:Q719675)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX emi: <https://purl.org/emi#>
-                PREFIX wd: <http://www.wikidata.org/entity/>
-                PREFIX sosa: <http://www.w3.org/ns/sosa/>
-                PREFIX dcterms: <http://purl.org/dc/terms/>
-                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                SELECT DISTINCT ?wdx_Source ?sourceName ?intxnLabel ?intxnType ?wdx_Target ?targetName WHERE {
-			{ SELECT DISTINCT ?wdx_Target ?targetName ?sourceName ?wdx_Source ?intxnType ?intxnLabel WHERE { #first select the source-target interaction-pairs
-				#unidirectional interaction, e.g.: source-X hosts target target-Y
-                		?intxn emi:hasSource ?source ;
-					emi:hasTarget ?target ;
-					emi:isClassifiedWith ?intxnType . 	
-				?intxnType rdfs:label ?intxnLabel .
-                		?source emi:inTaxon ?wdx_Source ;         	#retrieve wikidata-id for source
-					rdfs:label ?sourceName . 	  	#scientific name of source as given in GloBI
-                		?target emi:inTaxon ?wdx_Target ;	  	#retrieve wikidata-id for target
-					rdfs:label ?targetName . 		#scientific name of target as given in GloBI
-			}}
-			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-                 		{
-                 			?wdx_Source wdt:P141 wd:Q719675 ;		#filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
-                 				    wdt:P171* wd:Q879246 ;
-                 		} UNION
-                 		{
-                 			?wdx_Target wdt:P141 wd:Q719675 ;		#filter target wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
-                 				    wdt:P171* wd:Q879246 ; 
-                 		}
-
-                    	}
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?wdx_Source ?sourceName ?intxnLabel ?intxnType ?wdx_Target ?targetName WHERE {
+	{
+		SELECT DISTINCT ?wdx_Target ?targetName ?sourceName ?wdx_Source ?intxnType ?intxnLabel WHERE { #first select the source-target interaction-pairs
+			#unidirectional interaction, e.g.: source-X hosts target target-Y
+                	?intxn emi:hasSource ?source ;
+				emi:hasTarget ?target ;
+				emi:isClassifiedWith ?intxnType . 	
+			?intxnType rdfs:label ?intxnLabel .
+                	?source emi:inTaxon ?wdx_Source ; # retrieve wikidata-id for source
+				rdfs:label ?sourceName . # scientific name of source as given in GloBI
+                	?target emi:inTaxon ?wdx_Target ; # retrieve wikidata-id for target
+				rdfs:label ?targetName . # scientific name of target as given in GloBI
+		}
+	}
+	SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+        	{
+                 	?wdx_Source wdt:P141 wd:Q719675 ; # filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
+                 		wdt:P171* wd:Q879246 ;
                 }
-""" ;
+		UNION {
+        		?wdx_Target wdt:P141 wd:Q719675 ; # filter target wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
+                 		wdt:P171* wd:Q879246 ; 
+                 }
+        }
+}""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
