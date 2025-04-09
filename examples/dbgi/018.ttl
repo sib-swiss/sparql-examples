@@ -65,7 +65,7 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 	    			emi:isClassifiedWith ?intxnName3 . 
 			?intxnName3 rdfs:label ?intxn3Label .
 			# filter interactions by interaction label (hasHost and allelopathOf) or interaction ID
-	    		FILTER (?intxn3Label IN ('hasHost','hasAllelopath'))
+	    		FILTER (STR(?intxn3Label) IN ('hasHost','hasAllelopath'))
 			# VALUES ?intxnName3 { <http://purl.obolibrary.org/obo/RO_0020301> <http://purl.obolibrary.org/obo/RO_0002454> }
 			?parasiteX emi:inTaxon ?parasiteX_WD ; # retreieve wikidata-ids for parasiteX
 				rdfs:label ?parasiteName .
