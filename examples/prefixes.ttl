@@ -269,21 +269,6 @@ _:prefix_insdcschema
   sh:prefix "insdcschema" ;
   sh:namespace "http://ddbj.nig.ac.jp/ontologies/nucleotide/"^^xsd:anyURI .
 
-_:sparql_examples_prefixes sh:declare   _:prefix_np .
-_:prefix_np
-  sh:prefix "np" ;
-  sh:namespace "http://nextprot.org/rdf#"^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_nextprot .
-_:prefix_nextprot
-  sh:prefix "nextprot" ;
-  sh:namespace "http://nextprot.org/rdf/entry/"^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_nextprot_cv .
-_:prefix_nextprot_cv
-  sh:prefix "nextprot_cv" ;
-  sh:namespace "http://nextprot.org/rdf/terminology/"^^xsd:anyURI .
-
 _:sparql_examples_prefixes sh:declare _:prefix_wd .
 _:prefix_wd
     sh:prefix "wd" ;
