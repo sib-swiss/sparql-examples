@@ -6,9 +6,10 @@
 
 ex:018 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List possible interactions of plants that can produce asimcin (wd:Q100138042), a cytotoxin."@en ;
+    rdfs:comment "## List links between host-parasite and host-allelopathic interactions, where host is an agricultural crop, allelopath is usually a plant that inhibits growth of parasites which are usually insects. Inhibition happens by root/stem/leaf exudates of the allelopath."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
+    sh:select """
+             	PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -18,44 +19,60 @@ PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
-SELECT DISTINCT ?sourceWD ?sourceNameURI ?intxnName ?targetWD ?targetNameURI WHERE {
-    {
-        SELECT DISTINCT ?wd_chem WHERE { #retrieve metabolite data for sourceWD
-            ?material sosa:hasSample ?extract ;
-                sosa:isSampleOf ?organe .
-            ?organe emi:inTaxon ?sourceWD .
-            ?extract sosa:isFeatureOfInterestOf ?lcms .
-            ?lcms sosa:hasResult ?feature_list .
-            ?feature_list emi:hasLCMSFeature ?feature .
-            ?feature emi:hasAnnotation ?sirius_annotation .
-            ?sirius_annotation a emi:StructuralAnnotation ;
-                emi:hasChemicalStructure ?ik2d .
-            ?ik2d emi:hasSMILES ?smiles ;
-                emi:isInChIKey2DOf ?ik .
-            ?ik emi:isInChIKeyOf ?wd_chem . #retrieve wikidats-ids for metabolites
-            VALUES ?wd_chem { wd:Q100138042 } #filter on wikidata-id of asimicin
-        }
-    }
-    UNION #union with results from lotus (integrated in wikidata)
-  {
-        SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-            ?wd_chem wdt:P235 ?ik ;
-                wdt:P703 ?sourceWD .
-            VALUES ?wd_chem { wd:Q100138042 }
-        }
-    }
-    ?intxn emi:hasSource ?xOrg ; #retrieve interaction-pairs
-        emi:hasTarget ?yOrg ;
-        emi:isClassifiedWith ?intxnName .
-    ?xOrg emi:inTaxon ?sourceWD ; #retrieve wikidata-id of the interaction-source
-        sosa:isSampleOf ?sourceName . #retrieve its scientific name as listed in GloBI
-    ?yOrg emi:inTaxon ?targetWD ; #retrieve wikidata-id of the interaction-target
-        sosa:isSampleOf ?targetName . #retrieve its scientific names as listed in GloBI
-    BIND (REPLACE(STR(?sourceName), "%20", " ") AS ?sourceNameX) #remove percent encodings from source and target names
-    BIND (IRI(?sourceNameX) AS ?sourceNameURI)
-    BIND (REPLACE(STR(?targetName), "%20", " ") AS ?targetNameX)
-    BIND (IRI(?targetNameX) AS ?targetNameURI)
+PREFIX emiBox: <https://purl.org/emi/abox#>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelopathName ?intxn2Label ?agriCrop_WD ?agriCropName ?intxn3Label ?study1_DOI ?study2_DOI ?study3_DOI 
+WHERE {
+     #part-1 interactions for parasite that negatively effects a plant or an agricultural crop
+	 ?parasiteX1 emi:inTaxon ?parasiteX_WD . #parasite and its WD
+	 ?agriCropX emi:inTaxon ?agriCrop_WD . #agricultural crop and its WD
+     ?intxn1 emi:hasSource ?parasiteX1 ; #retrieve interaction pairs part-1
+    		 emi:hasTarget ?agriCropX ;
+    		 emi:isClassifiedWith ?intxnName1 .
+	?intxnName1 rdfs:label ?intxn1Label .
+	#filter the interactions either by FILTER (interaction label) or VALUES (interaction ID)
+	FILTER ((STR(?intxn1Label) IN ('hasHost','rootparasiteOf', 'hemiparasiteOf', 'hyperparasiteOf','rootparasiteOf','endoparasiteOf','ectoparasiteOf')))
+	#VALUES ?intxnName1 { <http://purl.obolibrary.org/obo/RO_0002454> <http://purl.obolibrary.org/obo/RO_0002632> <http://purl.obolibrary.org/obo/RO_0002634> <http://purl.obolibrary.org/obo/RO_0002237> <http://purl.obolibrary.org/obo/RO_0002553> <http://purl.obolibrary.org/obo/RO_0008503> <http://purl.obolibrary.org/obo/RO_0002444> <http://purl.obolibrary.org/obo/RO_0002236> }
+    	OPTIONAL { 
+		?intxn1 dcterms:bibliographicCitation ?study1_DOI . 
+	} 
+	#part-2 interactions for allelopath that impacts a plant or an agricultural crop
+	{SELECT * WHERE { 
+	?allelopathX1 emi:inTaxon ?allelopathX_WD . #allelopath and its WD
+	?intxn2 emi:hasSource ?allelopathX1 ; #retrieve interaction pairs part-2
+    		emi:hasTarget ?agriCrop ;
+    		emi:isClassifiedWith ?intxnName2 .
+	?intxnName2 rdfs:label ?intxn2Label .
+	#filter interactions which have interaction ID of allelopathOf
+	VALUES ?intxnName2 { <http://purl.obolibrary.org/obo/RO_0002555> }
+	?agriCrop emi:inTaxon ?agriCrop_WD ; #retreieve agriCrop and its WD
+	           rdfs:label ?agriCropName .
+    	OPTIONAL { 
+		?intxn2 dcterms:bibliographicCitation ?study2_DOI . 
+	}
+	SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	 	?agriCrop_WD wdt:P171* wd:Q879246 . #keep the interaction pairs part-2 only if agriCrop_WD has Kingdom Archaeplastida (wd:Q879246) in its lineage, this is to ensure the agriCrop is really a plant
+	}}}
+	
+    #part-3 interactions for parasite that impacts the allelopath
+	{SELECT * WHERE {
+	    ?intxn3 emi:hasSource ?parasiteX ; #retrieve interaction pairs part-3
+	    		emi:hasTarget ?allelopathX ;
+	    		emi:isClassifiedWith ?intxnName3 . 
+		?intxnName3 rdfs:label ?intxn3Label .
+		#filter interactions by interaction label (hasHost and allelopathOf) or interaction ID
+	    #FILTER (?intxn3Label IN ('hasHost','hasAllelopath'))
+		VALUES ?intxnName3 { <http://purl.obolibrary.org/obo/RO_0020301> <http://purl.obolibrary.org/obo/RO_0002454> }
+		?parasiteX emi:inTaxon ?parasiteX_WD ; #retreieve wikidata-ids for parasiteX
+			     rdfs:label ?parasiteName .
+		?allelopathX emi:inTaxon ?allelopathX_WD ; #retreieve wikidata-ids for allelopathX
+			   rdfs:label ?allelopathName .
+		OPTIONAL { 
+		    ?intxn3 dcterms:bibliographicCitation ?study3_DOI . 
+	    }
+	}}
 }
-LIMIT 1000""" ;
+""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
