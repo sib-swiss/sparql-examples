@@ -9,15 +9,10 @@ ex:021 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://purl.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX prov: <http://www.w3.org/ns/prov#>
-PREFIX wd: <http://www.wikidata.org/entity/>
 SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnId ?targetWD ?targetName WHERE {
 	# interaction data
 	{

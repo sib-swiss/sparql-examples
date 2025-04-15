@@ -11,7 +11,6 @@ ex:012 a sh:SPARQLExecutable,
     sh:select """PREFIX emi: <https://purl.org/emi#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

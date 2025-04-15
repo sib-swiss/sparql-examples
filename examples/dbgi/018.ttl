@@ -10,17 +10,10 @@ ex:018 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://purl.org/emi#>
-PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX prov: <http://www.w3.org/ns/prov#>
-PREFIX emiBox: <https://purl.org/emi/abox#>
-PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX bd: <http://www.bigdata.com/rdf#>
 SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelopathName ?intxn2Label ?agriCrop_WD ?agriCropName ?intxn3Label ?study1_DOI ?study2_DOI ?study3_DOI WHERE {
 	
 	#part-1 interactions for parasite that negatively effects a plant or an agricultural crop
@@ -65,7 +58,7 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 	    			emi:isClassifiedWith ?intxnName3 . 
 			?intxnName3 rdfs:label ?intxn3Label .
 			# filter interactions by interaction label (hasHost and allelopathOf) or interaction ID
-	    		FILTER (?intxn3Label IN ('hasHost','hasAllelopath'))
+	    		FILTER (STR(?intxn3Label) IN ('hasHost','hasAllelopath'))
 			# VALUES ?intxnName3 { <http://purl.obolibrary.org/obo/RO_0020301> <http://purl.obolibrary.org/obo/RO_0002454> }
 			?parasiteX emi:inTaxon ?parasiteX_WD ; # retreieve wikidata-ids for parasiteX
 				rdfs:label ?parasiteName .

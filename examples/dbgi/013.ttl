@@ -11,11 +11,9 @@ ex:013 a sh:SPARQLExecutable,
     sh:select """PREFIX emi: <https://purl.org/emi#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
 	# trait data
@@ -56,6 +54,6 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
    				wdt:P703 ?source_wdx .	
 		}
 	}
-  } LIMIT 1000""" ;
+} LIMIT 1000""" ;
     schema:target <https://biosoda.unil.ch/emi/sparql/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
