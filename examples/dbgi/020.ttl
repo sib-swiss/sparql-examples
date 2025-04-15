@@ -1,0 +1,61 @@
+@prefix ex: <https://purl.org/emi#examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:020 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Natural producers (and their interactions that might be useful in agriculture) of Onpordopicrin (wd:Q27107580), which might exhibit antimicrobial and cytotoxic activities, especially against human-derived macrophages and against epidermoid carcinoma cells. There is limited scientific evidence to support these claims (https://www.sciencedirect.com/science/article/abs/pii/S138614251500685X)."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX emi: <https://purl.org/emi#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHERE {
+	# trait data
+	?intxn emi:hasSource ?xOrg ; # retrieve interaction-pairs
+        	emi:hasTarget ?yOrg ;
+		emi:isClassifiedWith ?intxnName ;
+		prov:atLocation ?loc ; # retrieve location, latitude and longitude of interactions
+		wgs:lat ?lats ;					
+		wgs:long ?longs .
+	?xOrg emi:inTaxon ?sourceWD ; # retrieve interaction-source and its scientific name as listed in GloBI
+		rdfs:label ?sourceName ;
+		sosa:isSampleOf ?sourceSample .
+	?yOrg emi:inTaxon ?targetWD ; # retrieve interaction-target and its scientific name as listed in GloBI
+		rdfs:label ?targetName ;
+		sosa:isSampleOf ?targetSample .
+
+	# metabolite data
+        { 
+		SELECT DISTINCT ?targetWD ?wd_chem WHERE {		
+			?material sosa:hasSample ?extract ;
+                        	sosa:isSampleOf ?organe .
+                	?organe emi:inTaxon ?targetWD .	# filter by target wikidata-id
+                	?extract sosa:isFeatureOfInterestOf ?lcms .
+                	?lcms sosa:hasResult ?feature_list .
+                	?feature_list emi:hasLCMSFeature ?feature .
+                	?feature emi:hasAnnotation ?sirius_annotation .
+                	?sirius_annotation a emi:StructuralAnnotation ;
+	                	emi:hasChemicalStructure ?ik2d .
+                	?ik2d emi:hasSMILES ?smiles ;
+                      		emi:isInChIKey2DOf ?ik .
+                	?ik emi:isInChIKeyOf ?wd_chem .
+                	VALUES ?wd_chem { wd:Q27107580 } # filter on the wikidata-id of Onpordopicrin
+		}
+	} UNION	# union with the lotus metabolite data from wikidata
+	{ 
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+			?wd_chem wdt:P235 ?ik ;
+   				wdt:P703 ?targetWD .
+		 	VALUES ?wd_chem { wd:Q27107580 }
+		}
+	}
+}""" ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

@@ -1,0 +1,64 @@
+@prefix ex: <https://purl.org/emi#examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:017 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "## List metabolites of plants that interact with plant parasite moth Orgyia postica (wd:Q7102162) ."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX emi: <https://purl.org/emi#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName ?ik ?wd_chem WHERE { 
+	# interaction data
+	{
+		SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName WHERE {
+                	?intxn emi:hasSource ?source ; # retrieve interaction-pairs
+                		emi:hasTarget ?target ;
+                                emi:isClassifiedWith ?intxnName .	
+                        ?target emi:inTaxon ?targetWD ;	# retrieve wikidata-id for target plant 
+				sosa:isSampleOf ?targetSample ;
+				rdfs:label ?targetName .
+			?source emi:inTaxon ?sourceWD ;	# retrieve wikidata-id for source parasite
+				sosa:isSampleOf ?sourceSample ;
+				rdfs:label ?sourceName .
+			?intxnName rdfs:label ?intxnLabel
+                        VALUES ?sourceWD { wd:Q7102162 } # retain results only if the source-WD matches the wikidata-id of Orgyia postica
+                }
+	}   
+	# metabolite data        
+	{
+		SELECT DISTINCT ?targetWD ?ik ?wd_chem WHERE {
+                	?material sosa:hasSample ?extract ;
+                      		sosa:isSampleOf ?organe .
+                      	?organe emi:inTaxon ?targetWD .	# filter metabolite data which is found in wikidata-ids targetWD
+                      	?extract sosa:isFeatureOfInterestOf ?lcms .
+                      	?lcms sosa:hasResult ?feature_list .
+                      	?feature_list emi:hasLCMSFeature ?feature .
+                      	?feature emi:hasAnnotation ?sirius_annotation .
+                      	?sirius_annotation a emi:StructuralAnnotation ;
+                      		emi:hasChemicalStructure ?ik2d .
+                        ?ik2d emi:hasSMILES ?smiles ;
+                        	emi:isInChIKey2DOf ?ik .
+                      	?ik emi:isInChIKeyOf ?wd_chem .	# retrieve wikidata-ids for metabolites
+                }
+	} UNION	#union with data from lotus (integrated in wikidata)
+	{
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+			?wd_chem wdt:P235 ?ik ;
+				wdt:P703 ?targetWD .			
+		}
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+               		?targetWD wdt:P141 wd:Q719675 ; # filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
+                        	wdt:P171* wd:Q879246 ;
+                     	OPTIONAL { ?targetWD wdt:P225 ?targetName . }
+               	}
+	}
+}""" ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
