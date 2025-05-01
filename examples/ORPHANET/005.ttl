@@ -1,0 +1,24 @@
+@prefix ex: <https://www.bgee.org/sparql/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:005 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "HOOM - Counting the total number of Disorder-HPO associations in HOOM."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (COUNT(?association) as ?Association_Amount)
+WHERE {
+    ?association rdfs:subClassOf ?type .
+    ?association owl:equivalentClass ?node .
+    ?node owl:intersectionOf ?list .
+    ?list rdf:rest*/rdf:first ?item .
+    ?item owl:onProperty ?Property .
+    ?item owl:someValuesFrom ?Id .
+}
+""" ;
+    schema:target <https://www.orpha.net/sparql> .
