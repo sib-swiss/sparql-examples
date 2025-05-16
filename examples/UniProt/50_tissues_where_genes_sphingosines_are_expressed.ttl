@@ -43,7 +43,7 @@ WHERE {
 
   SERVICE  <https://www.bgee.org/sparql/> {
     ?gene genex:isExpressedIn ?anatomicEntity .
-    ?gene lscr:xrefEnsemblGene ?ensemblGene .
+    ?gene lscr:xrefUniprot ?protein .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
 }""" ;
