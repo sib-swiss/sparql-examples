@@ -31,7 +31,7 @@ WHERE {
   #
   { 
     ?chebi rdfs:subClassOf* CHEBI:18059 . # lipid
-    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
   }
   UNION 
   { # add non-pH 7.3 species
@@ -40,7 +40,7 @@ WHERE {
     ?chebiRestriction a owl:Restriction .
     ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
     ?chebiRestriction owl:someValuesFrom ?chebi .
-    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
   }
   ?chebi up:name ?name .
 }""" ;
