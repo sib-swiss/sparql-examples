@@ -19,7 +19,7 @@ SELECT ?swisslipid  ?organism {
   ?swisslipid owl:equivalentClass ?chebi .
   SERVICE <https://sparql.rhea-db.org/sparql> {
     ?rhea rh:side/rh:contains/rh:compound ?compound .
-    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?metabolite .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?metabolite .
   }
   SERVICE <https://sparql.uniprot.org/sparql> {
     ?catalyticActivityAnnotation up:catalyticActivity/up:catalyzedReaction ?rhea .

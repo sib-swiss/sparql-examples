@@ -19,11 +19,14 @@ SELECT
   ?protein
   ?chebi
 WHERE {
-  ?rhea rh:isTransport true .
-  ?rhea rh:side/rh:contains/rh:compound ?compound .
-  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  GRAPH <https://sparql.rhea-db.org/rhea> {
+    ?rhea rh:isTransport true .
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+  }
   # CHEBI:18059 is the class for all Lipids
   ?chebi rdfs:subClassOf* CHEBI:18059 .
+ 
   
   # Select human reviewed entries from Swiss-Prot
   ?protein up:reviewed true ; 
@@ -33,5 +36,5 @@ WHERE {
   ?annotation up:catalyticActivity?catalytic_activity_obj .
   ?catalytic_activity up:catalyzedReaction?rhea .
 }""" ;
-    schema:keywords "list" , "reaction", "rhea" ;
+    schema:keywords "list" , "reaction", "rhea", "lipid" ;
     schema:target <https://sparql.uniprot.org/sparql/> .

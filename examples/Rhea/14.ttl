@@ -25,7 +25,7 @@ WHERE {
   #
   # the ChEBI can be used either as a small molecule, the reactive part of a macromolecule or as a polymer.
   #
-  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
   VALUES (?chebi) { (CHEBI:29985) }
 }""" ;
     schema:target <https://sparql.rhea-db.org/sparql> .

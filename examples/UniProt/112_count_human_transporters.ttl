@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:111_count_human_transporters a sh:SPARQLExecutable,
+ex:112_count_human_transporters a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Count the number of Human Transporter Proteins"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
