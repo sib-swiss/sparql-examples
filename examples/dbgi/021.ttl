@@ -6,7 +6,7 @@
 
 ex:021 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List possible interactions of plants that can produce Norhyocyamine (wd:Q27107545), a plant secondary metabolite."@en ;
+    rdfs:comment "List possible interactions of plants that can produce Norhyocyamine (wd:Q27107545), a plant secondary metabolite."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

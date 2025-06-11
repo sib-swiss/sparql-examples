@@ -6,7 +6,7 @@
 
 ex:014 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List traits (and their values) of plants producing Diterpenoids"@en ;
+    rdfs:comment "List traits (and their values) of plants producing Diterpenoids"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
