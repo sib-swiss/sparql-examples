@@ -6,7 +6,7 @@
 
 ex:012 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List interactions and traits of all species which have an IUCN status (wdt:P141) of near threatened (wd:Q719675)."@en ;
+    rdfs:comment "List traits of all species which have an IUCN status (wdt:P141) of near threatened (wd:Q719675)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX emi: <https://purl.org/emi#>
 PREFIX wd: <http://www.wikidata.org/entity/>
