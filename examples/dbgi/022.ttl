@@ -42,5 +42,4 @@ SELECT DISTINCT ?source_wdx ?sourceName ?traitCategory ?traitLabel ?tryDataVal ?
 	HAVING (COUNT(?traitCategory) = 4)
 	# order by organism and trait names
 	ORDER BY ?source_wdx ?traitCategory""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    schema:target <https://biosoda.unil.ch/emi/sparql/> .
