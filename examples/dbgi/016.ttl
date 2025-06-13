@@ -6,7 +6,7 @@
 
 ex:016 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List of possible natural locations of plants, which produce  senkyunolide (wd:Q27251426)  which is a thalide for cerebral disorders (https://doi.org/10.3390/molecules28083636)."@en ;
+    rdfs:comment "List of possible natural locations of plants, which produce  senkyunolide (wd:Q27251426)  which is a thalide for cerebral disorders (https://doi.org/10.3390/molecules28083636)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

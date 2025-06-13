@@ -6,7 +6,7 @@
 
 ex:015 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List of possible natural locations of organisms, which produce Bahamaolide A,  (wd:Q75068439) which is an antifungal (https://doi.org/10.1021/np3001915)."@en ;
+    rdfs:comment "List of possible natural locations of organisms, which produce Bahamaolide A,  (wd:Q75068439) which is an antifungal (https://doi.org/10.1021/np3001915)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

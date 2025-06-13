@@ -6,7 +6,7 @@
 
 ex:018 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "## List links between host-parasite and host-allelopathic interactions, where host is an agricultural crop, allelopath is usually a plant that inhibits growth of parasites which are usually insects. Inhibition happens by root/stem/leaf exudates of the allelopath."@en ;
+    rdfs:comment "List links between host-parasite and host-allelopathic interactions, where host is an agricultural crop, allelopath is usually a plant that inhibits growth of parasites which are usually insects. Inhibition happens by root/stem/leaf exudates of the allelopath."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

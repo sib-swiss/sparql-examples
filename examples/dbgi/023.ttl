@@ -1,0 +1,76 @@
+@prefix ex: <https://purl.org/emi#examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:023 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve metabolites of organisms with data available from 4 traits in leaf economics spectrum."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX emi: <https://purl.org/emi#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName  WHERE 
+	{
+		# trait data
+		
+		# trait/non-trait data for trySpName (scientific name of plant species as listed in trydb)
+		?trySpObs sosa:isSampleOf ?trySpName ; 
+			rdfs:label ?sourceName ;
+			sosa:isFeatureOfInterestOf ?tryObId .
+		?tryObId sosa:hasResult ?tryData .
+		?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName
+		?tryData rdfs:label ?traitLabel ; 
+			rdf:type emi:Trait ; #retrieve data which is labelled as 'Trait' and its values
+		
+		# retrieve trait labels
+		BIND (
+        		IF (REGEX(STR(?traitLabel), "SLA", "i"), "Specific leaf area",
+    			IF (REGEX(STR(?traitLabel), "leaf dry matter content", "i"), "Leaf dry matter content",
+	    		IF (REGEX(STR(?traitLabel), "leaf nitrogen content", "i"), "Leaf nitrogen content",
+    			IF (REGEX(STR(?traitLabel), "leaf phosphorus content", "i"), "Leaf phosphorus content",
+    			"Other")))) AS ?traitCategory
+  		)
+  		
+		# filter to LES categories only
+	  	FILTER (?traitCategory != "Other")
+		
+		# metabolite data
+		{ 
+			SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {	
+				?material sosa:hasSample ?extract ;				
+		        		sosa:isSampleOf ?organe .	
+				?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx 
+				?extract sosa:isFeatureOfInterestOf ?lcms .
+			    	?lcms sosa:hasResult ?feature_list .
+				?feature_list emi:hasLCMSFeature ?feature .
+				?feature emi:hasAnnotation ?sirius_annotation .
+				?sirius_annotation a emi:StructuralAnnotation ;
+					emi:hasChemicalStructure ?ik2d .
+				?ik2d emi:hasSMILES ?smiles ;
+		    			emi:isInChIKey2DOf ?structure_inchikey .
+				?structure_inchikey emi:isInChIKeyOf ?wd_chem .	# wikidata-ids for metabolites
+			}
+		}
+		UNION # union with data from lotus (integrated in wikidata)
+		{
+			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
+				?wd_chem wdt:P235 ?structure_inchikey;				
+	   				wdt:P703 ?source_wdx .	
+			}
+		}
+	}
+
+	# group results and retain only the ones from organisms with all four traits available 
+	GROUP BY ?source_wdx ?sourceName ?traitCategory ?structure_inchikey ?wd_chem
+	HAVING(COUNT(?traitCategory) = 4)
+
+	# order by organism and trait names
+	ORDER BY ?source_wdx ?traitCategory""" ;
+    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
