@@ -1,5 +1,4 @@
 @prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
-@prefix ex120: <https://sparql.uniprot.org/.well-known/sparql-examples/120_proteins_and_diseases_linked#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
