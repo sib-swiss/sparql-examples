@@ -23,7 +23,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 SELECT ?uniprot ?mnemo ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
-    VALUES (?taxid) { (taxon:83333) }
+    BIND (taxon:83333 AS ?taxid)
     GRAPH <http://sparql.uniprot.org/uniprot> {
       ?uniprot up:reviewed true . 
       ?uniprot up:mnemonic ?mnemo . 
