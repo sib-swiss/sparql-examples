@@ -1,0 +1,58 @@
+@prefix ex: <https://purl.org/emi#examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:016 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List of possible natural locations of plants, which produce  senkyunolide (wd:Q27251426)  which is a thalide for cerebral disorders (https://doi.org/10.3390/molecules28083636)."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX emi: <https://purl.org/emi#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
+	# metabolite data
+	{
+		SELECT DISTINCT ?organismWD ?organismName WHERE {
+			?material sosa:hasSample ?extract ;
+		        	sosa:isSampleOf ?organe .
+			?organe emi:inTaxon ?organismWD ; # filter metabolite data which is found in wikidata-ids wdx	
+				rdfs:label ?organismName .
+			?extract sosa:isFeatureOfInterestOf ?lcms .
+			?lcms sosa:hasResult ?feature_list .
+			?feature_list emi:hasLCMSFeature ?feature .
+			?feature emi:hasAnnotation ?sirius_annotation .
+			?sirius_annotation a emi:StructuralAnnotation ;
+				emi:hasChemicalStructure ?ik2d .
+			?ik2d emi:hasSMILES ?smiles ;
+				emi:isInChIKey2DOf ?ik .
+			?ik emi:isInChIKeyOf ?wd_chem .	# retrieve wikidata-ids for metabolites
+			VALUES ?wd_chem { wd:Q27251426 } # filter wikidata_id of metabolites matches wd:Q27251426
+		}
+	} UNION # union with data from lotus (integrated in wikidata)
+	{
+		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+			?wd_chem wdt:P235 ?ik ;
+	    			wdt:P703 ?organismWD .
+			 VALUES ?wd_chem { wd:Q27251426 }
+			 FILTER(?organismWD = ?source_wdx || ?organismWD = ?target_wdx)	# ensure that organism-wd is either from source or target
+			 OPTIONAL { ?organismWD wdt:P225 ?organismName . }
+		}
+	}
+	# interaction data			
+	?intxn emi:hasSource ?source ; # retrieve interaction-pairs
+		emi:hasTarget ?target .
+	?source emi:inTaxon ?source_wdx . # retrieve wikidata-id of source
+		?target emi:inTaxon ?target_wdx . # retrieve wikidata-id of target
+		?intxn prov:atLocation ?loc ; # retrieve the location of the interaction, and the latitude/longitude
+			wgs:lat ?lats ;					
+			wgs:long ?longs .
+} LIMIT 4000""" ;
+    schema:target <https://purl.org/emi> ;
+    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

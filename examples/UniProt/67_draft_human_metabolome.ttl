@@ -22,7 +22,7 @@ WHERE
         up:mnemonic ?mnemonic .
   SERVICE <https://sparql.rhea-db.org/sparql> {
 	?rhea rh:side/rh:contains/rh:compound ?compound .
-    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|(rh:underlyingChebi/rh:chebi)) ?chebi .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
    }
    ?chebi chebislash:smiles ?smiles ;
           chebislash:inchikey ?inchiKey .

@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 title: "A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications"
 repository-code: https://github.com/sib-swiss/sparql-examples-utils
 date-released: 2024-10-08
-doi: 10.48550/arXiv.2410.06010
+doi: 10.1093/gigascience/giaf045
 license: MIT
 authors:
   - given-names: Jerven
@@ -18,15 +18,19 @@ authors:
   - given-names: Adrian
     family-names: Altenhoff
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0001-7492-1273
   - given-names: Amos
     family-names: Bairoch
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0003-2826-6444
   - given-names: Marie-Claude
     family-names: Blatter
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0002-7474-1499 
   - given-names: Alan
     family-names: Bridge
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0003-2148-9135 
   - given-names: Severine
     family-names: Duvaud
     orcid: https://orcid.org/0000-0001-7892-9678
@@ -34,27 +38,35 @@ authors:
   - given-names: Elisabeth
     family-names: Gasteiger
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0003-1829-162X 
   - given-names: Dmitry
     family-names: Kuznetsov
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0002-9972-947X
   - given-names: Sebastien
     family-names: Moretti
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0003-3947-488X
   - given-names: Pierre-Andre
     family-names: Michel
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0002-7023-1045 
   - given-names: Anne
     family-names: Morgat
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0002-1216-2969 
   - given-names: Marco
     family-names: Pagni
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0001-9292-9463 
   - given-names: Nicole
     family-names: Redaschi
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0001-8890-2268 
   - given-names: Monique
     family-names: Zahn-Zabal
     affiliation: SIB Swiss Institute of Bioinformatics
+    orcid: https://orcid.org/0000-0001-7961-6091 
   - given-names: Tarcisio
     family-names: Mendes de Farias
     orcid: https://orcid.org/0000-0002-3175-5372

@@ -17,3 +17,5 @@ In this github pages we have a HTML rendering for all them.
  * [Rhea](./examples/Rhea)
  * [SwissLipids](./examples/SwissLipids)
  * [UniProt](./examples/UniProt/)
+
+We also collect [some basic statistics on the different SPARQL features in use](./examples/algebra-statistics.md)

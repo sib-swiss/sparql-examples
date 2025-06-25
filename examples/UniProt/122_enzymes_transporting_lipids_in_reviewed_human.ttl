@@ -1,0 +1,39 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix up: <http://purl.uniprot.org/core/> .
+
+ex:122_enzymes_transporting_lipids_in_reviewed_human a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List all UniProtKB SwissProt entries, facilitation the transport of lipids."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT
+  ?protein
+  ?chebi
+WHERE {
+  GRAPH <https://sparql.rhea-db.org/rhea> {
+    ?rhea rh:isTransport true .
+    ?rhea rh:side/rh:contains/rh:compound ?compound .
+    ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+  }
+  # CHEBI:18059 is the class for all Lipids
+  ?chebi rdfs:subClassOf* CHEBI:18059 .
+ 
+  
+  # Select human reviewed entries from Swiss-Prot
+  ?protein up:reviewed true ; 
+    up:organism taxon:9606 .
+   # Link protein to catalytic activity, then to Rhea reaction
+  ?protein up:annotation?annotation .
+  ?annotation up:catalyticActivity?catalytic_activity_obj .
+  ?catalytic_activity up:catalyzedReaction?rhea .
+}""" ;
+    schema:keywords "list" , "reaction", "rhea", "lipid" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
