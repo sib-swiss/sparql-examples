@@ -7,6 +7,7 @@ have a public SPARQL endpoint.
 In this github pages we have a HTML rendering for all them.
 
  * [Bgee](./examples/Bgee/)
+ * [Cellosaurus](./examples/Cellosaurus)
  * [dbgi](./examples/dbgi/)
  * [GlyConnect](./examples/GlyConnect/)
  * [HAMAP](./examples/HAMAP/)
