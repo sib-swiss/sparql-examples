@@ -130,17 +130,15 @@ sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=
 
 ## How to cite this work
 
-If you reuse any part of this work, please cite [the arXiv paper](http://arxiv.org/abs/2410.06010):
+If you reuse any part of this work, please cite [the GigaScience paper](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giaf045/8133871):
 
 ```
 @misc{largecollectionsparqlquestionquery,
-      title={A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
-      author={Jerven Bolleman and Vincent Emonet and Adrian Altenhoff and Amos Bairoch and Marie-Claude Blatter and Alan Bridge and Severine Duvaud and Elisabeth Gasteiger and Dmitry Kuznetsov and Sebastien Moretti and Pierre-Andre Michel and Anne Morgat and Marco Pagni and Nicole Redaschi and Monique Zahn-Zabal and Tarcisio Mendes de Farias and Ana Claudia Sima},
-      year={2024},
-      doi={10.48550/arXiv.2410.06010},
-      eprint={2410.06010},
-      archivePrefix={arXiv},
-      primaryClass={cs.DB},
-      url={https://arxiv.org/abs/2410.06010},
+    author = {Bolleman, Jerven and Emonet, Vincent and Altenhoff, Adrian and Bairoch, Amos and Blatter, Marie-Claude and Bridge, Alan and Duvaud, Severine and Gasteiger, Elisabeth and Kuznetsov, Dmitry and Moretti, Sebastien and Michel, Pierre-Andre and Morgat, Anne and Pagni, Marco and Redaschi, Nicole and Zahn-Zabal, Monique and Mendes de Farias, Tarcisio and Sima, Ana Claudia},
+    doi = {10.1093/gigascience/giaf045},
+    month = {10},
+    title = {A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
+    url = {https://github.com/sib-swiss/sparql-examples-utils},
+    year = {2024}
 }
 ```
