@@ -1,4 +1,4 @@
-@prefix ex: <https://purl.org/emi#examples> .
+@prefix ex: <https://w3id.org/emi#examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -8,13 +8,13 @@ ex:012 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "List traits of all species which have an IUCN status (wdt:P141) of near threatened (wd:Q719675)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX emi: <https://purl.org/emi#>
+    sh:select """PREFIX emi: <https://w3id.org/emi#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX qudt: <https://qudt.org/2.1/schema/qudt#>		
+PREFIX qudt: <http://qudt.org/schema/qudt/>		
 SELECT DISTINCT ?source_wd ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComment WHERE {
 	?trySpObs sosa:isSampleOf ?source_trySpName ; #retrieve trait/non-trait data from trydb for trySpName (scientific name of plant species as listed in trydb)
 		rdfs:label ?sourceName ;

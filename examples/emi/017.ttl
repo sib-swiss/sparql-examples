@@ -1,4 +1,4 @@
-@prefix ex: <https://purl.org/emi#examples> .
+@prefix ex: <https://w3id.org/emi#examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -12,7 +12,7 @@ ex:017 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName ?ik ?wd_chem WHERE { 
 	# interaction data

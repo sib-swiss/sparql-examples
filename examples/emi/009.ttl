@@ -12,7 +12,7 @@ ex:009 a sh:SPARQLExecutable,
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 
 SELECT ?extract ?organe ?species_name ?genus_name ?family_name ?count_of_selected_class

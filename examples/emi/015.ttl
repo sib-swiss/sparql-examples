@@ -1,4 +1,4 @@
-@prefix ex: <https://purl.org/emi#examples> .
+@prefix ex: <https://w3id.org/emi#examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -12,14 +12,14 @@ ex:015 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 	# metabolite data
 	{
-		SELECT DISTINCT ?organismWD ?organismName WHERE {				
+		SELECT DISTINCT ?organismWD ?organismName WHERE {			
 			?material sosa:hasSample ?extract ;
 		        	sosa:isSampleOf ?organe .
 			?organe emi:inTaxon ?organismWD ; # filter metabolite data which is found in wikidata-ids wdx	
@@ -54,5 +54,5 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 		wgs:lat ?lats ;					
 		wgs:long ?longs .
 }""" ;
-    schema:target <https://purl.org/emi> ;
+    schema:target <https://w3id.org/emi> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

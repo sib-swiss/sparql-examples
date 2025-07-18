@@ -1,4 +1,4 @@
-@prefix ex: <https://purl.org/emi#examples> .
+@prefix ex: <https://w3id.org/emi#examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -12,7 +12,7 @@ ex:016 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -49,10 +49,10 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 	?intxn emi:hasSource ?source ; # retrieve interaction-pairs
 		emi:hasTarget ?target .
 	?source emi:inTaxon ?source_wdx . # retrieve wikidata-id of source
-		?target emi:inTaxon ?target_wdx . # retrieve wikidata-id of target
-		?intxn prov:atLocation ?loc ; # retrieve the location of the interaction, and the latitude/longitude
+	?target emi:inTaxon ?target_wdx . # retrieve wikidata-id of target
+	?intxn prov:atLocation ?loc ; # retrieve the location of the interaction, and the latitude/longitude
 			wgs:lat ?lats ;					
 			wgs:long ?longs .
 } LIMIT 4000""" ;
-    schema:target <https://purl.org/emi> ;
+    schema:target <https://w3id.org/emi> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

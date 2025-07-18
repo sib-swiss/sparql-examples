@@ -11,7 +11,7 @@ ex:004 a sh:SPARQLExecutable,
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 
 SELECT DISTINCT ?feature ?feature_opp ?ik2d ?rt ?rt_opp

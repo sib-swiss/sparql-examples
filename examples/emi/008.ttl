@@ -8,7 +8,7 @@ ex:008 a sh:SPARQLExecutable,
     rdfs:comment "Which features in the positive ionization mode have the most fragments and neutral losses in common with the feature identified as mzspec:MSV000087728:VGF143_H08_features_ms2_pos.mgf:scan:707"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 
 SELECT ?feature ?massive_doi (SAMPLE(?rt) AS ?retention_time) (SAMPLE(?pm) AS ?parent_mass) (COUNT(?peakloss) AS ?count)

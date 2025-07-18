@@ -1,4 +1,4 @@
-@prefix ex: <https://purl.org/emi#examples> .
+@prefix ex: <https://w3id.org/emi#examples> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -8,7 +8,7 @@ ex:023 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment "Retrieve metabolites of organisms with data available from 4 traits in leaf economics spectrum."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX emi: <https://purl.org/emi#>
+    sh:select """PREFIX emi: <https://w3id.org/emi#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
