@@ -9,8 +9,7 @@ ex:005 a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
-PREFIX enpkg: <https://enpkg.commons-lab.org/kg/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 
 SELECT (COUNT(?feature) AS ?count)
 WHERE {
