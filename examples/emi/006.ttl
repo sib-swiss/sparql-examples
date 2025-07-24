@@ -12,7 +12,7 @@ ex:006 a sh:SPARQLExecutable,
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX emi: <https://purl.org/emi#>
+PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 
 SELECT ?family_name ?genus_name ?species_name ?wd_sp ?feature ?sub_rt ?sub_parent_mass ?count
