@@ -17,7 +17,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 # (MNXM1) from those that are translocated (MNXM01).
 
 SELECT ?chem ?chem_name ?comp ?comp_name $coef
-FROM <https://rdf.metanetx.org/> WHERE{
+WHERE{
     ?reaction mnx:reacXref biggR:ATPS4m .
     ?reaction ?side ?part .
     ?part mnx:chem ?chem ;

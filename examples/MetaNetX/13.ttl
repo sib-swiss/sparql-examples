@@ -13,7 +13,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
 
 SELECT ?mnet_label ?reac_label ?reac_eq ?MNXR (GROUP_CONCAT( ?cata_label; separator=';' ) AS ?complex )
-FROM <https://rdf.metanetx.org/> WHERE{
+WHERE{
     ?pept mnx:peptXref uniprot:P0ABU7 .
     ?cata mnx:pept ?pept ;
           rdfs:label ?cata_label .
