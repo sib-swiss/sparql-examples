@@ -16,7 +16,7 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # compartments here.
 
 SELECT ?chem ?chem_name ?comp ?comp_name ?coef
-FROM <https://rdf.metanetx.org/> WHERE{
+WHERE{
     ?reac mnx:reacXref rh:34763 .
     ?reac ?side ?part .
     ?part mnx:chem ?chem ;
