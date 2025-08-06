@@ -12,7 +12,7 @@ PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 SELECT
   ?genericSubClass
   ?labelGenericSubClass
-  (count(?genericParticipant) as ?countGenericParticipant)
+  (COUNT(?genericParticipant) AS ?countGenericParticipant)
 WHERE
 {
   ?genericSubClass rdfs:subClassOf rh:GenericParticipant .

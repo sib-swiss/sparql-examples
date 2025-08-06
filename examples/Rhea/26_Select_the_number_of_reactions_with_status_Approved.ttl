@@ -11,7 +11,9 @@ ex:26_Select_the_number_of_reactions_with_status_Approved a sh:SPARQLExecutable,
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT (count(?reaction) as ?reactionCount) WHERE {
+SELECT 
+  (COUNT(?reaction) AS ?reactionCount) 
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .
 }""" ;

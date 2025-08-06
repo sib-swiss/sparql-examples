@@ -18,7 +18,12 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=ec:*
 #
-SELECT ?ec ?ecNumber ?rhea ?accession ?equation
+SELECT 
+  ?ec
+  ?ecNumber
+  ?rhea
+  ?accession
+  ?equation
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:accession ?accession .

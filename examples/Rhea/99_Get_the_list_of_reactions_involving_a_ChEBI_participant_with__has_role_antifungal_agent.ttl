@@ -14,7 +14,7 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 PREFIX rh:<http://rdf.rhea-db.org/>
-PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi#>
+PREFIX chemrof:<https://w3id.org/chemrof/>
 SELECT
   (count(distinct ?reaction) as ?reactionCount)
 WHERE {
@@ -38,10 +38,7 @@ WHERE {
     ?chebiRestrictionRole owl:onProperty obo:RO_0000087 .
     ?chebiRestrictionRole owl:someValuesFrom CHEBI:35718 .
 
-    ?chebi rdfs:subClassOf ?chebiRestrictionPH .
-    ?chebiRestrictionPH a owl:Restriction .
-    ?chebiRestrictionPH owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
-    ?chebiRestrictionPH owl:someValuesFrom ?chebiInRhea .
+    ?chebi chemrof:has_major_microspecies_at_pH_7_3 ?chebiInRhea .
   }
 }
 """;

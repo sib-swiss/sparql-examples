@@ -13,7 +13,7 @@ PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
 SELECT
   ?chebiDescendant
-  (str(?label) as ?chebiLabel)
+  (str(?label) AS ?chebiLabel)
 WHERE {
   ?chebiDescendant rdfs:subClassOf+ CHEBI:17815 .
   ?chebiDescendant rdfs:label ?label .

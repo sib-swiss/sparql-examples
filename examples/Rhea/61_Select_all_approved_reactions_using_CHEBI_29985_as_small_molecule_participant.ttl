@@ -12,7 +12,7 @@ ex:61_Select_all_approved_reactions_using_CHEBI_29985_as_small_molecule_particip
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 SELECT
-  (count(?reaction) as ?reactionCount)
+  (COUNT(?reaction) AS ?reactionCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

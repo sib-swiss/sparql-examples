@@ -11,7 +11,7 @@ PREFIX ec:<http://purl.uniprot.org/enzyme/>
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT
-  (count(distinct ?ecNumber) as ?ecCount)
+  (COUNT(DISTINCT ?ecNumber) AS ?ecCount)
 WHERE
 {
   ?ecNumber rdfs:subClassOf up:Enzyme .

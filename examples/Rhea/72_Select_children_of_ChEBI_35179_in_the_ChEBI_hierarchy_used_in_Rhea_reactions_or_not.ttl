@@ -14,7 +14,7 @@ PREFIX rh:<http://rdf.rhea-db.org/>
 
 SELECT
   ?chebiChild
-  (str(?label) as ?chebiChildName)
+  (str(?label) AS ?chebiChildName)
 WHERE {
   ?chebiChild rdfs:subClassOf CHEBI:35179 .
   ?chebiChild rdfs:label ?label .

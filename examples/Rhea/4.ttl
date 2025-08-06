@@ -17,7 +17,11 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # This query mimics the Cross-references section of 
 # https://www.rhea-db.org/rhea/21016
 #
-SELECT distinct ?rhea ?rheaDir ?xref 
+SELECT 
+  DISTINCT 
+    ?rhea
+    ?rheaDir
+    ?xref 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   VALUES (?rhea) {(rh:21016)}

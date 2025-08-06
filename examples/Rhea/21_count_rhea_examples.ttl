@@ -11,7 +11,9 @@ ex:21_count_rhea_examples a sh:SPARQLExecutable,
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT (count(?reaction) as ?reactionCount) WHERE {
+SELECT
+  (COUNT(?reaction) AS ?reactionCount) 
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
 }""" ;
     schema:target <https://sparql.rhea-db.org/sparql/> .

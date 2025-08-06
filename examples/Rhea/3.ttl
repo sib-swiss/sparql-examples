@@ -16,7 +16,11 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # This query mimics the Related reactions sections of
 # https://www.rhea-db.org/rhea/11628
 #
-SELECT ?rhea  ?equation ?childrenRhea ?childrenEquation 
+SELECT 
+  ?rhea
+  ?equation
+  ?childrenRhea
+  ?childrenEquation 
 WHERE {
   VALUES (?rhea) {(rh:11628)}
   ?rhea rh:equation ?equation .

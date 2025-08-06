@@ -15,10 +15,10 @@ PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX up:<http://purl.uniprot.org/core/>
 
 SELECT
-  distinct
+  DISTINCT
     ?reaction
     ?enzyme
-    (count(distinct ?protein) as ?proteinCount)
+    (COUNT(distinct ?protein) AS ?proteinCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .
