@@ -11,7 +11,7 @@ PREFIX up:<http://purl.uniprot.org/core/>
 PREFIX ec:<http://purl.uniprot.org/enzyme/>
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 SELECT
-  distinct
+  DISTINCT
     ?enzyme
 WHERE
 {

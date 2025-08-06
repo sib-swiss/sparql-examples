@@ -23,7 +23,7 @@ PREFIX up: <http://purl.uniprot.org/core/>
 SELECT ?uniprotCount ?rhea ?accession ?equation 
 WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> { 
-  	SELECT ?rhea (count(?uniprot) as ?uniprotCount) {
+  	SELECT ?rhea (COUNT(?uniprot) AS ?uniprotCount) {
       ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
   	}
   	GROUP BY ?rhea

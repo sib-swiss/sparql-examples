@@ -11,11 +11,13 @@ ex:24_Display_only_a_subset_of_reactions a sh:SPARQLExecutable,
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?reaction ?reactionId WHERE {
+SELECT 
+  ?reaction
+  ?reactionId
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:id ?reactionId . 
 }
 ORDER BY ?reaction
-LIMIT 10
 """ ;
     schema:target <https://sparql.rhea-db.org/sparql/> .

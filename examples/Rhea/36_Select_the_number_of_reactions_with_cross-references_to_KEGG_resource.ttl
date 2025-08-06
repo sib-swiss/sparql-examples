@@ -12,7 +12,8 @@ ex:36_Select_the_number_of_reactions_with_cross-references_to_KEGG_resource a sh
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX kegg: <http://identifiers.org/kegg.reaction/>
 
-SELECT (count(?reaction) as ?reactionCount) 
+SELECT 
+  (COUNT(?reaction) AS ?reactionCount) 
 WHERE {
     ?reaction rdfs:subClassOf rh:Reaction .
     ?reaction rh:bidirectionalReaction ?bidirectionalReaction .

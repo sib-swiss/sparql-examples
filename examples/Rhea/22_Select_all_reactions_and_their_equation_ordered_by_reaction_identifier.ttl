@@ -11,7 +11,11 @@ ex:22__Select_all_reactions_and_their_equation_ordered_by_reaction_identifier a 
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?reaction ?reactionId ?equation WHERE {
+SELECT
+  ?reaction
+  ?reactionId
+  ?equation
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:equation ?equation .
   ?reaction rh:id ?reactionId . 

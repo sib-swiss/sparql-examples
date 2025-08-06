@@ -16,7 +16,10 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # KEGG reactions are mapped to Rhea bidirectional reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=kegg:*
 #
-SELECT ?rhea ?kegg ?rheaDir 
+SELECT
+  ?rhea
+  ?kegg
+  ?rheaDir 
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:bidirectionalReaction ?rheaDir .

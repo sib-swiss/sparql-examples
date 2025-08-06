@@ -10,7 +10,7 @@ ex:118_Number_of_approved_reactions_missing_citations a sh:SPARQLExecutable, sh:
   sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>
 SELECT
-  (count(?reaction) as ?eactionMissingCitationCount)
+  (COUNT(?reaction) AS ?eactionMissingCitationCount)
 WHERE
 {
   ?reaction rdfs:subClassOf rh:Reaction .

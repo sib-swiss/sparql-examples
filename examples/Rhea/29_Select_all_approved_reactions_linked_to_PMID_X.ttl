@@ -12,7 +12,10 @@ ex:29_Select_all_approved_reactions_linked_to_PMID_X a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX pubmed:<http://rdf.ncbi.nlm.nih.gov/pubmed/>
 
-SELECT ?reaction ?reactionEquation  WHERE {
+SELECT 
+  ?reaction 
+  ?reactionEquation
+WHERE {
   BIND(pubmed:2460092 AS ?cit)
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

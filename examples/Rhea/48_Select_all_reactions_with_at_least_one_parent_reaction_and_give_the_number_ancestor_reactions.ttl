@@ -13,7 +13,7 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 
 SELECT
   ?reaction
-  (count(?parentReaction) as ?parentReactionCount)
+  (COUNT(?parentReaction) AS ?parentReactionCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

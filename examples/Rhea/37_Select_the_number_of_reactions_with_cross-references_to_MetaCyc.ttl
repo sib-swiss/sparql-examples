@@ -16,9 +16,9 @@ PREFIX keywords:<http://purl.uniprot.org/keywords/>
 PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
 
 SELECT
-  (count(distinct ?rhea) as ?rheaMetacycCount)
-  (count(distinct ?xref) as ?metacycRheaCount)
-  (count(?rhea) as ?rheaMetacycXrefCount)
+  (COUNT(distinct ?rhea) AS ?rheaMetacycCount)
+  (COUNT(distinct ?xref) AS ?metacycRheaCount)
+  (COUNT(?rhea) AS ?rheaMetacycXrefCount)
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:status rh:Approved .

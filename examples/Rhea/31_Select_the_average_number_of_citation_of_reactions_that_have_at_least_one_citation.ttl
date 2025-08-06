@@ -8,10 +8,13 @@ ex:31_Select_the_average_number_of_citation_of_reactions_that_have_at_least_one_
   rdfs:comment """Select the average number of citation of reactions that have at least one citation"""@en ;
   sh:select """PREFIX rh: <http://rdf.rhea-db.org/>
 
-SELECT (AVG(?linksToPubmedPerReaction) AS ?avgLinksToPubmedPerReaction)
+SELECT 
+  (AVG(?linksToPubmedPerReaction) AS ?avgLinksToPubmedPerReaction)
 WHERE
 {
-    SELECT ?reaction (COUNT(DISTINCT ?citation) AS ?linksToPubmedPerReaction)
+    SELECT 
+      ?reaction 
+      (COUNT(DISTINCT ?citation) AS ?linksToPubmedPerReaction)
     WHERE
     {
         ?reaction rh:citation ?citation .

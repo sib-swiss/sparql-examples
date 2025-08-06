@@ -20,12 +20,12 @@ WHERE {
   BIND(rh:11672 AS ?reaction)
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:ec ?enzyme
-  SERVICE <http://sparql.uniprot.org/sparql> {
+  SERVICE <https://sparql.uniprot.org/sparql> {
     ?protein up:reviewed true .
     OPTIONAL {?protein up:enzyme ?enzyme. } .
     OPTIONAL {?protein up:domain/up:enzyme ?enzyme . } .
     OPTIONAL {?protein up:component/up:enzyme ?enzyme .} .
   }
 }""";
-  <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <http://sparql.uniprot.org/sparql>;
+  <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.uniprot.org/sparql>;
   schema:target <https://sparql.rhea-db.org/sparql> .

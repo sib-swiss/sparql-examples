@@ -10,7 +10,10 @@ ex:25_Select_the_first_10_reactions_starting_from_the_fifth_reaction a sh:SPARQL
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT ?reaction ?reactionId WHERE {
+SELECT 
+  ?reaction 
+  ?reactionId 
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:id ?reactionId . 
 }

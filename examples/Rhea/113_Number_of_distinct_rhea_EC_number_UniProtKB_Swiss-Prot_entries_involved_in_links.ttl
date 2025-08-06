@@ -20,10 +20,10 @@ SELECT
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:ec ?enzyme
-  SERVICE <http://sparql.uniprot.org/sparql> {
+  SERVICE <https://sparql.uniprot.org/sparql> {
     ?protein up:reviewed true .
     ?protein up:enzyme ?enzyme.
   }
 }""";
-  <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <http://sparql.uniprot.org/sparql>;
+  <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.uniprot.org/sparql>;
   schema:target <https://sparql.rhea-db.org/sparql> .

@@ -26,7 +26,7 @@ SELECT ?protein ?ecNumber ?reaction where {
     UNION
       {?protein up:domain/up:enzyme ?ecNumber}
     UNION
-    {?protein up:component/up:enzyme ?ecNumber} .
+      {?protein up:component/up:enzyme ?ecNumber} .
   }
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

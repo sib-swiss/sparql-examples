@@ -12,7 +12,7 @@ ex:71_Select_count_of_descendants_of_carbohydrate_in_the_ChEBI_ontology_used_in_
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 SELECT
-  (count(?chebiDescendantCarbohydrate) AS ?chebiDescendantCarbohydrateCount)
+  (COUNT(?chebiDescendantCarbohydrate) AS ?chebiDescendantCarbohydrateCount)
 WHERE {
   ?chebiDescendantCarbohydrate rdfs:subClassOf+ CHEBI:16646 .
   ?chebiDescendantCarbohydrate rdfs:label ?label .

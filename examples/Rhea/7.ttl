@@ -15,7 +15,11 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # MetaCyc reactions are mapped to either undirected, left-to-right or right-to-left reactions
 # Rhea web query: https://www.rhea-db.org/rhea?query=reactome:*
 #    
-SELECT distinct ?rhea ?rheaDir ?reactome  
+SELECT 
+  DISTINCT
+    ?rhea
+    ?rheaDir
+    ?reactome  
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   {

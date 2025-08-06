@@ -12,21 +12,26 @@ ex:87_Select_all_approved_reactions_involving_lipids_that_are_parent_reactions_a
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 
-SELECT distinct ?reaction (count(distinct ?reactionDescendant) as ?reactionDescendantCount) ?reactionEquation WHERE {
-?reaction rdfs:subClassOf rh:Reaction .
-?reaction rh:status rh:Approved .
-?reaction rh:equation ?reactionEquation .
-?reaction rh:side ?reactionSide .
+SELECT 
+  DISTINCT 
+    ?reaction 
+    (COUNT(DISTINCT ?reactionDescendant) AS ?reactionDescendantCount)
+    ?reactionEquation 
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:side ?reactionSide .
 
-?reactionSide rh:contains ?participant .
-?participant rh:compound ?compound .
-?compound rh:chebi ?chebi .
-?chebi rdfs:subClassOf+ CHEBI:18059 .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:18059 .
 
-?reactionDescendant rdfs:subClassOf rh:Reaction .
-?reactionDescendant rh:status rh:Approved .
+  ?reactionDescendant rdfs:subClassOf rh:Reaction .
+  ?reactionDescendant rh:status rh:Approved .
 
-?reactionDescendant rdfs:subClassOf+ ?reaction .
+  ?reactionDescendant rdfs:subClassOf+ ?reaction .
 }
 group by ?reaction ?reactionEquation
 ORDER BY ?reaction""";

@@ -11,7 +11,11 @@ ex:43_Select_the_child_reactions_of_a_given_reaction_in_the_Rhea_hierarchy a sh:
   sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 
-SELECT ?reaction ?equation ?childReaction ?childEquation 
+SELECT 
+  ?reaction
+  ?equation
+  ?childReaction
+  ?childEquation 
 WHERE {
   BIND (rh:11628 AS ?reaction)
   ?reaction rdfs:subClassOf rh:Reaction .

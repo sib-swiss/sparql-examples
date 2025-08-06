@@ -10,9 +10,10 @@ ex:50_Number_of_reactions_that_have_parent_and_child_reactions a sh:SPARQLExecut
   rdfs:comment "Number of reactions that have parent and child reactions"@en;
   sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
-SELECT ?reaction
-  (count(distinct ?reactionChild) as ?reactionChildCount)
-  (count(distinct ?reactionDescendant) as ?reactionDescendantCount)
+SELECT 
+  ?reaction
+  (COUNT(distinct ?reactionChild) AS ?reactionChildCount)
+  (COUNT(distinct ?reactionDescendant) AS ?reactionDescendantCount)
   ?equation
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .

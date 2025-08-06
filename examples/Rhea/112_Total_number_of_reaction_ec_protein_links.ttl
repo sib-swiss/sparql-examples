@@ -14,14 +14,14 @@ PREFIX ec:<http://purl.uniprot.org/enzyme/>
 PREFIX up:<http://purl.uniprot.org/core/>
 
 SELECT
-  (count(?reaction) as ?reactionEcProteinLinkCount)
+  (COUNT(?reaction) AS ?reactionEcProteinLinkCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:ec ?enzyme
-  SERVICE <http://sparql.uniprot.org/sparql> {
+  SERVICE <https://sparql.uniprot.org/sparql> {
     ?protein up:reviewed true .
     ?protein up:enzyme ?enzyme.
   }
 }""";
-  spex:federatesWith <http://sparql.uniprot.org/sparql>;
+  spex:federatesWith <https://sparql.uniprot.org/sparql>;
   schema:target <https://sparql.rhea-db.org/sparql> .

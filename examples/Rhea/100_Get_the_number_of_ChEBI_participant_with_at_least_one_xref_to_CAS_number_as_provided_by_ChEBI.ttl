@@ -14,7 +14,7 @@ PREFIX allie: <http://allie.dbcls.jp/>
 PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi#>
+PREFIX chemrof:<https://w3id.org/chemrof/>
 PREFIX oboInOwl:<http://www.geneontology.org/formats/oboInOwl#>
 
 SELECT
@@ -29,17 +29,14 @@ WHERE {
   {
     ?compound rh:chebi ?chebi .
     ?chebi oboInOwl:hasDbXref ?dbXref .
-    FILTER (regex(?dbXref,'^CAS:'))
+    FILTER (regex(?dbXref,'^cas:'))
   }
   UNION
   {
     ?compound rh:chebi ?chebi .
-    ?chebi2 rdfs:subClassOf ?chebiRestriction .
-    ?chebiRestriction a owl:Restriction .
-    ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
-    ?chebiRestriction owl:someValuesFrom ?chebi .
+    ?chebi2 chemrof:has_major_microspecies_at_pH_7_3 ?chebi .
     ?chebi2 oboInOwl:hasDbXref ?dbXref .
-    FILTER (regex(?dbXref,'^CAS:'))
+    FILTER (regex(?dbXref,'^cas:'))
   }
 }""";
   schema:target <https://sparql.rhea-db.org/sparql> .

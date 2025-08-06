@@ -13,7 +13,7 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 SELECT
   ?genericSubClass
   ?labelGenericSubClass
-  (count(?genericParticipant) as ?countGenericParticipant)
+  (COUNT(?genericParticipant) AS ?countGenericParticipant)
 WHERE
 {
   ?genericSubClass rdfs:subClassOf rh:GenericParticipant .

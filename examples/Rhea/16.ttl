@@ -18,7 +18,13 @@ PREFIX up: <http://purl.uniprot.org/core/>
 # and CHEBI:58359 (L-glutamine) in the other side
 #
 # This query cannot be expressed in the Rhea website
-SELECT ?chebi1 ?name1 ?chebi2 ?name2 ?rhea ?equation
+SELECT 
+  ?chebi1 
+  ?name1 
+  ?chebi2 
+  ?name2
+  ?rhea
+  ?equation
 WHERE {
   VALUES (?chebi1) { (CHEBI:29985) }
   ?chebi1 up:name ?name1 .
