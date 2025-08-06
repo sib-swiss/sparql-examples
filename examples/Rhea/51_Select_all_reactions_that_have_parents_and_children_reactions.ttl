@@ -12,7 +12,7 @@ ex:51_Select_all_reactions_that_have_parents_and_children_reactions a sh:SPARQLE
 PREFIX rh: <http://rdf.rhea-db.org/>
 
 SELECT
-  (count(distinct ?reaction) as ?reactionCount)
+  (COUNT(distinct ?reaction) AS ?reactionCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

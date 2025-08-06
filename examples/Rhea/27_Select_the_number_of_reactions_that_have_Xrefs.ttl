@@ -11,7 +11,9 @@ ex:27_Select_the_number_of_reactions_that_have_Xrefs a sh:SPARQLExecutable,
     sh:select """PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT (count(distinct ?reaction) as ?distinctReactionCount) WHERE {
+SELECT 
+  (COUNT(distinct ?reaction) AS ?distinctReactionCount)
+WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:directionalReaction ?directionalReaction .
   ?reaction rh:bidirectionalReaction ?bidirectionalReaction .

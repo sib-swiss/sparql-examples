@@ -29,10 +29,6 @@ _:prefix_has_role
   sh:namespace "http://purl.obolibrary.org/obo/RO_0000087"^^xsd:anyURI .
 
 
-_:rhea_sparql_examples_prefixes sh:declare _:prefix_has_role .
-_:prefix_has_role
-  sh:prefix "has_role" ;
-  sh:namespace "http://purl.obolibrary.org/obo/RO_0000087"^^xsd:anyURI .
 
 _:rhea_sparql_examples_prefixes sh:declare [
   sh:prefix "has_functional_parent" ;

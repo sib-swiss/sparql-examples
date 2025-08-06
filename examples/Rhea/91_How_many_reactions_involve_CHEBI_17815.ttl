@@ -12,10 +12,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 
 SELECT
-  (count(distinct ?reaction) as ?countReaction)
+  (COUNT(distinct ?reaction) AS ?countReaction)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction ;
-  rh:status rh:Approved ;
+    rh:status rh:Approved ;
     rh:side ?reactionSide .
 
   ?reactionSide rh:contains ?participant .

@@ -14,9 +14,9 @@ PREFIX rh:<http://rdf.rhea-db.org/>
 SELECT
   ?reaction
   ?reactionSide1
-  (count(distinct ?participant1) as ?side1ParticipantCount)
+  (COUNT(distinct ?participant1) AS ?side1ParticipantCount)
   ?reactionSide2
-  (count(distinct ?participant2) as ?side2ParticipantCount)
+  (COUNT(distinct ?participant2) AS ?side2ParticipantCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status rh:Approved .

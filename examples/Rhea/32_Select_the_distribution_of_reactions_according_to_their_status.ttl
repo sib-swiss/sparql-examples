@@ -13,7 +13,7 @@ PREFIX rh:<http://rdf.rhea-db.org/>
 
 SELECT
   ?status
-  (count(?reaction) as ?reactionCount)
+  (COUNT(?reaction) AS ?reactionCount)
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:status ?status .

@@ -12,9 +12,9 @@ ex:47_Select_all_children_reactions_and_give_the_number_of_parent_reactions a sh
 PREFIX rh:<http://rdf.rhea-db.org/>
 
 SELECT 
-  (count(?reactionChild) as ?isARelationCount) 
-  (count(distinct ?reactionChild) as ?uniqueReactionChildCount) 
-  (count(distinct ?reactionParent) as ?uniqueReactionParentCount) 
+  (COUNT(?reactionChild) AS ?isARelationCount) 
+  (COUNT(distinct ?reactionChild) AS ?uniqueReactionChildCount) 
+  (COUNT(distinct ?reactionParent) AS ?uniqueReactionParentCount) 
 WHERE {
   ?reactionChild rdfs:subClassOf rh:Reaction .
   ?reactionChild rh:status rh:Approved .

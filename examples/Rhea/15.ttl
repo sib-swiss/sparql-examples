@@ -16,7 +16,10 @@ PREFIX up: <http://purl.uniprot.org/core/>
 # Select all ChEBI compounds used in Rhea as reaction participant
 # 
 # This query can not be expressed in the Rhea website
-SELECT ?chebi ?name (count(?rhea) as ?countRhea)
+SELECT 
+  ?chebi
+  ?name 
+  (COUNT(?rhea) AS ?countRhea)
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:side/rh:contains/rh:compound ?compound .

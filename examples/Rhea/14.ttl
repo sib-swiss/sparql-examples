@@ -17,7 +17,11 @@ PREFIX rh: <http://rdf.rhea-db.org/>
 # 
 # This query corresponds to the Rhea website query:
 # https://www.rhea-db.org/rhea?query=chebi:29985
-SELECT distinct ?chebi ?rhea ?equation
+SELECT 
+  DISTINCT
+    ?chebi
+    ?rhea
+    ?equation
 WHERE {
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:equation ?equation .

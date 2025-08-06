@@ -13,7 +13,7 @@ PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
 
 SELECT
-  distinct
+  DISTINCT
     ?reaction
     ?reactionEquation
 WHERE {

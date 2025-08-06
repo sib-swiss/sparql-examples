@@ -11,7 +11,9 @@ ex:88_How_many_descendants_of_CHEBI_17815 a sh:SPARQLExecutable, sh:SPARQLSelect
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 
-SELECT (count(?chebiDescendant) as ?countChild) WHERE {
+SELECT 
+  (COUNT(?chebiDescendant) AS ?countChild) 
+WHERE {
   ?chebiDescendant rdfs:subClassOf+ CHEBI:17815 .
   ?chebiDescendant rdfs:label ?label .
 }""";

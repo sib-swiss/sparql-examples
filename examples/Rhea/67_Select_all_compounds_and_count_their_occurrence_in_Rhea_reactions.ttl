@@ -14,7 +14,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT
   ?reactionParticipantAc
   ?chebi
-  (count(distinct ?reaction) as ?reactionCount)
+  (COUNT(distinct ?reaction) AS ?reactionCount)
   ?reactionParticipantName
 WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
