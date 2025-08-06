@@ -1,0 +1,64 @@
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix up: <http://purl.uniprot.org/core/>
+prefix faldo: <http://biohackathon.org/resource/faldo#>
+_:rhea_sparql_examples_prefixes
+  a owl:Ontology ;
+  owl:imports sh: .
+
+_:rhea_sparql_examples_prefixes sh:declare _:prefix_bfo_has_part .
+_:prefix_bfo_has_part
+  sh:prefix "has_part" ;
+  sh:namespace "http://purl.obolibrary.org/obo/BFO_0000051"^^xsd:anyURI .
+
+_:rhea_sparql_examples_prefixes sh:declare _:prefix_bfo_part_of .
+_:prefix_bfo_has_part
+  sh:prefix "part_of" ;
+  sh:namespace "http://purl.obolibrary.org/obo/BFO_0000050"^^xsd:anyURI .
+
+_:rhea_sparql_examples_prefixes sh:declare _:prefix_iao_definition .
+_:prefix_iao_definition
+  sh:prefix "definition" ;
+  sh:namespace "http://purl.obolibrary.org/obo/IAO_0000115"^^xsd:anyURI .
+
+_:rhea_sparql_examples_prefixes sh:declare _:prefix_has_role .
+_:prefix_has_role
+  sh:prefix "has_role" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0000087"^^xsd:anyURI .
+
+
+_:rhea_sparql_examples_prefixes sh:declare _:prefix_has_role .
+_:prefix_has_role
+  sh:prefix "has_role" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0000087"^^xsd:anyURI .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "has_functional_parent" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018038"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "has_parent_hydride" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018040"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "is_conjugate_acid_of" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018034"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "is_conjugate_base_of" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018033"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "is_enantiomer_of" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018039"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "is_substituent_group_from" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018037"^^xsd:anyURI ] .
+
+_:rhea_sparql_examples_prefixes sh:declare [
+  sh:prefix "is_tautomer_of" ;
+  sh:namespace "http://purl.obolibrary.org/obo/RO_0018036"^^xsd:anyURI ] .
+

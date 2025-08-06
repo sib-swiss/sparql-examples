@@ -338,3 +338,8 @@ _:sparql_examples_prefixes sh:declare _:prefix_sparql_service_description .
 _:prefix_sparql_service_description
     sh:prefix "sd" ;
     sh:namespace "http://www.w3.org/ns/sparql-service-description#"^^xsd:anyURI .
+
+# Used in Rhea, UniProt and metaNetX
+_:sparql_examples_prefixes sh:declare [
+    sh:prefix "chemrof" ;
+    sh:namespace "https://w3id.org/chemrof/"^^xsd:anyURI ] .
