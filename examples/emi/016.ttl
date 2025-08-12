@@ -54,5 +54,5 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 			wgs:lat ?lats ;					
 			wgs:long ?longs .
 } LIMIT 4000""" ;
-    schema:target <https://kg.earthmetabolome.org/api/metrin/> 
+    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
