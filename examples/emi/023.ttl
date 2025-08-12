@@ -55,13 +55,13 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName  WHERE
 				?ik2d emi:hasSMILES ?smiles ;
 		    			emi:isInChIKey2DOf ?structure_inchikey .
 				?structure_inchikey emi:isInChIKeyOf ?wd_chem .	# wikidata-ids for metabolites
-			}
+			} LIMIT 100
 		}
 		UNION # union with data from lotus (integrated in wikidata)
 		{
 			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
 				?wd_chem wdt:P235 ?structure_inchikey;				
-	   				wdt:P703 ?source_wdx .	
+	   				wdt:P703 ?source_wdx .
 			}
 		}
 	}
