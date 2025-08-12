@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -14,7 +14,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX qudt: <https://qudt.org/schema/qudt/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>		
 SELECT DISTINCT ?source_wdx ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComment WHERE {
 	# metabolite data
@@ -57,5 +57,5 @@ SELECT DISTINCT ?source_wdx ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComme
 		qudt:hasUnit ?unit ; 
 		rdfs:comment ?unitComment . # original units for Trait data as listed in trydb
 }""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

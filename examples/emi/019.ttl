@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -53,5 +53,5 @@ SELECT DISTINCT ?parasitoidX_WD ?parasitoidName ?intxn2Label ?parasiteX_WD ?para
 	 	?hostPlant_WD wdt:P171* wd:Q879246 . # keep the interaction pairs part-2 only if hostPlant_WD has Kingdom Archaeplastida (wd:Q879246) in its lineage, this is to ensure the hostPlant is really a plant
 	}
 } LIMIT 1000""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

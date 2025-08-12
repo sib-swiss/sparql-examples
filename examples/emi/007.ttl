@@ -1,4 +1,4 @@
-@prefix ex: <https://biosoda.unil.ch/emi/sparql/.well-known/sparql-examples/> .
+@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -52,6 +52,6 @@ WHERE {
         ?taxon wdt:P225 ?taxon_name .
     }
 }""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 
