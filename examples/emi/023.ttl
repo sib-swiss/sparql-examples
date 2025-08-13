@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -72,5 +72,5 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName  WHERE
 
 	# order by organism and trait names
 	ORDER BY ?source_wdx ?traitCategory""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

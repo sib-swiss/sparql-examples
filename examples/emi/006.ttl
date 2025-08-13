@@ -1,4 +1,4 @@
-@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -74,6 +74,6 @@ WHERE {
     }
 } GROUP BY ?family_name ?genus_name ?species_name ?wd_sp ?feature ?sub_rt ?sub_parent_mass ?count
 ORDER BY DESC(?count)""" ;
-    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://query.wikidata.org/sparql> .
 

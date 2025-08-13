@@ -1,4 +1,4 @@
-@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -57,5 +57,5 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHER
 		}
 	}
 }""" ;
-    schema:target <https://kg.earthmetabolome.org/api/metrin/> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

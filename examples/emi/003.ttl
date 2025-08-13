@@ -1,4 +1,4 @@
-@prefix ex: <https://kg.earthmetabolome.org/api/metrin/> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -47,5 +47,5 @@ WHERE {
     FILTER(((?rt - ?rt_tol) < ?rt_opp) && ((?rt + ?rt_tol) > ?rt_opp))
     FILTER((?pm_opp > ((?pm - 2.014) - ((?ppm * 0.000001) * (?pm - 2.014)))) && (?pm_opp < ((?pm - 2.014) + ((?ppm * 0.000001) * (?pm - 2.014)))))
 }""" ;
-    schema:target <https://kg.earthmetabolome.org/api/metrin/> .
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> .
 
