@@ -15,7 +15,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 # identifier, name and reference.
 
 SELECT ?metabolite ?reference ?name
-FROM <https://rdf.metanetx.org/> WHERE {
+WHERE {
     ?metabolite a mnx:CHEM .
     ?metabolite mnx:chemRefer ?reference .
     ?metabolite rdfs:comment ?name .

@@ -17,7 +17,7 @@ PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
 # appears.
 
 SELECT ?mnet_label ?reac_label ?reac_eq ?MNXR (GROUP_CONCAT( ?cata_label; separator=';' ) AS ?complex )
-FROM <https://rdf.metanetx.org/> WHERE{
+WHERE{
     ?pept mnx:peptXref uniprot:P42588 .
     ?cata mnx:pept ?pept ;
           rdfs:label ?cata_label .

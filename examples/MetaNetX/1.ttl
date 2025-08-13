@@ -12,7 +12,7 @@ ex:1 a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
-FROM <https://rdf.metanetx.org/> WHERE {
+WHERE {
     ?metabolite a mnx:CHEM .
     ?metabolite rdfs:label ?label .
     ?metabolite rdfs:comment 'N,N-dimethyl-beta-alanine' .
