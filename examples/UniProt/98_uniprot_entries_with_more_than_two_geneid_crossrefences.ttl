@@ -22,6 +22,6 @@ WHERE
            up:organism ?organism
 } GROUP BY ?geneid ?organism HAVING (COUNT(?protein) > 1) ORDER BY ?organism ?geneid
 """ ;
-    schema:keywords "cross-reference " , "mapping" , "count" ;
+    schema:keywords "cross-reference" , "mapping" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
