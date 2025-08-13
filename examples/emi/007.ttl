@@ -1,4 +1,4 @@
-@prefix ex: <https://kg.earthmetabolome.org/metrin/.well-known/examples/> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
