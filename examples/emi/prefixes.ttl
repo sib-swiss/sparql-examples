@@ -13,7 +13,7 @@ _:prefix_dbgi_sosa sh:prefix "sosa" ;
 
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_emi .
 _:prefix_dbgi_emi sh:prefix "emi" ;
-  sh:namespace "https://purl.org/emi#"^^xsd:anyURI .
+  sh:namespace "https://w3id.org/emi#"^^xsd:anyURI .
 
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_enpkg .
 _:prefix_dbgi_enpkg sh:prefix "enpkg" ;
@@ -21,7 +21,7 @@ _:prefix_dbgi_enpkg sh:prefix "enpkg" ;
 
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_npc .
 _:prefix_dbgi_npc sh:prefix "npc" ;
-  sh:namespace "https://purl.org/npc#"^^xsd:anyURI .
+  sh:namespace "https://w3id.org/emi/npc#"^^xsd:anyURI .
 
 _:dbgi_sparql_examples_prefixes sh:declare _:prefix_dbgi_wgs .
 _:prefix_dbgi_wgs sh:prefix "wgs" ;

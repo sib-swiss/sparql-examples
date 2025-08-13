@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -41,11 +41,11 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 			?wd_chem wdt:P235 ?ik ;
 	    			wdt:P703 ?organismWD .
 			 VALUES ?wd_chem { wd:Q75068439 }
-			 FILTER(?organismWD = ?source_wdx || ?organismWD = ?target_wdx)	# ensure that organism-wd is either from source or target
 			 OPTIONAL { ?organismWD wdt:P225 ?organismName . }
 		}
 	}
 	# interaction data		
+	FILTER(?organismWD = ?source_wdx || ?organismWD = ?target_wdx)	# ensure that organism-wd is either from source or target
 	?intxn emi:hasSource ?source ; #retrieve interaction-pairs
 		emi:hasTarget ?target .
 	?source emi:inTaxon ?source_wdx . # retrieve wikidata-id of source
@@ -54,5 +54,5 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 		wgs:lat ?lats ;					
 		wgs:long ?longs .
 }""" ;
-    schema:target <https://w3id.org/emi> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

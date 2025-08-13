@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -14,7 +14,7 @@ PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX qudt: <http://qudt.org/schema/qudt/>		
+PREFIX qudt: <https://qudt.org/schema/qudt/>		
 SELECT DISTINCT ?source_wd ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComment WHERE {
 	?trySpObs sosa:isSampleOf ?source_trySpName ; #retrieve trait/non-trait data from trydb for trySpName (scientific name of plant species as listed in trydb)
 		rdfs:label ?sourceName ;
@@ -32,5 +32,5 @@ SELECT DISTINCT ?source_wd ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitCommen
         	?source_wd wdt:P141 wd:Q719675 . #filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
         }
 }""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

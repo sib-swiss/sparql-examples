@@ -1,4 +1,4 @@
-@prefix ex: <https://biosoda.unil.ch/emi/sparql/.well-known/sparql-examples/> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -33,5 +33,5 @@ WHERE {
         }
     }
 } GROUP BY ?feature ?massive_doi ORDER BY DESC(?count)""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> .
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> .
 

@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -55,13 +55,13 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName  WHERE
 				?ik2d emi:hasSMILES ?smiles ;
 		    			emi:isInChIKey2DOf ?structure_inchikey .
 				?structure_inchikey emi:isInChIKeyOf ?wd_chem .	# wikidata-ids for metabolites
-			}
+			} LIMIT 100
 		}
 		UNION # union with data from lotus (integrated in wikidata)
 		{
 			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
 				?wd_chem wdt:P235 ?structure_inchikey;				
-	   				wdt:P703 ?source_wdx .	
+	   				wdt:P703 ?source_wdx .
 			}
 		}
 	}
@@ -72,5 +72,5 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName  WHERE
 
 	# order by organism and trait names
 	ORDER BY ?source_wdx ?traitCategory""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> ;
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
     spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .

@@ -1,4 +1,4 @@
-@prefix ex: <https://w3id.org/emi#examples> .
+@prefix ex: <https://kg.earthmetabolome.org/metrin/api/.well-known/examples/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -15,7 +15,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX qudt: <https://qudt.org/schema/qudt/>
 SELECT DISTINCT ?source_wdx ?sourceName ?traitCategory ?traitLabel ?tryDataVal ?unit ?unitComment WHERE 
 	{
 		# trait data
@@ -33,7 +33,13 @@ SELECT DISTINCT ?source_wdx ?sourceName ?traitCategory ?traitLabel ?tryDataVal ?
 			?tryData rdfs:comment ?unitComment .
 		} #retrieve comments (containing original unprocessed unit information - necessary for understanding some data) for Trait data
   		# retrieve trait labels
-		BIND (IF(REGEX(STR(?traitLabel),"SLA","i"),"Specific leaf area",IF(REGEX(STR(?traitLabel),"leaf dry matter content","i"),"Leaf dry matter content",IF(REGEX(STR(?traitLabel),"leaf nitrogen content","i"),"Leaf nitrogen content",IF(REGEX(STR(?traitLabel),"leaf phosphorus content","i"),"Leaf phosphorus content","Other")))) AS ?traitCategory)
+		BIND (
+			IF(REGEX(STR(?traitLabel),"SLA","i"),"Specific leaf area",
+			IF(REGEX(STR(?traitLabel),"leaf dry matter content","i"),"Leaf dry matter content",
+			IF(REGEX(STR(?traitLabel),"leaf nitrogen content","i"),"Leaf nitrogen content",
+			IF(REGEX(STR(?traitLabel),"leaf phosphorus content","i"),"Leaf phosphorus content",
+			"Other")))) AS ?traitCategory)
+			
   		# filter to LES categories only
   		FILTER (?traitCategory != "Other")
 	}
@@ -42,4 +48,4 @@ SELECT DISTINCT ?source_wdx ?sourceName ?traitCategory ?traitLabel ?tryDataVal ?
 	HAVING (COUNT(?traitCategory) = 4)
 	# order by organism and trait names
 	ORDER BY ?source_wdx ?traitCategory""" ;
-    schema:target <https://biosoda.unil.ch/emi/sparql/> .
+    schema:target <https://kg.earthmetabolome.org/metrin/api/> .
