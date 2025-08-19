@@ -54,8 +54,7 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetNa
 				wdt:P703 ?targetWD .			
 		}
 		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
-               		?targetWD wdt:P141 wd:Q719675 ; # filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
-                        	wdt:P171* wd:Q879246 ;
+               		?targetWD wdt:P171* wd:Q879246 . # filter source wikidata ids which are plants
                      	OPTIONAL { ?targetWD wdt:P225 ?targetName . }
                	}
 	}
