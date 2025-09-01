@@ -16,7 +16,7 @@ jobs:
         java-version: '21'
 
     - name: Install tester
-      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.15/sparql-examples-utils-2.0.15-uber.jar" -O sparql-examples-utils.jar
+      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.19/sparql-examples-utils-2.0.19-uber.jar" -O sparql-examples-utils.jar
 
     - name: Run tests
       run: java -jar sparql-examples-utils.jar test --input-directory=examples/
