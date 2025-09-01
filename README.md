@@ -50,7 +50,7 @@ We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examp
 First, download the jar file with:
 
 ```bash
-wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.7/sparql-examples-utils-2.0.7-uber.jar'
+wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.18/sparql-examples-utils-2.0.18-uber.jar'
 ```
 
 ### Compile all query files into one file to upload to your endpoint
