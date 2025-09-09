@@ -19,7 +19,7 @@ WHERE {
   }
   ?swisslipidHexadeconate owl:equivalentClass ?chebi .
   ?swisslipid SWISSLIPID:hasPart [
-    SWISSLIPID:derived_from ?swisslipidHexadecanoate ;
+    SWISSLIPID:derivedFrom ?swisslipidHexadecanoate ;
     SWISSLIPID:position SWISSLIPID:sn1 
   ]
 }""" ;
