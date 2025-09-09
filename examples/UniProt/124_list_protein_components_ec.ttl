@@ -3,7 +3,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh:<http://www.w3.org/ns/shacl#> .
 
-ex:126_list_protein_components_ec a sh:SPARQLExecutable,
+ex:124_list_protein_components_ec a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
   rdfs:comment """list = protein - components -ec"""@en ;
   sh:select """
@@ -21,4 +21,4 @@ WHERE
   ?domain up:enzyme ?enzyme .
 }
 """;
- schema:target <https://sparql.rhea-db.org/sparql> .
+ schema:target <https://sparql.uniprot.org/sparql> .
