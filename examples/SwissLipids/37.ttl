@@ -22,14 +22,14 @@ WHERE {
   VALUES ?startId { SWISSLIPID:000121946 }
   ?startId rdfs:label ?startName .
   # tail components
-  ?startId SWISSLIPID:haspart ?tail1 .
-  ?startId SWISSLIPID:haspart ?tail2 .
+  ?startId SWISSLIPID:hasPart ?tail1 .
+  ?startId SWISSLIPID:hasPart ?tail2 .
   FILTER(!sameTerm(?tail1, ?tail2))
   ?tail1 rdfs:label ?tailName1 .
   ?tail2 rdfs:label ?tailName2 .
 
   # Retrieve lipids with similar tails
-  ?id SWISSLIPID:haspart ?tail1 , ?tail2 .
+  ?id SWISSLIPID:hasPart ?tail1 , ?tail2 .
   
   # Restrict to isomeric subspecies with PubMed citation(s)
   ?id SWISSLIPID:rank SWISSLIPID:Isomeric_Subspecies .
