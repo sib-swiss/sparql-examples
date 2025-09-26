@@ -1,0 +1,64 @@
+name: Add SPARQL query example
+description: Form to submit a new SPARQL query example
+title: "Add example "
+labels: ["add-example"]
+
+body:
+  - type: textarea
+    id: sparql_query
+    attributes:
+      label: SPARQL query
+      description: |
+        Provide a working SPARQL query example for a known public SPARQL endpoint.
+        Make sure the query runs without errors and returns results.
+      placeholder: "Add a working SPARQL query"
+      # TODO: uncomment once https://github.com/sib-swiss/sparql-examples-utils/pull/8 merged and sparql-examples-utils v2.0.23 is released
+      # render: sparql
+    validations:
+      required: true
+
+  - type: textarea
+    id: natural_language_query
+    attributes:
+      label: Query description
+      description: Describe in natural language what the query does. What are you trying to achieve with it? You can use HTML formatting (do not use markdown here).
+      placeholder: "Describe your query here"
+    validations:
+      required: true
+
+  - type: input
+    id: filepath
+    attributes:
+      label: Query file path
+      description: Provide the desired file path for your query within the repository examples folder.
+      placeholder: "UniProt/001.ttl"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: predefined_sparql_endpoints
+    attributes:
+      label: Select the target SPARQL endpoint(s)
+      description: Choose one or more SPARQL endpoints from the list, and/or use the custom field below.
+      options:
+        - label: "https://sparql.uniprot.org/sparql"
+        - label: "https://www.bgee.org/sparql/"
+        - label: "https://sparql.omabrowser.org/sparql/"
+        - label: "https://sparql.rhea-db.org/sparql/"
+        - label: "https://sparql.cellosaurus.org/sparql"
+        - label: "https://kg.earthmetabolome.org/metrin/api/"
+        - label: "https://sparql.orthodb.org/sparql/"
+        - label: "https://rdf.metanetx.org/sparql/"
+        - label: "https://hamap.expasy.org/sparql/"
+
+  - type: textarea
+    id: custom_sparql_endpoint
+    attributes:
+      label: Custom SPARQL Endpoints
+      description: Please provide custom SPARQL endpoints URLs here (one per line).
+
+  - type: textarea
+    id: keywords
+    attributes:
+      label: Keywords
+      description: List keywords relevant to the query (one per line).
