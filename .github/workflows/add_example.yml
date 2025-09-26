@@ -1,0 +1,144 @@
+name: Add SPARQL query example
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  contents: write
+  pull-requests: write
+# NOTE: You will need to enable gh actions workflows to create PRs in your org and repo settings
+# At the bottom of the "Actions" tab check "Allow GitHub Actions to create and approve pull requests"
+
+jobs:
+  add_example:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'add-example')
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v5
+
+    - name: Set up Java
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Download sparql-examples-utils.jar
+      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.22/sparql-examples-utils-2.0.22-uber.jar" -O sparql-examples-utils.jar
+
+    - name: Parse issue and create turtle file
+      id: create_ttl
+      run: java -jar sparql-examples-utils.jar import-github-issue -i ./examples -t tmp 2> error.log >> $GITHUB_OUTPUT
+      env:
+        GITHUB_ISSUE_BODY: ${{ github.event.issue.body }}
+
+
+    - name: Validate generated SPARQL query example
+      id: validate
+      if: success()
+      run: java -jar sparql-examples-utils.jar test -i ./examples -p tmp --also-run-slow-tests > error.log 2>&1
+
+
+    - name: Clean up temporary files
+      if: success()
+      run: |
+        rm -f error.log
+        rm -rf examples/tmp
+
+    - name: Create Pull Request with validated query
+      if: success()
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Add SPARQL query example `${{ steps.create_ttl.outputs.output_file }}` (from issue #${{ github.event.issue.number }})"
+        title: "Add example: ${{ steps.create_ttl.outputs.output_file }}"
+        body: |
+          ## Adding SPARQL Query
+
+          This PR adds the SPARQL query example `${{ steps.create_ttl.outputs.output_file }}` submitted in issue #${{ github.event.issue.number }} with the following description:
+
+          > ${{ steps.create_ttl.outputs.query_description }}
+
+          This PR was automatically created after successful validation and execution of the SPARQL query.
+
+          Closes #${{ github.event.issue.number }}
+        branch: add-example-${{ github.event.issue.number }}
+        delete-branch: true
+        labels: |
+          add-example
+          automated-pr
+
+    - name: Comment successful validation in issue
+      if: success()
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const targetPath = '${{ steps.create_ttl.outputs.output_file }}';
+          const comment = `## ✅ Query validation successful
+
+          Your SPARQL query `${targetPath}` has been validated and a pull request has been created for review.
+
+          The query will be added to the SPARQL examples collection once the pull request is reviewed and merged.
+
+          Thank you for your contribution!`;
+
+          await github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+    - name: Comment on validation failure and close issue
+      if: failure()
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const fs = require('fs');
+          let errorMessage = 'No error details available';
+          try {
+            const log = fs.readFileSync('error.log', 'utf8').trim();
+            if (log) errorMessage = log;
+          } catch (e) {}
+          const comment = `## ❌ Query validation failed
+
+          Your SPARQL query did not pass validation. Please check the following:
+
+          1. **Syntax**: Ensure your SPARQL query syntax is correct
+          2. **Prefixes**: Make sure all prefixes used in the query are properly defined
+          3. **Endpoint compatibility**: Verify that your query is compatible with the selected endpoint
+
+          **⚠️ Error details:**
+
+          \`\`\`
+          ${errorMessage}
+          \`\`\`
+
+          Please fix the query, and make sure of the following:
+
+          1. **Syntax**: Ensure your SPARQL query syntax is correct
+          2. **Prefixes**: Make sure all prefixes used in the query are properly defined
+          3. **Results**: Verify that your query returns results with the selected endpoint(s)
+
+          Then **create a new issue** with the corrected version. The validation will run again automatically.`;
+
+          await github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+          await github.rest.issues.update({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'closed'
+          });
