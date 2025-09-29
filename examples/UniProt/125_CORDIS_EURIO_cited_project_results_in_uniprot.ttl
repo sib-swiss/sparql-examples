@@ -29,7 +29,7 @@ WHERE {
   }
   #EURIO use literals of type xsd:anyURI to represent DOIs 
   #without the leading doi: indicator
-  BIND(CONCAT(\"doi:\", STR(?doi)) AS ?doi_string)
+  BIND(CONCAT("doi:", STR(?doi)) AS ?doi_string)
   ?citation a up:Journal_Citation ;
      dcterms:identifier ?doi_string .
   ?protein up:citation ?citation . 
