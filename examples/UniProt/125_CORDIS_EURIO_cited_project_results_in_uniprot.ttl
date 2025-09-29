@@ -1,0 +1,40 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:125_CORDIS_EURIO_cited_project_results_in_uniprot a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Use the CORDIS EURIO Knowledge Graph in combination with UniProt to find the count of outputs(DOIs) of their funded projects cited in UniProt."^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX eurio: <http://data.europa.eu/s66#> 
+PREFIX patent: <http://purl.uniprot.org/EPO/>
+PREFIX pubmed: <http://purl.uniprot.org/pubmed/>
+SELECT 
+  (IRI(CONCAT('https://cordis.europa.eu/project/id/', SAMPLE(?identifier))) AS ?id)
+  (SAMPLE(?project_title) AS ?project_titles)
+  (COUNT(DISTINCT ?dois) AS ?doisInSwissProt)
+  (COUNT(DISTINCT ?protein) AS ?entriesInSwissProt)
+WHERE { 
+  SERVICE <https://cordis.europa.eu/datalab/sparql> {
+  	?project a eurio:Project ;
+            eurio:identifier ?identifier ;
+  		eurio:title ?project_title ;
+  	 	eurio:hasResult ?result .
+  	?result eurio:doi ?doi .
+  }
+  #EURIO use literals of type xsd:anyURI to represent DOIs 
+  #without the leading doi: indicator
+  BIND(CONCAT(\"doi:\", STR(?doi)) AS ?dois)
+  ?citation a up:Journal_Citation ;
+     dcterms:identifier ?dois .
+  ?protein up:citation ?citation . 
+  BIND(xsd:int(?identifier) AS ?intid)
+} GROUP BY ?project ORDER BY DESC(?intid)""";
+  spex:federatesWith <https://cordis.europa.eu/datalab/sparql>;
+  schema:keywords "DOI", "count", "publication";
+  schema:target <https://sparql.uniprot.org/sparql> .
