@@ -83,7 +83,7 @@ jobs:
           const targetPath = '${{ steps.create_ttl.outputs.output_file }}';
           const comment = `## ✅ Query validation successful
 
-          Your SPARQL query `${targetPath}` has been validated and a pull request has been created for review.
+          Your SPARQL query \`${targetPath}\` has been validated and a pull request has been created for review.
 
           The query will be added to the SPARQL examples collection once the pull request is reviewed and merged.
 
