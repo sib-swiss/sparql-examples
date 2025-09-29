@@ -17,7 +17,7 @@ PREFIX pubmed: <http://purl.uniprot.org/pubmed/>
 SELECT 
   (IRI(CONCAT('https://cordis.europa.eu/project/id/', SAMPLE(?identifier))) AS ?id)
   (SAMPLE(?project_title) AS ?project_titles)
-  (COUNT(DISTINCT ?dois) AS ?doisInSwissProt)
+  (COUNT(DISTINCT ?doi_string) AS ?doisInSwissProt)
   (COUNT(DISTINCT ?protein) AS ?entriesInSwissProt)
 WHERE { 
   SERVICE <https://cordis.europa.eu/datalab/sparql> {
@@ -29,9 +29,9 @@ WHERE {
   }
   #EURIO use literals of type xsd:anyURI to represent DOIs 
   #without the leading doi: indicator
-  BIND(CONCAT(\"doi:\", STR(?doi)) AS ?dois)
+  BIND(CONCAT(\"doi:\", STR(?doi)) AS ?doi_string)
   ?citation a up:Journal_Citation ;
-     dcterms:identifier ?dois .
+     dcterms:identifier ?doi_string .
   ?protein up:citation ?citation . 
   BIND(xsd:int(?identifier) AS ?intid)
 } GROUP BY ?project ORDER BY DESC(?intid)""";
