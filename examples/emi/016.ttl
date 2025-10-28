@@ -22,7 +22,7 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 		SELECT DISTINCT ?organismWD ?organismName WHERE {
 			?material sosa:hasSample ?extract ;
 		        	sosa:isSampleOf ?organe .
-			?organe emi:inTaxon ?organismWD ; # filter metabolite data which is found in wikidata-ids wdx	
+			?organe emi:inTaxon ?organismWD ; # filter metabolite data which is found in wikidata-ids wdx
 				rdfs:label ?organismName .
 			?extract sosa:isFeatureOfInterestOf ?lcms .
 			?lcms sosa:hasResult ?feature_list .
@@ -37,22 +37,22 @@ SELECT DISTINCT ?organismName ?organismWD ?loc ?lats ?longs WHERE {
 		}
 	} UNION # union with data from lotus (integrated in wikidata)
 	{
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+		SERVICE <https://qlever.dev/api/wikidata> {
 			?wd_chem wdt:P235 ?ik ;
 	    			wdt:P703 ?organismWD .
 			 VALUES ?wd_chem { wd:Q27251426 }
 			 OPTIONAL { ?organismWD wdt:P225 ?organismName . }
 		}
 	}
-	# interaction data			
+	# interaction data
 	FILTER(?organismWD = ?source_wdx || ?organismWD = ?target_wdx)	# ensure that organism-wd is either from source or target
 	?intxn emi:hasSource ?source ; # retrieve interaction-pairs
 		emi:hasTarget ?target .
 	?source emi:inTaxon ?source_wdx . # retrieve wikidata-id of source
 	?target emi:inTaxon ?target_wdx . # retrieve wikidata-id of target
 	?intxn prov:atLocation ?loc ; # retrieve the location of the interaction, and the latitude/longitude
-			wgs:lat ?lats ;					
+			wgs:lat ?lats ;
 			wgs:long ?longs .
 } LIMIT 4000""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

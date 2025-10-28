@@ -15,7 +15,7 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://w3id.org/emi#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelopathName ?intxn2Label ?agriCrop_WD ?agriCropName ?intxn3Label ?study1_DOI ?study2_DOI ?study3_DOI WHERE {
-	
+
 	#part-1 interactions for parasite that negatively effects a plant or an agricultural crop
 	?parasiteX1 emi:inTaxon ?parasiteX_WD . # parasite and its WD
 	?agriCropX emi:inTaxon ?agriCrop_WD . # agricultural crop and its WD
@@ -26,13 +26,13 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 	# filter the interactions either by FILTER (interaction label) or VALUES (interaction ID)
 	FILTER ((STR(?intxn1Label) IN ('hasHost','rootparasiteOf', 'hemiparasiteOf', 'hyperparasiteOf','rootparasiteOf','endoparasiteOf','ectoparasiteOf')))
 	# VALUES ?intxnName1 { <http://purl.obolibrary.org/obo/RO_0002454> <http://purl.obolibrary.org/obo/RO_0002632> <http://purl.obolibrary.org/obo/RO_0002634> <http://purl.obolibrary.org/obo/RO_0002237> <http://purl.obolibrary.org/obo/RO_0002553> <http://purl.obolibrary.org/obo/RO_0008503> <http://purl.obolibrary.org/obo/RO_0002444> <http://purl.obolibrary.org/obo/RO_0002236> }
-    	OPTIONAL { 
-		?intxn1 dcterms:bibliographicCitation ?study1_DOI . 
+    	OPTIONAL {
+		?intxn1 dcterms:bibliographicCitation ?study1_DOI .
 	}
 
 	# part-2 interactions for allelopath that impacts a plant or an agricultural crop
 	{
-		SELECT * WHERE { 
+		SELECT * WHERE {
 			?allelopathX1 emi:inTaxon ?allelopathX_WD . #allelopath and its WD
 			?intxn2 emi:hasSource ?allelopathX1 ; #retrieve interaction pairs part-2
     				emi:hasTarget ?agriCrop ;
@@ -41,10 +41,10 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 			VALUES ?intxnName2 { <http://purl.obolibrary.org/obo/RO_0002555> } # filter interactions which have interaction ID of allelopathOf
 			?agriCrop emi:inTaxon ?agriCrop_WD ; # retreieve agriCrop and its WD
 	           		rdfs:label ?agriCropName .
-    			OPTIONAL { 
-				?intxn2 dcterms:bibliographicCitation ?study2_DOI . 
+    			OPTIONAL {
+				?intxn2 dcterms:bibliographicCitation ?study2_DOI .
 			}
-			SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+			SERVICE <https://qlever.dev/api/wikidata> {
 	 			?agriCrop_WD wdt:P171* wd:Q879246 . # keep the interaction pairs part-2 only if agriCrop_WD has Kingdom Archaeplastida (wd:Q879246) in its lineage, this is to ensure the agriCrop is really a plant
 			}
 		}
@@ -55,7 +55,7 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 		SELECT * WHERE {
 	    		?intxn3 emi:hasSource ?parasiteX ; # retrieve interaction pairs part-3
 	    			emi:hasTarget ?allelopathX ;
-	    			emi:isClassifiedWith ?intxnName3 . 
+	    			emi:isClassifiedWith ?intxnName3 .
 			?intxnName3 rdfs:label ?intxn3Label .
 			# filter interactions by interaction label (hasHost and allelopathOf) or interaction ID
 	    		FILTER (STR(?intxn3Label) IN ('hasHost','hasAllelopath'))
@@ -64,11 +64,11 @@ SELECT DISTINCT ?parasiteX_WD ?parasiteName ?intxn1Label ?allelopathX_WD ?allelo
 				rdfs:label ?parasiteName .
 			?allelopathX emi:inTaxon ?allelopathX_WD ; # retreieve wikidata-ids for allelopathX
 				rdfs:label ?allelopathName .
-			OPTIONAL { 
-				?intxn3 dcterms:bibliographicCitation ?study3_DOI . 
+			OPTIONAL {
+				?intxn3 dcterms:bibliographicCitation ?study3_DOI .
 	    		}
 		}
 	}
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

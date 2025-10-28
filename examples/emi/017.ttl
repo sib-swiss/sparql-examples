@@ -14,14 +14,14 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName ?ik ?wd_chem WHERE { 
+SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName ?ik ?wd_chem WHERE {
 	# interaction data
 	{
 		SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetName WHERE {
                 	?intxn emi:hasSource ?source ; # retrieve interaction-pairs
                 		emi:hasTarget ?target ;
-                                emi:isClassifiedWith ?intxnName .	
-                        ?target emi:inTaxon ?targetWD ;	# retrieve wikidata-id for target plant 
+                                emi:isClassifiedWith ?intxnName .
+                        ?target emi:inTaxon ?targetWD ;	# retrieve wikidata-id for target plant
 				sosa:isSampleOf ?targetSample ;
 				rdfs:label ?targetName .
 			?source emi:inTaxon ?sourceWD ;	# retrieve wikidata-id for source parasite
@@ -30,8 +30,8 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetNa
 			?intxnName rdfs:label ?intxnLabel
                         VALUES ?sourceWD { wd:Q7102162 } # retain results only if the source-WD matches the wikidata-id of Orgyia postica
                 }
-	}   
-	# metabolite data        
+	}
+	# metabolite data
 	{
 		SELECT DISTINCT ?targetWD ?ik ?wd_chem WHERE {
                 	?material sosa:hasSample ?extract ;
@@ -49,15 +49,15 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnLabel ?targetWD ?targetNa
                 }
 	} UNION	#union with data from lotus (integrated in wikidata)
 	{
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+		SERVICE <https://qlever.dev/api/wikidata> {
 			?wd_chem wdt:P235 ?ik ;
-				wdt:P703 ?targetWD .			
+				wdt:P703 ?targetWD .
 		}
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+		SERVICE <https://qlever.dev/api/wikidata> {
                		?targetWD wdt:P171* wd:Q879246 . # filter source wikidata ids which are plants
                      	OPTIONAL { ?targetWD wdt:P225 ?targetName . }
                	}
 	}
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .
