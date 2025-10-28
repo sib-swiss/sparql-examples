@@ -25,23 +25,26 @@ SELECT
   ((STRLEN(?value) - ?medianLength) as ?deviationFromMedianLength)
 WHERE
 {
-  uniprotkb:P05067 a up:Protein ;
-        up:organism/up:scientificName ?scientificName ;
-        rdfs:seeAlso ?orthoGroup ;
-        up:encodedBy/skos:prefLabel ?prefferedGeneName ;
-          up:sequence/rdf:value ?value .
+  BIND(uniprotkb:P05067 AS ?protein)
+  ?protein a up:Protein ;
+    up:organism/up:scientificName ?scientificName ;
+    up:encodedBy/skos:prefLabel ?prefferedGeneName ;
+    up:sequence/rdf:value ?value .
+  # We do not ask the UniProt endpoint for the ?orthoGroup from the
+  # cross-reference as these can be out of date. We trust the content
+  # of the orthodb endpoint
   OPTIONAL {
     ?protein up:annotation ?functionAnnotation .
     ?functionAnnotation a up:Function_Annotation ;
       rdfs:comment ?functionComment .
   }
-  SERVICE <https://sparql.orthodb.org/sparql>{
+  SERVICE <https://sparql.orthodb.org/sparql/>{
     ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
     ?orthoGroup orthodb:hasMember ?xref .
-    ?xref orthodb:xref/orthodb:xrefResource uniprotkb:P05067 .
+    ?xref orthodb:xref/orthodb:xrefResource ?protein .
   }
 }""" ;
     schema:keywords "ortholog" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
-    spex:federatesWith <https://sparql.orthodb.org/sparql> .
+    spex:federatesWith <https://sparql.orthodb.org/sparql/> .
 
