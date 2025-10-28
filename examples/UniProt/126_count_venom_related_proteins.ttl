@@ -1,0 +1,47 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:126_count_venom_related_proteins a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Count the number of entries that are annotated to be related to venomous activity in selected taxonomic groups"^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up:  <http://purl.uniprot.org/core/>
+PREFIX location: <http://purl.uniprot.org/locations/>
+SELECT
+  (COUNT(DISTINCT ?protein) AS ?proteins)
+  ?grouping
+  ?groupingScientificName
+WHERE
+{
+  VALUES ?grouping {
+    taxon:6103 #sea anemones
+    taxon:8570 #snakes
+    taxon:6855 #scorpions
+    taxon:6893 #Araneae
+    taxon:50557 #Insecta
+    taxon:37797 #Conoidea
+  }
+  ?grouping up:scientificName ?groupingScientificName .
+  ?taxon rdfs:subClassOf ?grouping.
+  ?protein up:organism ?taxon .
+  {
+    ?protein up:annotation ?tsa .
+    ?tsa a up:Tissue_Specificity_Annotation ;
+           rdfs:comment ?tsac .
+     FILTER(REGEX(?tsac,\"venom\", \"i\"))
+  } UNION {
+   ?protein up:annotation ?scla .
+   # location:177 is nematocyst
+   ?scla a up:Subcellular_Location_Annotation ;
+          up:locatedIn/up:cellularComponent location:177 .
+  }
+}
+GROUP BY ?grouping ?groupingScientificName
+ORDER BY (COUNT(DISTINCT ?protein))""";
+  schema:keywords "statistics", "tissue", "venom";
+  schema:target <https://sparql.uniprot.org/sparql> .
