@@ -22,7 +22,7 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHER
         	emi:hasTarget ?yOrg ;
 		emi:isClassifiedWith ?intxnName ;
 		prov:atLocation ?loc ; # retrieve location, latitude and longitude of interactions
-		wgs:lat ?lats ;					
+		wgs:lat ?lats ;
 		wgs:long ?longs .
 	?xOrg emi:inTaxon ?sourceWD ; # retrieve interaction-source and its scientific name as listed in GloBI
 		rdfs:label ?sourceName ;
@@ -32,8 +32,8 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHER
 		sosa:isSampleOf ?targetSample .
 
 	# metabolite data
-        { 
-		SELECT DISTINCT ?targetWD ?wd_chem WHERE {		
+        {
+		SELECT DISTINCT ?targetWD ?wd_chem WHERE {
 			?material sosa:hasSample ?extract ;
                         	sosa:isSampleOf ?organe .
                 	?organe emi:inTaxon ?targetWD .	# filter by target wikidata-id
@@ -49,8 +49,8 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHER
                 	VALUES ?wd_chem { wd:Q27107580 } # filter on the wikidata-id of Onpordopicrin
 		}
 	} UNION	# union with the lotus metabolite data from wikidata
-	{ 
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	{
+		SERVICE <https://qlever.dev/api/wikidata> {
 			?wd_chem wdt:P235 ?ik ;
    				wdt:P703 ?targetWD .
 		 	VALUES ?wd_chem { wd:Q27107580 }
@@ -58,4 +58,4 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?targetWD ?targetName ?loc WHER
 	}
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

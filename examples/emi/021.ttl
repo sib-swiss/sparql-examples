@@ -46,8 +46,8 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnId ?targetWD ?targetName 
                         VALUES ?wd_chem { wd:Q27107545 }
                 }
 	}  UNION # union with data from wikidata (lotus)
-	{ 
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	{
+		SERVICE <https://qlever.dev/api/wikidata> {
 			?wd_chem wdt:P235 ?ik ;
    				wdt:P703 ?xWD .
 			VALUES ?wd_chem { wd:Q27107545 }
@@ -55,4 +55,4 @@ SELECT DISTINCT ?sourceWD ?sourceName ?intxnName ?intxnId ?targetWD ?targetName 
 	}
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

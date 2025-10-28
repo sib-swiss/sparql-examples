@@ -15,11 +15,11 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX emi: <https://w3id.org/emi#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
 PREFIX qudt: <https://qudt.org/schema/qudt/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>		
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 SELECT DISTINCT ?source_wdx ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComment WHERE {
 	# metabolite data
 	{
-		SELECT DISTINCT ?source_wdx WHERE {						
+		SELECT DISTINCT ?source_wdx WHERE {
 			?material sosa:hasSample ?extract ;
 		        	sosa:isSampleOf ?organe .
 		        ?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx
@@ -37,25 +37,25 @@ SELECT DISTINCT ?source_wdx ?sourceName ?tryDataLab ?tryDataVal ?unit ?unitComme
 			FILTER (REGEX(STR(?npcSuperClass), 'DITERPENOIDS'))
 		}
 	} UNION	#union with data from lotus (integrated in wikidata)
-	{ 
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	{
+		SERVICE <https://qlever.dev/api/wikidata> {
 			?wd_chem wdt:P235 ?structure_inchikey ;
 				((wdt:P31|wdt:P279)/(wdt:P279*)) wd:Q47006367 ;	# check if the class/superclass of the chemical is Diterpenoids
    				wdt:P703 ?source_wdx .
 		}
 	}
-	# trait data 	        
-	?trySpName emi:inTaxon ?wdx .						
+	# trait data
+	?trySpName emi:inTaxon ?wdx .
 	?trySpObs sosa:isSampleOf ?trySpName ; # trait/non-trait data for trySpName (scientific name of plant species as listed in trydb)
 		rdfs:label ?sourceName ;
 		sosa:isFeatureOfInterestOf ?tryObId .
-	?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName matching the one from metabolite queries 
+	?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName matching the one from metabolite queries
 	?tryObId sosa:hasResult ?tryData .
 	?tryData rdfs:label ?tryDataLab ;
 		rdf:type emi:Trait ; # retrieve data which is labelled as 'Trait' and its values
 		rdf:value ?tryDataVal ;
-		qudt:hasUnit ?unit ; 
+		qudt:hasUnit ?unit ;
 		rdfs:comment ?unitComment . # original units for Trait data as listed in trydb
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

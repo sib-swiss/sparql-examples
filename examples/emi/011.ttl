@@ -27,11 +27,11 @@ SELECT DISTINCT ?wdx_Source ?sourceName ?intxnLabel ?intxnType ?wdx_Target ?targ
                                 rdfs:label ?targetName . # scientific name of target as given in GloBI
                 }
     }
-    SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+    SERVICE <https://qlever.dev/api/wikidata> {
         {
             ?wdx_Source wdt:P141 wd:Q719675 ; # filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
                 wdt:P171* wd:Q879246 ;
-        } UNION 
+        } UNION
         {
             ?wdx_Target wdt:P141 wd:Q719675 ; # filter target wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
                 wdt:P171* wd:Q879246 ;
@@ -39,4 +39,4 @@ SELECT DISTINCT ?wdx_Source ?sourceName ?intxnLabel ?intxnType ?wdx_Target ?targ
     }
 }""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .

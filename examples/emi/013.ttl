@@ -22,20 +22,20 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
 		sosa:isFeatureOfInterestOf ?tryObId .
 	?tryObId sosa:hasResult ?tryData .
 	?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName
-	?tryData rdfs:label ?tryDataLab ;					
+	?tryData rdfs:label ?tryDataLab ;
 		rdf:type emi:Trait ; #retrieve data which is labelled as 'Trait' and its values
 		rdf:value ?tryDataVal .
 	FILTER (STR(?tryDataLab) = 'Seed dry mass' ) #filter on data label 'Seed dry mass'
-	FILTER (?tryDataVal >= 100)						
-	SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {
+	FILTER (?tryDataVal >= 100)
+	SERVICE <https://qlever.dev/api/wikidata> {
         	?source_wdx wdt:P141 wd:Q719675 . # filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
-        }	
+        }
 	# metabolite data
-	{ 
-		SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {	
-			?material sosa:hasSample ?extract ;				
-		        	sosa:isSampleOf ?organe .	
-			?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx 
+	{
+		SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {
+			?material sosa:hasSample ?extract ;
+		        	sosa:isSampleOf ?organe .
+			?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx
 			?extract sosa:isFeatureOfInterestOf ?lcms .
 		    	?lcms sosa:hasResult ?feature_list .
 			?feature_list emi:hasLCMSFeature ?feature .
@@ -49,11 +49,11 @@ SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
 	}
 	UNION # union with data from lotus (integrated in wikidata)
 	{
-		SERVICE <https://qlever.cs.uni-freiburg.de/api/wikidata> {		
-			?wd_chem wdt:P235 ?structure_inchikey;				
-   				wdt:P703 ?source_wdx .	
+		SERVICE <https://qlever.dev/api/wikidata> {
+			?wd_chem wdt:P235 ?structure_inchikey;
+   				wdt:P703 ?source_wdx .
 		}
 	}
 } LIMIT 1000""" ;
     schema:target <https://kg.earthmetabolome.org/metrin/api/> ;
-    spex:federatesWith <https://qlever.cs.uni-freiburg.de/api/wikidata> .
+    spex:federatesWith <https://qlever.dev/api/wikidata> .
