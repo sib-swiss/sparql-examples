@@ -33,7 +33,7 @@ WHERE
     ?protein up:annotation ?tsa .
     ?tsa a up:Tissue_Specificity_Annotation ;
            rdfs:comment ?tsac .
-     FILTER(REGEX(?tsac,\"venom\", \"i\"))
+     FILTER(REGEX(?tsac, 'venom', 'i'))
   } UNION {
    ?protein up:annotation ?scla .
    # location:177 is nematocyst
@@ -42,6 +42,6 @@ WHERE
   }
 }
 GROUP BY ?grouping ?groupingScientificName
-ORDER BY (COUNT(DISTINCT ?protein))""";
+ORDER BY ?proteins""";
   schema:keywords "statistics", "tissue", "venom";
   schema:target <https://sparql.uniprot.org/sparql> .
