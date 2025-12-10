@@ -12,8 +12,7 @@ body:
         Provide a working SPARQL query example for a known public SPARQL endpoint.
         Make sure the query runs without errors and returns results.
       placeholder: "Add a working SPARQL query"
-      # TODO: uncomment once https://github.com/sib-swiss/sparql-examples-utils/pull/8 merged and sparql-examples-utils v2.0.23 is released
-      # render: sparql
+      render: sparql
     validations:
       required: true
 
