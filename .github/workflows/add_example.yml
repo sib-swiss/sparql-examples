@@ -31,7 +31,7 @@ jobs:
         python-version: '3.x'
 
     - name: Download sparql-examples-utils.jar
-      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.22/sparql-examples-utils-2.0.22-uber.jar" -O sparql-examples-utils.jar
+      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils.jar
 
     - name: Parse issue and create turtle file
       id: create_ttl
