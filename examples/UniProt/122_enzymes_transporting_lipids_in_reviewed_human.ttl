@@ -33,7 +33,7 @@ WHERE {
    # Link protein to catalytic activity, then to Rhea reaction
   ?protein up:annotation ?annotation .
   ?annotation up:catalyticActivity ?catalytic_activity_obj .
-  ?catalytic_activity up:catalyzedReaction?rhea .
+  ?catalytic_activity up:catalyzedReaction ?rhea .
 }""" ;
     schema:keywords "list" , "reaction", "rhea", "lipid" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
