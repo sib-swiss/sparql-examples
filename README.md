@@ -139,6 +139,6 @@ If you reuse any part of this work, please cite [the GigaScience paper](https://
     month = {10},
     title = {A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
     url = {https://github.com/sib-swiss/sparql-examples-utils},
-    year = {2024}
+    year = {2025}
 }
 ```
