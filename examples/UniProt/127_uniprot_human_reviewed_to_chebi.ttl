@@ -1,0 +1,44 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:127_uniprot_human_reviewed_to_chebi a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "UniProt entries use ChEBI in the following annotations: Ligands, Cofactors and Enzymatic Activity. This query shows how these can all be retrieved in one go, to make a UniProt to ChEBI mapping. The example query is made smaller by retrieving only human entries in Swiss-Prot."^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT
+	(SUBSTR(STR(?protein), STRLEN(STR(uniprotkb:))+1) AS ?proteinAc)
+	(GROUP_CONCAT(DISTINCT ?chebiId; separator=',') AS ?chebis)
+WHERE {
+	?protein up:reviewed true ;
+	up:organism taxon:9606 .
+	{
+		?protein up:annotation ?ligandAnnotation .
+		?ligandAnnotation up:ligand/rdfs:subClassOf ?chebi
+	} UNION {
+		?protein up:annotation ?cofactorAnnotation .
+		?cofactorAnnotation up:cofactor ?chebi .
+	} UNION {
+		?protein up:annotation ?catalyticActivityAnnotation .
+		?catalyticActivityAnnotation a up:Catalytic_Activity_Annotation ;
+			up:catalyticActivity ?catalyticActivity .
+		?catalyticActivity up:catalyzedReaction ?rhea .
+		?rhea rh:side/rh:contains/rh:compound ?compound .
+		?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+	}
+	GRAPH <http://sparql.uniprot.org/chebi> {
+		?chebi a owl:Class .
+	}
+	BIND((CONCAT(\"chebi:\",SUBSTR(STR(?chebi), STRLEN(STR(CHEBI:))+1))) AS ?chebiId)
+} GROUP BY ?protein""";
+  schema:keywords "CHEBI", "catalytic activity", "cofactor", "enzyme", "ligand";
+  schema:target <https://sparql.uniprot.org/sparql> .
