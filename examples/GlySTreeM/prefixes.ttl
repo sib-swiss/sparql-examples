@@ -1,0 +1,22 @@
+prefix sh: <http://www.w3.org/ns/shacl#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+_:glystreem_sparql_examples_prefixes
+  a owl:Ontology ;
+  owl:imports sh: .
+
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+_:glystreem_sparql_examples_prefixes sh:declare _:prefix_glystreem_part .
+_:prefix_glystreem_part sh:prefix "part" ;
+  sh:namespace "http://purl.org/vocab/participation/schema#"^^xsd:anyURI .
+
+_:glystreem_sparql_examples_prefixes sh:declare _:prefix_glystreem_modl .
+_:prefix_glystreem_modl sh:prefix "modl" ;
+  sh:namespace "https://archive.org/services/purl/domain/modular_ontology_design_library/"^^xsd:anyURI .
+
+_:glystreem_sparql_examples_prefixes sh:declare _:prefix_glystreem .
+_:prefix_glystreem sh:prefix "glystreem" ;
+  sh:namespace "https://glyconnect.expasy.org/rdf/structures#"^^xsd:anyURI .
