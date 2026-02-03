@@ -9,7 +9,7 @@ ex:17 a sh:SPARQLExecutable,
     rdfs:comment "Select all Rhea reactions that involve a lipid, i.e. children of CHEBI:18059 in the ChEBI hierarchy."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>
@@ -38,7 +38,7 @@ WHERE {
     ?not7_3 rdfs:subClassOf* CHEBI:18059 . # lipid
     ?not7_3 rdfs:subClassOf ?chebiRestriction .
     ?chebiRestriction a owl:Restriction .
-    ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
+    ?chebiRestriction owl:onProperty chemrof:has_major_microspecies_at_pH_7_3 .
     ?chebiRestriction owl:someValuesFrom ?chebi .
     ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
   }

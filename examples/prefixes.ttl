@@ -149,15 +149,10 @@ _:prefix_chebi
   sh:prefix "CHEBI" ;
   sh:namespace "http://purl.obolibrary.org/obo/CHEBI_"^^xsd:anyURI .
 
-_:sparql_examples_prefixes sh:declare _:prefix_chebihash .
-_:prefix_chebislash
-  sh:prefix "chebislash" ;
-  sh:namespace "http://purl.obolibrary.org/obo/chebi/"^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_chebislash .
-_:prefix_chebihash
-  sh:prefix "chebihash" ;
-  sh:namespace "http://purl.obolibrary.org/obo/chebi#"^^xsd:anyURI .
+_:sparql_examples_prefixes sh:declare _:prefix_chemrof .
+_:prefix_chemrof
+  sh:prefix "chemrof" ;
+  sh:namespace "https://w3id.org/chemrof/"^^xsd:anyURI .
 
 _:sparql_examples_prefixes sh:declare _:prefix_rhea .
 _:prefix_rhea

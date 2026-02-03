@@ -11,8 +11,7 @@ ex:132_pretend_chebi_hierarchy_is_consistent_over_acid_base_relations
   sh:select """
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebislash: <http://purl.obolibrary.org/obo/chebi/>
-PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 SELECT
@@ -24,20 +23,20 @@ WHERE {
     ?chebi rdfs:subClassOf+ ?chebiRestriction .
     ?chebiRestriction a owl:Restriction .
     {
-      ?chebiRestriction owl:onProperty chebihash:is_conjugate_acid_of .
+      ?chebiRestriction owl:onProperty chemrof:is_conjugate_acid_of .
     } UNION {
-      ?chebiRestriction owl:onProperty chebihash:is_conjugate_base_of .
+      ?chebiRestriction owl:onProperty chemrof:is_conjugate_base_of .
     }
     ?chebiRestriction owl:someValuesFrom ?chebiRelationTarget .
     ?chebiRelationTarget rdfs:subClassOf+ ?chebiClass .
     FILTER(NOT EXISTS{
-      # Zwiterions should b excluded from being considered for transfering the hierarchy
+      # Zwitterions should be excluded from being considered for transferring the hierarchy
       ?chebi rdfs:subClassOf CHEBI:27369 .
     })
 
     # If the charge is zero then don't expand the hierarchy.
     OPTIONAL {
-      ?chebi chebislash:charge "0" .
+      ?chebi chemrof:charge 0 .
       BIND(true AS ?chebiChargeZero)
     }
     FILTER(!BOUND(?chebiChargeZero))

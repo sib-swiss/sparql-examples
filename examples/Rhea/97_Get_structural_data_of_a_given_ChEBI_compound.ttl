@@ -13,7 +13,7 @@ ex:97_Get_structural_data_of_a_given_ChEBI_compound a sh:SPARQLExecutable,
 #
 PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi/>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 SELECT
   ?chebi
   ?formula
@@ -25,12 +25,12 @@ SELECT
   ?inchi
 WHERE {
   BIND (CHEBI:29985 AS ?chebi)
-  ?chebi chebihash:inchi ?inchi ;
-    chebihash:smiles ?smiles ;
-    chebihash:formula ?formula ;
-    chebihash:mass ?mass ;
-    chebihash:charge ?charge ;
-    chebihash:inchikey ?inchikey ;
-    chebihash:monoisotopicmass ?monoisotopicmass .
+  ?chebi chemrof:inchi ?inchi ;
+    chemrof:smiles ?smiles ;
+    chemrof:formula ?formula ;
+    chemrof:mass ?mass ;
+    chemrof:charge ?charge ;
+    chemrof:inchikey ?inchikey ;
+    chemrof:monoisotopicmass ?monoisotopicmass .
 }""";
  schema:target <https://sparql.rhea-db.org/sparql> .

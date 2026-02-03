@@ -9,12 +9,12 @@ ex:98_Get_chebi_compound_of_a_given_InChI a sh:SPARQLExecutable,
   sh:select """
 PREFIX rh:<http://rdf.rhea-db.org/>
 PREFIX obo:<http://purl.obolibrary.org/obo/>
-PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi/>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 SELECT
   ?chebi
   ?inchi
 WHERE {
   BIND("InChI=1S/C5H9NO4/c6-3(5(9)10)1-2-4(7)8/h3H,1-2,6H2,(H,7,8)(H,9,10)/t3-/m0/s1" AS ?inchi)
-  ?chebi chebihash:inchi ?inchi .
+  ?chebi chemrof:inchi ?inchi .
 }""";
  schema:target <https://sparql.rhea-db.org/sparql> .

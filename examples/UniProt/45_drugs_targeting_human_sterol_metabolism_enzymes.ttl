@@ -9,7 +9,7 @@ ex:45 a sh:SPARQLExecutable,
     rdfs:comment "Retrieve drugs that target human enzymes involved in sterol metabolism (federated query with WikiData and Rhea)."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>
@@ -36,9 +36,9 @@ WHERE {
       ?compound rh:chebi ?chebi .
       ?chebi2 rdfs:subClassOf ?chebiRestriction .
       ?chebiRestriction
-		a owl:Restriction ;
-		owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 ;
-		owl:someValuesFrom ?chebi .
+        a owl:Restriction ;
+        owl:onProperty chemrof:has_major_microspecies_at_pH_7_3 ;
+        owl:someValuesFrom ?chebi .
       ?chebi2 (rdfs:subClassOf)+ CHEBI:15889
     }
   }
