@@ -13,6 +13,7 @@ PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX RO: <http://purl.obolibrary.org/obo/RO>
 
 SELECT
   ?chebi
@@ -23,9 +24,9 @@ WHERE {
     ?chebi rdfs:subClassOf+ ?chebiRestriction .
     ?chebiRestriction a owl:Restriction .
     {
-      ?chebiRestriction owl:onProperty chemrof:is_conjugate_acid_of .
+      ?chebiRestriction owl:onProperty RO:0018034 # is_conjugate_acid_of .
     } UNION {
-      ?chebiRestriction owl:onProperty chemrof:is_conjugate_base_of .
+      ?chebiRestriction owl:onProperty RO:0018033 #is_conjugate_base_of .
     }
     ?chebiRestriction owl:someValuesFrom ?chebiRelationTarget .
     ?chebiRelationTarget rdfs:subClassOf+ ?chebiClass .
