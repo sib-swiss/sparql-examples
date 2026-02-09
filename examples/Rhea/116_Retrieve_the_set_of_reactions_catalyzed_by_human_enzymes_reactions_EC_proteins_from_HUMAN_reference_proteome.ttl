@@ -27,10 +27,7 @@ WHERE {
   ?reaction rh:side ?reactionSide .
   ?reactionSide rh:contains ?participant .
   ?participant rh:compound ?compound .
-  # ?compound rh:chebi CHEBI:57970 .
   ?compound rh:chebi ?chebi .
-  ?chebi rdfs:subClassOf+ CHEBI:18059 .
-
 
   SERVICE <https://sparql.uniprot.org/sparql> {
     ?protein a up:Protein ;
