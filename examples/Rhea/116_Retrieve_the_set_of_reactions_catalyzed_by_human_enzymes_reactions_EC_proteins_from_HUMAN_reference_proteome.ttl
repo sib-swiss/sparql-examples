@@ -32,13 +32,14 @@ WHERE {
   SERVICE <https://sparql.uniprot.org/sparql> {
     ?protein a up:Protein ;
     up:reviewed true ;
-    up:organism taxon:83333 ;
-    up:classifiedWith keywords:1185 .
-      {?protein up:enzyme ?ecNumber}
-    UNION
-      {?protein up:domain/up:enzyme ?ecNumber}
-    UNION
-      {?protein up:component/up:enzyme ?ecNumber} .
+    up:organism taxon:9606 ;
+    {
+      ?protein up:enzyme ?ecNumber
+    } UNION {
+      ?protein up:domain/up:enzyme ?ecNumber
+    } UNION {
+      ?protein up:component/up:enzyme ?ecNumber
+    } .
   }
 }""";
   <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.uniprot.org/sparql>;
