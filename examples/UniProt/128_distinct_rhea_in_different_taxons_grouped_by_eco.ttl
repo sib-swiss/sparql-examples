@@ -1,0 +1,57 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:128_distinct_rhea_in_different_taxons_grouped_by_eco a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Count of unique Rhea reactions/Evidence code pairs annotated in different taxa in Swiss-Prot"@en;
+  schema:keywords "Reaction", "Taxonomy", "Statistics" ;
+  sh:select """
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT
+  (COUNT(DISTINCT ?rhea) as ?uniqueRheaCount)
+  ?taxon
+  ?taxonName
+  ?eco
+WHERE
+{
+   #Select taxa
+   VALUES (?taxon)
+   {
+     (taxon:9606)  # Homo sapiens
+     (taxon:7742)  # Vertebrata
+     (taxon:33208) # Metazoa
+     (taxon:33090) # Viridiplantae
+     (taxon:4751)  # Fungi
+     (taxon:2)     # Bacteria
+     (taxon:2157)  # Archaea
+     (taxon:10239) # Viruses
+   }
+  ?taxon up:scientificName ?taxonName .
+  GRAPH <http://sparql.uniprot.org/taxonomy>{
+     ?subc rdfs:subClassOf ?taxon .
+   }
+  GRAPH <http://sparql.uniprot.org/uniprot>{
+    {
+      ?protein up:organism ?subc .
+    } UNION {
+      # Only useful in the Homo sapiens case
+      ?protein up:organism ?taxon .
+    }
+    ?protein up:reviewed true .
+    ?protein up:annotation ?annot .
+    ?annot up:catalyticActivity ?caa .
+    ?caa up:catalyzedReaction ?rhea .
+    [] rdf:subject ?annot ;
+       rdf:object ?caa ;
+       up:attribution/up:evidence ?eco
+  }
+}
+GROUP BY ?taxon ?taxonName ?eco
+ORDER BY ?taxonName ?eco""" ;
+    schema:target <https://sparql.uniprot.org/sparql> .
