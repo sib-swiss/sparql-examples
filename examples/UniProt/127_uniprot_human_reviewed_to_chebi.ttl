@@ -38,7 +38,7 @@ WHERE {
 	GRAPH <http://sparql.uniprot.org/chebi> {
 		?chebi a owl:Class .
 	}
-	BIND((CONCAT(\"chebi:\",SUBSTR(STR(?chebi), STRLEN(STR(CHEBI:))+1))) AS ?chebiId)
+	BIND((CONCAT('chebi:',SUBSTR(STR(?chebi), STRLEN(STR(CHEBI:))+1))) AS ?chebiId)
 } GROUP BY ?protein""";
   schema:keywords "ChEBI", "catalytic activity", "cofactor", "enzyme", "ligand";
   schema:target <https://sparql.uniprot.org/sparql> .
