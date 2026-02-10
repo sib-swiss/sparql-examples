@@ -19,8 +19,8 @@ WHERE {
   # reviewed entries (UniProtKB/Swiss-Prot)
   ?protein up:reviewed true . 
   # restricted to Human taxid
-  ?uniprot up:organism taxon:9606 . 
-  ?uniprot up:proteome ?proteomeData .
+  ?protein up:organism taxon:9606 .
+  ?protein up:proteome ?proteomeData .
   BIND( strbefore( str(?proteomeData), "#" ) as ?proteome )
   BIND( strafter( str(?proteomeData), "#" ) as ?replicon )
 }""" ;
