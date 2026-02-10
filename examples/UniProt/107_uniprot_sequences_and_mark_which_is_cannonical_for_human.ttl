@@ -34,8 +34,9 @@ WHERE {
         BIND(true AS ?isComplicated)
       }
       # If it is an external isoform it's id would not match the 
-      # entry primary accession
-      BIND(IF(?isComplicated, STRENDS(STR(?entry), STRBEFORE(SUBSTR(STR(?sequence), 34),'-')),?likelyIsCanonical) AS ?isCanonical)
+      # entry primary accession. We test that the variable is bound
+      # else an UNDEF might fail the query from working
+      BIND(IF(BOUND(?isComplicated), STRENDS(STR(?entry), STRBEFORE(SUBSTR(STR(?sequence), 34),'-')),?likelyIsCanonical) AS ?isCanonical)
   }
 }""" ;
     schema:keywords "isoform" , "sequence" ;
