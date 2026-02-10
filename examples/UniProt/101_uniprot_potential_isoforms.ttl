@@ -11,7 +11,7 @@ ex:101_uniprot_potential_isoforms a sh:SPARQLExecutable,
     sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT ?entry ?sequence ?isCanonical
+SELECT ?entry ?sequence
 WHERE {
   # We don't want to look into the UniParc graph which will 
   # confuse matters
