@@ -41,9 +41,8 @@ WHERE {
     up:catalyticActivity ?ca .
   ?ca up:catalyzedReaction ?reaction .
   # federated query to Bgee (expression data)
-  BIND(IRI(REPLACE(STR(?ensemblGene), "\\\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
   SERVICE <https://www.bgee.org/sparql/> {
-    ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
+    ?gene lscr:xrefUniprot ?protein ;
       genex:isExpressedIn ?anatomicEntity .
     ?anatomicEntity rdfs:label ?anatomicEntityLabel .
   }
