@@ -15,8 +15,7 @@ SELECT
 	(COUNT(?rhea) AS ?rheaAnnotated)
 WHERE {
   GRAPH <http://sparql.uniprot.org/uniprot> {
-    ?protein up:reviewed ?reviewed ;
-             up:organism ?taxon ;
+    ?protein up:organism ?taxon ;
              up:annotation ?annotation .
 	?annotation up:catalyticActivity ?caa .
     ?caa up:catalyzedReaction ?rhea .
