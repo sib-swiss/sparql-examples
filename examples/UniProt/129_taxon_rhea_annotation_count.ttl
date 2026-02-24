@@ -6,7 +6,7 @@
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:129_taxon_rhea_annotation_count a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
-  rdfs:comment "List Taxa Identifiers and the number of annotated Rhea reaction in them that have an experimental evidence."^^rdf:HTML;
+  rdfs:comment "List Taxa Identifiers and the number of annotated Rhea reactions in each that have an experimental evidence."^^rdf:HTML;
   sh:prefixes _:sparql_examples_prefixes;
   sh:select """PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -28,5 +28,5 @@ WHERE {
     ?attr up:evidence ECO:0000269 .
   }
 } GROUP BY ?taxon""";
-  schema:keywords "count", "enzyme", "taxon";
+  schema:keywords "count", "enzyme", "taxon", "experimental";
   schema:target <https://sparql.uniprot.org/sparql> .
