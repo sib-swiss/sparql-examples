@@ -142,3 +142,20 @@ If you reuse any part of this work, please cite [the GigaScience paper](https://
     year = {2025}
 }
 ```
+
+## Forking for your own use database/endpoint/project
+
+We *love* for you to use the same representation to document your database/endpoint/project SPARQL queries. 
+The best approach is to start a new project in github and then copy our .github/actions to your own new project (not a fork).
+
+## Jekyl or mkdocs
+If you like the static pages to be generated with Jekyll:
+ * copy the
+   * _includes
+   * _layouts
+   * _config.yml
+* Do not copy as is
+  * _includes/matamo.html, this would include our tracking code into your site
+
+If you like mkdocs (recommended) have a look at https://github.com/JervenBolleman/wikibase-sparql-examples/ instead.
+
