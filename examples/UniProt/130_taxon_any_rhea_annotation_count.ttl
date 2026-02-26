@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:130_taxon_any_rhea_annotation_count a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "List Taxa Identifiers and the number of annotated Rhea reactions for each"^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT 
+	?taxon
+	(COUNT(?rhea) AS ?rheaAnnotated)
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:organism ?taxon ;
+             up:annotation ?catalyticActivityAnnotation .
+	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivity up:catalyzedReaction ?rhea .
+  }
+} GROUP BY ?taxon""";
+  schema:keywords "count", "enzyme", "taxon";
+  schema:target <https://sparql.uniprot.org/sparql> .
