@@ -18,11 +18,11 @@ SELECT
 WHERE {
   GRAPH <http://sparql.uniprot.org/uniprot> {
     ?protein up:organism ?taxon ;
-             up:annotation ?annotation .
-	?annotation up:catalyticActivity ?caa .
-    ?caa up:catalyzedReaction ?rhea .
-    [] rdf:subject ?annotation ; 
-       rdf:object ?caa ; 
+             up:annotation ?catalyticActivityAnnotation .
+	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivity up:catalyzedReaction ?rhea .
+    [] rdf:subject ?catalyticActivityAnnotation ; 
+       rdf:object ?catalyticActivity ; 
        up:attribution ?attr .
     ?attr up:evidence ECO:0000269 .
   }
