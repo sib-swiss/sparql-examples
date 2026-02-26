@@ -16,9 +16,9 @@ SELECT
 WHERE {
   GRAPH <http://sparql.uniprot.org/uniprot> {
     ?protein up:organism ?taxon ;
-             up:annotation ?annotation .
-	?annotation up:catalyticActivity ?caa .
-    ?caa up:catalyzedReaction ?rhea .
+             up:annotation ?catalyticActivityAnnotation .
+	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivity up:catalyzedReaction ?rhea .
   }
 } GROUP BY ?taxon""";
   schema:keywords "count", "enzyme", "taxon";
