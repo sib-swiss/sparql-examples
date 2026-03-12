@@ -21,7 +21,7 @@ WHERE{
   GRAPH <http://sparql.uniprot.org/uniparc> {
     ?uniparc up:sequenceFor ?protein ;
       rdfs:seeAlso ?interproMemberDatabaseXref .
-    ?interproDatabaseXref up:signatureSequenceMatch ?sam .
+    ?interproMemberDatabaseXref up:signatureSequenceMatch ?sam .
     ?sam faldo:begin ?sab ;
       faldo:end ?sae .
     ?sab faldo:position ?matchStart ;
