@@ -15,21 +15,19 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
-
-SELECT 
-	?protein 
-	?begin
-	?end
-	?chromosome
-	?assembly
+SELECT
+    ?protein
+    ?begin
+    ?end
+    ?chromosome
+    ?assembly
 WHERE {
     {
-        BIND(uniprotkb:P05067 AS ?proteinIRI)
-        BIND (SUBSTR(STR(?proteinIRI), STRLEN(STR(uniprotkb:))+1) AS ?protein)
+        BIND(uniprotkb:P05067 AS ?protein)
     }
     SERVICE <https://query.wikidata.org/sparql> {
-        ?wp wdt:P352 ?protein ;
-            wdt:P702 ?wg . 
+        ?wp wdt:P2888 ?protein ;
+            wdt:P702 ?wg .
         ?wg p:P644   ?wgss .
         ?wgss ps:P644        ?begin ;
           pq:P1057/wdt:P1813 ?chromosome ;
@@ -39,7 +37,7 @@ WHERE {
           pq:P1057/wdt:P1813 ?chromosome ;
           pq:P659/rdfs:label ?assembly .
         FILTER(lang(?assembly) = "en")
-  } 
+  }
 }""" ;
     schema:keywords "chromosome location" , "gene" , "Wikidata" , "federated query" ;
     schema:target <https://sparql.uniprot.org/sparql/> ;
