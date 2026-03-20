@@ -9,7 +9,7 @@ Each SPARQL query is itself in a turtle file. We use the following ontologies fo
 * RDF for basic type relations
 * schema.org for the target SPARQL endpoint and tagging relevant keywords
 
-The following illustrates an example to retrieve retrieve human enzymes that metabolize sphingolipids from the UniProt SPARQL endpoint, with a service call to Rhea endpoint.
+The following illustrates an example to retrieve human enzymes that metabolize sphingolipids from the UniProt SPARQL endpoint, with a service call to Rhea endpoint.
 
 ```turtle
 @prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> . # <!-- change per dataset
