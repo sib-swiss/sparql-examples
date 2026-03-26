@@ -11,7 +11,7 @@ Each SPARQL query is itself in a turtle file. We use the following ontologies fo
 
 # Having examples for your own endpoints
 
-Use the [sparql-examples template](https://github.com/sib-swiss/sparql-examples-template) to create a new repository for examples of your own endpoints. Fork this repository and open a pull request if you want to contribute to the SIB SPARQL examples.
+Use the [sparql-examples template](https://github.com/sib-swiss/sparql-examples-template) to create a new repository for examples of your own endpoints. If you want to contribute to the SIB SPARQL examples, fork the main [sib-swiss/sparql-examples](https://github.com/sib-swiss/sparql-examples) repository and open a pull request.
 
 # What it looks like
 
