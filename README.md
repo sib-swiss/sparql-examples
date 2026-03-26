@@ -1,4 +1,8 @@
-# SPARQL examples
+# Having examples for your own endpoints
+
+Please use the [template](https://github.com/sib-swiss/sparql-examples-template) to create a new repository for your own examples, fork if you want to contribute to the SIB examples.
+
+# SPARQL examples for SIB resources
 
 This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder.
 
@@ -8,6 +12,11 @@ Each SPARQL query is itself in a turtle file. We use the following ontologies fo
 * RDFS for comments and labels as shown in the user interfaces, annotated with a language tag
 * RDF for basic type relations
 * schema.org for the target SPARQL endpoint and tagging relevant keywords
+
+
+
+
+
 
 The following illustrates an example to retrieve human enzymes that metabolize sphingolipids from the UniProt SPARQL endpoint, with a service call to Rhea endpoint.
 
