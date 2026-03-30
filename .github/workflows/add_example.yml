@@ -22,7 +22,7 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v5
       with:
-        distribution: 'temurin'
+        distribution: 'graalvm'
         java-version: '25'
 
     - name: Set up Python

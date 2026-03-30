@@ -28,8 +28,8 @@ jobs:
     
     - uses: actions/setup-java@v5
       with:
-        distribution: 'temurin'
-        java-version: '21'
+        distribution: 'graalvm'
+        java-version: '25'
     
     - name: Install tester
       run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
