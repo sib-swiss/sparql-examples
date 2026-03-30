@@ -24,9 +24,9 @@ jobs:
     name: "publish html"
     runs-on: ubuntu-latest 
     steps: 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     
-    - uses: actions/setup-java@v4
+    - uses: actions/setup-java@v5
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -42,7 +42,7 @@ jobs:
 
     - name: Setup Pages
       id: pages
-      uses: actions/configure-pages@v5
+      uses: actions/configure-pages@v6
 
     - name: Build with Jekyll
       uses: actions/jekyll-build-pages@v1
@@ -51,7 +51,7 @@ jobs:
         destination: ./_site
        
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
 
   # Deployment job
   deploy:
@@ -63,4 +63,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

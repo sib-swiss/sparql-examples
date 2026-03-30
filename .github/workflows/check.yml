@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - uses: actions/setup-java@v4
+    - uses: actions/setup-java@v5
       with:
         distribution: 'temurin'
-        java-version: '21'
+        java-version: '25'
 
     - name: Install tester
       run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils.jar
