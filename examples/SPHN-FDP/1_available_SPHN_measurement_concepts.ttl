@@ -1,0 +1,30 @@
+@prefix ex: <https://purl.expasy.org/sparql-examples/SPHN-FDP/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:1_available_SPHN_measurement_concepts a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Which 'SPHN measurements concepts' are available in the FedData?"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX dcterms:<http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX sphn-catalog:<http://fdp.dcc.sib.swiss/catalog/>
+PREFIX void:<http://rdfs.org/ns/void#>
+PREFIX sphn:<https://biomedit.ch/rdf/sphn-schema/sphn>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  DISTINCT
+    ?class
+WHERE {
+  ?distribution dcterms:isPartOf sphn-catalog:58cd4839-5821-5dee-a859-72e4462c3659 .
+
+  ?concepts dcterms:isPartOf ?distribution .
+  ?concepts a void:Dataset .
+  ?concepts void:classPartition/void:class ?class .
+
+  ?class rdfs:subClassOf sphn:Measurement .
+}""" ;
+ schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
+
