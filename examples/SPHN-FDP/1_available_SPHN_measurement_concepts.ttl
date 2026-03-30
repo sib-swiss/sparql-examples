@@ -12,6 +12,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX sphn-catalog:<http://fdp.dcc.sib.swiss/catalog/>
 PREFIX void:<http://rdfs.org/ns/void#>
 PREFIX sphn:<https://biomedit.ch/rdf/sphn-schema/sphn>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT
   DISTINCT
