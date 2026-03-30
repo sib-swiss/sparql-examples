@@ -2,6 +2,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:3_how_many_health_datasets_are_available a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
@@ -32,5 +33,7 @@ WHERE {
     }
   }
 } GROUP BY ?source""" ;
- schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
+ schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> ;
+ spex:federatesWith <https://sparql.fellesdatakatalog.digdir.no>,
+   <https://sparql.healthdata.nl/repositories/fdp> .
 
