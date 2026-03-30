@@ -1,0 +1,36 @@
+@prefix ex: <https://purl.expasy.org/sparql-examples/SPHN-FDP/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:3_how_many_health_datasets_are_available a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "How many 'health' datasets are available?"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX data-theme: <http://publications.europa.eu/resource/authority/data-theme/>
+
+SELECT
+  ?source
+  (COUNT(?dataset) AS ?count)
+WHERE {
+  {
+    BIND('SPHN' AS ?source)
+    ?dataset a dcat:Dataset .
+    ?dataset dcat:theme data-theme:HEAL .
+  } UNION {
+    BIND('HealthRI' AS ?source)
+    SERVICE <https://sparql.healthdata.nl/repositories/fdp> {
+        ?dataset a dcat:Dataset .
+        ?dataset dcat:theme data-theme:HEAL .
+    }
+  } UNION {
+    BIND('Data.Norge' AS ?source)
+    SERVICE <https://sparql.fellesdatakatalog.digdir.no> {
+        ?dataset a dcat:Dataset .
+        ?dataset dcat:theme data-theme:HEAL .
+    }
+  }
+} GROUP BY ?source""" ;
+ schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
+
