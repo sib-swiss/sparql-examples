@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Count of sequence variation annotations by sequence variation type and other characteristics
+#+ tags:
+#+ - sequence variation
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?sv_name ?with_none_reported ?with_hgvs ?with_comment ?gene_cnt (count(*) as ?cases_cnt) {
+select ?sv ?sv_name ?nr ?with_none_reported ?hgvs ?with_hgvs ?comment ?with_comment (count(?gene) as ?gene_cnt) where {
+	?sv_type rdfs:subClassOf* cello:SequenceVariation .
+    ?sv_type rdfs:label ?sv_name .
+    ?sv a ?sv_type .
+    ?sv cello:ofGene ?gene .
+    optional { ?sv cello:hgvs ?hgvs . }
+    optional { ?sv cello:noneReported ?nr . }
+    optional { ?sv rdfs:comment ?comment . }
+  	bind (if(bound(?hgvs), "Yes", "No") as ?with_hgvs)
+  	bind (if(?nr = 1, "Yes", "No") as ?with_none_reported)
+  	bind (if(bound(?comment), "Yes", "No") as ?with_comment)
+}
+group by ?sv ?sv_name ?nr ?with_none_reported ?hgvs ?with_hgvs ?comment ?with_comment
+}
+group by ?sv_name ?with_none_reported ?with_hgvs ?with_comment ?gene_cnt
+order by ?sv_name ?with_none_reported

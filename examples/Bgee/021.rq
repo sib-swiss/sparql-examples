@@ -1,0 +1,16 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: Which species the Mt-co1 gene is present (without considering synonyms)?
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+SELECT ?name
+WHERE {
+    ?gene a orth:Gene ;
+        rdfs:label ?geneName ;
+        orth:organism ?organism .
+    ?organism obo:RO_0002162 ?taxon . # in taxon
+    ?taxon up:scientificName ?name .
+    FILTER ( UCASE(?geneName) = UCASE('Mt-co1') )
+}

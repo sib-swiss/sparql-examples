@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose genes are located in chromosome 2 region from 2p12 to 2p24.2
+#+ tags:
+#+ - chromosomal location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :gene ?gene .
+ ?gene :chromosome "2"^^xsd:string .
+ ?gene :band ?band.
+ filter (?band >= "p12"@en && ?band <= "p24.2"@en )
+}

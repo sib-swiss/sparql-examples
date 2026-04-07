@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find LCA in the OrthoDB tree for fruit fly and honey bee taxons
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT DISTINCT *
+WHERE {
+    ?lca a :Clade ; up:scientificName ?lcaname .
+    taxon:7227  rdfs:subClassOf* ?lca .
+    taxon:7460 rdfs:subClassOf* ?lca .
+    FILTER(not exists {
+        ?xca a :Clade ; rdfs:subClassOf ?lca .
+        taxon:7227    rdfs:subClassOf* ?xca .
+        taxon:7460   rdfs:subClassOf* ?xca .
+    })
+}

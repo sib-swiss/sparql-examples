@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with GO biological process annotations with evidence having the evidence code HDA and the quality GOLD
+#+ tags:
+#+ - QC
+#+ - evidence
+#+ - function
+#+ - quality
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform /:goBiologicalProcess /:evidence ?ev1.
+  ?ev1 :evidenceCode cv:ECO_0007005.
+  ?ev1 :quality :GOLD.
+}

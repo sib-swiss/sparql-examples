@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List UniProtKB proteins with their associated named gene
+#+ tags:
+#+ - gene name
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein
+  ?gene 
+WHERE {
+  ?protein a up:Protein ;
+           up:encodedBy ?gene .
+}

@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with peroxisome transit peptide annotations with evidence from UniProt that is negative
+#+ tags:
+#+ - QC
+#+ - evidence
+#+ - negative
+#+ - sequence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:peroxisomeTransitPeptide /:evidence ?ev.
+  ?ev :assignedBy source:Uniprot.
+  ?ev :negative 1.
+}

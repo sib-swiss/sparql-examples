@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries which are PE2-PE4 with a binary-interaction annotations with GOLD experimental evidence
+#+ tags:
+#+ - PE
+#+ - QC
+#+ - protein existence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry a :Entry.
+  ?entry :existence ?pe.
+  filter ( ?pe not in (:Evidence_at_protein_level,:Uncertain ))
+  ?entry :isoform ?iso.
+  ?iso :binaryInteraction /:evidence ?ev.
+  ?ev :quality :GOLD.
+  ?ev :evidenceCode cv:ECO_0000006. # experimental evidence
+}

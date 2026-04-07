@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with subcellular location gold and list of all these locations
+#+ tags:
+#+ - quality
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry (group_concat(distinct str(?loclab); SEPARATOR = ",") as ?locs) WHERE {
+ ?entry :isoform ?iso.
+ ?iso :cellularComponent ?locannot .
+ ?locannot :term ?locterm .
+ ?locterm rdfs:label ?loclab .
+ ?locannot :evidence ?locev .
+ ?locev :quality :GOLD .
+ filter not exists {?locannot :negativeEvidence ?locev .}
+}
+GROUP BY ?entry

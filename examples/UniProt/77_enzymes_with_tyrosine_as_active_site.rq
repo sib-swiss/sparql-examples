@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find enzymes with a Tyrosine (Y) as an active site
+#+ tags:
+#+ - active site
+#+ - enzyme
+#+ - search within sequence
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+WHERE {
+  ?protein up:annotation ?activeSiteAnnotation .
+  ?activeSiteAnnotation a up:Active_Site_Annotation ;
+    up:range ?range .
+  ?range faldo:begin ?begin .
+  ?begin faldo:position ?beginPosition ;
+    faldo:reference ?sequence .
+  ?sequence rdf:value ?sequenceVal .
+  FILTER(SUBSTR(?sequenceVal, ?beginPosition, 1) = 'Y')
+}

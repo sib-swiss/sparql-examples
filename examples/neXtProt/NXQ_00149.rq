@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: BRCA1 variants with at least 5 different Severe phenotypes
+#+ tags:
+#+ - phenotype
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+?pfname
+(count(?pvlabel) as ?severe_count)
+(group_concat(?pvlabel;separator=", and ") as ?severe_list)
+WHERE {
+ nextprot:NX_P38398 :isoform / :proteoform ?pf .
+ ?pf rdfs:label ?pfname .
+ ?pf :phenotypicVariation ?pv1 .
+ ?pv1 rdfs:comment ?pvlabel .
+ ?pv1 :evidence / :severity :Severe .
+ }
+group by ?pfname having (count(?pvlabel)>=5)
+order by desc(count(?pvlabel)) ?pfname

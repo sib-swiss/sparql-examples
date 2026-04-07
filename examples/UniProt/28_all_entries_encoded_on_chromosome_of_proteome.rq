@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Get the list of UniProtKB entries for the chromosome of proteome <a href="https://www.uniprot.org/proteomes/UP000000625">UP000000625</a>
+#+ tags:
+#+ - chromosome
+#+ - proteome
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?protein
+  ?proteome 
+WHERE
+{
+  ?protein a up:Protein ;
+           up:reviewed true ;
+           up:proteome ?proteome .
+  VALUES (?proteome) {(<http://purl.uniprot.org/proteomes/UP000000625#Chromosome>)}
+}

@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Count of publications referenced by publication type
+#+ tags:
+#+ - publication
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?pub_type (count(?cl) as ?cnt) where {
+  ?pub_type rdfs:subClassOf* cello:Publication .
+  optional {?cl rdf:type ?pub_type. }
+}
+group by ?pub_type
+order by desc(count(*))

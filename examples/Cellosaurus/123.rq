@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Statistics of methods used for gene knockout and gene integration
+#+ tags:
+#+ - gene integration
+#+ - gene knockout
+#+ - int
+#+ - integrated
+#+ - knockout
+#+ - ko
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX OBI: <http://purl.obolibrary.org/obo/OBI_>
+select  ?modification_class ?method_class  ?method_name (count(*) as ?cnt) where {
+  ?proc_inst cello:hasGenomeModificationMethod ?gem_inst .
+  ?proc_inst a ?modification_class .
+  ?proc_class rdfs:subClassOf OBI:0001364 . # parent cello:GeneIntegration and cello:GeneKnockdown
+  ?gem_inst a ?method_class .
+  #?gem_class rdfs:subClassOf OBI:0600043 . # genome modification method
+  ?method_class rdfs:label ?method_name .
+}
+group by  ?modification_class ?method_class ?method_name
+order by  ?modification_class desc(count(*)) ?method_class ?method_name

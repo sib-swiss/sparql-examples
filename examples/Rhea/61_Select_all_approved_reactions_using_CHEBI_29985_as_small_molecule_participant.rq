@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions using CHEBI:29985 (L-glutamate) as small molecule participant
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  (count(?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?smallMolecule .
+  ?smallMolecule rdfs:subClassOf+ CHEBI:29985
+}

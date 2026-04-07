@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all cross-references for a given reaction (RHEA:11680)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT 
+  ?reaction 
+  ?xref 
+WHERE {
+  BIND (rh:11680 AS ?reaction)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:directionalReaction ?directionalReaction .
+  OPTIONAL { ?directionalReaction rdfs:seeAlso ?xref . }
+  ?reaction rh:bidirectionalReaction ?bidirectionalReaction .
+  OPTIONAL { ?bidirectionalReaction rdfs:seeAlso ?xref . }
+}

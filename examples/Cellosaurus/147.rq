@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some hybrid cell lines with the species from which they originate
+#+ tags:
+#+ - hybrid
+#+ - ox
+#+ - species
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select
+  ?cl_class ?cl ?cl_name
+  (count(?species_name) as ?species_cnt)
+  (group_concat(?species_name ; separator = ', ') as ?species_list)
+  where {
+    select ?cl_class ?cl ?cl_name ?species_name
+      where {
+      ?cl a ?cl_class .
+      ?cl cello:recommendedName ?cl_name .
+      ?cl cello:derivedFromIndividualBelongingToSpecies / rdfs:label ?species_name .
+    }
+}
+group by ?cl_class ?cl ?cl_name having (count(?species_name) > 1)
+order by desc(count(?species_name))
+limit 100

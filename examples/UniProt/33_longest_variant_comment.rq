@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find longest comment text associated with a UniProtKB natural variant annotation
+#+ tags:
+#+ - count
+#+ - variant annotation
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+    ?annotation ?comment
+WHERE {
+    ?annotation a up:Natural_Variant_Annotation ;
+        rdfs:comment ?comment . 
+} 
+ORDER BY DESC(STRLEN(?comment))

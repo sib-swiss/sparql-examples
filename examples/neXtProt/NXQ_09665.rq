@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with binary interaction annotations with evidence from ENYO that is negative
+#+ tags:
+#+ - QC
+#+ - evidence
+#+ - interaction
+#+ - negative
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:binaryInteraction /:evidence ?ev.
+  ?ev :assignedBy source:ENYO.
+  ?ev :negative 1.
+}

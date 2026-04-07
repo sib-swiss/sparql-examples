@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all UniProtKB entries that were integrated on the 30th of November 2010
+#+ tags:
+#+ - date
+#+ - entry history
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?protein
+WHERE
+{
+	?protein a up:Protein . 
+	?protein up:created '2010-11-30'^^xsd:date
+}

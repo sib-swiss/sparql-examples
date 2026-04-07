@@ -1,0 +1,36 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: Which are the orthologs of a gene that is expressed in the fruit fly's brain?
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT DISTINCT ?geneEnsembl ?proteinOrtholog ?geneOrthologEnsembl ?taxonOrtholog ?omaLinkOrtholog WHERE {
+    {
+        SELECT DISTINCT * {
+            ?gene a orth:Gene ;
+                genex:isExpressedIn/rdfs:label 'brain' ;
+                orth:organism/obo:RO_0002162 ?taxonFly ;
+                dcterms:identifier ?geneEnsembl .
+            ?taxonFly up:commonName 'fruit fly' .
+        } LIMIT 20
+    }
+
+    SERVICE <https://sparql.omabrowser.org/sparql/> {
+        ?cluster a orth:OrthologsCluster ;
+            orth:hasHomologousMember ?node1 ;
+            orth:hasHomologousMember ?node2 .
+        ?node1 orth:hasHomologousMember* ?protein1 .
+        ?node2 orth:hasHomologousMember* ?proteinOrtholog .
+        ?protein1 sio:SIO_010079 ?gene . # is encoded by
+        ?proteinOrtholog rdfs:seeAlso ?omaLinkOrtholog ;
+            orth:organism/obo:RO_0002162 ?taxonOrthologUri ;
+            sio:SIO_010079 ?geneOrtholog . # is encoded by
+        FILTER ( ?node1 != ?node2 )
+    }
+    ?taxonOrthologUri up:commonName ?taxonOrtholog .
+    ?geneOrtholog dcterms:identifier ?geneOrthologEnsembl .
+}

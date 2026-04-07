@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Protein that have a signal sequence which is not cleaved
+#+ tags:
+#+ - signal sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform / :signalPeptide / rdfs:comment ?comment .
+ filter(contains(?comment,"Not cleaved"))
+}

@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select a mapping of UniProtKB to PDB entries using the UniProtKB cross-references to the <a href="https://www.uniprot.org/database/DB-0070">PDB</a> database
+#+ tags:
+#+ - PDB
+#+ - cross-reference
+#+ - mapping
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?db
+WHERE
+{
+    ?protein a up:Protein .
+    ?protein rdfs:seeAlso ?db .
+    ?db up:database <http://purl.uniprot.org/database/PDB>
+}

@@ -1,0 +1,28 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: Genes expressed in the human's brain during the infant stage and their UniProt disease annotations.
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX orth: <http://purl.org/net/orth#>
+SELECT DISTINCT ?geneEns ?uniprot ?annotation {
+	{
+		SELECT ?geneEns {
+			?geneB genex:isExpressedIn ?cond ;
+				lscr:xrefEnsemblGene ?geneEns .
+			?cond genex:hasDevelopmentalStage ?st .
+			?cond genex:hasAnatomicalEntity ?anat .
+			?st rdfs:label 'infant stage' .
+			?anat rdfs:label 'brain' .
+			?geneB orth:organism ?o .
+			?o obo:RO_0002162 ?taxon2 .
+			?taxon2 up:commonName 'human' .
+		}
+		LIMIT 10
+	}
+	SERVICE <https://sparql.uniprot.org/sparql> {
+		?uniprot up:transcribedFrom ?geneEns .
+		?uniprot up:annotation ?annotation .
+	}
+}

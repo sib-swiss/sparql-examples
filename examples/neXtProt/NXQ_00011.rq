@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that are expressed in liver and involved in transport
+#+ tags:
+#+ - expression
+#+ - function
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :detectedExpression/:term/:childOf nextprot_cv:TS-0564.
+ nextprot_cv:KW-0813 :related ?tra.
+ ?iso :generalAnnotation / :term ?tra.
+}

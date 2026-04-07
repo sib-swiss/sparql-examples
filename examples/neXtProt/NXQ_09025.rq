@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with disease annotations with evidence NOT from neXtProt, Orphanet or UniProt
+#+ tags:
+#+ - QC
+#+ - disease
+#+ - provenance
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry ?src where {
+  ?entry :isoform ?iso.
+  ?iso :disease /:evidence /:assignedBy ?src.
+  filter ( ?src not in (source:NextProt,source:Orphanet,source:Uniprot))
+}

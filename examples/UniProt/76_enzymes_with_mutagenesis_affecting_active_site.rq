@@ -1,0 +1,32 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find enzymes, where the active site is a region affected by mutagenesis and show the comment regarding mutagenesis effect.
+#+ tags:
+#+ - active site
+#+ - enzyme
+#+ - list
+#+ - mutagenesis
+#+ - search within sequence
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein ?mutagenesisBeginPosition ?activeSiteBeginPosition ?mutagenesisRangeEndPosition ?mutagenesisComment
+WHERE {
+  ?protein up:annotation ?activeSiteAnnotation ,
+      ?mutagenesisAnnotation .
+  ?mutagenesisAnnotation a up:Mutagenesis_Annotation ;
+     up:range ?mutagenesisRange ;
+	 rdfs:comment ?mutagenesisComment .
+  ?activeSiteAnnotation a up:Active_Site_Annotation ;
+    up:range ?activeSiteRange .
+  ?activeSiteRange faldo:begin ?activeSiteBegin .
+  ?activeSiteBegin faldo:position ?activeSiteBeginPosition ;
+    faldo:reference ?sequence .
+  ?mutagenesisRange faldo:begin ?mutagenesisRangeBegin ;
+    faldo:end ?mutagenesisRangeEnd .
+  ?mutagenesisRangeBegin faldo:position ?mutagenesisBeginPosition ;
+    faldo:reference ?sequence .
+  ?mutagenesisRangeEnd faldo:position ?mutagenesisRangeEndPosition .
+  FILTER(?mutagenesisBeginPosition <= ?activeSiteBeginPosition && ?activeSiteBeginPosition <= ?mutagenesisRangeEndPosition)
+}

@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines with a doubling time between 3 and 5 days
+#+ tags:
+#+ - doubling time
+#+ - time
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX schema: <https://schema.org/>
+select ?cl ?cl_name ?min ?max ?unit where  {
+  ?cl cello:hasDoublingTimeRange ?duration .
+  ?cl cello:recommendedName ?cl_name .
+  ?duration schema:minValue ?min .
+  ?duration schema:maxValue ?max .
+  ?duration schema:unitCode ?unit . # ISO 4217 code for duration unit: HUR=hour(s)
+  filter (?min >= 24 * 3) # 3 days in hours
+  filter (?max <= 24 * 5) # 5 days in hours
+}
+order by asc(?min)
+limit 1000

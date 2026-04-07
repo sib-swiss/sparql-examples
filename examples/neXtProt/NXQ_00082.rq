@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose genes are on chromosome 21 that have "gold" variants not associated with a disease
+#+ tags:
+#+ - chromosomal location
+#+ - disease
+#+ - quality
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :gene / :chromosome "21"^^xsd:string; :isoform / :variant ?variant.
+ ?variant :evidence / :quality :GOLD.
+ filter not exists { ?variant :disease ?disease. }
+ filter ( not exists {
+	?entry :isoform / :proteoform ?pf.
+	?pf :difference ?variant.
+	?variant :evidence / :negative false. # variant with positive evidence
+	?pf :diseaseRelatedVariant / :term nextprot_cv:ME_0000013 . # variant is causing disease
+ } )
+}

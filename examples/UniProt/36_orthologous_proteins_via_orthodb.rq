@@ -1,0 +1,39 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find the orthologous proteins for UniProtKB entry P05067 using the <a href="http://www.orthod.org">OrthoDB database</a>
+#+ tags:
+#+ - ortholog
+PREFIX orthodb: <http://purl.orthodb.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?orthoGroup
+  ?scientificName
+  ?functionComment
+  ?prefferedGeneName
+  ((STRLEN(?value) - ?medianLength) as ?deviationFromMedianLength)
+WHERE
+{
+  BIND(uniprotkb:P05067 AS ?protein)
+  ?protein a up:Protein ;
+    up:organism/up:scientificName ?scientificName ;
+    up:encodedBy/skos:prefLabel ?prefferedGeneName ;
+    up:sequence/rdf:value ?value .
+  # We do not ask the UniProt endpoint for the ?orthoGroup from the
+  # cross-reference as these can be out of date. We trust the content
+  # of the orthodb endpoint
+  OPTIONAL {
+    ?protein up:annotation ?functionAnnotation .
+    ?functionAnnotation a up:Function_Annotation ;
+      rdfs:comment ?functionComment .
+  }
+  SERVICE <https://sparql.orthodb.org/sparql/>{
+    ?orthoGroup orthodb:ogMedianProteinLength ?medianLength .
+    ?orthoGroup orthodb:hasMember ?xref .
+    ?xref orthodb:xref/orthodb:xrefResource ?protein .
+  }
+}

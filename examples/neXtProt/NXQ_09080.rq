@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with subcellular location annotations with evidence NOT from UniProt, HPA, Dyp or GFP-cDNAEMBL
+#+ tags:
+#+ - QC
+#+ - provenance
+#+ - subcellular location
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry ?src where {
+  ?entry :isoform ?iso.
+  ?iso :subcellularLocation /:evidence /:assignedBy ?src.
+  filter ( ?src not in (source:Uniprot, source:Human_protein_atlas, source:Dyp, source:GFP-cDNAEMBL))
+}

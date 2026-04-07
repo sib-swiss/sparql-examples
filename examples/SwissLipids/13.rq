@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: For a given list of ChEBI identifiers return the list of corresponding SwissLipids identifiers.
+#+   Output should include SwissLipids identifier and name plus the HMDB identifier. 
+#+   This query considers only the cross references in the SwissLipids entry – it does not attempt to query other levels to find links between parents or children.
+#+   Recapitulates one ID mapping function on the website.
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 13
+SELECT ?chebi ?slm ?slmName 
+WHERE {
+  VALUES ?chebi {CHEBI:70846 CHEBI:70771 CHEBI:70829}
+  ?slm rdfs:label ?slmName . 
+  # Corresponding SwissLipids entries
+  ?slm owl:equivalentClass ?chebi .
+}
+ORDER BY ?chebi

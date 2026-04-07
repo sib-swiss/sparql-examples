@@ -15,8 +15,17 @@ jobs:
         distribution: 'graalvm'
         java-version: '25'
 
+    # - name: Install tester
+    #   run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils.jar
+
+    # - name: Run tests
+    #   run: java -Xss8m -jar sparql-examples-utils.jar test --input-directory=examples/
+
     - name: Install tester
-      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils.jar
+      run: make install
+
+    - name: Generate .ttl files
+      run: make ttl
 
     - name: Run tests
-      run: java -Xss8m -jar sparql-examples-utils.jar test --input-directory=examples/
+      run: make test

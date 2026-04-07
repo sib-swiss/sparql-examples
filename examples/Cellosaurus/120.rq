@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 anatomical part from which cell lines are derived from
+#+ tags:
+#+ - site
+#+ - stats
+#+ - tissue
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?site_name ?site_type ?site_ac (count(?cl) as ?cl_count)
+where {
+    ?cl cello:derivedFromSite ?site .
+    ?site cello:name ?site_name .
+    ?site cello:siteType ?site_type .
+    optional { ?site rdfs:comment ?note } # unused here but shows that a comment may exist
+    optional {?site cello:isIdentifiedByXref / cello:accession ?site_ac } # a few anatomical parts are not identified by a xref
+  }
+group by ?site_name ?site_type ?site_ac
+order by desc(count(?cl))
+limit 100

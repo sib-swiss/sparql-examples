@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List UniProtKB proteins with their associated gene and the gene's ORF label
+#+ tags:
+#+ - gene name
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?gene 
+  ?orfName
+WHERE {
+  ?protein a up:Protein ;
+           up:encodedBy ?gene .
+  ?gene up:orfName ?orfName .
+}

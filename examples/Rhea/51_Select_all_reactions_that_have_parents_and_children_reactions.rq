@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions that have parents and children reactions
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  (count(distinct ?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+
+  ?childReaction rdfs:subClassOf rh:Reaction .
+  ?childReaction rh:status rh:Approved .
+
+  ?parentReaction rdfs:subClassOf rh:Reaction .
+  ?parentReaction rh:status rh:Approved .
+
+  ?reaction rdfs:subClassOf ?parentReaction .
+  ?reaction ^rdfs:subClassOf ?childReaction .
+}

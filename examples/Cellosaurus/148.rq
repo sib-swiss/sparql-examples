@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines with the name and cross-reference of their transformant
+#+ tags:
+#+ - tfor
+#+ - transformant
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?cl_name ?transformant_name ?xref_db ?xref_ac ?comment
+  where {
+  ?cl a / rdfs:subClassOf cello:CellLine .
+  ?cl cello:recommendedName ?cl_name .
+  ?cl cello:transformedBy ?annot.
+  ?annot rdfs:label ?transformant_name .
+  ?annot a ?annot_class .
+  optional {?annot rdfs:comment ?comment . }
+  optional {?annot cello:isIdentifiedByXref ?xr . ?xr cello:database ?xref_db ; cello:accession ?xref_ac .}
+  #filter ( ! bound(?xr)) # uncomment to see only transformants not identified by a cross-reference
+  #filter ( bound(?comment) )  # uncomment to see transformants with a non empty optional comment
+}
+limit 100

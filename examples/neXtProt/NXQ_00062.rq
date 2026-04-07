@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins which have at least one zinc finger of any subtype
+#+ tags:
+#+ - domain
+#+ - region
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :zincFingerRegion ?_.
+}

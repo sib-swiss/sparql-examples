@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with an xref to SRMAtlas but no SRM peptide mapping annotation with evidence from SRMAtlas
+#+ tags:
+#+ - QC
+#+ - cross-reference
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select distinct ?entry where {
+  ?entry a :Entry.
+  ?entry :reference /:provenance db:SRMAtlas.
+  filter not exists {?entry :isoform /:srmPeptideMapping /:evidence /:assignedBy source:SRMAtlas.}
+}

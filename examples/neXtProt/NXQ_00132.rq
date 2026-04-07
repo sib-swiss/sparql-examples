@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a 3D structure in complex with another human protein which is not reported as binary interactant
+#+ tags:
+#+ - 3D structure
+#+ - PPI
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry a :Entry.
+ ?entry :reference ?ref.
+ ?ref :provenance db:PDB; :accession ?ac.
+ ?entry2 a :Entry.
+ ?ac ^:accession/^:reference ?entry2.
+ filter(?entry != ?entry2).
+ filter not exists{?entry :isoform /:binaryInteraction / :interactant ?entry2.}
+}

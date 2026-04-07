@@ -1,0 +1,28 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find UniProtKB proteins involved in metabolic diseases using the MeSH concept for 'Metabolic Diseases'.
+#+ tags:
+#+ - MeSH
+#+ - disease
+#+ - enzyme
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+ ?disease ?protein
+WHERE {
+  SERVICE<https://id.nlm.nih.gov/mesh/sparql> {
+    GRAPH <http://id.nlm.nih.gov/mesh> {
+      # Mesh M0013493 represents the concept 'Metabolic Diseases'
+	  ?mesh <http://id.nlm.nih.gov/mesh/vocab#broaderDescriptor>* ?broader .
+      ?broader <http://id.nlm.nih.gov/mesh/vocab#preferredConcept> <http://id.nlm.nih.gov/mesh/M0013493> .
+    }
+  }
+  GRAPH <http://sparql.uniprot.org/diseases>{
+    ?disease a up:Disease ;
+    	rdfs:seeAlso ?mesh .
+    ?mesh up:database <http://purl.uniprot.org/database/MeSH> .
+  }
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+     ?protein up:annotation/up:disease ?disease . 
+  }
+}

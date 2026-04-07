@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List UniProtKB proteins with their associated gene and the gene's preffered name
+#+ tags:
+#+ - gene name
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein
+  ?gene 
+WHERE {
+  ?protein a up:Protein ;
+           up:encodedBy ?gene .
+  ?gene skos:prefLabel ?recommendedGeneName .
+}

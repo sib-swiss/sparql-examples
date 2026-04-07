@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.omabrowser.org/sparql
+#+ summary: Retrieve all proteins belongong to the Hierarchical Orthologous Group (HOG) at the level 'Vertebrata' to which humans' CDIN1 gene belong, together with their gene name symbol if available.
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?HOG ?MEMBER ?GENE_LABEL
+WHERE {
+    ?HOG a orth:OrthologsCluster ;
+      orth:hasHomologousMember ?node1 ;
+      orth:hasTaxonomicRange ?taxRange .
+    ?taxRange orth:taxRange 'Vertebrata' .
+    ?node1 orth:hasHomologousMember* ?query ;
+      orth:hasHomologousMember* ?MEMBER .
+    ?MEMBER a orth:Protein .
+    OPTIONAL {
+        ?MEMBER rdfs:label ?GENE_LABEL .
+    }
+    ?query a orth:Protein ;
+      orth:organism/obo:RO_0002162/up:scientificName 'Homo sapiens';
+      rdfs:label 'CDIN1'.
+}

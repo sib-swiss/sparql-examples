@@ -1,0 +1,36 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Get the number of ChEBI participant with at least one xref to CAS number as provided by ChEBI
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX allie: <http://allie.dbcls.jp/>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi#>
+PREFIX oboInOwl:<http://www.geneontology.org/formats/oboInOwl#>
+
+SELECT
+  (count(distinct ?chebi) as ?chebiCount)
+  (count(distinct ?dbXref) as ?xrefCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  {
+    ?compound rh:chebi ?chebi .
+    ?chebi oboInOwl:hasDbXref ?dbXref .
+    FILTER (regex(?dbXref,'^CAS:'))
+  }
+  UNION
+  {
+    ?compound rh:chebi ?chebi .
+    ?chebi2 rdfs:subClassOf ?chebiRestriction .
+    ?chebiRestriction a owl:Restriction .
+    ?chebiRestriction owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
+    ?chebiRestriction owl:someValuesFrom ?chebi .
+    ?chebi2 oboInOwl:hasDbXref ?dbXref .
+    FILTER (regex(?dbXref,'^CAS:'))
+  }
+}

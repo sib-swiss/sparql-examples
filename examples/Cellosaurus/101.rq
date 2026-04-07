@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Identifiers and names of cell lines
+#+ tags:
+#+ - ac
+#+ - accession
+#+ - alternativeName
+#+ - id
+#+ - name
+#+ - preferredName
+#+ - primaryAccession
+#+ - secondaryAccession
+#+ - sy
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?ac ?recommended_name
+(group_concat(str(?old_ac); separator= ' ') as ?old_acs) (group_concat(str(?alt_name); separator= ' ') as ?alternative_names)
+where {
+  ?cl a / rdfs:subClassOf cello:CellLine .
+  ?cl cello:primaryAccession ?ac .                       # cell line accession (ac)
+  ?cl cello:recommendedName ?recommended_name .          # cell line preferred name (id)
+  optional { ?cl cello:secondaryAccession ?old_ac . }    # cell line obsoleted accession(s)
+  optional { ?cl cello:alternativeName ?alt_name . }     # cell line alternative name(s) (sy)
+  #filter (bound(?old_ac))
+}
+group by ?cl ?ac ?recommended_name
+limit 100

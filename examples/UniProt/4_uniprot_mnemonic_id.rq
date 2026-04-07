@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select the UniProtKB entry with the <a href="https://www.uniprot.org/manual/entry_name">mnemonic</a> 'A4_HUMAN'
+#+ tags:
+#+ - identifier
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein
+WHERE
+{
+    ?protein a up:Protein .
+    ?protein up:mnemonic 'A4_HUMAN'
+}

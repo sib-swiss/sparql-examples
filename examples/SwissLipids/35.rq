@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: Lipids by fatty acid component (hexadecanoate) at position sn1
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT 
+?swisslipid 
+WHERE {
+  VALUES (?chebi) {
+    (CHEBI:7896) #hexadecanoate
+  }
+  ?swisslipidHexadeconate owl:equivalentClass ?chebi .
+  ?swisslipid SWISSLIPID:hasPart [
+    SWISSLIPID:derivedFrom ?swisslipidHexadecanoate ;
+    SWISSLIPID:position SWISSLIPID:sn1 
+  ]
+}

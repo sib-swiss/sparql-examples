@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Sometimes it is known that a gene encoding a protein UniProtKB is located on a plasmid or an organelle, but the name of the plasmid is unknown.
+#+ tags:
+#+ - gene location
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+    ?protein 
+    ?plasmidOrOrganelle
+    ?label
+WHERE {
+    ?protein a up:Protein ;
+      up:encodedIn ?plasmidOrOrganelle .
+    OPTIONAL {
+        ?plasmidOrOrganelle rdfs:label ?label .
+    }
+}

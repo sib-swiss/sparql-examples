@@ -1,0 +1,16 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: Human anatomic entities at young adult developmental stage
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+SELECT DISTINCT ?anatomicalEntity ?stageName {
+    ?condition genex:hasAnatomicalEntity ?anatEntity ;
+        genex:hasDevelopmentalStage ?stage ;
+        obo:RO_0002162/up:commonName ?commonName .
+    ?anatEntity rdfs:label ?anatomicalEntity .
+    ?stage rdfs:label ?stageName .
+    FILTER( LCASE(?commonName) = "human" )
+    FILTER( CONTAINS(LCASE(?stageName), "young adult") )
+}

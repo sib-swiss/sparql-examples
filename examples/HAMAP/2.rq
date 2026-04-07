@@ -1,0 +1,3 @@
+#+ endpoint: https://hamap.expasy.org/sparql/
+#+ summary: Show the triples about <a href="https://hamap.expasy.org/rule/">MF_00001</a>
+DESCRIBE <http://purl.uniprot.org/hamap/MF_00001>

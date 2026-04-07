@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Glycosylation sites from GlyConnect
+#+ tags:
+#+ - PTM
+#+ - glycosylation
+#+ - isoforms
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+SELECT DISTINCT ?entry ?iso ?pos ?comment WHERE {
+?entry :isoform ?iso.
+?iso :swissprotDisplayed true .
+?iso :glycosylationSite ?glyco.
+?glyco :evidence / :assignedBy source:GlyConnect.
+?glyco rdfs:comment ?comment.
+?glyco :start ?pos.
+
+} order by ?entry

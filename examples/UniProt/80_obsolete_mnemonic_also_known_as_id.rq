@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List all UniProtKB protein ID (mnemonic) that where used in the past for current UniProtKB entries.
+#+ tags:
+#+ - entry history
+#+ - identifier
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?uniprot ?obsoleteMnemonic 
+WHERE
+{
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+        ?uniprot a up:Protein ;
+            up:oldMnemonic ?obsoleteMnemonic .
+    }
+}

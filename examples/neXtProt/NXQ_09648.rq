@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with the keyword KW-0621 (Polymorphism) that do not have a variant annotation with evidence from UniProt or dbSNP and having a xref starting with "rs" 
+#+ tags:
+#+ - QC
+#+ - keyword
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:keyword /:term cv:KW-0621.
+  ?entry :isoform /:variant /:evidence ?ev.
+  {?ev :assignedBy source:dbSNP.}
+  union
+  {?ev :assignedBy source:UniProt.}
+  ?ev :reference /:accession ?xref.
+  filter (!regex(?xref, "^rs"))
+}

@@ -1,0 +1,25 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Distribution: number of reaction participants per reaction Side
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?reaction
+  ?reactionSide1
+  (count(distinct ?participant1) as ?side1ParticipantCount)
+  ?reactionSide2
+  (count(distinct ?participant2) as ?side2ParticipantCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+
+  ?reaction rh:side ?reactionSide1 .
+  ?reactionSide1 rh:contains ?participant1 .
+
+  ?reaction rh:side ?reactionSide2 .
+  ?reactionSide2 rh:contains ?participant2 .
+
+  ?reactionSide1 rh:transformableTo ?reactionSide2
+}
+GROUP BY ?reaction ?reactionSide1 ?reactionSide2
+ORDER BY ?reaction

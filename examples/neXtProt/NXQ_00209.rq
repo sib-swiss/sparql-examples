@@ -1,0 +1,30 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Glycosylation sites and cross links positions on SwissProt canonical isoforms
+#+ tags:
+#+ - PTM
+#+ - glycosylation
+#+ - isoforms
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry ?iso ?ptmtype ?pos ?modres WHERE {
+?entry :isoform ?iso.
+?iso :swissprotDisplayed true .
+?iso :sequence / :chain ?seq .
+?iso :ptm ?ptm.
+?ptm :term ?modterm.
+?ptm :start ?pos.
+bind (substr(?seq,?pos,1) as ?modres)	.
+{
+?ptm a :GlycosylationSite .
+bind("glyco" as ?ptmtype)
+}
+union
+{
+?ptm a :CrossLink .
+bind("cross-link" as ?ptmtype)
+}
+}
+order by ?iso
+#limit 100

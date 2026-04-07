@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: At the LCA level, find all human orthologs of mouse genes with name containing "MAPK", case-insensitive
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?og a :OrthoGroup.
+    ?og :ogBuiltAt taxon:314146.
+    ?gene_m a :Gene.
+    ?gene_h a :Gene.
+    ?gene_m up:organism/a taxon:10090.
+    ?gene_h up:organism/a taxon:9606.
+    ?gene_m :memberOf ?og.
+    ?gene_h :memberOf ?og.
+    ?gene_m :name ?gene_m_name.
+    ?gene_h :name ?gene_h_name.
+    FILTER(contains (UCASE(?gene_m_name), "MAPK" ))
+}

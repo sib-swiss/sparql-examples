@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find all genes with their name and description in the orthologous group 6400at314295
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX odbgroup: <http://purl.orthodb.org/odbgroup/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?gene a :Gene.
+    ?gene :name ?gene_name.
+    ?gene :description ?description.
+    ?gene up:organism/a ?taxon.
+    ?taxon up:scientificName ?org_name.
+    ?gene :memberOf odbgroup:6400at314295.
+}

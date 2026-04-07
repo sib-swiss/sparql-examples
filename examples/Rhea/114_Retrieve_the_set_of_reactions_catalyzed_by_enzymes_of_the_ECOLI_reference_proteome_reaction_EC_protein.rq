@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Retrieve the set of reactions catalyzed by enzymes of the ECOLI reference proteome (<reaction> - <EC> - <protein>)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
+PREFIX keywords:<http://purl.uniprot.org/keywords/>
+
+SELECT ?protein ?ecNumber ?reaction where {
+
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    ?protein a up:Protein .
+    ?protein up:reviewed true .
+    ?protein up:organism taxon:83333 .
+    ?protein up:classifiedWith keywords:1185 .
+      {?protein up:enzyme ?ecNumber}
+    UNION
+      {?protein up:domain/up:enzyme ?ecNumber}
+    UNION
+    {?protein up:component/up:enzyme ?ecNumber} .
+  }
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:ec ?ecNumber .
+}

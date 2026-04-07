@@ -1,0 +1,13 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: What are the anatomical entities where the APOC1 gene is expressed?
+PREFIX genex: <http://purl.org/genex#>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?anat ?anatName WHERE {
+    ?seq a orth:Gene ;
+        genex:isExpressedIn ?anat ;
+        rdfs:label "APOC1" .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label ?anatName .
+}

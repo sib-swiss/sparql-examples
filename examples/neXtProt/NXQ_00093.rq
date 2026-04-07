@@ -1,0 +1,11 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a sequence containing "FF.+QYE" where ".+" is any peptide of any length
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform / :sequence / :chain ?chain.
+ filter ( regex(?chain, "FF.+QYE") )
+}

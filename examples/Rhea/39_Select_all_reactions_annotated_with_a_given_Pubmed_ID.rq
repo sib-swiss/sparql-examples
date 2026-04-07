@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions annotated with a given Pubmed ID
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX pubmed:<http://rdf.ncbi.nlm.nih.gov/pubmed/>
+
+SELECT
+  ?reaction
+  ?pubMedID
+  ?reactionEquation
+WHERE {
+  BIND(pubmed:2460092 AS ?pubMedID)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:citation ?pubMedID .
+}

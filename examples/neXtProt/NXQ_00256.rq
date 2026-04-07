@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Variants identified in exome datasets in a frequent homozygote state
+#+ tags:
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry ?varpos where
+{
+ ?entry :isoform ?iso .
+ ?iso :swissprotDisplayed true .
+ ?iso :variant ?var .
+ ?var :start ?varpos .
+ ?var :evidence ?ev .
+ ?var :evidence / :homozygoteCount ?hcnt .
+ filter(?hcnt > 100000)
+ }
+ order by desc(?hcnt)

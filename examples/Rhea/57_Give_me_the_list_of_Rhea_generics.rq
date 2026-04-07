@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Give me the list of Rhea generics, type polypeptide (rh:GenericPolypeptideParticipant)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?genericSubClass
+  ?labelGenericSubClass
+  (count(?genericParticipant) as ?countGenericParticipant)
+WHERE
+{
+  ?genericSubClass rdfs:subClassOf rh:GenericParticipant .
+  ?genericSubClass rdfs:label ?labelGenericSubClass .
+  ?genericParticipant rdfs:subClassOf* ?genericSubClass .
+}
+GROUP BY ?genericSubClass ?labelGenericSubClass

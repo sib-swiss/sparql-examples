@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Count of sequence variation annotations by sequence variation type and status
+#+ tags:
+#+ - sequence variation
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+select ?seqvar_class ?status ?with_source (count(distinct ?annot) as ?seqvar_count) where {
+ ?annot a cello:SequenceVariationInfo .
+ optional { ?annot cello:hasTarget ?sv . ?sv a ?seqvar_class  }
+ optional { ?annot  cello:variationStatus ?status }
+ optional { ?annot  cello:hasSource ?src }
+ bind( if (bound(?src), "yes", "no") as ?with_source)
+}
+group by ?seqvar_class ?status ?with_source
+order by ?seqvar_class ?status ?with_source

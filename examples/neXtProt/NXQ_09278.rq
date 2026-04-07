@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with disease annotations from ORPHANET for which the evidence code is NOT curator inference used in manual assertion
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - disease
+#+ - evidence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:disease /:evidence ?ev1.
+  ?ev1 :assignedBy source:Orphanet.
+  ?ev1 :evidenceCode ?eco.
+  filter (?eco not in (cv:ECO_0000305))
+}

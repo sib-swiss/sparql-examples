@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved transport reactions
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  ?reaction
+  ?reactionEquation
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:isTransport true
+}
+ORDER BY ?reaction

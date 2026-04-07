@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that do not have a cross-reference to an Ensembl ENSG
+#+ tags:
+#+ - cross-reference
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry a :Entry.
+ filter not exists { ?entry :reference / :provenance db:Ensembl . }
+}

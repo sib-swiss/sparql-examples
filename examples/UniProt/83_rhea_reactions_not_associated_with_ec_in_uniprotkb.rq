@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List <a href="https://www.rhea-db.org/">Rhea</a> reactions that are <em>not</em> associated with an <a href="https://iubmb.qmul.ac.uk/enzyme/index.html">EC (enzyme classification)</a>.
+#+ tags:
+#+ - Rhea
+#+ - enzyme
+#+ - enzyme classification
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?rhea 
+  ?EC 
+WHERE {
+  ?CatalyticActivity up:catalyzedReaction ?rhea .
+  MINUS {
+    ?CatalyticActivity up:enzymeClass ?EC .
+  }
+}

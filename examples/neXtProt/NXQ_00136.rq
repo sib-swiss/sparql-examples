@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose sequence was updated in 2014
+#+ tags:
+#+ - entry history
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry a :Entry.
+ ?entry :history / :lastSequenceUpdate ?sequpd.
+ filter(contains(str(?sequpd),"2014"))
+}

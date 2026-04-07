@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins interacting with small molecules according to DrugBank
+#+ tags:
+#+ - small molecule interaction
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry (group_concat(distinct str(?lbl); SEPARATOR = ";") as ?mol) WHERE {
+ ?entry :isoform / :smallMoleculeInteraction / :interactant ?ref .
+ ?ref :provenance db:DrugBank.
+ ?ref rdfs:label ?lbl.
+}
+group by ?entry

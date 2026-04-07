@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select reaction participants for a given reaction ID. Display their coefficient and their name.
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+SELECT
+  ?genericCompound
+  ?genericCompoundName
+  ?reaction
+  ?equation
+WHERE
+{
+  ?genericCategory rdfs:subClassOf rh:GenericCompound .
+  ?genericCompound rdfs:subClassOf ?genericCategory .
+  ?genericCompound rh:name ?genericCompoundName .
+  ?genericCompound rh:accession ?ac .
+  FILTER (?ac='GENERIC:11964') .
+
+  ?participant rh:compound ?genericCompound .
+  ?reactionSide rh:contains ?participant .
+  ?reaction rh:side ?reactionSide .
+  ?reaction rh:equation ?equation .
+}

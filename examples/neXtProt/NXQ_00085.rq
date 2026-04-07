@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with Poly-Proline stretches
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ ?iso :compositionallyBiasedRegion / rdfs:comment ?desc.
+ filter (contains(?desc,'Pro residues')).
+}

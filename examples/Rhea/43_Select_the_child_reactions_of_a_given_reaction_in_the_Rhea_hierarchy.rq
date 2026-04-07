@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the child reaction(s) of a given reaction (RHEA:11628) in the Rhea hierarchy, (using rdfs:subClassOf)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT ?reaction ?equation ?childReaction ?childEquation 
+WHERE {
+  BIND (rh:11628 AS ?reaction)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?equation .
+
+  ?childReaction rdfs:subClassOf rh:Reaction .
+  ?childReaction rh:status rh:Approved .
+  ?childReaction rdfs:subClassOf ?reaction .
+  ?childReaction rh:equation ?childEquation .
+}

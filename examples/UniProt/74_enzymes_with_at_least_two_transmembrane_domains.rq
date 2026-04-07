@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find Hydrolases (enzymes that catalyse the hydrolysis of various bonds) that have at least two transmembrane domains
+#+ tags:
+#+ - count
+#+ - enzyme
+#+ - enzyme classification
+#+ - transmembrane
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+WHERE {
+ ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?enzymeClass ;
+                   up:annotation ?transMembraneAnnotation .
+ ?enzymeClass rdfs:subClassOf <http://purl.uniprot.org/enzyme/3.-.-.-> .
+ ?transMembraneAnnotation a up:Transmembrane_Annotation .
+} GROUP BY ?protein HAVING (COUNT(DISTINCT ?transMembraneAnnotation) >= 2)

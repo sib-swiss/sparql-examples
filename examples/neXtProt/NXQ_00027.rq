@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with one or more glycosylation sites reported in PubMed:20570859 or PubMed:14760718
+#+ tags:
+#+ - PTM
+#+ - glycosylation
+#+ - proteomics
+#+ - publication
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry ?publications WHERE {
+ values ?pmid {"20570859"^^xsd:string "14760718"^^xsd:string}
+ # get all assertions from the publications
+ ?entry :isoform/:glycosylationSite ?statement.
+ ?statement :evidence/:reference/:from ?xref .
+ ?xref :accession ?pmid ; :provenance db:PubMed .
+}

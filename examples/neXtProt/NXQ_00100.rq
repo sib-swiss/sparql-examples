@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins expressed in liver and that have COSMIC variants associated with liver/hepatic cancer
+#+ tags:
+#+ - disease
+#+ - expression
+#+ - sequence variation
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform ?iso.
+  ?iso :detectedExpression/:term/:childOf cv:TS-0564.
+  ?iso :variant /:evidence ?ev.
+  ?ev :assignedBy source:Cosmic.
+  ?ev :experimentalContext /:tissue cv:TS-0564.
+}

@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a synthetic peptide from SRMAtlas with an AC which does NOT start with "Pap"
+#+ tags:
+#+ - QC
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select distinct ?entry where {
+  ?entry :isoform /:srmPeptideMapping  ?pm.
+  ?pm :evidence /:reference ?ref.
+  ?ref :provenance db:SRMAtlas.
+  ?ref :accession ?ac.
+  filter(!strStarts(?ac,"PAp"))
+}

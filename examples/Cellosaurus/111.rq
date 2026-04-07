@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: HLA typing of a chosen cell line
+#+ tags:
+#+ - HLA
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX cvcl: <https://purl.expasy.org/cellosaurus/rdf/cvcl/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?cl_name ?gene_name ?allele_id  where {
+  	values ?cl { cvcl:CVCL_E549 }
+        ?cl cello:hasHLAtyping ?hasHLAtyping .
+  	?cl cello:recommendedName ?cl_name .
+    ?hasHLAtyping cello:includesObservation ?obs .
+        ?obs cello:hasTarget ?gene .
+    ?gene rdfs:label ?gene_name .
+    ?gene rdf:type ?gene_class .
+    ?obs cello:detectedAllele ?allele .
+    ?allele cello:alleleIdentifier ?allele_id .
+}
+order by ?gene_name

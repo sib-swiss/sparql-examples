@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with SRM peptide mapping annotations from SRMAtlas for which the evidence code is NOT mass spectrometry evidence
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - evidence
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry ?eco where {
+  ?entry :isoform /:srmPeptideMapping /:evidence ?ev1.
+  ?ev1 :assignedBy source:SRMAtlas.
+  ?ev1 :evidenceCode ?eco.
+  filter (?eco not in (cv:ECO_0001096))
+}

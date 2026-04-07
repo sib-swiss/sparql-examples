@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 authors of publications referenced in Cellosaurus
+#+ tags:
+#+ - author
+#+ - contributor
+#+ - publication
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+select ?person_name (count(distinct ?publi) as ?publi_count)
+where {
+  ?cl a / rdfs:subClassOf cello:CellLine .
+  ?cl cello:references ?publi .
+  ?publi ?p ?contr .
+  ?contr a schema:Person .
+  ?contr cello:name ?person_name .
+}
+group by ?person_name
+order by desc(count(distinct(?publi)))
+limit 100

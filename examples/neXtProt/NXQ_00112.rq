@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins located in nucleus and nowhere else
+#+ tags:
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?entry WHERE {
+ {
+ select ?entry (count(?loc) as ?anyLoc) (sum(?inNucleus) as ?nucleusLoc)
+ WHERE {
+ ?entry :isoform / :cellularComponent ?loc .
+ ?loc :evidence / :negative false .
+ ?loc :term ?locterm.
+ bind( exists {
+ ?locterm :childOf / rdfs:label ?label.
+ filter (regex(?label, '^[Nn]ucleus$'))
+ } as ?inNucleus)
+ }
+ group by ?entry
+ }
+ filter ( ?anyLoc = ?nucleusLoc)
+}

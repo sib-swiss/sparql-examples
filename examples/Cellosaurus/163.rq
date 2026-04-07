@@ -1,0 +1,46 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some topic comments (optionally with their source) about cell lines
+#+ tags:
+#+ - anec
+#+ - biot
+#+ - caution
+#+ - char
+#+ - donor
+#+ - misc
+#+ - omics
+#+ - prob
+#+ - time
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+select ?cl ?cl_name ?annot_class ?source ?shortened_comment where {
+  values ?annot_class {
+    cello:AnecdotalComment
+    cello:BiotechnologyComment
+    cello:CautionComment
+    cello:CharacteristicsComment
+    cello:DonorInfoComment
+    cello:DoublingTime
+    cello:OmicsInfo
+    cello:ProblematicCellLineComment
+    cello:MiscellaneousInfoComment
+  }
+  ?prop rdfs:subPropertyOf cello:hasAnnotation .
+  ?cl ?prop ?annot .
+  ?cl cello:recommendedName ?cl_name .
+  ?annot a ?annot_class .
+  ?annot rdfs:comment ?comment .
+  optional {
+    ?annot cello:hasSource ?s .
+  	optional { ?s cello:originatesFrom / a ?st }.
+   	optional { ?s cello:originatesFrom / cello:internalId ?id }   	# src origin is a xref or a publi
+    optional { ?s cello:originatesFrom / skos:prefLabel ?org }      # src origin is an organization
+    optional { ?s rdfs:label ?lb }                                  # src origin not specified
+  }
+  bind (coalesce(?id, ?org, ?lb, '-') as ?source)
+  bind (coalesce(?st, '-') as ?source_type)
+  bind (substr(?comment, 0, 80) as ?shortened_comment)
+  #filter (?source != '-') # uncomment to get only sourced comments
+}
+order by ?cl
+limit 100

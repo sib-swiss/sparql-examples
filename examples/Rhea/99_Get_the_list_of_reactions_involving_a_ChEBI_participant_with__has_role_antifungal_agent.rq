@@ -1,0 +1,38 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Get the list of reactions involving a ChEBI participant with <em>has role</em> <strong>antifungal agent</strong> (CHEBI:35718)
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX chebihash:<http://purl.obolibrary.org/obo/chebi#>
+SELECT
+  (count(distinct ?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebiInRhea .
+  {
+    ?chebiInRhea rdfs:subClassOf ?chebiRestrictionRole .
+    ?chebiRestrictionRole a owl:Restriction .
+    ?chebiRestrictionRole owl:onProperty obo:RO_0000087 .
+    ?chebiRestrictionRole owl:someValuesFrom CHEBI:35718 .
+  }
+  UNION
+  {
+    ?chebi rdfs:subClassOf ?chebiRestrictionRole .
+    ?chebiRestrictionRole a owl:Restriction .
+    ?chebiRestrictionRole owl:onProperty obo:RO_0000087 .
+    ?chebiRestrictionRole owl:someValuesFrom CHEBI:35718 .
+
+    ?chebi rdfs:subClassOf ?chebiRestrictionPH .
+    ?chebiRestrictionPH a owl:Restriction .
+    ?chebiRestrictionPH owl:onProperty chebihash:has_major_microspecies_at_pH_7_3 .
+    ?chebiRestrictionPH owl:someValuesFrom ?chebiInRhea .
+  }
+}

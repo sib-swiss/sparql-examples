@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with mutagenesis annotations from neXtProt for which the evidence code is NOT experimental evidence used in manual assertion
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - evidence
+#+ - sequence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:mutagenesis /:evidence ?ev1.
+  ?ev1 :assignedBy source:NextProt.
+  ?ev1 :evidenceCode ?eco.
+  filter (?eco not in (cv:ECO_0000269))
+}

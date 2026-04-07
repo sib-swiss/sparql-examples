@@ -1,0 +1,30 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines known to be resistant to some chemical compound or toxin
+#+ tags:
+#+ - chemical
+#+ - drug
+#+ - res
+#+ - resistance
+#+ - toxin
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?cl_name ?compound_class (substr(?compound_str,0,36) as ?compound_name) ?compound_iri ?compound_url where
+  {
+   ?cl a / rdfs:subClassOf cello:CellLine .
+   ?cl cello:recommendedName ?cl_name .
+   ?cl cello:hasResistance ?compound.
+   ?compound a ?compound_class .
+   ?compound cello:name ?compound_str .
+   optional {
+    ?compound cello:isIdentifiedByXref ?xref .
+    ?xref cello:accession ?ac.
+    ?xref rdfs:seeAlso ?compound_url .
+  }
+  optional {
+    ?compound cello:isIdentifiedByIRI ?compound_iri .
+  }
+  #filter(!bound(?compound_iri))  # uncomment to see only chemical for which we have no IRI (owl concept)
+  #filter(!bound(?compound_url))  # uncomment to see only chemical for which we have no identifying xref
+}
+order by ?cl
+limit 100

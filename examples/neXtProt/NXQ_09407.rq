@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with peptide mapping annotations with peptides of length 6 aa or less
+#+ tags:
+#+ - QC
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform / :peptideMapping /:position ?pmpos .
+  ?pmpos :start ?start; :end ?end .
+  filter((?end - ?start + 1) <= 6 )
+}

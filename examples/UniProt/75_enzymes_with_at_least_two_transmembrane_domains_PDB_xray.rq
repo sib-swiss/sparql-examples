@@ -1,0 +1,28 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find enzymes that have at least two transmembrane domains, whose 3D structure is elucidated through X-Ray analysis
+#+ tags:
+#+ - 3D
+#+ - PDB
+#+ - count
+#+ - enzyme
+#+ - enzyme classification
+#+ - membrane
+#+ - transmembrane
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?transmembrane_annotation ;
+    rdfs:seeAlso ?wwPDB .
+  {
+    ?protein up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:annotation/a up:Catalytic_Activity_Annotation .
+  }
+  ?wwPDB up:database <http://purl.uniprot.org/database/PDB> ;
+    up:method up:X-Ray_Crystallography .
+  ?transmembrane_annotation a up:Transmembrane_Annotation .
+} GROUP BY ?protein HAVING(COUNT(DISTINCT ?transmembrane_annotation ) >= 2)

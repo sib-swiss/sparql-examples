@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Domains that are entirely covered by 3D structures
+#+ tags:
+#+ - 3D structure
+#+ - domain
+#+ - region
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?domlabel WHERE {
+ ?entry :isoform ?isoform.
+ ?isoform :pdbMapping ?struc.
+ ?struc :start ?s1 ; :end ?s2.
+ ?isoform :domain ?dom.
+ ?dom :start ?d1 ; :end ?d2.
+ ?dom :term/rdfs:label ?domlabel
+ filter ((?s1 <= ?d1) && (?s2 >= ?d2))
+}

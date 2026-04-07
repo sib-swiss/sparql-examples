@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least 2 HPA antibodies whose genes are located on chromosome 21 and that are highly expressed according to IHC in heart
+#+ tags:
+#+ - antibody
+#+ - chromosomal location
+#+ - expression
+#+ - method
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?entry WHERE {
+ SELECT DISTINCT ?entry ?id WHERE {
+ ?entry :gene / :chromosome "21"^^xsd:string .
+ ?entry :isoform / :expressionProfile ?s1.
+ ?s1 :term / :childOf nextprot_cv:TS-0445.
+ ?s1 :evidence ?evi.
+ ?evi :observedExpression :High.
+ ?evi :evidenceCode nextprot_cv:ECO_0001055.
+ ?entry :isoform / :antibodyMapping ?map.
+	 ?map :evidence / :reference / :accession ?id .
+ }
+} group by ?entry having (count(?id)>=2)

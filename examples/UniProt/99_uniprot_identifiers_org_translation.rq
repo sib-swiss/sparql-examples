@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Translate a selection of UniProtKB accession numbers into other options using the identifiers.org translating endpoint.
+#+ tags:
+#+ - identifier
+#+ - mapping
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+    ?protein 
+    ?otherIdentifier
+WHERE {
+    VALUES (?protein) {(uniprotkb:P00750) (uniprotkb:P05067)}
+    ?protein a up:Protein .
+    SERVICE <https://sparql.api.identifiers.org/sparql> {
+        ?protein owl:sameAs ?otherIdentifier .
+    }
+}

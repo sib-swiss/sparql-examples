@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: List all polymers
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?compound
+  ?compoundName
+WHERE
+{
+  ?compound rdfs:subClassOf rh:Polymer .
+  ?compound rh:name ?compoundName
+}
+ORDER BY (?compound)

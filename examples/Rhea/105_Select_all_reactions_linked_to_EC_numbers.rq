@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions linked to EC numbers
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  ?reaction
+  ?ecNumber
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:ec ?ecNumber
+}
+ORDER BY ?reaction

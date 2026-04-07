@@ -1,0 +1,28 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: What are the anatomical entities where the mouse gene APOC1 is expressed in the adult stages?
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?geneName ?anatName ?anat ?stageName ?stage WHERE {
+    ?seq a orth:Gene ;
+        rdfs:label ?geneName ;
+        genex:isExpressedIn ?condition ;
+        orth:organism ?organism .
+    ?condition a genex:ExpressionCondition ;
+        genex:hasAnatomicalEntity ?anat ;
+        genex:hasAnatomicalEntity obo:GO_0005575 ;
+        genex:hasDevelopmentalStage ?stage .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label ?anatName .
+    ?stage a efo:EFO_0000399 ; # developmental stage
+        rdfs:label ?stageName .
+    ?organism obo:RO_0002162 ?taxon . # in taxon
+    ?taxon a up:Taxon ;
+        up:commonName "mouse" .
+    FILTER (CONTAINS(LCASE(?stageName), 'adult' ))
+    FILTER (lcase(str(?geneName)) = "apoc1" ).
+}

@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose genes are on chromosome X and which do not have a ortholog in mouse
+#+ tags:
+#+ - chromosomal location
+#+ - cross-reference
+#+ - ortholog
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :gene / :chromosome "X"^^xsd:string .
+ filter not exists { ?entry :reference / :provenance db:MGI . }
+}

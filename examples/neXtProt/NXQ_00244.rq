@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a variant having an impact on a binary interaction 
+#+ tags:
+#+ - PPI
+#+ - phenotype
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry ?interactant WHERE {
+ ?entry :isoform / :proteoform / :phenotypicVariation ?phvar .
+ ?phvar :term / :childOf nextprot_cv:ME_0000002 . # children of impact
+ ?phvar :evidence / :quality :GOLD .
+ ?phvar :impactedObject / :interactant ?interactant.
+}

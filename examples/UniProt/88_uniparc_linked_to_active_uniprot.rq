@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Show for a given UniParc accessions which active UniProtKB entries have the same amino acid sequence
+#+ tags:
+#+ - UniParc
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?uniparc
+  ?uniprot
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniparc>{
+    BIND(<http://purl.uniprot.org/uniparc/UPI000002DB1C> AS ?uniparc) 
+    ?uniparc up:sequenceFor ?uniprot .
+  }
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?uniprot a up:Protein .
+  }
+}

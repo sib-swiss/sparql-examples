@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Retrieve the rank and the scientific name of an taxonomic record. Not all taxonomic records have a <a href="http://purl.uniprot.org/core/rank">rank</a> associated with them.
+#+ tags:
+#+ - taxonomy
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?taxon 
+  ?scientificName
+  ?rank
+WHERE {
+  ?taxon a up:Taxon ;
+         up:scientificName ?scientificName .
+  OPTIONAL {
+    ?taxon up:rank ?rank
+  }
+}

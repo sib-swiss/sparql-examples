@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the descendant reaction(s) of a given reaction (RHEA:11628) in the Rhea hierarchy, (using rdfs:subClassOf+)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT 
+  ?reaction 
+  ?equation 
+  ?descendantReaction 
+  ?descendantEquation 
+WHERE {
+  BIND(rh:11628 AS ?reaction)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?equation .
+
+  ?descendantReaction rdfs:subClassOf rh:Reaction .
+  ?descendantReaction rh:status rh:Approved .
+  ?descendantReaction rdfs:subClassOf+ ?reaction .
+  ?descendantReaction rh:equation ?descendantEquation .
+}

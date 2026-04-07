@@ -1,0 +1,18 @@
+#+ endpoint: https://glyconnect.expasy.org/sparql
+#+ summary: Select all glycosylations (glycan, protein, position) with their reference articles
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+
+SELECT distinct ?glycoprotein ?isoform ?position ?structure ?image  ?citation ?pmid
+where {
+?glycosite faldo:reference ?isoform .
+?glycosite faldo:position ?position .
+?specificglycosite faldo:location ?glycosite .
+?glycoprotein glycan:glycosylated_at ?specificglycosite .
+?structure glycan:glycosylates_at ?specificglycosite .
+?structure foaf:depiction ?image .
+?refconjugate glycan:has_protein_part ?glycoprotein .
+?refconjugate glycan:published_in ?citation . 
+?citation foaf:primaryTopicOf ?pmid .
+}

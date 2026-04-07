@@ -1,0 +1,33 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: Use the CORDIS EURIO Knowledge Graph in combination with UniProt to find the count of outputs(DOIs) of their funded projects cited in UniProt.
+#+ tags:
+#+ - DOI
+#+ - count
+#+ - publication
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX eurio: <http://data.europa.eu/s66#> 
+PREFIX patent: <http://purl.uniprot.org/EPO/>
+PREFIX pubmed: <http://purl.uniprot.org/pubmed/>
+SELECT 
+  (IRI(CONCAT('https://cordis.europa.eu/project/id/', SAMPLE(?identifier))) AS ?id)
+  (SAMPLE(?project_title) AS ?project_titles)
+  (COUNT(DISTINCT ?doi_string) AS ?doisInSwissProt)
+  (COUNT(DISTINCT ?protein) AS ?entriesInSwissProt)
+WHERE { 
+  SERVICE <https://cordis.europa.eu/datalab/sparql> {
+  	?project a eurio:Project ;
+            eurio:identifier ?identifier ;
+  		eurio:title ?project_title ;
+  	 	eurio:hasResult ?result .
+  	?result eurio:doi ?doi .
+  }
+  #EURIO use literals of type xsd:anyURI to represent DOIs 
+  #without the leading doi: indicator
+  BIND(CONCAT("doi:", STR(?doi)) AS ?doi_string)
+  ?citation a up:Journal_Citation ;
+     dcterms:identifier ?doi_string .
+  ?protein up:citation ?citation . 
+  BIND(xsd:int(?identifier) AS ?intid)
+} GROUP BY ?project ORDER BY DESC(?intid)

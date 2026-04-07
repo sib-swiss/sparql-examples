@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no organelle terms with no entry associated
+#+ tags:
+#+ - QC
+#+ - snorql-only
+#+ - vocabulary
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?orgnl where {
+  ?orgnl a :OrganelleCv .
+  filter not exists {?member :isoform /:processingProduct / :term ?orgnl .}
+}
+order by ?orgnl

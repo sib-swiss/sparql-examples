@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all citations of a given reaction
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX pubmed:<http://rdf.ncbi.nlm.nih.gov/pubmed/>
+
+SELECT
+  ?reaction
+  ?citation
+WHERE {
+  BIND(rh:11680 AS ?reaction)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:citation ?citation .
+}

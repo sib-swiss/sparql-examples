@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with transport activity annotations with evidence NOT from TCDB
+#+ tags:
+#+ - QC
+#+ - function
+#+ - provenance
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry ?src where {
+  ?entry :isoform ?iso.
+  ?iso :transportActivity /:evidence /:assignedBy ?src.
+  filter ( ?src not in (source:TCDB))
+}

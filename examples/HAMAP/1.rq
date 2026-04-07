@@ -1,0 +1,9 @@
+#+ endpoint: https://hamap.expasy.org/sparql/
+#+ summary: Select all hamap rules
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+SELECT ?rule
+WHERE
+{
+    ?rule sh:construct ?query  .
+}

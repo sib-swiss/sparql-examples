@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find GeneID's crosslinked to more than one human or mouse UniProtKB entry
+#+ tags:
+#+ - count
+#+ - cross-reference
+#+ - mapping
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon:<http://purl.uniprot.org/taxon/>
+SELECT 
+  ?geneid 
+  ?organism 
+  (GROUP_CONCAT(?protein; separator=', ') AS ?entries)
+WHERE
+{
+  VALUES ?organism {taxon:9606 taxon:10090}
+  ?geneid up:database <http://purl.uniprot.org/database/GeneID> .
+  ?protein rdfs:seeAlso ?geneid ; 
+           up:organism ?organism
+} GROUP BY ?geneid ?organism HAVING (COUNT(?protein) > 1) ORDER BY ?organism ?geneid

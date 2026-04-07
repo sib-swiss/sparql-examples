@@ -1,0 +1,39 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find human transporter proteins in reviewed UniProtKB/Swiss-Prot, that are expressed in the liver (Uses Bgee and UBERON).
+#+ tags:
+#+ - Bgee
+#+ - Rhea
+#+ - UBERON
+#+ - federated query
+#+ - tissue specificity
+#+ - transport reaction
+PREFIX genex: <http://purl.org/genex#>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX uberon: <http://purl.obolibrary.org/obo/uo#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?rhea
+  ?protein
+  ?anat
+WHERE
+{
+  GRAPH <https://sparql.rhea-db.org/rhea> {
+    ?rhea rh:isTransport true .
+  }
+  ?protein up:annotation ?ann .
+  ?protein up:organism taxon:9606 .
+  ?ann up:catalyticActivity ?ca .
+  ?ca up:catalyzedReaction ?rhea .
+  BIND(uberon:0002107 AS ?anat)
+  SERVICE <https://www.bgee.org/sparql/> {
+    ?seq genex:isExpressedIn ?anat .
+    ?seq lscr:xrefUniprot ?protein .
+    ?seq orth:organism ?organism .
+    ?organism obo:RO_0002162 taxon:9606 .
+  }
+}

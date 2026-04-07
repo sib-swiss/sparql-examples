@@ -1,0 +1,9 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all triples that relate to the taxon that describes <i>Homo sapiens</i> in the named graph for <a href="http://sparql.uniprot.org/taxonomy">taxonomy</a>
+#+ tags:
+#+ - taxonomy
+#+ - triples
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+DESCRIBE taxon:9606 
+FROM <http://sparql.uniprot.org/taxonomy>

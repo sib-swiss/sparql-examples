@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with expression profile annotations with evidence from IHC which are NOT from HPA
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - provenance
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform ?iso.
+  ?iso :expressionProfile /:evidence ?ev.
+  ?ev :evidenceCode cv:ECO_0001055. # IHC
+  filter not exists { ?ev :assignedBy source:Human_protein_atlas }
+}

@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Count number of unique Rhea transport reactions annotated in reviewed UniProtKB entries.
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+(COUNT(DISTINCT ?rhea) AS ?distinctRheaTransportInUniProt)
+WHERE
+{
+  GRAPH <https://sparql.rhea-db.org/rhea> {
+    ?rhea rh:isTransport true .
+  }
+  ?protein up:annotation ?ann .
+  ?ann up:catalyticActivity ?ca .
+  ?ca up:catalyzedReaction ?rhea .
+}

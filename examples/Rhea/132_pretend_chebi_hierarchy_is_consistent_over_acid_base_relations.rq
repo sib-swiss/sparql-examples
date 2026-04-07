@@ -1,0 +1,39 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: The ChEBI hierarchy is not consistent between conjugate base/acid relationships this query pretends that these can be transfered as is. In the example specifically for lipids
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX chebislash: <http://purl.obolibrary.org/obo/chebi/>
+PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT
+  ?chebi
+WHERE {
+  # Specifically for lipids
+  BIND(CHEBI:18059 AS ?chebiClass)
+  {
+    ?chebi rdfs:subClassOf+ ?chebiRestriction .
+    ?chebiRestriction a owl:Restriction .
+    {
+      ?chebiRestriction owl:onProperty chebihash:is_conjugate_acid_of .
+    } UNION {
+      ?chebiRestriction owl:onProperty chebihash:is_conjugate_base_of .
+    }
+    ?chebiRestriction owl:someValuesFrom ?chebiRelationTarget .
+    ?chebiRelationTarget rdfs:subClassOf+ ?chebiClass .
+    FILTER(NOT EXISTS{
+      # Zwiterions should b excluded from being considered for transfering the hierarchy
+      ?chebi rdfs:subClassOf CHEBI:27369 .
+    })
+
+    # If the charge is zero then don't expand the hierarchy.
+    OPTIONAL {
+      ?chebi chebislash:charge "0" .
+      BIND(true AS ?chebiChargeZero)
+    }
+    FILTER(!BOUND(?chebiChargeZero))
+  } UNION {
+    #Also look directly in the upper classes to follow the normal hierarchy path.
+    ?chebi rdfs:subClassOf+ ?chebiClass .
+  }
+}

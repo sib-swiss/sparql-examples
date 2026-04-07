@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the number of approved reactions using L-glutamine (CHEBI:29985) AND L-glutamate (CHEBI:58359) in different reaction sides
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  ?reaction
+  ?reactionEquation
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi CHEBI:29985
+}
+
+# There are several way to indicate that the reaction sides must be different:
+# - ?reactionSide1 rh:transformableTo ?reactionSide2
+# FILTER (?reactionSide1 != ?reactionSide2)
+#It is better to use rh:transformableTo predicate.

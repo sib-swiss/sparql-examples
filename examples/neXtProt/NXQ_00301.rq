@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: PE1 entries that comply with HPP guidelines (at least 2 non overlapping peptides of at least 9aa from a single data source)
+#+ tags:
+#+ - keyword
+#+ - protein existence
+#+ - proteomics
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :existence :Evidence_at_protein_level .
+ ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-1267.
+}

@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: List Taxa Identifiers and the number of annotated Rhea reactions in each that have experimental evidence.
+#+ tags:
+#+ - count
+#+ - enzyme
+#+ - experimental
+#+ - taxon
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ECO: <http://purl.obolibrary.org/obo/ECO_>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT 
+	?taxon
+	(COUNT(?rhea) AS ?experimentalRheaAnnotated)
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:organism ?taxon ;
+             up:annotation ?catalyticActivityAnnotation .
+	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivity up:catalyzedReaction ?rhea .
+    [] rdf:subject ?catalyticActivityAnnotation ; 
+       rdf:object ?catalyticActivity ; 
+       up:attribution ?attr .
+    ?attr up:evidence ECO:0000269 .
+  }
+} GROUP BY ?taxon

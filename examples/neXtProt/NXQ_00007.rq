@@ -1,0 +1,11 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins associated with diseases that are associated with cardiovascular aspects
+#+ tags:
+#+ - disease
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform /:medical / :term /:related / :childOf nextprot_cv:D002318.
+}

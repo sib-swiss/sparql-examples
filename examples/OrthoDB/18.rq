@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find zebrafish orthologs of disease-implicated (according to Nextprot SPARQL endpoint) human genes via Vertebrata-level orthogroup/s annotated with both IPR000719 (protein kinase domain) and GO:0048013 (ephrin receptor signaling pathway)
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+PREFIX : <http://purl.orthodb.org/>
+PREFIX np: <http://nextprot.org/rdf#>
+PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
+
+SELECT ?gene_zf ?gene_zf_name ?gene ?gene_name ?description ?go ?disease
+WHERE {
+	SERVICE <https://sparql.nextprot.org/> {
+        select distinct ?entry ?disease WHERE {
+            ?entry np:isoform / np:disease / rdfs:comment ?disease
+        }
+    }
+    ?gene rdfs:seeAlso ?entry;
+        :name ?gene_name ;
+        :description ?description.
+    ?gene :memberOf ?og .
+    ?og :xref/:xrefResource interpro:IPR000719 , GO:0048013.
+    ?og :ogBuiltAt/up:scientificName "Vertebrata";
+        :hasMember ?gene_zf.
+    ?gene_zf :name ?gene_zf_name;
+        up:organism/a [up:scientificName "Danio rerio"].
+} ORDER BY ?disease

@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions with at least one parent reaction and give the number ancestor reactions
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?reaction
+  (count(?parentReaction) as ?parentReactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+
+  ?reaction rdfs:subClassOf ?parentReaction .
+
+  ?parentReaction rdfs:subClassOf rh:Reaction .
+  ?parentReaction rh:status rh:Approved .
+}
+GROUP BY ?reaction
+ORDER BY DESC (?parentReactionCount) ?reaction

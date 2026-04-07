@@ -1,0 +1,35 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: References for SCN1A variants causing Dravet syndrome
+#+ tags:
+#+ - disease
+#+ - publication
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT (str(?publiid) as ?PMID) ?title WHERE {
+ nextprot:NX_P35498 :isoform ?iso. #SCN1A entry
+ ?iso :swissprotDisplayed true. #Swissprot canonical isoform
+ {
+ ?iso :variant ?v.
+ ?v :disease nextprot_cv:DI-01023. #UniProtKB term for Dravet syndrome
+ ?v :evidence /:reference ?pub.
+ ?pub :title ?title.
+ ?pub :from ?xref .
+ ?xref :accession ?publiid ; :provenance db:PubMed .
+ }
+ union
+ {
+ ?iso :proteoform ?pf.
+ ?pf :diseaseRelatedVariant ?ann.
+ filter not exists {?ann :negativeEvidence ?negev} # No negative disease evidence
+ ?ann :impactedObject /:term nextprot_cv:C116573. #NCI Thesaurus term for Dravet syndrome
+ ?ann :evidence /:reference ?pub.
+ ?pub :title ?title.
+ ?pub :from ?xref .
+ ?xref :accession ?publiid ; :provenance db:PubMed .
+ }
+}

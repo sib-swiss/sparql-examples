@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with 3 disulfide bonds and that are not annotated as hormones 
+#+ tags:
+#+ - PTM
+#+ - function
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?isoform.
+ ?isoform :ptm ?statement.
+ ?statement a :DisulfideBond.
+ filter not exists { ?entry :isoform / :function / :term /:childOf nextprot_cv:GO_0005179. } # GO Hormone activity
+} group by ?entry ?isoform having (count(?statement) =3 )

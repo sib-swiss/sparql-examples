@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Pathway names
+#+ tags:
+#+ - pathway
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct (str(?plab) as ?pathlab) ?src where
+{
+?entry :isoform / :pathway ?p.
+?p :evidence / :assignedBy ?src .
+filter(?src != source:Uniprot )
+?p rdfs:comment ?plab.
+}
+order by ?plab

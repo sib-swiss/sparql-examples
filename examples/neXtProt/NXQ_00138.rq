@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with 10 or more gold interactions with SH3 domain-containing proteins
+#+ tags:
+#+ - PPI
+#+ - domain
+#+ - quality
+#+ - region
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :interaction ?it.
+ ?it :quality :GOLD.
+ ?it :interactant ?interactant.
+ ?interactant :isoform? / :domain / :term nextprot_cv:DO-00615. # SH3
+}
+group by ?entry having (count (distinct ?interactant) >= 10)

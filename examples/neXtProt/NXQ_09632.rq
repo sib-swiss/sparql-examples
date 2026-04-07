@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a variant annotation with the start less than 1
+#+ tags:
+#+ - QC
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform /:variant ?var.
+  ?var :start ?start.
+  filter ( ?start < 1)
+}

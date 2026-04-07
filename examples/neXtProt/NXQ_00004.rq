@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins expressed in brain with observed IHC expression "high" but not expressed in testis
+#+ tags:
+#+ - expression
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ # get all expression
+ ?iso :expression ?e1.
+ # highly expressed in brain
+ ?e1 :term/:childOf nextprot_cv:TS-0095;:evidence/:observedExpression :High.
+ # not expressed in testis
+ ?iso :undetectedExpression ?e2.
+ ?e2 :term nextprot_cv:TS-1030.
+# Use the semicolon ';' to refer to the previous subject (?e1)
+# Only IHC data has observed expression "High" so ECO is not specified.
+#
+# Note that we also exclude expression detected in testis.
+ filter not exists { ?iso :detectedExpression / :term / :childOf nextprot_cv:TS-1030 }
+}

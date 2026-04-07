@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with interaction mapping annotations with evidence from ENYO for which the evidence code is NOT physical interaction evidence used in manual assertion (ECO:0000353)
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - evidence
+#+ - interaction
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:interactionMapping /:evidence ?ev1.
+  ?ev1 :assignedBy source:ENYO.
+  ?ev1 :evidenceCode ?eco.
+  filter (?eco not in (cv:ECO_0000353))
+}

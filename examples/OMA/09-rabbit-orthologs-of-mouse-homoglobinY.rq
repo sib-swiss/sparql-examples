@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.omabrowser.org/sparql
+#+ summary: Retrieve all Rabbit's proteins encoded by genes that are orthologous to Mouses's hemoglobin Y gene and their cross-reference links to Uniprot.
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?MOUSE_PROTEIN ?RABIT_PROTEIN ?MOUSE_UNIPROT_XREF ?RABIT_UNIPROT_XREF
+WHERE {
+    ?cluster a orth:OrthologsCluster ;
+        orth:hasHomologousMember ?node1 ;
+        orth:hasHomologousMember ?node2 .
+    ?node2 orth:hasHomologousMember* ?RABIT_PROTEIN .
+    ?node1 orth:hasHomologousMember* ?MOUSE_PROTEIN .
+    ?MOUSE_PROTEIN a orth:Protein .
+    ?MOUSE_PROTEIN  orth:organism/obo:RO_0002162/up:scientificName 'Mus musculus' ;
+        rdfs:label 'HBB-Y';
+        lscr:xrefUniprot ?MOUSE_UNIPROT_XREF .
+    ?RABIT_PROTEIN a orth:Protein .
+    ?RABIT_PROTEIN orth:organism/obo:RO_0002162/up:scientificName 'Oryctolagus cuniculus' .
+    ?RABIT_PROTEIN lscr:xrefUniprot ?RABIT_UNIPROT_XREF.
+    FILTER(?node1 != ?node2)
+}

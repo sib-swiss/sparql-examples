@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all Rhea reactions
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 1
+# Select all Rhea reactions (unspecified direction) 
+# and return identifier (id), accession, boolean attributes (isChemicallyBalanced, isTransport) and chemical equation.
+#
+SELECT ?rhea ?id ?accession ?isChemicallyBalanced ?isTransport  ?equation 
+WHERE {
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:id ?id .
+  ?rhea rh:accession ?accession .
+  ?rhea rh:equation ?equation .
+  ?rhea rh:isTransport ?isTransport .
+  ?rhea rh:isChemicallyBalanced ?isChemicallyBalanced .
+}

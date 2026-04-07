@@ -1,0 +1,11 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least one annotated mutagenesis site
+#+ tags:
+#+ - mutagenesis
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :mutagenesis ?mut.
+}

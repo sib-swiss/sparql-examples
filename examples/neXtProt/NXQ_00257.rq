@@ -1,0 +1,25 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Frequent variants at a PTM site
+#+ tags:
+#+ - evidence
+#+ - sequence variation
+#+ - snorql-only
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select  distinct ?entry (str(?ptmlab) as ?ptmlabSTR) ?varpos (str(?varAA) as ?varAASTR) ?freq where {
+?entry :isoform ?iso .
+?iso :swissprotDisplayed true .
+?iso :variant ?var .
+?var :start ?varpos .
+?var :variation ?varAA .
+?iso :ptm  ?ptm .
+?ptm :term / rdfs:label ?ptmlab.
+?ptm :start ?varpos .
+?var :evidence ?ev .
+?ev :allele-frequency ?freq .
+filter (?freq > 0.5 )
+}
+order by desc(?freq)

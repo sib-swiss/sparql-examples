@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least one 3D structure and that are phosphorylated
+#+ tags:
+#+ - 3D structure
+#+ - PTM
+#+ - phosphorylation
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0597. # Phosphoprotein
+ ?iso :pdbMapping ?map.
+}

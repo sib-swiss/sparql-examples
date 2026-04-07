@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with GO cellular component annotations with evidence having the evidence code IBA and quality GOLD
+#+ tags:
+#+ - QC
+#+ - cellular component
+#+ - evidence
+#+ - quality
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform /:goCellularComponent /:evidence ?ev1.
+  ?ev1 :evidenceCode cv:ECO_0000318.
+  ?ev1 :quality :GOLD.
+}

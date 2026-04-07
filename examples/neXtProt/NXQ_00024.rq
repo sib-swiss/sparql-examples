@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with more than 10 reported interactions (of 'gold' quality)
+#+ tags:
+#+ - PPI
+#+ - quality
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform/:binaryInteraction ?interaction.
+ ?interaction :interactant ?interactant; :quality :GOLD.
+ ?interactant a :Entry.
+} group by ?entry having (count(distinct ?interactant) > 10)

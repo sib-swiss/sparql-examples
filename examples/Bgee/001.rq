@@ -1,0 +1,8 @@
+#+ endpoint: https://sparql.omabrowser.org/sparql/, https://sparql.uniprot.org/sparql/, https://www.bgee.org/sparql/
+#+ summary: What are the species present in Bgee?
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?species WHERE {
+    ?species a up:Taxon .
+    ?species up:rank up:Species .
+}

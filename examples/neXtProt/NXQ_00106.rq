@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins annotated as glycosylated but with no recorded glycosylation site
+#+ tags:
+#+ - PTM
+#+ - glycosylation
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0325.
+ filter not exists { ?entry :isoform /:glycosylationSite ?_. }
+}

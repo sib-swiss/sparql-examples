@@ -1,0 +1,10 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: What are the species present in Bgee and their scientific and common names?
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?species ?sci_name ?common_name WHERE {
+    ?species a up:Taxon ;
+        up:scientificName ?sci_name ;
+        up:rank up:Species .
+    OPTIONAL { ?species up:commonName ?common_name . }
+}

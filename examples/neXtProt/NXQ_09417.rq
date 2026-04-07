@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries whose gene is not located on the plus or minus strand or where the strand is unknown
+#+ tags:
+#+ - QC
+#+ - chromosomal location
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry ?strand where {
+  ?entry :gene / :strand ?strand .
+   filter (!regex (?strand, '1'))
+   filter (!regex (?strand, '-1'))
+   filter (!regex (?strand, '0'))
+}

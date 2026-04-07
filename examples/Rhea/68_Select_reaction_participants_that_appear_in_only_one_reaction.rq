@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select reaction participants that appear in only one reaction
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?compound
+  ?compoundAc
+  ?compoundName
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:name ?compoundName .
+  ?compound rh:accession ?compoundAc .
+}
+GROUP BY ?compound ?compoundName ?compoundAc
+HAVING (count(distinct ?reaction) = 1)
+ORDER BY ?compoundAc

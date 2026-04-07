@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins which are linked to a disease and that do not have orthologs/paralogs in mouse
+#+ tags:
+#+ - disease
+#+ - keyword
+#+ - ortholog
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ {
+ ?iso :medical / rdf:type :Disease.
+ } union {
+ ?iso :uniprotKeyword / :term ?kw .
+ ?kw :termType "Disease"^^xsd:string
+ filter (?kw != nextprot_cv:KW-0656)
+ }
+ FILTER NOT EXISTS { ?entry :reference / :provenance db:MGI . }
+}

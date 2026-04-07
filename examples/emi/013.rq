@@ -1,0 +1,49 @@
+#+ endpoint: https://kg.earthmetabolome.org/metrin/api/
+#+ summary: List all metabolites produced by species with near threatened (wd:Q719675) IUCN status (wdt:P141) and with values available (or greater than a specific value) for trait 'Seed dry mass'.
+PREFIX emi: <https://w3id.org/emi#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?structure_inchikey ?wd_chem ?source_wdx ?sourceName WHERE {
+	# trait data
+	?trySpObs sosa:isSampleOf ?trySpName ; # trait/non-trait data for trySpName (scientific name of plant species as listed in trydb)
+		rdfs:label ?sourceName ;
+		sosa:isFeatureOfInterestOf ?tryObId .
+	?tryObId sosa:hasResult ?tryData .
+	?trySpName emi:inTaxon ?source_wdx . # wikidata-ids wdx for trySpName
+	?tryData rdfs:label ?tryDataLab ;
+		rdf:type emi:Trait ; #retrieve data which is labelled as 'Trait' and its values
+		rdf:value ?tryDataVal .
+	FILTER (STR(?tryDataLab) = 'Seed dry mass' ) #filter on data label 'Seed dry mass'
+	FILTER (?tryDataVal >= 100)
+	SERVICE <https://qlever.dev/api/wikidata> {
+        	?source_wdx wdt:P141 wd:Q719675 . # filter wikidata-ids for trySpName, which have IUCN status (wdt:P141) as near threatened (wd:Q719675)
+        }
+	# metabolite data
+	{
+		SELECT ?source_wdx ?structure_inchikey ?wd_chem WHERE {
+			?material sosa:hasSample ?extract ;
+		        	sosa:isSampleOf ?organe .
+			?organe emi:inTaxon ?source_wdx . # filter metabolite data which is found in wikidata-ids wdx
+			?extract sosa:isFeatureOfInterestOf ?lcms .
+		    	?lcms sosa:hasResult ?feature_list .
+			?feature_list emi:hasLCMSFeature ?feature .
+			?feature emi:hasAnnotation ?sirius_annotation .
+			?sirius_annotation a emi:StructuralAnnotation ;
+				emi:hasChemicalStructure ?ik2d .
+			?ik2d emi:hasSMILES ?smiles ;
+		    		emi:isInChIKey2DOf ?structure_inchikey .
+			?structure_inchikey emi:isInChIKeyOf ?wd_chem .	# wikidata-ids for metabolites
+		}
+	}
+	UNION # union with data from lotus (integrated in wikidata)
+	{
+		SERVICE <https://qlever.dev/api/wikidata> {
+			?wd_chem wdt:P235 ?structure_inchikey;
+   				wdt:P703 ?source_wdx .
+		}
+	}
+} LIMIT 1000

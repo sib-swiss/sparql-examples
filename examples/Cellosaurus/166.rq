@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Example (sample) of a cross-reference with its properties from each database
+#+ tags:
+#+ - disc
+#+ - discontinued
+#+ - dr
+#+ - xref
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+select ?db_class ?db (sample(?ac) as ?sample_ac) (sample(?disc) as ?sample_disc) (sample(?lbl) as ?sample_label) (sample(?url) as ?sample_url) where {
+  ?xref a cello:Xref .
+  ?xref cello:database ?db.
+  ?xref cello:accession ?ac.
+  ?db a ?db_class .
+  ?db_class rdfs:subClassOf cello:Database . # (useful to get rid of irrelevant owl:NamedIndividual)
+  optional { ?xref cello:discontinued ?disc  }.
+  optional { ?xref rdfs:label ?lbl  }.
+  optional { ?xref rdfs:seeAlso ?url } .
+  # filter (bound(?disc))  # uncomment to see xrefs identifying a discontinued product reference in a catalog
+  # filter (bound(?lbl))   # uncomment to see xrefs having a label (genes, chemicals, anatomy, ...)
+  # filter (! bound(?url)) # uncomment to see xrefs having NO url (discontinued products, ...)
+}
+group by ?db_class ?db
+order by ?db_class ?db
+limit 300

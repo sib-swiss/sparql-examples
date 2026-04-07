@@ -1,0 +1,10 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least one selenocysteine in their sequence
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform/:selenocysteine ?statement.
+}

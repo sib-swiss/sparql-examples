@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins having at least 2 proteotypic peptides of 7 or 8aa but no proteotypic peptide >= 9 aa
+#+ tags:
+#+ - peptide
+#+ - proteomics
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+?entry :isoform / :peptideMapping ?pm.
+?pm :proteotypic true .
+?pm :peptideName ?pepid .
+#?pm :start ?pos1 ; :end ?pos2 .
+#filter((?pos2 - ?pos1 + 1) >= 7) # This is not absolutely required for current query since 7 is the minimum length for accepted proteotypic peptides
+filter not exists {
+ ?entry :isoform / :peptideMapping ?pm2.
+ ?pm2 :start ?p1 ; :end ?p2 .
+ ?pm2 :proteotypic true .
+ filter((?p2 - ?p1 + 1) >= 9)
+ }
+}
+group by ?entry having(count (distinct ?pepid) >= 2)

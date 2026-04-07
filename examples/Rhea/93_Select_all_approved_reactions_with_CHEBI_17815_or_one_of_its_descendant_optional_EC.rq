@@ -1,0 +1,25 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions with CHEBI:17815 (a 1,2-diacyl-sn-glycerol) or one of its descendant. Display the EC numbers if the rhea-ec link exists.
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  distinct
+    ?reaction
+    ?ec
+    ?reactionEquation
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:side ?reactionSide .
+
+  OPTIONAL {?reaction rh:ec ?ec .} .
+
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf* CHEBI:17815 .
+}
+ORDER BY ?reaction

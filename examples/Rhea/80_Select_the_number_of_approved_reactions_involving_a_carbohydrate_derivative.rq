@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the number of approved reactions involving a *_carbohydrate derivative_* (subclass of *CHEBI:63299*) based on the ChEBI ontology (use of *subClassOf+*)
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  (count(distinct ?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:63299 .
+}

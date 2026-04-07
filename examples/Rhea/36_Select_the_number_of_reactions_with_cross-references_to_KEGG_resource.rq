@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the number of reactions with cross-references to KEGG resource (via bidirectional rhea reactions)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX kegg: <http://identifiers.org/kegg.reaction/>
+
+SELECT (count(?reaction) as ?reactionCount) 
+WHERE {
+    ?reaction rdfs:subClassOf rh:Reaction .
+    ?reaction rh:bidirectionalReaction ?bidirectionalReaction .
+    ?bidirectionalReaction rdfs:seeAlso ?xref .
+    FILTER (regex(?xref, str(kegg:)))
+}

@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find in any organsim under Gammaproteobacteria all genes containing word "protease", case-insensitive, anywhere in description
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?tx rdfs:subClassOf+/up:scientificName "Gammaproteobacteria".
+    ?gene a :Gene; up:organism/a ?tx; :description ?description.
+    FILTER(contains (lcase(?description), "protease" ))
+}

@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find UniProtKB entries with merged loci in <a href="https://www.uniprot.org/taxonomy/360910">Bordetella avium</a>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein 
+  (GROUP_CONCAT(?locusName; separator=',') AS ?locusNames)
+WHERE 
+{ 
+  ?protein a up:Protein ;
+    up:organism taxon:360910 ;
+    up:encodedBy ?gene .
+  ?gene up:locusName ?locusName .
+} 
+GROUP BY ?protein 
+HAVING (COUNT(?locusName) > 1)

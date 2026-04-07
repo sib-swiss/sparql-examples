@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a variant having an impact on the nucleus localization at level GOLD
+#+ tags:
+#+ - phenotype
+#+ - quality
+#+ - subcellular location
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry
+where {
+ values ?ioTerm {nextprot_cv:GO_0005634} . # nucleus
+ ?entry :isoform / :proteoform / :phenotypicVariation ?phvar .
+ ?phvar :term / :childOf nextprot_cv:ME_0000002 . # children of impact
+ ?phvar :evidence / :quality :GOLD .
+ ?phvar :impactedObject / :term ?ioTerm .
+}

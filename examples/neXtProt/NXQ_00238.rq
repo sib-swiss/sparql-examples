@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that are lipoproteins
+#+ tags:
+#+ - PTM
+#+ - keyword
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0449.
+}

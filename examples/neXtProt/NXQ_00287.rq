@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with interactions obtained from x-ray crystallography
+#+ tags:
+#+ - PPI
+#+ - method
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :binaryInteraction /:evidence ?ev.
+ ?ev :interactionDetectionMethod nextprot_cv:MI_0114. # x-ray crystallography
+}

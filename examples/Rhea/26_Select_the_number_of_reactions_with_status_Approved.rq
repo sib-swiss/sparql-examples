@@ -1,0 +1,9 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql/
+#+ summary: Select the number of reactions with status Approved
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (count(?reaction) as ?reactionCount) WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+}

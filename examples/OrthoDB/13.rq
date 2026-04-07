@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: List all xrefs attached to the groups annotated with at least three Interpro domains (IPR011990, IPR013083 and IPR001841)
+PREFIX : <http://purl.orthodb.org/>
+PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
+
+SELECT ?og ?og_description (group_concat(distinct ?xref; SEPARATOR="; ") as ?xrefs)
+WHERE {
+    ?og a :OrthoGroup; :name ?og_description.
+    ?og :xref [a :Xref; :xrefResource ?xref].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR011990].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR013083].
+    ?og :xref [a :Xref; :xrefResource interpro:IPR001841].
+} GROUP BY ?og ?og_description
+ORDER BY ?og_description

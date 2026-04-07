@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List all UniProtKB proteins and if they are reviewed (Swiss-Prot) or unreviewed (TrEMBL)
+#+ tags:
+#+ - entry status
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?reviewed
+WHERE {
+  ?protein a up:Protein . 
+  ?protein up:reviewed ?reviewed . 
+}

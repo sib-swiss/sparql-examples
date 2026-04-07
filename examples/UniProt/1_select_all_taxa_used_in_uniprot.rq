@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all taxa from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>
+#+ tags:
+#+ - taxonomy
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?taxon
+FROM <http://sparql.uniprot.org/taxonomy>
+WHERE
+{
+    ?taxon a up:Taxon .
+}

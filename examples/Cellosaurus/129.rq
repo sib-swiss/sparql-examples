@@ -1,0 +1,27 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 most referenced publications in Cellosaurus
+#+ tags:
+#+ - publication
+#+ - ref
+#+ - reference
+#+ - rx
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?publi ?publi_identifiers (count(distinct(?cl_ac)) as ?cl_count) where {
+  select
+  	?publi
+  	(group_concat(distinct ?pac; separator = ', ') as ?publi_identifiers)
+    ?cl_ac
+  	where {
+      ?cl a / rdfs:subClassOf cello:CellLine .
+  	  ?cl cello:primaryAccession ?cl_ac .
+      ?cl cello:references ?publi.
+      ?publi a ?publiClass .
+      ?publi cello:seeAlsoXref / cello:accession ?pac.
+    }
+    group by ?publi ?cl_ac
+}
+group by ?publi ?publi_identifiers
+order by desc(count(distinct(?cl_ac)))
+limit 100

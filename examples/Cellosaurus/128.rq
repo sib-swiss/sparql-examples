@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 agents used to transform cell lines
+#+ tags:
+#+ - stats
+#+ - tfor
+#+ - transformant
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?transformant_name (count(distinct ?cl) as ?cl_count) where {
+  ?cl cello:transformedBy ?annot.
+  ?annot rdfs:label ?transformant_name .
+}
+group by ?transformant_name
+order by desc(count(?annot))
+limit 100

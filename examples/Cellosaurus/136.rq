@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines with a karyotypic comment
+#+ tags:
+#+ - kar
+#+ - karyotype
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?cl_name ?shortened_karyotypic_comment where {
+  ?cl a / rdfs:subClassOf cello:CellLine .
+  ?cl cello:recommendedName ?cl_name .
+  ?cl cello:hasKaryotypicInfoComment ?annot.
+  ?annot rdfs:comment ?comment .
+  bind(
+    if(
+      strlen(?comment) > 140,
+      concat( substr(?comment, 0, 140), "..."), ?comment) as ?shortened_karyotypic_comment)
+}
+limit 3000

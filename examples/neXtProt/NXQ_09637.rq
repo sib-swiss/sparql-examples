@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a variant annotation with no original value
+#+ tags:
+#+ - QC
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select distinct ?entry where {
+  ?entry :isoform /:variant /:original ""^^xsd:string.
+}

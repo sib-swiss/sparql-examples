@@ -1,0 +1,26 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Count the number of Human Transporter Proteins
+#+ tags:
+#+ - enzyme
+#+ - rhea
+#+ - transport
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+
+SELECT  
+  (COUNT(DISTINCT ?protein) AS ?humanTransportEnzymes)
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:organism taxon:9606 ;
+             up:annotation ?a .
+    ?a a up:Catalytic_Activity_Annotation ;
+      up:catalyticActivity ?ca .
+    ?ca up:catalyzedReaction ?rhea .
+  }
+  GRAPH <https://sparql.rhea-db.org/rhea>{
+  	?rhea rh:isTransport true .
+  }
+}

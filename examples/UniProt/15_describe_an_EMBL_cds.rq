@@ -1,0 +1,7 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all triples that relate to the EMBL CDS entry AA089367.1: 
+#+ tags:
+#+ - EMBL
+#+ - cross-reference
+#+ - triples
+DESCRIBE <http://purl.uniprot.org/embl-cds/AAO89367.1>

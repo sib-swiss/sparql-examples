@@ -1,0 +1,32 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some senescence comments about cell lines with their source
+#+ tags:
+#+ - sen
+#+ - senescence
+#+ - source
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+select ?cl ?cl_name ?source_type ?source ?shortened_comment
+where {
+  ?cl cello:hasSenescenceComment ?annot.
+  ?cl cello:recommendedName ?cl_name .
+  ?annot rdfs:comment ?comment .
+  optional {
+    ?annot cello:hasSource ?s .
+  	optional { ?s cello:originatesFrom / a ?st }.
+   	optional { ?s cello:originatesFrom / cello:internalId ?id }   	# src origin is a xref or a publi
+    optional { ?s cello:originatesFrom / skos:prefLabel ?org }      # src origin is an organization
+    optional { ?s rdfs:label ?lb }                                  # src origin not specified
+  }
+  bind (coalesce(?id, ?org, ?lb, '-') as ?source)
+  bind (coalesce(?st, '-') as ?source_type)
+  bind(
+    if(
+      strlen(?comment) > 140,
+      concat( substr(?comment, 0, 140), "..."),
+      ?comment)
+      as ?shortened_comment)
+}
+order by ?cl ?source
+limit 100

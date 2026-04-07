@@ -1,0 +1,24 @@
+[format]
+align_predicates = false
+align_prefixes = false
+separate_prologue = true
+capitalize_keywords = true
+insert_spaces = true
+tab_size = 2
+where_new_line = false
+filter_same_line = true
+line_length = 120
+contract_triples = true
+auto_line_break = false
+
+[completion]
+timeout_ms = 10000
+result_size_limit = 50
+subject_completion_trigger_length = 3
+object_completion_suffix = true
+variable_completion_limit = 10
+same_subject_semicolon = true
+
+[prefixes]
+add_missing = true
+remove_unused = false

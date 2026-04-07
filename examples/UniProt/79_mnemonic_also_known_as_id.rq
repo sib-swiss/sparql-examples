@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List all UniProtKB protein ID (mnemonic) for current UniProtKB entries.
+#+ tags:
+#+ - identifier
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?uniprot ?mnemonic 
+WHERE
+{
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+        ?uniprot a up:Protein ;
+            up:mnemonic ?mnemonic .
+    }
+}

@@ -1,0 +1,10 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: How many descendants of CHEBI:17815 (a 1,2-diacyl-sn-glycerol) in the ChEBI ontology?
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT (count(?chebiDescendant) as ?countChild) WHERE {
+  ?chebiDescendant rdfs:subClassOf+ CHEBI:17815 .
+  ?chebiDescendant rdfs:label ?label .
+}

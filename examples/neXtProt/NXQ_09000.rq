@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no protein domains with no entry associated
+#+ tags:
+#+ - QC
+#+ - domain
+#+ - snorql-only
+#+ - vocabulary
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?domain where {
+?domain a :NextprotDomainCv .
+filter not exists {  ?entry :isoform  / :region / :term ?domain. }
+}
+order by ?domain

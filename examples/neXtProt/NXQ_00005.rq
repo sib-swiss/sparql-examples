@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins located in mitochondrion and that lack a transit peptide
+#+ tags:
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739 } # SL and GO values for mitochondrion
+ ?entry :isoform ?iso.
+ filter not exists { ?iso :uniprotKeyword /:term nextprot_cv:KW-0809 } # Transit peptide
+ ?iso :cellularComponent ?loc .
+ ?loc :term /:childOf ?mitoloc.
+ filter not exists {?loc :negativeEvidence ?negev} # No negative localization evidence
+}
+
+# Variables start with ? and can be given any name.
+# Variables such as ?entry and ?mitoloc (location in the mitochondrion) are easily understood by humans.

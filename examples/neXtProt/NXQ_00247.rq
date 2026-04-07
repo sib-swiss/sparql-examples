@@ -1,0 +1,11 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a molecular weight less than 25 kDa
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry ?mw WHERE {
+ ?entry :isoform / :sequence / :molecularWeight ?mw.
+ filter ( ?mw < 25000)
+} order by ?mw

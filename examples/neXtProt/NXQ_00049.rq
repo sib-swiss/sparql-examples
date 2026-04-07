@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least one variant of the types "A->R" or "R->A"
+#+ tags:
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform/:variant ?statement.
+ {?statement :original "A"^^xsd:string;:variation "R"^^xsd:string}
+ UNION
+ {?statement :original "R"^^xsd:string;:variation "A"^^xsd:string}
+}

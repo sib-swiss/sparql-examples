@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with sequences 100% identical to other proteins, grouped
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry (group_concat(distinct substr(str(?entry2),34); separator = ",") as ?sameseq) WHERE {
+ ?entry :isoform / :sequence / :chain ?chain1.
+ ?entry2 :isoform / :sequence / :chain ?chain2.
+ filter ( (?chain1 = ?chain2) && (?entry != ?entry2))
+}
+group by ?entry
+order by ?entry

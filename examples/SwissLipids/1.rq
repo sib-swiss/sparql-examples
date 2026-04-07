@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: Select the SwissLipids categories and their labels.
+PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 1
+SELECT ?category ?label
+WHERE
+{
+    ?category SWISSLIPID:rank SWISSLIPID:Category .
+    ?category rdfs:label ?label .
+}

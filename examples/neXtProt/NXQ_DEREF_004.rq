@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Query for an Isoform Instance e.g isoform:NX_Q8WZ42-1
+#+ tags:
+#+ - deref_instance_Isoform
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+     ?INSTANCE :functionInfo ?object .
+     ?object rdfs:comment ?comment.
+     ?INSTANCE :swissprotDisplayed ?swissprotDisplayed.
+} WHERE {
+     ?INSTANCE :functionInfo ?object .
+     ?object rdfs:comment ?comment.
+     optional {
+          ?INSTANCE :swissprotDisplayed ?swissprotDisplayed.
+     }
+     FILTER(!isBlank(?object))
+}

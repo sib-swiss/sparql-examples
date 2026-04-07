@@ -1,0 +1,29 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List all InterPro member database signature match start and end for a specific UniProtKB protein.
+#+ tags:
+#+ - InterPro
+#+ - domain
+#+ - search within sequence
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?protein ?interproMemberDatabaseXref ?matchStart ?matchEnd
+WHERE{
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    VALUES ?protein {<http://purl.uniprot.org/uniprot/P05067>} .
+    ?protein rdfs:seeAlso ?sa .
+  }
+  GRAPH <http://sparql.uniprot.org/uniparc> {
+    ?uniparc up:sequenceFor ?protein ;
+      rdfs:seeAlso ?interproMemberDatabaseXref .
+    ?interproDatabaseXref up:signatureSequenceMatch ?sam .
+    ?sam faldo:begin ?sab ;
+      faldo:end ?sae .
+    ?sab faldo:position ?matchStart ;
+      faldo:reference ?uniparc .
+    ?sae  faldo:position ?matchEnd ;
+      faldo:reference ?uniparc .
+  }
+}

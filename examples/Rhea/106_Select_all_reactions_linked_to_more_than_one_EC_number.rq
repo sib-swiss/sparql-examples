@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions linked to more than one EC number
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  ?reaction
+  (count(?ecNumber) as ?ecCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:ec ?ecNumber
+}
+GROUP BY ?reaction
+HAVING (count(?ecNumber) > 1)
+ORDER BY DESC(?ecCount)

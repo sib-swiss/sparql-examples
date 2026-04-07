@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a peptide mapping annotation with evidence from PeptideAtlas but no xref to PeptideAtlas
+#+ tags:
+#+ - QC
+#+ - cross-reference
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select distinct ?entry where {
+  ?entry a :Entry.
+  ?entry :isoform /:peptideMapping /:evidence /:assignedBy ?src.
+  filter (regex (?src,'PeptideAtlas'))
+  filter not exists {?entry :reference /:provenance db:PeptideAtlas.}
+}

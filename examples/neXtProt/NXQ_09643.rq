@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a variant annotation with an xref starting with rs that do not have evidence from dbSNP or UniProt
+#+ tags:
+#+ - QC
+#+ - variant
+#+ - xref
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:variant /:evidence ?ev.
+  ?ev :reference /:accession ?xref.
+  filter (regex(?xref, "^rs"))
+  ?ev :assignedBy ?src.
+  filter ( ?src not in (source:dbSNP,source:Uniprot))
+}

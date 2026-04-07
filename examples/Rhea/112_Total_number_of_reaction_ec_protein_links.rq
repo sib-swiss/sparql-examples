@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Total number of <reaction> <ec> <protein> links
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX up:<http://purl.uniprot.org/core/>
+
+SELECT
+  (count(?reaction) as ?reactionEcProteinLinkCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:ec ?enzyme
+  SERVICE <http://sparql.uniprot.org/sparql> {
+    ?protein up:reviewed true .
+    ?protein up:enzyme ?enzyme.
+  }
+}

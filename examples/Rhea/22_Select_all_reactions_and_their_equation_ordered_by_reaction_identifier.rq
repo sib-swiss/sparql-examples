@@ -1,0 +1,11 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql/
+#+ summary: Select all reactions and their equation, ordered by reaction identifier
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?reaction ?reactionId ?equation WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:equation ?equation .
+  ?reaction rh:id ?reactionId . 
+}
+ORDER BY ?reaction

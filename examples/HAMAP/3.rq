@@ -1,0 +1,11 @@
+#+ endpoint: https://hamap.expasy.org/sparql/
+#+ summary: Select all hamap rules that deal with Catalytic Activity
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+
+SELECT ?rule ?query
+WHERE
+{
+    ?rule sh:construct ?query  .
+    FILTER (CONTAINS(?query, 'Catalytic_Activity_Annotation'))
+}

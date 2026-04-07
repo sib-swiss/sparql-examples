@@ -1,0 +1,12 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a signal sequence 
+#+ tags:
+#+ - signal sequence
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :signalPeptide ?_.
+}

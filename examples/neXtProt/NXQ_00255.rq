@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Variants identified in exome datasets with a frequency of >0.1
+#+ tags:
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry ?varpos ?freq where
+{
+ ?entry :isoform ?iso .
+ ?iso :swissprotDisplayed true .
+ ?iso :variant ?var .
+ ?var :start ?varpos .
+ ?var :evidence ?ev .
+ ?ev :alleleNumber ?anb .
+ ?ev :alleleFrequency ?freq .
+ filter(?freq > 0.1 && ?anb > 100000)
+ } order by desc(?freq)

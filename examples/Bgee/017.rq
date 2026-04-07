@@ -1,0 +1,29 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: Anatomical entities where the ins zebrafish gene is expressed and its gene GO annotations.
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?anatomicalEntity ?goClass ?goLabel {
+    {
+        SELECT ?ensemblGene ?anatomicalEntity {
+            ?geneB a orth:Gene ;
+                genex:isExpressedIn ?anat ;
+                rdfs:label ?geneLabel ;
+                lscr:xrefEnsemblGene ?ensemblGene ;
+                orth:organism/obo:RO_0002162 ?taxon2 .
+            ?taxon2 up:commonName 'zebrafish' .
+            FILTER (UCASE(?geneLabel) = UCASE('ins'))
+            ?anat rdfs:label ?anatomicalEntity .
+        }
+    }
+    SERVICE <https://sparql.uniprot.org/sparql> {
+        ?uniprot rdfs:seeAlso/up:transcribedFrom ?ensemblGene ;
+            a up:Protein ;
+            up:classifiedWith ?goClass .
+        ?goClass rdfs:label ?goLabel .
+    }
+} LIMIT 20

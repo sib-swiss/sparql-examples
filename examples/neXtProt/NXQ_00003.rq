@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with 7 transmembrane regions
+#+ tags:
+#+ - domain
+#+ - region
+#+ - topology
+#+ - transmembrane
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :topology ?statement.
+ ?statement a :TransmembraneRegion.
+} group by ?entry ?iso having(count( ?statement)=7)
+
+# 'a' can also be used instead of 'rdf:type'
+# 'a' is a synonym of 'rdf:type'
+#
+# Apply the grouping criterion (group by) for the results.
+# This groups entries with isoforms having 7 transmembrane regions.
+# Apply the aggregate function (count) to the variable ?statement.
+# This counts the number of transmembrane region statements for each isoform.

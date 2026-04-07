@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 population (ethnic grouping) of the individual from which human cell lines were sampled
+#+ tags:
+#+ - pop
+#+ - population
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+select ?population_name (count(?cl) as ?cl_count) where {
+        ?cl cello:derivedFromIndividualBelongingToPopulation ?pop.
+        ?pop cello:name ?population_name .
+  filter not exists { ?cl cello:hasParentCellLine ?any_parent }
+}
+group by ?population_name
+order by desc(count(?cl))
+limit 100

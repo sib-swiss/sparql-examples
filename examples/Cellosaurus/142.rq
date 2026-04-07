@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines with a miscellaneous comment
+#+ tags:
+#+ - misc
+#+ - miscellaneous
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?cl_name ?miscellaneous_comment where {
+  ?cl cello:hasMiscellaneousInfoComment ?annot.
+  ?cl cello:recommendedName ?cl_name .
+  ?annot rdfs:comment ?miscellaneous_comment .
+}
+limit 100

@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: Distinct Enzymes in UniRef50 seed entries
+PREFIX up:<http://purl.uniprot.org/core/>
+SELECT 
+  (COUNT(DISTINCT ?enzyme) AS ?distinctEnzymesInUniRef50Seed)
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot>{
+  	?protein ( up:enzyme | up:domain/up:enzyme | up:component/up:enzyme ) ?enzyme .
+  }
+  GRAPH <http://sparql.uniprot.org/uniref>{
+    ?protein up:seedFor ?cluster .
+    ?cluster up:identity 0.5 .
+  }
+}

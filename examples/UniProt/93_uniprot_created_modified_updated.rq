@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: List the created, last modified, and last sequence update dates for UniProtKB proteins.
+#+ tags:
+#+ - entry history
+#+ - list
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein 
+  ?created
+  ?modified
+  ?version
+WHERE {
+  ?protein a up:Protein ;
+           up:created ?created ;
+           up:modified ?modified ;
+           up:version ?version .
+}

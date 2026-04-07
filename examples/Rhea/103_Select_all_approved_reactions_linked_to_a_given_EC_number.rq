@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions linked to a given EC number (EC 1.1.1.353)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+
+SELECT
+  ?reaction
+  ?reactionEquation
+WHERE {
+  BIND(ec:1.1.1.353 AS ?ecNumber)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:ec ?ecNumber
+}
+ORDER BY ?reaction

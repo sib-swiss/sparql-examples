@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Alternative protein full names for UniProtKB entries
+#+ tags:
+#+ - protein name
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein 
+  ?fullName
+WHERE {
+  ?protein a up:Protein ;
+           up:alternativeName ?recommendedName .
+  ?recommendedName up:fullName ?fullName .
+}

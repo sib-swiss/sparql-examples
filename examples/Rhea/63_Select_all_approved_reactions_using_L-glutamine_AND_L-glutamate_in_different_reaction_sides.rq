@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions using L-glutamine (CHEBI:29985) AND L-glutamate (CHEBI:58359) in different reaction sides
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  (count(?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+
+  ?reaction rh:side ?reactionSide1 .
+  ?reactionSide1 rh:contains ?participant1 .
+  ?participant1 rh:compound ?compound1 .
+  ?compound1 rh:chebi CHEBI:29985 .
+
+  ?reaction rh:side ?reactionSide2 .
+  ?reactionSide2 rh:contains ?participant2 .
+  ?participant2 rh:compound ?compound2 .
+  ?compound2 rh:chebi CHEBI:58359 .
+
+  ?reactionSide1 rh:transformableTo ?reactionSide2
+}

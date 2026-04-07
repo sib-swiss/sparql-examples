@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 10 most represented dog breeds in Cellosaurus
+#+ tags:
+#+ - breed
+#+ - ox
+#+ - species
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+select ?species_ac ?species_name ?breed_ac ?breed_name (count(distinct(?cl)) as ?cl_count) where {
+  values ?species_ac { "9615" } # Canis lupus familiaris (Dog)
+  ?cl cello:derivedFromIndividualBelongingToSpecies ?species .
+  ?species cello:isIdentifiedByXref / cello:accession ?species_ac .
+  ?species cello:name ?species_name .
+  optional {
+    ?cl cello:derivedFromIndividualBelongingToBreed ?breed .
+    ?breed cello:isIdentifiedByXref / cello:accession ?breed_ac .
+    ?breed cello:name ?breed_name .
+  }
+}
+group by ?species_ac ?species_name ?breed_ac ?breed_name
+order by desc(count(distinct(?cl)))
+limit 10

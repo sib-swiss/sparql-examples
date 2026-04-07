@@ -1,0 +1,25 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find A.thaliana genes with their properties by a list of their gene symbols/names
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?gene a :Gene;
+        up:organism [up:scientificName ?sciname] .
+    FILTER(strstarts (?sciname, "Arabidopsis thaliana" ))
+    ?gene :name ?gene_name; :description ?description; :geneTranslatedLength ?aa_seq_length.
+    OPTIONAL {?gene :geneNbExons ?geneNbExons}.
+    ?gene :aaSequence ?sequence
+    FILTER(?gene_name in(
+        "CHX10"
+        ,"GPX1"
+        ,"MAG"
+        ,"MSRB6"
+        ,"MYH"
+        ,"POLH"
+        ,"RPA3A"
+        ,"UVR3"
+        ,"XRCC1"
+    ))
+} ORDER BY ?aa_seq_length

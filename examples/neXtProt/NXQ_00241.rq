@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Interaction annotations from SwissProt 
+#+ tags:
+#+ - PPI
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry (str(?txt) as ?itinfo) WHERE {
+ SELECT DISTINCT ?entry ?txt WHERE {
+ ?entry :isoform ?iso.
+ ?iso :interactionInfo / rdfs:comment ?txt.
+ } order by ?entry
+}

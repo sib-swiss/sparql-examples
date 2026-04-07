@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: List Taxa Identifiers and the number of annotated Rhea reactions for each
+#+ tags:
+#+ - count
+#+ - enzyme
+#+ - taxon
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT 
+	?taxon
+	(COUNT(?rhea) AS ?rheaAnnotated)
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:organism ?taxon ;
+             up:annotation ?catalyticActivityAnnotation .
+	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivity up:catalyzedReaction ?rhea .
+  }
+} GROUP BY ?taxon

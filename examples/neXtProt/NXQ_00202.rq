@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with from 2 to 4 transmembrane regions
+#+ tags:
+#+ - domain
+#+ - region
+#+ - topology
+#+ - transmembrane
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :topology ?statement.
+ ?statement a :TransmembraneRegion.
+} group by ?entry ?iso having(count( ?statement)>=2 && count( ?statement)<=4)

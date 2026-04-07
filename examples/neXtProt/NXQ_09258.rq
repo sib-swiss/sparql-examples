@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with SRM peptide mapping annotations with evidence from SRMAtlas of quality SILVER
+#+ tags:
+#+ - QC
+#+ - evidence
+#+ - proteomics
+#+ - quality
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:srmPeptideMapping /:evidence ?ev1.
+  ?ev1 :assignedBy source:SRMAtlas.
+  ?ev1 :quality :SILVER.
+}

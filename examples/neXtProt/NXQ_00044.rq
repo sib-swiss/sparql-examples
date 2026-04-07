@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins involved in the Reactome pathway "Respiratory electron transport"
+#+ tags:
+#+ - function
+#+ - pathway
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform / :pathway ?p.
+ ?p :evidence /:reference ?xref.
+ ?xref :provenance db:Reactome; :accession "R-HSA-611105"^^xsd:string.
+}

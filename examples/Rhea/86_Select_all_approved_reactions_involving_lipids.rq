@@ -1,0 +1,25 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions involving *lipids* (subclass of *CHEBI:18059*) that have at least one parent reaction
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  distinct
+    ?reaction
+    ?reactionParent
+WHERE {
+  ?reactionParent rdfs:subClassOf rh:Reaction .
+  ?reactionParent rh:status rh:Approved .
+
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rdfs:subClassOf ?reactionParent .
+  ?reaction rh:side ?reactionSide .
+
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:18059 .
+}
+ORDER BY ?reaction

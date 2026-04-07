@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all the (direct) children of *carbohydrate* (CHEBI:16646) in the ChEBI ontology , used in Rhea reaction or not
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?chebiChildCarbohydrate
+  ?chebiLabel
+WHERE {
+  ?chebiChildCarbohydrate rdfs:subClassOf CHEBI:16646 .
+  ?chebiChildCarbohydrate rdfs:label ?chebiLabel .
+}
+ORDER BY ?chebiChildCarbohydrate

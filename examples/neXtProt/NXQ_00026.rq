@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins interacting with at least one protein which is located in the mitochondrion
+#+ tags:
+#+ - PPI
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
+
+ ?entry :isoform / :interaction ?it .
+ ?it :quality :GOLD . # remove this filter for lower quality interactions
+ ?it :interactant ?interactant.
+ ?interactant :isoform? / :cellularComponent ?loc .
+ # the question mark at :isoform allows to select also isoform-specific interactions
+ ?loc :term / :childOf ?mitoloc.
+ filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
+}

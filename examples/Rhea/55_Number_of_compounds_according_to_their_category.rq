@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Number of compounds according to their category (Small molecule, Generic compound, Polymer)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT 
+  ?compoundCategory 
+  ?compoundCategoryLabel?genericCategory
+WHERE
+{
+  VALUES (?compoundCategory) {(rh:GenericCompound) (rh:Polymer) (rh:SmallMolecule)}
+  ?compoundCategory rdfs:subClassOf rh:Compound .
+  ?compoundCategory rdfs:label ?compoundCategoryLabel .
+}
+ORDER BY ?genericCategory DESC(?compound)

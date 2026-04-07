@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose genes are less than 50000 bp away from the location of the gene coding for protein p53
+#+ tags:
+#+ - chromosomal location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+
+SELECT DISTINCT ?entry WHERE {
+ nextprot:NX_P04637 :gene /:begin ?s;:gene/:chromosome ?chr.
+ ?entry :gene/:begin ?gs;:gene/:chromosome ?chr.
+ filter ( ?gs > (?s -50000) && ?gs <= (?s +50000) && ?entry != nextprot:NX_P04637 )
+}

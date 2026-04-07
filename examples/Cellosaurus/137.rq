@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Some cell lines with a gene knockout
+#+ tags:
+#+ - gene
+#+ - knockout
+#+ - ko
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?cl ?method ?gene_name ?gene_ac ?comment where {
+  ?cl cello:hasGeneKnockout ?annot.
+  ?annot cello:hasGenomeModificationMethod ?method .
+  ?annot cello:ofGene ?gene .
+  ?gene cello:isIdentifiedByXref / cello:accession ?gene_ac  .
+  ?gene cello:name ?gene_name .
+  optional {?annot rdfs:comment ?comment . }
+  #filter (bound(?comment)) # uncomment to get only ko annotations with a comment
+}
+limit 100

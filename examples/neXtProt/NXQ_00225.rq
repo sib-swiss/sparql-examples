@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with high proline content
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry ?AAcnt ?seqlen ?AAdensity WHERE {
+ ?entry :isoform ?iso.
+ ?iso :swissprotDisplayed true .
+ ?iso :sequence / :chain ?seq .
+ ?iso :sequence / :length ?seqlen .
+ bind( strlen( replace( str(?seq), "[^P]", "")) as ?AAcnt) # replace all non-Proline by empty string
+ bind(xsd:float(?AAcnt)/xsd:float(?seqlen) as ?AAdensity)
+ filter(?AAcnt > 10)
+}
+order by desc(?AAdensity)
+limit 100 # will bring-up the 100 most relevant cases

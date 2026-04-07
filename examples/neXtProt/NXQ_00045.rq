@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with an active site that is a proton acceptor
+#+ tags:
+#+ - active site
+#+ - enzyme
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry ?comment WHERE {
+ ?entry :isoform/ :activeSite /rdfs:comment ?comment.
+ filter (contains (?comment,'Proton acceptor'))
+}

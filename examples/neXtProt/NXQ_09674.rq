@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with expression profile annotations with evidence from microarray with an expression level other than detected or not detected
+#+ tags:
+#+ - ECO
+#+ - QC
+#+ - expression
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform ?iso.
+  ?iso :expressionProfile /:evidence ?ev.
+  ?ev :evidenceCode cv:ECO_0000104. # microarray
+  ?ev :expressionLevel ?level
+  filter ( ?level not in (:Negative, :Positive))
+}

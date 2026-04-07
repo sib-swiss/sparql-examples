@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins whose gene is located in chromosome 2 that belongs to families with at least 5 members in the human proteome
+#+ tags:
+#+ - chromosomal location
+#+ - family
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+select ?entry WHERE {
+ ?entry :familyName / :term/^:term/^:familyName ?member.
+ ?entry :gene / :chromosome "2"^^xsd:string .
+} group by ?entry having ( count(distinct ?member) >= 5 )

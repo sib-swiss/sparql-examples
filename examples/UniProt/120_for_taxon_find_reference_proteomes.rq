@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: For a ncbi taxon identifier as a digit find it's reference proteome(s) if they exist
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
+
+SELECT ?taxon ?reference_proteome
+WHERE
+{
+  VALUES (?taxid) {
+    (623) # Shigella flexneri
+    (633) # Yersinia pseudotuberculosis
+  } 
+  # Convert the digit to a correct IRI
+  BIND(IRI(CONCAT(STR(taxon:), ?taxid)) AS ?taxon)
+  ?taxon up:scientificName ?taxonName .
+  OPTIONAL {
+    ?reference_proteome a up:Reference_Proteome .
+    ?reference_proteome up:organism ?taxon .
+  }
+}

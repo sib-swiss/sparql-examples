@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least one homeobox domain and with at least one variant in the homeobox domain(s)
+#+ tags:
+#+ - domain
+#+ - region
+#+ - tutorial
+#+ - variant
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ # with >=1 homeobox domain
+ ?iso :region ?st1.
+ ?st1 :term nextprot_cv:DO-00312;:start ?start;:end ?end.
+ # with >=1 variant
+ ?iso :variant ?var.
+ ?var :start ?varpos.
+ # one variant in the homeobox domain
+ filter (?varpos >=?start && ?varpos <=?end)
+}

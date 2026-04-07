@@ -1,0 +1,29 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: What are the anatomical entities where the eel gene apoc1 is expressed along with its expression score independently of the strain, sex, and cell type?
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX lscr: <http://purl.org/lscr#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?anat ?anatName ?stageIRI ?score WHERE {
+    ?seq a orth:Gene ;
+        lscr:xrefNCBIGene <https://www.ncbi.nlm.nih.gov/gene/118230125> .
+        # Or dcterms:identifier "118230125" .
+    ?expression a genex:Expression ;
+        genex:hasExpressionCondition ?condition ;
+        genex:hasExpressionLevel ?score ;
+        genex:hasSequenceUnit ?seq .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label ?anatName .
+    ?condition a genex:ExpressionCondition ;
+        genex:hasAnatomicalEntity ?anat ;
+        genex:hasDevelopmentalStage ?stageIRI ;
+        genex:hasSex "any" ;
+        genex:hasStrain ?strain .
+    ?stageIRI a efo:EFO_0000399 .
+    ?strain a efo:EFO_0005135 ;
+        rdfs:label "wild-type" .
+    FILTER (?anat != obo:GO_0005575)
+} ORDER BY DESC(?score)

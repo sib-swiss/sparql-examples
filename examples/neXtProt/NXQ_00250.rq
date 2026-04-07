@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that act as transporters and their TCDB numbers
+#+ tags:
+#+ - cross-reference
+#+ - function
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry (str(?trcom) as ?trannot) (str(?acc) as ?trac) {
+ ?entry :isoform/ :transportActivity ?tr.
+ ?tr rdfs:comment ?trcom; :evidence / :reference ?ref.
+ ?ref a :Xref; :accession ?acc .
+} order by ?acc

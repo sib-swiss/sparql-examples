@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find taxon records that are known to have part of their life cycle in other organisms (e.g. parasite, symbiont, infection)
+#+ tags:
+#+ - host
+#+ - taxonomy
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?virus 
+  ?host 
+WHERE {
+    ?virus up:host ?host .
+}

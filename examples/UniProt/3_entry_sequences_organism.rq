@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all UniProtKB entries, and their organism and amino acid sequences (including isoforms), for <a href="http://purl.uniprot.org/taxonomy/83333"><i>E. coli K12</i> and all its strains</a>
+#+ tags:
+#+ - isoform
+#+ - taxonomy
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?organism ?isoform ?sequence
+WHERE
+{
+    ?protein a up:Protein .
+    ?protein up:organism ?organism .
+    # Taxon subclasses are materialized, do not use rdfs:subClassOf+
+    ?organism rdfs:subClassOf taxon:83333 .
+    ?protein up:sequence ?isoform .
+    ?isoform rdf:value ?sequence .
+}

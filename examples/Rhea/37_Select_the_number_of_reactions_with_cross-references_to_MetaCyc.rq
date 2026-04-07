@@ -1,0 +1,33 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the number of reactions with cross-references to MetaCyc
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX keywords:<http://purl.uniprot.org/keywords/>
+PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
+
+SELECT
+  (count(distinct ?rhea) as ?rheaMetacycCount)
+  (count(distinct ?xref) as ?metacycRheaCount)
+  (count(?rhea) as ?rheaMetacycXrefCount)
+WHERE {
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:status rh:Approved .
+  ?rhea rh:directionalReaction ?directionalReaction .
+  ?rhea rh:bidirectionalReaction ?bidirectionalReaction .
+  {
+    ?directionalReaction rdfs:seeAlso ?xref .
+    FILTER regex(str(?xref), "METACYC") .
+  }
+  UNION
+  {
+    ?bidirectionalReaction rdfs:seeAlso ?xref .
+    FILTER regex(str(?xref), "METACYC") .
+  }
+  UNION
+  {
+    ?rhea rdfs:seeAlso ?xref .
+    FILTER regex(str(?xref), "METACYC") .
+  }
+}

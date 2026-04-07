@@ -1,0 +1,32 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find all proteins linked to arachidonate (CHEBI:32395)
+#+ tags:
+#+ - ChEBI
+#+ - federated query
+#+ - small molecule
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
+SELECT 
+    DISTINCT
+        ?uniprot
+        ?uniprotID
+        ?recname
+        ?gene
+        ?chebi
+        ?uniprotName
+WHERE {
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+     VALUES (?chebi) { (CHEBI:32395) }
+     ?rhea rh:side/rh:contains/rh:compound ?compound .
+     ?compound rh:chebi ?chebi .
+     ?chebi up:name ?uniprotName .
+  }
+  ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
+  ?uniprot up:mnemonic ?uniprotID .
+  ?uniprot up:recommendedName/up:fullName ?recname .
+  OPTIONAL {?uniprot up:encodedBy/skos:prefLabel ?gene .}
+}

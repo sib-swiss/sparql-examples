@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with RNA-seq observed expression "not detected" and IHC observed expression : "high" (same tissue or children)
+#+ tags:
+#+ - expression
+#+ - method
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ ?iso :expression ?exp, ?exp2.
+ ?exp :term ?tiss .
+ ?exp :negativeEvidence / :evidenceCode nextprot_cv:ECO_0000295. # RNA-seq
+ ?exp2 :quality :GOLD .
+ ?exp2 :term ?tiss2 .
+ ?exp2 :evidence ?evi2.
+ ?evi2 :evidenceCode nextprot_cv:ECO_0001055. # IHC
+ ?evi2 :observedExpression :High.
+ ?tiss2 :childOf ?tiss . # same tissue or children
+}

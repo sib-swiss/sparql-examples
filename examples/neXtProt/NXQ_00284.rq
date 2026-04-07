@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Distribution of interaction detection methods for each year (ENYO data)
+#+ tags:
+#+ - PPI
+#+ - snorql-only
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct (str(?y) as ?year) (str(?psimi) as ?method) (count (distinct ?itid) as ?itcnt) where {
+ ?entry :isoform / :binaryInteraction ?interaction.
+ ?interaction :evidence ?ev; :entryAnnotationId ?itid .
+  ?ev :reference ?publi; :interactionDetectionMethod / rdfs:label ?psimi .
+ ?publi :year ?y.
+} group by ?y ?psimi
+order by desc(?year) desc(?itcnt)

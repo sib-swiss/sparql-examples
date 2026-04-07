@@ -1,0 +1,28 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: For a given lipid (SWISSLIPID:000399814, Ceramide), return a list of all corresponding reactions (Rhea IDs and equation).
+#+   This query does consider the hierarchy: it looks for reactions involving the specified lipid and/or its more specific forms.
+PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Example 5
+SELECT ?startId ?startName ?id ?name ?chebi ?rhea ?rheaEquation 
+WHERE
+{
+  # SwissLipids query (list of) identifier(s)
+  VALUES ?startId { SWISSLIPID:000399814 }
+  # name
+  ?startId rdfs:label ?startName .
+  # Retrieve children lipids 
+  ?id rdfs:subClassOf* ?startId .
+  ?id rdfs:label ?name .
+  # ChEBI x-ref
+  ?id owl:equivalentClass ?chebi .
+  # federated query to Rhea
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+  	?rhea rh:equation ?rheaEquation .
+  	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
+  }    
+} 
+ORDER BY  ?startId ?id

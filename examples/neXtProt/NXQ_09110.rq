@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no DNA binding region annotations with evidence from UniProt of quality SILVER
+#+ tags:
+#+ - QC
+#+ - evidence
+#+ - interaction
+#+ - quality
+#+ - region
+#+ - sequence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:dnaBindingRegion /:evidence ?ev1.
+  ?ev1 :assignedBy source:Uniprot.
+  ?ev1 :quality :SILVER.
+}

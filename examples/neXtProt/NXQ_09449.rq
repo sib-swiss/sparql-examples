@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a keyword in the category "Developmental stage" that does not apply to human proteins
+#+ tags:
+#+ - QC
+#+ - keyword
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {  # Include ?kw if result is not 0 to identify problem keyword
+  values ?kw {
+  cv:KW-0244 # Early protein
+  cv:KW-0293 # Fruiting body
+  cv:KW-0364 # Heterocyst
+  cv:KW-0426 # Late protein
+  cv:KW-0477 # Merozoite
+  cv:KW-0748 # Sporozoite
+  cv:KW-1136 # Bradyzoite
+  cv:KW-1137 # Tachyzoite
+  cv:KW-1138 # Trophozoite
+  }
+  ?entry :isoform /:keyword /:term ?kw.
+}

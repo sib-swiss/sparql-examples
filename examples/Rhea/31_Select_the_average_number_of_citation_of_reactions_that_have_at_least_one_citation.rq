@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the average number of citation of reactions that have at least one citation
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT (AVG(?linksToPubmedPerReaction) AS ?avgLinksToPubmedPerReaction)
+WHERE
+{
+    SELECT ?reaction (COUNT(DISTINCT ?citation) AS ?linksToPubmedPerReaction)
+    WHERE
+    {
+        ?reaction rh:citation ?citation .
+    }
+GROUP BY ?reaction ORDER BY DESC(?linksToPubmedPerReaction)
+}

@@ -1,0 +1,31 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find taxon records for which one reviewed UniProtKB/Swiss-Prot entry exists. We might expect species, strains, subspecies and isolates in the taxon list.
+#+ tags:
+#+ - entry status
+#+ - list
+#+ - taxonomy
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
+SELECT
+    DISTINCT
+         ?taxid
+         ?scientificName
+         ?domain
+         ?domainName
+WHERE {
+  ?uniprot a up:Protein .
+  # reviewed entries
+  ?uniprot up:reviewed true .
+  ?uniprot up:organism ?taxid . 
+  ?taxid up:scientificName ?scientificName .
+    
+  VALUES ?domain { taxon:2 # bacteria
+                   taxon:2157 # archaea
+                   taxon:2759 # eukaryota
+                   taxon:10239 #viruses
+                 } .
+  ?taxid rdfs:subClassOf ?domain .
+}

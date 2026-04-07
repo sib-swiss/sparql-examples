@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Number of IsA relationships, distinct child reactions and distinct parent reactions
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT 
+    (COUNT(?reactionChild) AS ?isARelationCount) 
+    (COUNT(distinct ?reactionChild) AS ?uniqueReactionChildCount)
+    (COUNT(distinct ?reactionParent) AS ?uniqueReactionParentCount)
+WHERE {
+    ?reactionChild rdfs:subClassOf rh:Reaction .
+    ?reactionChild rh:status rh:Approved .
+    ?reactionParent rdfs:subClassOf rh:Reaction .
+    ?reactionParent rh:status rh:Approved .
+    ?reactionChild rdfs:subClassOf ?reactionParent .
+}

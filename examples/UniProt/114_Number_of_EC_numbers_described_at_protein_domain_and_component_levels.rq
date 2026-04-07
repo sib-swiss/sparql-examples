@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: Number of EC numbers described at protein, domain and component levels
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT 
+  (count(distinct ?protein) as ?proteinCount)
+WHERE
+{
+  ?protein up:reviewed true .
+  OPTIONAL{?protein up:enzyme ?ecNumber}
+  OPTIONAL{?protein up:domain/up:enzyme ?ecNumber}
+  OPTIONAL{?protein up:component/up:enzyme ?ecNumber}
+  FILTER (BOUND(?ecNumber))
+}

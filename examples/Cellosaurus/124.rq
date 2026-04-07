@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Count of cross-references by database
+#+ tags:
+#+ - database
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select ?db_class ?db (count(*) as ?xref_count) where {
+  ?xref a cello:Xref .
+  ?xref cello:database ?db .
+  ?db a ?db_class .
+  ?db_class rdfs:subClassOf cello:Database .
+}
+group by ?db_class ?db
+order by desc(count(*))

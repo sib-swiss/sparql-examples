@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select the distribution of reactions according to their status
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?status
+  (count(?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status ?status .
+}
+GROUP BY ?status

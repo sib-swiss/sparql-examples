@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 most represented cell types in Cellosaurus
+#+ tags:
+#+ - cell
+#+ - cell-type
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+select ?cell_type_ac ?cell_type_name (count(distinct ?cl) as ?cell_line_count) where {
+    ?cl cello:derivedFromCellType ?ct.
+    ?ct cello:name ?cell_type_name .
+    optional {
+    	?ct cello:isIdentifiedByXref / cello:accession ?cell_type_ac .
+    }
+  }
+group by ?cell_type_ac ?cell_type_name
+order by desc(count(distinct(?cl)))
+limit 100

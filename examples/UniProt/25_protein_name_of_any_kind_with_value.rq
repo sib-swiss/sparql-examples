@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find UniProtKB entry which has a protein name 'HLA class I histocompatibility antigen, B-73 alpha chain'
+#+ tags:
+#+ - protein name
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?anyKindOfName
+WHERE
+{
+		?protein a up:Protein .
+		?protein (up:recommendedName|up:alternativeName) ?structuredName .
+		?structuredName ?anyKindOfName  "HLA class I histocompatibility antigen, B alpha chain" .
+		?anyKindOfName rdfs:subPropertyOf up:structuredNameType .
+}

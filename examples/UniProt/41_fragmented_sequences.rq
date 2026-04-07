@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Retrieve UniProtKB entries with sequences that are composed of fragments
+#+ tags:
+#+ - protein fragment
+#+ - sequence
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
+SELECT DISTINCT 
+  ?protein
+WHERE {
+  ?protein a up:Protein ;
+    up:sequence ?sequence .
+  ?sequence up:fragment [] .
+}

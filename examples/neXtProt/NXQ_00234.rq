@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with at least two proteotypic synthetic peptides from SRMAtlas of at least 9 amino acids in length
+#+ tags:
+#+ - dataset
+#+ - peptide
+#+ - proteomics
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :srmPeptideMapping ?srm .
+ ?srm :start ?ps; :end ?pe .
+ filter(?pe - ?ps + 1 >= 9)
+ ?srm :proteotypic true .
+ ?srm :peptideName ?pepid .
+}
+group by ?entry having(count(distinct ?pepid) > 1)

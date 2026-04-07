@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a sequence containing "FF.QYE" where "." is any single amino-acid
+#+ tags:
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry rdf:type :Entry.
+ ?entry :isoform / :sequence / :chain ?chain.
+ filter ( regex(?chain, "FF.QYE") )
+}

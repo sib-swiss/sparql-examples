@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all approved reactions involving a *_carbohydrate derivative_* (subclass of *CHEBI:63299*) based on the ChEBI ontology
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  distinct
+    ?reaction
+    ?reactionEquation
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:equation ?reactionEquation .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi rdfs:subClassOf+ CHEBI:63299 .
+}
+ORDER BY ?reaction

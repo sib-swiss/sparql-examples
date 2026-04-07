@@ -1,8 +1,9 @@
 /target/
 /examples_*.ttl
-/examples/**/*.rq
+/examples/**/*.ttl
 /examples/**/*.md
 /_site/
+/data/
 
 .project
 .classpath

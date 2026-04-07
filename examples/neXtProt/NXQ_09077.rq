@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with signal peptide annotations with evidence NOT from UniProt
+#+ tags:
+#+ - QC
+#+ - provenance
+#+ - sequence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry ?src where {
+  ?entry :isoform ?iso.
+  ?iso :signalPeptide /:evidence /:assignedBy ?src.
+  filter ( ?src not in (source:Uniprot))
+}

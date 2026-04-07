@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Predicates and objects, for a given UniParc accession as a subject
+#+ tags:
+#+ - UniParc
+#+ - triples
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT 
+  ?predicate 
+  ?object 
+WHERE { 
+  <http://purl.uniprot.org/uniparc/UPI000012A0AD> ?predicate ?object
+}

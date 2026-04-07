@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select <reaction> <ec> <protein> for a given EC number
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX up:<http://purl.uniprot.org/core/>
+
+SELECT
+  ?reaction
+  ?enzyme
+  ?protein
+WHERE {
+  BIND(ec:2.6.1.62 AS ?enzyme)
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:ec ?enzyme .
+  SERVICE <http://sparql.uniprot.org/sparql> {
+    ?protein up:reviewed true .
+    OPTIONAL {?protein up:enzyme ?enzyme. } .
+    OPTIONAL {?protein up:domain/up:enzyme ?enzyme . } .
+    OPTIONAL {?protein up:component/up:enzyme ?enzyme .} .
+  }
+
+}

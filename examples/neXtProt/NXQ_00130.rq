@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a DNA-binding region but not located in the nucleus
+#+ tags:
+#+ - domain
+#+ - nucleotide binding
+#+ - region
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?entry :gene / :name / rdfs:label ?gen .
+ ?iso :dnaBindingRegion ?dnab.
+ filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:SL-0191} # SL for nucleus
+ filter not exists { ?entry :isoform / :cellularComponent /:term /:childOf nextprot_cv:GO_0005634} # GO for nucleus
+}

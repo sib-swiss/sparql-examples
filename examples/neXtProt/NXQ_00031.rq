@@ -1,0 +1,10 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with more than 10 alternative isoforms
+#+ tags:
+#+ - isoforms
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+} group by ?entry having (count(?iso)>10)

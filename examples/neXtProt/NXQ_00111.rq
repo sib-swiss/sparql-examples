@@ -1,0 +1,19 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with one transmembrane domain and no annotated topology
+#+ tags:
+#+ - domain
+#+ - region
+#+ - topology
+#+ - transmembrane
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :swissprotDisplayed true .
+ ?iso :topology ?tm.
+ ?tm a :TransmembraneRegion.
+ filter (not exists { ?iso :topology ?topodom.
+ ?topodom a :TopologicalDomain.
+ })
+} group by ?entry having (count( ?tm)=1)

@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that interact with protein RBM17 and that are involved in splicing
+#+ tags:
+#+ - PPI
+#+ - function
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot: <http://nextprot.org/rdf/entry/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ nextprot:NX_Q96I25 :isoform / :interaction / :interactant ?entry.
+ ?entry :isoform / :uniprotKeyword / :term nextprot_cv:KW-0508
+}

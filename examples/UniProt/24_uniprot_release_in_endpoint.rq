@@ -1,0 +1,10 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find the release number of the UniProt data that is currently being queried
+#+ tags:
+#+ - release number
+SELECT ?version
+FROM <https://sparql.uniprot.org/.well-known/void>
+WHERE
+{
+    [] <http://purl.org/pav/version> ?version
+}

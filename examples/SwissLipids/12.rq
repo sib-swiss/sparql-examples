@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: Retrieve mapping between SwissLipids lipid identifiers and their corresponding ChEBI identifiers.
+#+   Output should include SwissLipids identifier and name plus the ChEBI identifier.
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 12
+SELECT ?slm ?slmName ?chebi
+WHERE {
+  ?slm rdfs:label ?slmName . 
+  # Corresponding ChEBI entries
+  ?slm owl:equivalentClass ?chebi .
+}
+ORDER BY ?slm

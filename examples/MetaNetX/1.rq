@@ -1,0 +1,17 @@
+#+ endpoint: https://rdf.metanetx.org/sparql/
+#+ summary: Retrieve the MNXref metabolite with name <em>N,N-dimethyl-beta-alanine</em>, together with molecular information.
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?metabolite ?label ?source ?formula ?charge ?inchi ?inchikey ?smiles
+WHERE {
+    ?metabolite a mnx:CHEM .
+    ?metabolite rdfs:label ?label .
+    ?metabolite rdfs:comment 'N,N-dimethyl-beta-alanine' .
+    ?metabolite mnx:chemSource ?source
+    OPTIONAL { ?metabolite mnx:formula  ?formula }
+    OPTIONAL { ?metabolite mnx:charge   ?charge }
+    OPTIONAL { ?metabolite mnx:inchi    ?inchi }
+    OPTIONAL { ?metabolite mnx:inchikey ?inchikey }
+    OPTIONAL { ?metabolite mnx:smiles   ?smiles }
+}

@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with a sequence that does not contain a lysine in the mature region
+#+ tags:
+#+ - processing
+#+ - sequence
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ ?iso :sequence / :chain ?seq.
+ ?iso :matureProtein [ :start ?mstart ; :end ?mend]
+ bind(?mend - ?mstart + 1 as ?mlen)
+ bind(substr(?seq, ?mstart, ?mlen) as ?mseq)
+ filter (!regex (?mseq,'K'))
+}

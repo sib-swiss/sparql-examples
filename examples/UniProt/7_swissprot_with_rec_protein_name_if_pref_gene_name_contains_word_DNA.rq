@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select reviewed UniProtKB entries (Swiss-Prot), and their recommended protein name, that have a preferred gene name that contains the text 'DNA'
+#+ tags:
+#+ - entry status
+#+ - gene name
+#+ - protein name
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?name
+WHERE
+{
+        ?protein a up:Protein .
+        ?protein up:reviewed true .
+        ?protein up:recommendedName ?recommended .
+        ?recommended up:fullName ?name .
+        ?protein up:encodedBy ?gene .
+        ?gene skos:prefLabel ?text .
+        FILTER CONTAINS(?text, 'DNA')
+}

@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all compounds and count their occurrence in Rhea reactions
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?reactionParticipantAc
+  ?chebi
+  (count(distinct ?reaction) as ?reactionCount)
+  ?reactionParticipantName
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  OPTIONAL {
+    ?compound rh:chebi ?chebi .
+  }
+  ?compound rh:name ?reactionParticipantName .
+  ?compound rh:accession ?reactionParticipantAc .
+}
+GROUP BY ?reactionParticipantAc ?chebi ?reactionParticipantName
+ORDER BY DESC(?reactionCount)

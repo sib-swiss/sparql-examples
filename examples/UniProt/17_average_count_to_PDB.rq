@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select the average number of cross-references to the <a href="${uniprot}database/DB-0070">PDB</a> database of UniProtKB entries that have at least one cross-reference to the PDB database
+#+ tags:
+#+ - PDB
+#+ - count
+#+ - cross-reference
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT (AVG(?linksToPdbPerEntry) AS ?avgLinksToPdbPerEntry)
+WHERE
+{
+	SELECT ?protein (COUNT(DISTINCT ?db) AS ?linksToPdbPerEntry)
+	WHERE
+	{
+		?protein a up:Protein .
+		?protein rdfs:seeAlso ?db .
+		?db up:database <http://purl.uniprot.org/database/PDB> .
+	}
+	GROUP BY ?protein ORDER BY DESC(?linksToPdbPerEntry)
+}

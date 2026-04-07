@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find URI and some properties of the orthologous group 6400at314295 by its short text label
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT *
+WHERE {
+    ?og a :OrthoGroup;
+        rdfs:label "6400at314295";
+        :name ?description;
+        :ogBuiltAt [up:scientificName ?clade] .
+}

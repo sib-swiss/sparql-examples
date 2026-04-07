@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select Enzyme Classification (EC) classes that have a protein associated to them
+#+ tags:
+#+ - enzyme
+#+ - enzyme classification
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT
+  DISTINCT ?enzyme
+WHERE {
+  ?protein a up:Protein .
+  {
+    ?protein up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:annotation ?caa .
+    ?caa a up:Catalytic_Activity_Annotation .
+    ?caa up:catalyticActivity ?ca .
+    ?ca up:enzymeClass ?enzyme
+  } UNION {
+    ?protein up:component/up:enzyme ?enzyme .
+  } UNION {
+    ?protein up:domain/up:enzyme ?enzyme .
+  }
+}

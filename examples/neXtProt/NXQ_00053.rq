@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins which are involved in cell adhesion according to GO with an evidence which is not used in automatic assertion nor a sequence similarity evidence used in manual assertion
+#+ tags:
+#+ - function
+#+ - method
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform/:function ?statement.
+ ?statement :term / :childOf nextprot_cv:GO_0007155.
+ filter not exists { ?statement :negativeEvidence ?negev. } # No negative function evidence
+ ?statement :evidence/:evidenceCode ?ecode.
+ filter not exists { ?ecode :childOf nextprot_cv:ECO_0000501. } # Automatic assertion
+ filter not exists { ?ecode :childOf nextprot_cv:ECO_0000250. } # Sequence similarity evidence used in manual assertion
+}

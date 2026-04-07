@@ -1,0 +1,32 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Retrieve entries and catalytic activities in the reviewed (UniProtKB/Swiss-Prot) section that have experimental evidences,
+#+ tags:
+#+ - entry status
+#+ - enzyme
+#+ - evidence tag
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT  
+  ?protein
+  ?rhea 
+WHERE {
+  # ECO 269 is experimental evidence
+  BIND (<http://purl.obolibrary.org/obo/ECO_0000269> as ?evidence)
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:reviewed true ;
+      up:annotation ?a ;
+      up:attribution ?attribution  .
+
+    ?a a up:Catalytic_Activity_Annotation ;
+      up:catalyticActivity ?ca .
+    ?ca up:catalyzedReaction ?rhea .
+  
+    [] rdf:subject ?a ;
+      rdf:predicate up:catalyticActivity ;
+      rdf:object ?ca ;
+      up:attribution ?attribution .
+
+    ?attribution up:evidence ?evidence .
+  }
+}

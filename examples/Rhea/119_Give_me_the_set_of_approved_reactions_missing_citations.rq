@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Give me the set of approved reactions missing citations
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?reaction
+WHERE
+{
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  OPTIONAL {?reaction rh:citation ?citation .}
+  FILTER (NOT EXISTS {?reaction rh:citation ?citation .} )
+}
+ORDER BY ?reaction

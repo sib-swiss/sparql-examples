@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins involved in both Wnt and Hippo signaling pathways
+#+ tags:
+#+ - function
+#+ - pathway
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ # nextprot_cv:GO:0016055 wnt pathway
+ ?iso :goBiologicalProcess ?func1 .
+ ?func1 :term / :childOf nextprot_cv:GO_0016055.
+ filter not exists { ?func1 :negativeEvidence ?negev. } # No negative function evidence
+ # nextprot_cv:GO:0035329 Hippo pathway
+ ?iso :goBiologicalProcess ?func2 .
+ ?func2 :term / :childOf nextprot_cv:GO_0035329.
+ filter not exists { ?func2 :negativeEvidence ?negev. } # No negative function evidence
+}

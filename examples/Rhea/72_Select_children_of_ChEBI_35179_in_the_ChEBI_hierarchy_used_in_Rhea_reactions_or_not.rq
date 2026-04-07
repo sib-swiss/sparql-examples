@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select children of CHEBI:35179 (a 2-oxo carboxylate) in the ChEBI hierarchy (using rdfs:subClassOf), used in Rhea reactions or not
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?chebiChild
+  (str(?label) as ?chebiChildName)
+WHERE {
+  ?chebiChild rdfs:subClassOf CHEBI:35179 .
+  ?chebiChild rdfs:label ?label .
+}
+ORDER BY ?chebiChild

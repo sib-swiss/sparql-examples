@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.swisslipids.org/sparql/
+#+ summary: Retrieve mapping between SwissLipids lipid identifiers and their corresponding LIPID MAPS identifiers.
+#+   Output should include SwissLipids identifier and name plus the LIPID MAPS identifier. 
+#+   
+PREFIX lipidmaps: <https://www.lipidmaps.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Example 8
+SELECT ?slm ?slmName ?lipidmaps
+WHERE {
+  ?slm rdfs:label ?slmName . 
+  # Corresponding LIPID MAPS
+  ?slm rdfs:seeAlso ?lipidmaps .
+  FILTER (strstarts(str(?lipidmaps), str(lipidmaps:))) .
+}
+ORDER BY ?slm

@@ -1,0 +1,11 @@
+#+ endpoint: https://glyconnect.expasy.org/sparql
+#+ summary: Get all Glyconnect proteins their Uniprot reference isoform
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>
+
+SELECT distinct ?glycoprotein ?isoform
+where {
+?glycosite faldo:reference ?isoform .
+?specificglycosite faldo:location ?glycosite .
+?glycoprotein glycan:glycosylated_at ?specificglycosite .
+}

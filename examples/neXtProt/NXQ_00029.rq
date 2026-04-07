@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins anchored to the membrane via a GPI-anchor
+#+ tags:
+#+ - PTM
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ ?iso :lipidationSite / rdfs:comment ?mod.
+ filter(contains(?mod,"GPI-anchor")).
+}

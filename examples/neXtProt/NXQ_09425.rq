@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries which do not have a valid protein existence value
+#+ tags:
+#+ - PE
+#+ - QC
+#+ - protein existence
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry a :Entry.
+  ?entry :existence ?pe.
+  filter ( ?pe not in (:Evidence_at_protein_level,:Evidence_at_transcript_level,:Inferred_from_homology,:Predicted,:Uncertain ))
+}

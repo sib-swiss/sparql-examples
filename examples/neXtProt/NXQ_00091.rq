@@ -1,0 +1,20 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins which are targets of drugs for cardiac therapy
+#+ tags:
+#+ - drug
+#+ - federated query
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  service <http://drugbank.bio2rdf.org/sparql> {
+    select distinct ?uniprot WHERE {
+	?drug <http://bio2rdf.org/drugbank_vocabulary:target> ?drugTarget .
+	?drug <http://bio2rdf.org/drugbank_vocabulary:x-atc> ?atcCode.
+    ?drugTarget <http://bio2rdf.org/drugbank_vocabulary:x-uniprot> ?uniprot .
+	filter(!contains(str(?uniprot),"_"))
+	filter(contains(str(?atcCode), "atc:C01" )) # ATC starting with C01 means therapeutic subgroup for cardiac therapy
+    }
+  }
+  BIND (IRI(CONCAT("http://nextprot.org/rdf/entry/NX_",substr(str(?uniprot),28,6))) as ?entry) # cast drugbank id to neXtprot entry
+}

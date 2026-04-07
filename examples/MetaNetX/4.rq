@@ -1,0 +1,14 @@
+#+ endpoint: https://rdf.metanetx.org/sparql/
+#+ summary: Retrieve the MNXref reaction identifier, that corresponds to the KEGG reaction R00703 (lactate dehydrogenase).
+PREFIX keggR: <https://identifiers.org/kegg.reaction:>
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+
+# Retrieve the MNXref reaction identifier, that corresponds to
+# the KEGG reaction *R00703* (lactate dehydrogenase).
+
+SELECT ?reaction ?reference
+WHERE {
+    ?reaction a mnx:REAC .
+    ?reaction mnx:reacXref keggR:R00703 .
+    ?reaction mnx:reacRefer ?reference
+}

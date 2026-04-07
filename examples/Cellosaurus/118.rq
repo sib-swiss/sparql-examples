@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Top 100 most represented species in Cellosaurus
+#+ tags:
+#+ - ox
+#+ - species
+#+ - stats
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+select ?species_ac ?species_name (count(distinct(?cl)) as ?cl_count) where {
+  ?cl cello:derivedFromIndividualBelongingToSpecies ?species .
+  ?species cello:isIdentifiedByXref / cello:accession ?species_ac .
+  ?species cello:name ?species_name .
+}
+group by ?species_ac ?species_name
+order by desc(count(distinct(?cl)))
+limit 100

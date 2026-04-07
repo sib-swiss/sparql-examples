@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find all clades, i.e. taxonomic levels where orthologous groups were built on, with their Latin names and ranks underneath Bacteria, sorted alphabetically by rank, then name
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://purl.orthodb.org/>
+
+SELECT * WHERE {
+    ?taxon a :Clade ;
+        rdfs:subClassOf+ taxon:2 ;
+        up:scientificName ?name ;
+        up:rank ?rank .
+} ORDER BY ?rank ?name

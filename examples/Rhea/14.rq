@@ -1,0 +1,22 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all Rhea reactions that have a given ChEBI ID as reaction participant
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+# Query 14
+# Select all Rhea reactions that have CHEBI:29985 (L-glutamate) as reaction participant
+# 
+# This query corresponds to the Rhea website query:
+# https://www.rhea-db.org/rhea?query=chebi:29985
+SELECT distinct ?chebi ?rhea ?equation
+WHERE {
+  ?rhea rdfs:subClassOf rh:Reaction .
+  ?rhea rh:equation ?equation .
+  ?rhea rh:side/rh:contains/rh:compound ?compound .
+  #
+  # the ChEBI can be used either as a small molecule, the reactive part of a macromolecule or as a polymer.
+  #
+  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+  VALUES (?chebi) { (CHEBI:29985) }
+}

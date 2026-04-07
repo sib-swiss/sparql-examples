@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no non-standard amino acid terms with no entry associated
+#+ tags:
+#+ - QC
+#+ - selenocysteine
+#+ - snorql-only
+#+ - vocabulary
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?nstdaa where {
+  ?nstdaa a :NonStandardAminoAcidCv .
+  filter not exists {?member :isoform /:selenocysteine / :term ?nstdaa .}
+}

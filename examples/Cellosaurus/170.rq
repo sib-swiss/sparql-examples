@@ -1,0 +1,27 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Usage of name properties for instances of each class defined in cello: ontology
+#+ tags:
+#+ - id
+#+ - label
+#+ - miss
+#+ - misspelling
+#+ - misspellingName
+#+ - name
+#+ - private
+#+ - recommendedName
+#+ - reg
+#+ - registration
+#+ - semantics
+#+ - sy
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select distinct ?entity_type ?sub_prop
+where {
+  # values ?entity_type { cello:CellLine } # uncomment to see name properties used for cello:CellLine instances
+  ?sub_prop rdfs:subPropertyOf* rdfs:label .
+  ?entity ?sub_prop ?_ .
+  ?entity a ?entity_type .
+  filter strstarts(str(?entity_type), (str(cello:)))
+}
+order by ?entity_type
+limit 1000

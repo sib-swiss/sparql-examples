@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with a natural peptide from PeptideAtlas with an AC which does NOT start with "Pap"
+#+ tags:
+#+ - QC
+#+ - mass spectrometry
+#+ - peptide
+#+ - proteomics
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX db: <http://nextprot.org/rdf/db/>
+
+select distinct ?entry where {
+  ?entry :isoform / :peptideMapping ?pm.
+  ?pm :evidence / :reference ?ref.
+  ?ref :provenance  db:PeptideAtlas.
+  ?ref :accession ?ac.
+  filter(!strStarts(?ac,"PAp"))
+}

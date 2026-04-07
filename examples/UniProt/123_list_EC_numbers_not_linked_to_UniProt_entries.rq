@@ -1,0 +1,27 @@
+#+ endpoint: https://sparql.uniprot.org/sparql
+#+ summary: list = EC numbers not linked to UniProt entries
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  (count(distinct ?ecNumber) as ?ecCount)
+WHERE
+{
+  ?ecNumber rdfs:subClassOf up:Enzyme .
+  FILTER (NOT EXISTS {?ecNumber up:obsolete true .} )
+  FILTER (!regex(?ecNumber,'-')) .
+
+  FILTER (NOT EXISTS {
+    ?protein up:enzyme ?ecNumber .
+    ?protein up:reviewed true .
+  })
+  FILTER (NOT EXISTS {
+    ?protein up:domain/up:enzyme ?ecNumber .
+    ?protein up:reviewed true .
+  })
+  FILTER (NOT EXISTS {
+    ?protein up:reviewed true .
+    ?protein up:component/up:enzyme ?ecNumber .
+  })
+}

@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: List all small molecules
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?compound
+  ?compoundName
+WHERE
+{
+  ?compound rdfs:subClassOf rh:SmallMolecule .
+  ?compound rh:name ?compoundName
+}
+ORDER BY (?compound)

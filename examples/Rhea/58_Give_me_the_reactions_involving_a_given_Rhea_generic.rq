@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Give me the reactions involving a given Rhea generic (GENERIC:11964, "reduced [NADPH—hemoprotein reductase]")
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?genericSubClass
+  ?labelGenericSubClass
+  (count(?genericParticipant) as ?countGenericParticipant)
+WHERE
+{
+  ?genericSubClass rdfs:subClassOf rh:GenericParticipant .
+  ?genericSubClass rdfs:label ?labelGenericSubClass .
+  ?genericParticipant rdfs:subClassOf* ?genericSubClass .
+} GROUP BY ?genericSubClass ?labelGenericSubClass

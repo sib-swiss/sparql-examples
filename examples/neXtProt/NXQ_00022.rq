@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins with no function annotated
+#+ tags:
+#+ - function
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso.
+ filter not exists { ?iso :functionInfo ?_. }
+ filter not exists { ?iso :catalyticActivity ?_ .}
+ filter not exists { ?iso :transportActivity ?_ .}
+ filter not exists { ?iso :pathway ?_. }
+ filter not exists {
+ ?iso :function / :term ?fterm .
+			 filter(?fterm != nextprot_cv:GO_0005524 && ?fterm != nextprot_cv:GO_0000287 && ?fterm != nextprot_cv:GO_0005515 && ?fterm != nextprot_cv:GO_0042802
+			 && ?fterm != nextprot_cv:GO_0008270 && ?fterm != nextprot_cv:GO_0051260 && ?fterm != nextprot_cv:GO_0005509
+					 && ?fterm != nextprot_cv:GO_0003676 && ?fterm != nextprot_cv:GO_0003824 && ?fterm != nextprot_cv:GO_0007165 && ?fterm != nextprot_cv:GO_0035556
+					 && ?fterm != nextprot_cv:GO_0046914 && ?fterm != nextprot_cv:GO_0046872)
+ }
+ filter not exists { ?entry :existence :Uncertain } # Remove PE5 proteins
+}

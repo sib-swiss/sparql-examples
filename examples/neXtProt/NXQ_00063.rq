@@ -1,0 +1,33 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that have at least one RRM RNA-binding domain and either no GO "RNA binding" or a GO "RNA binding" with evidence cv:ECO_0000501 or cv:ECO_0000250
+#+ tags:
+#+ - domain
+#+ - method
+#+ - nucleotide binding
+#+ - region
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ {
+ ?entry :isoform ?iso.
+ # >=1 RRM RNA-binding domain
+ ?iso :region/:term nextprot_cv:DO-00581.
+ # No GO "RNA binding"
+ filter not exists {
+ ?iso :function/:term /:childOf nextprot_cv:GO_0003723
+ }
+ }
+ union{
+ ?entry :isoform ?iso.
+ # >=1 RRM RNA-binding domain
+ ?iso :region/:term nextprot_cv:DO-00581.
+ # GO "RNA binding" with evidence IEA or ISS
+ ?iso :function ?s1.
+ ?s1 :term /:childOf nextprot_cv:GO_0003723.
+ filter not exists { ?s1 :negativeEvidence ?negev. } # No negative function evidence
+ ?s1 :evidence /:evidenceCode /:childOf ?pcode.
+ values ?pcode { nextprot_cv:ECO_0000501 nextprot_cv:ECO_0000250 }
+ }
+}

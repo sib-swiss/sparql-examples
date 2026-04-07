@@ -1,0 +1,37 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Pairs of reaction participants that belong to the same reaction but on distinct sides and number of reactions in which they occur
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+
+SELECT
+  ?chebi1
+  ?compound1Name
+
+  ?chebi2
+  ?compound2Name
+
+  (count(distinct ?reaction) as ?reactionCount)
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+
+  ?reaction rh:side ?reactionSide1 .
+  ?reactionSide1 rh:contains ?participant1 .
+  ?participant1 rh:compound ?compound1 .
+  ?compound1 rh:name ?compound1Name .
+  ?compound1 rh:chebi ?chebi1 .
+
+  ?reaction rh:side ?reactionSide2 .
+  ?reactionSide2 rh:contains ?participant2 .
+  ?participant2 rh:compound ?compound2 .
+  ?compound2 rh:name ?compound2Name .
+  ?compound2 rh:chebi ?chebi2 .
+
+
+  ?reactionSide1 rh:transformableTo ?reactionSide2
+
+  FILTER(?chebi1<?chebi2)
+}
+GROUP BY ?chebi1 ?chebi2 ?compound1Name ?compound2Name
+ORDER BY DESC (?reactionCount)
+LIMIT 100

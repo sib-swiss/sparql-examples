@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins which are located in mitochondrion and have at least one HPA antibody and exist in at least one proteome identification sets
+#+ tags:
+#+ - antibody
+#+ - dataset
+#+ - proteomics
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ values ?mitoloc {nextprot_cv:SL-0173 nextprot_cv:GO_0005739} # SL and GO values for mitochondrion
+
+ ?entry :isoform ?iso.
+ ?iso :cellularComponent ?loc .
+ ?loc :term /:childOf ?mitoloc .
+ filter not exists { ?loc :negativeEvidence ?negev. } # No negative localization evidence
+ ?iso :antibodyMapping ?abmap.
+ ?iso :peptideMapping ?pepmap.
+}

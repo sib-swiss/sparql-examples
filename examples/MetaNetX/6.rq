@@ -1,0 +1,22 @@
+#+ endpoint: https://rdf.metanetx.org/sparql/
+#+ summary: Show the reaction equation catalyzed by lactate dehydrogenase (KEGG reaction R00703). NB: Stoichiometric coefficients for substrates are given a negative value.
+PREFIX keggR: <https://identifiers.org/kegg.reaction:>
+PREFIX mnx: <https://rdf.metanetx.org/schema/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Show the reaction equation catalyzed by lactate
+# dehydrogenase (KEGG reaction *R00703*). NB: Stoichiometric
+# coefficients for substrates are given a negative value
+
+SELECT ?chem ?chem_name ?comp ?comp_name ?coef
+WHERE{
+    ?reac mnx:reacXref keggR:R00703 .
+    ?reac ?side ?part .
+    ?part mnx:chem ?chem ;
+          mnx:comp ?comp ;
+          mnx:coef ?c    .
+    ?chem rdfs:comment ?chem_name .
+    ?comp rdfs:comment ?comp_name .
+    FILTER( ?side IN ( mnx:left , mnx:right ))
+    BIND( IF( ?side = mnx:left, - ?c, ?c ) AS ?coef )
+}

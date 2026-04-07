@@ -1,0 +1,15 @@
+#+ endpoint: https://hamap.expasy.org/sparql/
+#+ summary: Select all hamap rules that annotate a Rhea reaction with an EC enzyme class
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+
+SELECT ?rule ?enzymeClass
+WHERE
+{
+ ?rule a sp:Construct ;
+     sp:templates/rdf:rest*/rdf:first ?annotationsToAdd .
+ ?annotationsToAdd sp:predicate up:enzymeClass ;
+                   sp:object ?enzymeClass .
+}

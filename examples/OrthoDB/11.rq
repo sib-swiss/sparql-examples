@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.orthodb.org/sparql/
+#+ summary: Find shortest rapidly evolving Caudovirales genes
+PREFIX : <http://purl.orthodb.org/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT *
+WHERE {
+?gene a :Gene; :description ?description.
+?gene :geneTranslatedLength ?aa_length.
+?gene :memberOf ?og.
+?og :ogBuiltAt [up:scientificName "Caudovirales"].
+?og a :OrthoGroup; :ogEvolRate ?evolrate.
+FILTER(?evolrate > 1)
+bind (?evolrate/?aa_length as ?x)
+}
+ORDER BY desc(?x) limit 99

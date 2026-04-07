@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Select all bacterial taxa and their scientific name from the <a href="https://www.uniprot.org/taxonomy/">UniProt taxonomy</a>
+#+ tags:
+#+ - taxonomy
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?taxon ?name
+WHERE
+{
+    ?taxon a up:Taxon .
+    ?taxon up:scientificName ?name .
+    # Taxon subclasses are materialized, do not use rdfs:subClassOf+
+    ?taxon rdfs:subClassOf taxon:2 .
+}

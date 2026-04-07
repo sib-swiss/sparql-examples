@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with antibody mapping annotations for which the antibody AC does NOT start with "HPA"
+#+ tags:
+#+ - QC
+#+ - antibody
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+
+select distinct ?entry where {
+  ?entry :isoform ?iso.
+  ?iso :antibodyMapping /:evidence /:reference /:accession ?ac.
+  filter (!regex (?ac,"^HPA"))
+}

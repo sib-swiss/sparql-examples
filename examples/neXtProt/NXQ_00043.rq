@@ -1,0 +1,17 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that bind zinc and are not oxidoreductase and not involved in transcription
+#+ tags:
+#+ - enzyme
+#+ - function
+#+ - metal binding
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0479. # metal-binding
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0862. # zinc
+ filter not exists {?iso :uniprotKeyword / :term nextprot_cv:KW-0804} # transcription
+ filter not exists {?iso :uniprotKeyword / :term nextprot_cv:KW-0560} # oxidoreductase
+}

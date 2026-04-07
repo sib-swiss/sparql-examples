@@ -1,0 +1,15 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Extracting an UniProtKB primary accession from our IRIs. Is done with a bit of string manipulation. While UniProt primary accession are unique within UniProtKB they may be reused by accident or itentionally by other data sources. If we provided them as strings (not IRI) and if you used them in a query that way, you might accidentaly retrieve completely wrong records.
+#+ tags:
+#+ - identifier
+#+ - mapping
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?primaryAccession
+  ?protein
+WHERE {
+  ?protein a up:Protein .
+  BIND(substr(str(?protein), strlen(str(uniprotkb:))+1) AS ?primaryAccession)
+}

@@ -1,0 +1,23 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that are enzymes requiring the cofactor Ca(2+) and with a calcium binding site
+#+ tags:
+#+ - enzyme
+#+ - small molecule interaction
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?entry (str(?name) as ?prot_name) (str(?ec) as ?ecs) where
+
+{ ?entry :recommendedName ?name_entity .
+ ?name_entity a :ProteinName; rdfs:label ?name.
+ ?entry :isoform ?iso.
+ ?iso :enzymeClassification /rdfs:comment ?ec.
+ ?iso :cofactor /:interactant /skos:exactMatch CHEBI:29108. # Ca(2+) cofactor
+ ?iso :bindingSite /:interactant ?inter.
+ ?inter :accession "CHEBI:29108"^^xsd:string # binding site interactant Ca(2+)
+}
+order by asc(?ec)

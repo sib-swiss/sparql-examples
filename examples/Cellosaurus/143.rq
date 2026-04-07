@@ -1,0 +1,18 @@
+#+ endpoint: https://sparql.cellosaurus.org/sparql
+#+ summary: Count of cell lines for each insect taxon
+#+ tags:
+#+ - ox
+#+ - species
+#+ - taxon
+PREFIX cello: <https://purl.expasy.org/cellosaurus/rdf/ontology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+select ?taxon_scheme ?taxon_ac ?taxon_name (count(?cl) as ?cell_line_count) where {
+?cl cello:derivedFromIndividualBelongingToSpecies  / cello:isIdentifiedByXref ?taxon.
+?taxon skos:prefLabel ?taxon_name.
+?taxon skos:inScheme ?taxon_scheme .
+?taxon skos:notation ?taxon_ac .
+?taxon cello:more_specific_than* / skos:prefLabel "Insecta"
+}
+group by ?taxon_scheme ?taxon_ac ?taxon_name
+order by desc(count(?cl))
+limit 300

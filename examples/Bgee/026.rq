@@ -1,0 +1,22 @@
+#+ endpoint: https://www.bgee.org/sparql/
+#+ summary: What are the genes expressed in the human brain?
+#+ tags:
+#+ - genes
+#+ - human
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX orth: <http://purl.org/net/orth#>
+PREFIX genex: <http://purl.org/genex#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?gene ?geneName WHERE {
+    ?gene a orth:Gene ;
+        genex:isExpressedIn ?anat ;
+        rdfs:label ?geneName ;
+        orth:organism ?organism .
+    ?anat a genex:AnatomicalEntity ;
+        rdfs:label "brain" .
+    ?organism obo:RO_0002162 ?species .
+    ?species a up:Taxon ;
+        up:scientificName "Homo sapiens" .
+}

@@ -1,0 +1,27 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Proteins that are involved in transport and located in a membrane and that are not glycosylated (experimentally or predicted)
+#+ tags:
+#+ - PTM
+#+ - function
+#+ - glycosylation
+#+ - subcellular location
+#+ - tutorial
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX nextprot_cv: <http://nextprot.org/rdf/terminology/>
+
+SELECT DISTINCT ?entry WHERE {
+ ?entry :isoform ?iso .
+ {
+ ?iso :goBiologicalProcess ?gofunc .
+	?gofunc :term / :childOf nextprot_cv:GO_0006810. # GO value for transport
+	filter not exists {?gofunc :negativeEvidence ?negev} # No negative function evidence
+ } union {
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0813. # KW for transport
+ }
+ {
+ ?iso :uniprotKeyword / :term nextprot_cv:KW-0812. # transmembrane
+ } union {
+ ?iso :topology / :term nextprot_cv:CVTO_0004. # intramembrane
+ }
+ filter not exists { ?iso :uniprotKeyword / :term nextprot_cv:KW-0325 } # not a glycoprotein
+}

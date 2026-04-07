@@ -1,0 +1,14 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Select all reactions with citations, display the number of citations and ORDER BY reaction ID
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+SELECT
+  ?reaction
+  (COUNT(DISTINCT ?citation) AS ?countPubmedPerReaction)
+WHERE
+{
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:citation ?citation .
+}
+GROUP BY ?reaction
+ORDER BY DESC (COUNT(DISTINCT ?citation))

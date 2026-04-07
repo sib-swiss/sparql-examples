@@ -1,0 +1,36 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Retrieve the set of reactions catalyzed by human enzymes (reactions - EC - proteins from HUMAN reference proteome)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX ec:<http://purl.uniprot.org/enzyme/>
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX taxon:<http://purl.uniprot.org/taxonomy/>
+PREFIX keywords:<http://purl.uniprot.org/keywords/>
+
+SELECT
+  ?protein
+  ?ecNumber
+  ?reaction
+WHERE {
+  ?reaction rdfs:subClassOf rh:Reaction .
+  ?reaction rh:status rh:Approved .
+  ?reaction rh:ec ?ecNumber .
+  ?reaction rh:side ?reactionSide .
+  ?reactionSide rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+
+  SERVICE <https://sparql.uniprot.org/sparql> {
+    ?protein a up:Protein ;
+    up:reviewed true ;
+    up:organism taxon:9606 ;
+    {
+      ?protein up:enzyme ?ecNumber
+    } UNION {
+      ?protein up:domain/up:enzyme ?ecNumber
+    } UNION {
+      ?protein up:component/up:enzyme ?ecNumber
+    } .
+  }
+}

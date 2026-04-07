@@ -1,0 +1,24 @@
+#+ endpoint: https://sparql.rhea-db.org/sparql
+#+ summary: Get uniprot name of a given chebi compound
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rh:<http://rdf.rhea-db.org/>
+PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX oboInOwl:<http://www.geneontology.org/formats/oboInOwl#>
+PREFIX owl:<http://www.w3.org/2002/07/owl#>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?chebi
+  ?chebiName
+  ?chebiUniprotName
+WHERE {
+  BIND(CHEBI:57416 AS ?chebi)
+  ?chebi rdfs:label ?chebiName .
+  ?chebi oboInOwl:hasRelatedSynonym ?chebiUniprotName .
+  ?axiom a owl:Axiom .
+  ?axiom owl:annotatedSource ?chebi .
+  ?axiom owl:annotatedProperty oboInOwl:hasRelatedSynonym .
+  ?axiom owl:annotatedTarget ?chebiUniprotName .
+  ?axiom oboInOwl:hasDbXref ?dbXref .
+  FILTER (?dbXref="UniProt")
+}

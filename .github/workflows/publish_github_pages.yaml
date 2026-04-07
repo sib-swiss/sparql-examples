@@ -18,27 +18,28 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-  
+
 jobs:
   publish_html:
     name: "publish html"
-    runs-on: ubuntu-latest 
-    steps: 
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v6
-    
+
     - uses: actions/setup-java@v5
       with:
         distribution: 'graalvm'
         java-version: '25'
-    
+
     - name: Install tester
-      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
+      run: make install
+      # run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
 
     - name: generate markdown
-      run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -m 
-    
+      run: make ttl
+
     - name: generate rq files
-      run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -r
+      run: make rq
 
     - name: Setup Pages
       id: pages
@@ -49,7 +50,7 @@ jobs:
       with:
         source: ./
         destination: ./_site
-       
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v4
 

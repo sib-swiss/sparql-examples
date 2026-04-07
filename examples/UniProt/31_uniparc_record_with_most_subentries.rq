@@ -1,0 +1,21 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: Find UniParc records whose sequence point to the most database entries
+#+ tags:
+#+ - UniParc
+#+ - count
+#+ - cross-reference
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?sequence ?entries
+WHERE
+{
+    SELECT 
+        ?sequence 
+        (COUNT(?entry) AS ?entries)
+    WHERE
+    {
+        GRAPH <http://sparql.uniprot.org/uniparc> {
+            ?sequence up:sequenceFor ?entry .
+        }
+    } GROUP BY ?sequence
+} ORDER BY DESC(?entries)

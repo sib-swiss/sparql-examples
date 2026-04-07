@@ -1,0 +1,16 @@
+#+ endpoint: https://sparql.nextprot.org/sparql
+#+ summary: Check there are no entries with GO cellular component annotations with evidence from YuBioLab of quality GOLD
+#+ tags:
+#+ - QC
+#+ - cellular component
+#+ - evidence
+#+ - quality
+PREFIX : <http://nextprot.org/rdf/>
+PREFIX cv: <http://nextprot.org/rdf/terminology/>
+PREFIX source: <http://nextprot.org/rdf/source/>
+
+select distinct ?entry where {
+  ?entry :isoform /:goCellularComponent /:evidence ?ev1.
+  ?ev1 :assignedBy source:YuBioLab.
+  ?ev1 :quality :GOLD.
+}

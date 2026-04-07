@@ -1,0 +1,13 @@
+#+ endpoint: https://sparql.uniprot.org/sparql/
+#+ summary: The recommended protein short names for UniProtKB entries
+#+ tags:
+#+ - protein name
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein 
+  ?fullName
+WHERE {
+  ?protein a up:Protein ;
+           up:recommendedName ?recommendedName .
+  ?recommendedName up:shortName ?fullName .
+}
