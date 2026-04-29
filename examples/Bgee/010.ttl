@@ -34,7 +34,7 @@ SELECT DISTINCT ?anat ?cellType ?anatName ?cellTypeName ?score ?stage WHERE {
     ?organism obo:RO_0002162  ?species .
     ?species a up:Taxon ;
         up:commonName "human" .
-    FILTER (?anat !=  obo:GO_0005575)
+    FILTER (?anat != obo:GO_0005575)
     FILTER (?anat != ?cellType)
 } ORDER BY DESC(?score)""" ;
     schema:target <https://www.bgee.org/sparql/> .
