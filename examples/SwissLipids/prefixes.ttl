@@ -1,0 +1,16 @@
+prefix   sh: <http://www.w3.org/ns/shacl#>
+prefix  xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix  owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+_:swisslipids_sparql_examples_prefixes
+  a owl:Ontology ;
+  owl:imports sh: .
+
+_:swisslipds_sparql_examples_prefixes sh:declare _:prefix_bao .
+_:prefix_bao sh:prefix "bao" ;
+  sh:namespace "http://www.bioassayontology.org/bao#BAO_"^^xsd:anyURI .
+
+_:swisslipds_sparql_examples_prefixes sh:declare _:prefix_mmdbvoc .
+_:prefix_mmdbvoc sh:prefix "mmdbvoc" ;
+  sh:namespace "https://rdf.molmedb.upol.cz/vocabulary#"^^xsd:anyURI .
