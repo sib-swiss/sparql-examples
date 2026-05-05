@@ -1,0 +1,42 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:39 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:label """Finding Membrane Models in <a href="https://molmedb.upol.cz/">MolMeDB</a> SwissLipids"""^^rdf:HTML ;
+    rdfs:comment """Using the SwissLipids to ChEBI, and ChEBI to molmedb links, find Membrane Models and their labels """@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX mmdbvoc: <https://rdf.molmedb.upol.cz/vocabulary#>
+PREFIX bao: <http://www.bioassayontology.org/bao#BAO_>
+SELECT
+ ?lipid
+ ?chebi
+ ?modelLabel
+ ?model
+WHERE {
+  ?lipid owl:equivalentClass ?chebi .
+  SERVICE <https://idsm.elixir-czech.cz/sparql/endpoint/molmedb> {
+    SELECT
+      DISTINCT
+        ?chebi
+        ?model
+        ?modelLabel
+    WHERE {
+      ?substance skos:closeMatch ?chebi .
+      ?interaction bao:0090012 ?model ,
+                               ?substance .
+      ?model a mmdbvoc:MembraneModel ;
+             rdfs:label ?modelLabel .
+    }
+  }
+}""";
+  schema:target <https://sparql.swisslipids.org/sparql/> ;
+  spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/molmedb> .
