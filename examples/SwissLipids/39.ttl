@@ -1,4 +1,5 @@
 @prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -6,8 +7,8 @@
 
 ex:39 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:label "Finding Membrane Models in <a href="https://molmedb.upol.cz/">MolMeDB</a> SwissLipids"^^rdf:HTML ;
-    rdfs:comment """Using the SwissLipids to ChEBI, and ChEBI to molmedb links, find Membrane Models and their """@en ;
+    rdfs:label """Finding Membrane Models in <a href="https://molmedb.upol.cz/">MolMeDB</a> SwissLipids"""^^rdf:HTML ;
+    rdfs:comment """Using the SwissLipids to ChEBI, and ChEBI to molmedb links, find Membrane Models and their labels """@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -18,7 +19,7 @@ PREFIX bao: <http://www.bioassayontology.org/bao#BAO_>
 SELECT
  ?lipid
  ?chebi
- ?modeLabel
+ ?modelLabel
  ?model
 WHERE {
   ?lipid owl:equivalentClass ?chebi .
@@ -27,13 +28,13 @@ WHERE {
       DISTINCT
         ?chebi
         ?model
-        ?modeLabel
+        ?modelLabel
     WHERE {
       ?substance skos:closeMatch ?chebi .
       ?interaction bao:0090012 ?model ,
                                ?substance .
       ?model a mmdbvoc:MembraneModel ;
-             rdfs:label ?modeLabel .
+             rdfs:label ?modelLabel .
     }
   }
 }""";
