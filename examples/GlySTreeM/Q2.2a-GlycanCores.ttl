@@ -1,0 +1,20 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.2a-GlycanCores a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Q2.2a GlycanCores: Show Glycan Cores''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+SELECT DISTINCT ?glycan_type ?glycan_core (COUNT(?glycan) AS ?count) WHERE
+{
+    ?glycan a glystreem:Glycan .
+    ?glycan glystreem:glycan_type ?glycan_type . 
+    ?glycan glystreem:glycan_core ?glycan_core .
+    # If you wish to see cores for a particular glycan type
+    # uncomment the following line & add in the type e.g. "N-Linked"
+    # Types can be listed from Q2.1a
+    # FILTER(?glycan_type in ("N-Linked"))
+} GROUP BY ?glycan_type ?glycan_core''' .
