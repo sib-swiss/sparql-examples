@@ -14,3 +14,7 @@ _:prefix_bao sh:prefix "bao" ;
 _:swisslipids_sparql_examples_prefixes sh:declare _:prefix_mmdbvoc .
 _:prefix_mmdbvoc sh:prefix "mmdbvoc" ;
   sh:namespace "https://rdf.molmedb.upol.cz/vocabulary#"^^xsd:anyURI .
+
+_:swisslipids_sparql_examples_prefixes sh:declare _:prefix_chemrof .
+_:prefix_chemrof sh:prefix "chemrof" ;
+  sh:namespace "https://w3id.org/chemrof/"^^xsd:anyURI .
