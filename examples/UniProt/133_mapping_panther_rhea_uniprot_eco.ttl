@@ -1,0 +1,38 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:133_mapping_panther_rhea_uniprot_eco a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment """Generate a mapping table for PANTHER family - Rhea - UniProt Protein - ECO code"""@en;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up:  <http://purl.uniprot.org/core/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+?pantherFamily
+?rhea
+?protein
+?eco
+WHERE {
+  # Protein has a catalytic activity annotation with a Rhea reaction
+  ?protein up:annotation ?ann .
+  ?ann up:catalyticActivity ?ca .
+  ?ca up:catalyzedReaction ?rhea .
+
+  # The catalyticActivity statement has experimental evidence and a citation
+  ?reif rdf:subject   ?ann ;
+        rdf:predicate up:catalyticActivity ;
+        rdf:object    ?ca ;
+        up:attribution ?attr .
+  ?attr up:evidence ?eco .
+
+  # Protein is linked to a PANTHER family cross-reference
+  ?protein rdfs:seeAlso ?pantherFamily .
+  ?pantherFamily up:database <http://purl.uniprot.org/database/PANTHER> .
+}""";
+  schema:keywords "enzyme", "PANTHER", "Rhea";
+  schema:target <https://sparql.uniprot.org/sparql> .
