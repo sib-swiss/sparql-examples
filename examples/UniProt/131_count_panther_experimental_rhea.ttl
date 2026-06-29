@@ -1,0 +1,37 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:131_count_panther_experimental_rhea a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment """Count the number of <a href="https://pantherdb.org/">PANTHER</a> families that have an experimentally confirmed catalytic activity"""^^rdf:HTML,
+  "Count the number of PANTHER families that have an experimentally confirmed catalytic activity"@en;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX ECO: <http://purl.obolibrary.org/obo/ECO_>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX up:  <http://purl.uniprot.org/core/>
+PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+(COUNT(DISTINCT ?pantherFamily) AS ?pantherFamiliesWithExperimentalCatalyticActivity)
+WHERE {
+  # Protein has a catalytic activity annotation with a Rhea reaction
+  ?protein up:annotation ?ann .
+  ?ann up:catalyticActivity ?ca .
+  ?ca up:catalyzedReaction ?rhea .
+
+  # The catalyticActivity statement has experimental evidence and a citation
+  ?reif rdf:subject   ?ann ;
+        rdf:predicate up:catalyticActivity ;
+        rdf:object    ?ca ;
+        up:attribution ?attr .
+  ?attr up:evidence ECO:0000269 .
+
+  # Protein is linked to a PANTHER family cross-reference
+  ?protein rdfs:seeAlso ?pantherFamily .
+  ?pantherFamily up:database <http://purl.uniprot.org/database/PANTHER> .
+}""";
+  schema:keywords "count", "enzyme", "PANTHER";
+  schema:target <https://sparql.uniprot.org/sparql> .
