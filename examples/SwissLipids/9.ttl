@@ -13,6 +13,7 @@ This query considers only the cross references in the SwissLipids entry – it d
 Recapitulates one ID mapping function on the website """@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX lipidmaps: <https://www.lipidmaps.org/rdf/>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # Example 9
@@ -21,7 +22,7 @@ WHERE {
   VALUES ?lipidmaps {lipidmaps:LMSP01020001 lipidmaps:LMST01010069 lipidmaps:LMST04030222}
   ?slm rdfs:label ?slmName . 
   # Corresponding SwissLipds entries
-  ?slm rdfs:seeAlso ?lipidmaps .
+  ?slm oboInOwl:hasDbXref ?lipidmaps .
 }
 ORDER BY ?lipidmaps""" ;
     schema:target <https://sparql.swisslipids.org/sparql/> .

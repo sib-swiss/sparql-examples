@@ -13,13 +13,14 @@ Output should include SwissLipids identifier and name plus the LIPID MAPS identi
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX lipidmaps: <https://www.lipidmaps.org/rdf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
 
 # Example 8
 SELECT ?slm ?slmName ?lipidmaps
 WHERE {
   ?slm rdfs:label ?slmName . 
   # Corresponding LIPID MAPS
-  ?slm rdfs:seeAlso ?lipidmaps .
+  ?slm oboInOwl:hasDbXref ?lipidmaps .
   FILTER (strstarts(str(?lipidmaps), str(lipidmaps:))) .
 }
 ORDER BY ?slm""" ;

@@ -12,6 +12,7 @@ This query considers only the cross references in the SwissLipids entry – it d
 Recapitulates one ID mapping function on the website."""@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
 
 # Example 11
 prefix HMDB:<http://identifiers.org/hmdb/>
@@ -20,7 +21,7 @@ WHERE {
   VALUES ?hmdb {HMDB:HMDB00269 HMDB:HMDB00032 HMDB:HMDB01383}
   ?slm rdfs:label ?slmName . 
   # Corresponding SwissLipids entries
-  ?slm rdfs:seeAlso ?hmdb .
+  ?slm oboInOwl:hasDbXref ?hmdb .
 }
 ORDER BY ?hmdb""" ;
     schema:target <https://sparql.swisslipids.org/sparql/> .

@@ -17,7 +17,7 @@ WHERE {
   VALUES (?chebi) {
     (CHEBI:7896) #hexadecanoate
   }
-  ?swisslipidHexadeconate owl:equivalentClass ?chebi .
+  ?swisslipidHexadecanoate owl:equivalentClass ?chebi .
   ?swisslipid SWISSLIPID:hasPart [
     SWISSLIPID:derivedFrom ?swisslipidHexadecanoate ;
     SWISSLIPID:position SWISSLIPID:sn1 
