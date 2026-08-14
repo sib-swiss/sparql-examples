@@ -207,19 +207,6 @@ _:prefix_kegg.drug
    sh:prefix 'kegg.drug' ;
    sh:namespace 'https://identifiers.org/kegg.drug:'^^xsd:anyURI .
 
-_:sparql_examples_prefixes sh:declare _:prefix_keggE .
-_:prefix_keggE 
-   rdfs:comment 'A primary prefix for chem entries';
-   sh:prefix 'keggE' ;
-   sh:namespace 'https://www.genome.jp/kegg/'^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_kegg.environ .
-_:prefix_kegg.environ 
-   rdfs:comment 'A secondary prefix for chem entries, i.e. this is a proxy for keggE via identifiers.org';
-   rdfs:seeAlso _:prefix_keggE ;
-   sh:prefix 'kegg.environ' ;
-   sh:namespace 'https://identifiers.org/kegg.environ:'^^xsd:anyURI .
-
 _:sparql_examples_prefixes sh:declare _:prefix_keggG .
 _:prefix_keggG 
    rdfs:comment 'A primary prefix for chem entries';
@@ -285,6 +272,12 @@ _:prefix_metacyc.reaction
    sh:prefix 'metacyc.reaction' ;
    sh:namespace 'https://identifiers.org/metacyc.reaction:'^^xsd:anyURI .
 
+_:sparql_examples_prefixes sh:declare _:prefix_metatlas .
+_:prefix_metatlas 
+   rdfs:comment 'A primary prefix for chem and reac entries';
+   sh:prefix 'metatlas' ;
+   sh:namespace 'https://identifiers.org/metatlas:'^^xsd:anyURI .
+
 _:sparql_examples_prefixes sh:declare _:prefix_mnet .
 _:prefix_mnet 
    rdfs:comment 'A primary prefix for other entries';
@@ -347,29 +340,9 @@ _:prefix_metanetx.reaction
    sh:prefix 'metanetx.reaction' ;
    sh:namespace 'https://identifiers.org/metanetx.reaction:'^^xsd:anyURI .
 
-_:sparql_examples_prefixes sh:declare _:prefix_reactomeM .
-_:prefix_reactomeM 
-   rdfs:comment 'A primary prefix for chem entries';
-   sh:prefix 'reactomeM' ;
-   sh:namespace 'https://reactome.org/content/detail/'^^xsd:anyURI .
-
 _:sparql_examples_prefixes sh:declare _:prefix_reactome .
 _:prefix_reactome 
-   rdfs:comment 'A secondary prefix for chem entries, i.e. this is a proxy for reactomeM via identifiers.org';
-   rdfs:seeAlso _:prefix_reactomeM ;
-   sh:prefix 'reactome' ;
-   sh:namespace 'https://identifiers.org/reactome:'^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_reactomeR .
-_:prefix_reactomeR 
-   rdfs:comment 'A primary prefix for reac entries';
-   sh:prefix 'reactomeR' ;
-   sh:namespace 'https://reactome.org/content/detail/'^^xsd:anyURI .
-
-_:sparql_examples_prefixes sh:declare _:prefix_reactome .
-_:prefix_reactome 
-   rdfs:comment 'A secondary prefix for reac entries, i.e. this is a proxy for reactomeR via identifiers.org';
-   rdfs:seeAlso _:prefix_reactomeR ;
+   rdfs:comment 'A primary prefix for chem and reac entries';
    sh:prefix 'reactome' ;
    sh:namespace 'https://identifiers.org/reactome:'^^xsd:anyURI .
 
