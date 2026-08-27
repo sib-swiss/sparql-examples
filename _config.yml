@@ -1,3 +1,7 @@
 theme: jekyll-theme-dinky
 
 markdown: GFM
+
+title: SIB SPARQL examples
+description: A collection of SPARQL examples for SIB Swiss Institute of Bioinformatics resources
+logo: /assets/images/sib-logo.svg
