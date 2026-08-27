@@ -1,0 +1,147 @@
+---
+---
+@import "{{ site.theme }}";
+
+/*
+ * SIB brand override for jekyll-theme-dinky.
+ * Palette and typefaces per the SIB Brand guidelines (2024),
+ * https://www.sib.swiss/sites/default/files/2024-02/2024-SIB-brandbook.pdf
+ */
+
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,500,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --sib-red: #E30613;
+  --sib-red-dark: #A80410;
+  --sib-blue: #3368EE;
+  --sib-green: #78E0C2;
+  --sib-green-accessible: #50B798;
+  --sib-pink: #F6D0D0;
+  --sib-pink-20: #FDF4F4;
+  --sib-ink: #191A23;
+  --sib-paper: #FBFAF7;
+}
+
+body {
+  font-family: 'Inter', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--sib-ink);
+  background-color: var(--sib-paper);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cabinet Grotesk', 'Inter', Arial, sans-serif;
+  color: var(--sib-ink);
+  font-weight: 700;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid var(--sib-pink);
+}
+
+a {
+  color: var(--sib-blue);
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--sib-red);
+  text-decoration: underline;
+}
+
+strong {
+  color: var(--sib-ink);
+}
+
+/* Code blocks: SPARQL/turtle listings get a data-science accent */
+
+code, pre {
+  font-family: 'JetBrains Mono', Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+
+pre {
+  background: var(--sib-pink-20);
+  border: 1px solid var(--sib-pink);
+  border-left: 4px solid var(--sib-green-accessible);
+  border-radius: 6px;
+}
+
+/* Mermaid diagrams render inside a <pre class="mermaid">/.language-mermaid block */
+pre.mermaid, .language-mermaid {
+  background: #fff;
+  border-left: 4px solid var(--sib-blue);
+  text-align: center;
+}
+
+/* Tables */
+
+th {
+  font-family: 'Cabinet Grotesk', 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  background: var(--sib-ink);
+  color: #fff;
+}
+
+td {
+  background: var(--sib-pink-20);
+  border-bottom: 1px solid var(--sib-pink);
+}
+
+hr {
+  background: var(--sib-pink);
+}
+
+/* Sidebar header */
+
+header {
+  background-color: var(--sib-ink);
+  color: #fff;
+  border: none;
+  border-top: 4px solid var(--sib-red);
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  max-width: 130px;
+  height: auto;
+  margin: 0 0 22px;
+  padding: 0;
+  border: none;
+}
+
+h1.header, header h1 {
+  font-family: 'Cabinet Grotesk', 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  border-bottom: none;
+}
+
+h1.header a, header h1 a, a.header, a.name, header a {
+  color: #fff;
+}
+
+header p {
+  color: var(--sib-pink);
+}
+
+header li {
+  background: var(--sib-red);
+  background: linear-gradient(to top, var(--sib-red-dark) 0%, var(--sib-red) 100%);
+  border: 1px solid var(--sib-red-dark);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+header li:hover {
+  background: var(--sib-red-dark);
+  background: linear-gradient(to top, #7c030c 0%, var(--sib-red-dark) 100%);
+}
+
+/* Footer */
+
+footer, footer a {
+  color: var(--sib-ink);
+}
+
+footer a {
+  color: var(--sib-blue);
+}
