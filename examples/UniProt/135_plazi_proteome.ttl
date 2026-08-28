@@ -1,0 +1,36 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:135_plazi_proteome a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Connect a taxonomic treatment collected by [Plazi](https://plazi.org/) in their [synospecies](https://synospecies.plazi.org/) system. We connect by what is called the dwc:id-ENA property which is encoded as a xsd:string which is the naked identifier of an NCBI taxon concept. Which in UniProt is encoded as an IRI starting with `http://purl.uniprot.org/taxonomy/'. After converting the taxon identifier we can query for Proteomes in UniProt for that taxon."^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX trt:   <http://plazi.org/vocab/treatment#>
+PREFIX dwc:   <http://rs.tdwg.org/dwc/terms/>
+PREFIX dwcFP: <http://filteredpush.org/ontologies/oa/dwcFP#>
+SELECT
+  ?proteome 
+  ?ncbiTaxon 
+  ?treatment
+WHERE 
+{
+  {
+    SERVICE <https://lindas.admin.ch/query> {
+      ?tc a dwcFP:TaxonConcept ;
+          dwc:ID-ENA ?ena .
+      ?treatment trt:augmentsTaxonConcept|trt:definesTaxonConcept ?tc ;
+                 dwc:basisOfRecord ?mc .
+      ?mc trt:gbifOccurrenceId ?occ .
+    }
+  }
+  BIND(IRI(CONCAT('http://purl.uniprot.org/taxonomy/', ?ena)) AS ?ncbiTaxon)
+  ?proteome a up:Proteome ;
+            up:organism ?ncbiTaxon 
+}""";
+  spex:federatesWith <https://lindas.admin.ch/query>;
+  schema:keywords "gbif", "plazi", "proteome", "taxonomy", "treatments";
+  schema:target <https://sparql.uniprot.org/sparql> .
