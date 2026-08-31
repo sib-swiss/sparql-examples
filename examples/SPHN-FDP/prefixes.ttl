@@ -1,0 +1,197 @@
+prefix   sh: <http://www.w3.org/ns/shacl#>
+prefix  xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix  owl: <http://www.w3.org/2002/07/owl#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+_:sphn_dcc_sparql_examples_prefixes
+  a owl:Ontology ;
+  owl:imports sh: .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_ldp .
+_:prefix_ldp sh:prefix "ldp" ;
+  sh:namespace "http://www.w3.org/ns/ldp#"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_fdpo .
+_:prefix_fdpo sh:prefix "fdp-o" ;
+  sh:namespace "https://w3id.org/fdp/fdp-o"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn_catalog .
+_:prefix_sphn_catalog sh:prefix "sphn-catalog" ;
+  sh:namespace "http://fdp.dcc.sib.swiss/catalog/"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_void .
+_:prefix_void sh:prefix "void" ;
+  sh:namespace "http://rdfs.org/ns/void#"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn .
+_:prefix_sphn sh:prefix "sphn" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-schema/sphn"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_eco .
+_:prefix_eco sh:prefix "ECO" ;
+  sh:namespace "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_atc .
+_:prefix_atc sh:prefix "atc" ;
+  sh:namespace "https://www.whocc.no/atc_ddd_index/?code="^^xsd:anyURI .
+
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_chop .
+_:prefix_chop sh:prefix "chop" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/chop/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_dc .
+_:prefix_dc sh:prefix "dc" ;
+  sh:namespace "http://purl.org/dc/elements/1.1/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_dcm .
+_:prefix_dcm sh:prefix "dcm" ;
+  sh:namespace "http://dicom.nema.org/resources/ontology/DCM/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_dcterms .
+_:prefix_dcterms sh:prefix "dcterms" ;
+  sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_eco .
+_:prefix_eco sh:prefix "eco" ;
+  sh:namespace "http://purl.obolibrary.org/obo/ECO_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_edam .
+_:prefix_edam sh:prefix "edam" ;
+  sh:namespace "http://edamontology.org/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_efo .
+_:prefix_efo sh:prefix "efo" ;
+  sh:namespace "http://www.ebi.ac.uk/efo/EFO_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_emdn .
+_:prefix_emdn sh:prefix "emdn" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/emdn/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_genepio .
+_:prefix_genepio sh:prefix "genepio" ;
+  sh:namespace "http://purl.obolibrary.org/obo/GENEPIO_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_geno .
+_:prefix_geno sh:prefix "geno" ;
+  sh:namespace "http://purl.obolibrary.org/obo/GENO_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_hgnc .
+_:prefix_hgnc sh:prefix "hgnc" ;
+  sh:namespace "https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_icd-10-gm .
+_:prefix_icd-10-gm sh:prefix "icd-10-gm" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/icd-10-gm/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_icd-o-3 .
+_:prefix_icd-o-3 sh:prefix "icd-o-3" ;
+  sh:namespace "https://data.jrc.ec.europa.eu/collection/ICDO3_O#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_loinc .
+_:prefix_loinc sh:prefix "loinc" ;
+  sh:namespace "https://loinc.org/rdf/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_obi .
+_:prefix_obi sh:prefix "obi" ;
+  sh:namespace "http://purl.obolibrary.org/obo/OBI_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_oncotree .
+_:prefix_oncotree sh:prefix "oncotree" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/sphn/oncotree#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_ordo .
+_:prefix_ordo sh:prefix "ordo" ;
+  sh:namespace "http://www.orpha.net/ORDO/Orphanet_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_snomed .
+_:prefix_snomed sh:prefix "snomed" ;
+  sh:namespace "http://snomed.info/id/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_so .
+_:prefix_so sh:prefix "so" ;
+  sh:namespace "http://purl.obolibrary.org/obo/SO_"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn .
+_:prefix_sphn sh:prefix "sphn" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-schema/sphn#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-atc .
+_:prefix_sphn-atc sh:prefix "sphn-atc" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/atc/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_data-theme .
+_:prefix_data-theme sh:prefix "data-theme" ;
+  sh:namespace "http://publications.europa.eu/resource/authority/data-theme/"^^xsd:anyURI  .
+
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_dcat .
+_:prefix_dcat sh:prefix "dcat" ;
+  sh:namespace "http://www.w3.org/ns/dcat#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-dcm .
+_:prefix_sphn-dcm sh:prefix "sphn-dcm" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/dcm/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-deprecated .
+_:prefix_sphn-deprecated sh:prefix "sphn-deprecated" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-ontology/sphn#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-eco .
+_:prefix_sphn-eco sh:prefix "sphn-eco" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/eco/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-edam .
+_:prefix_sphn-edam sh:prefix "sphn-edam" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/edam/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-efo .
+_:prefix_sphn-efo sh:prefix "sphn-efo" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/efo/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-genepio .
+_:prefix_sphn-genepio sh:prefix "sphn-genepio" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/genepio/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-geno .
+_:prefix_sphn-geno sh:prefix "sphn-geno" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/geno/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-hgnc .
+_:prefix_sphn-hgnc sh:prefix "sphn-hgnc" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/hgnc/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-icd-o-3 .
+_:prefix_sphn-icd-o-3 sh:prefix "sphn-icd-o-3" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/icd-o-3/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-individual .
+_:prefix_sphn-individual sh:prefix "sphn-individual" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-schema/sphn/individual#"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-loinc .
+_:prefix_sphn-loinc sh:prefix "sphn-loinc" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/loinc/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-metacat .
+_:prefix_sphn-metacat sh:prefix "sphn-metacat" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-metacat/sphn/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-obi .
+_:prefix_sphn-obi sh:prefix "sphn-obi" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/obi/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-ordo .
+_:prefix_sphn-ordo sh:prefix "sphn-ordo" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/ordo/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_sphn-so .
+_:prefix_sphn-so sh:prefix "sphn-so" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/so/"^^xsd:anyURI  .
+
+_:sphn_dcc_sparql_examples_prefixes sh:declare _:prefix_ucum .
+_:prefix_ucum sh:prefix "ucum" ;
+  sh:namespace "https://biomedit.ch/rdf/sphn-resource/ucum/"^^xsd:anyURI  .
+
+

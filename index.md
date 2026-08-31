@@ -17,6 +17,7 @@ In this github pages we have a HTML rendering for all them.
  * [OrthoDB](./examples/OrthoDB)
  * [Rhea](./examples/Rhea)
  * [SwissLipids](./examples/SwissLipids)
+ * [Swiss Personalized Health Network - Fair Data Point](./examples/SPHN-FDP)
  * [UniProt](./examples/UniProt/)
 
 We also collect [some basic statistics on the different SPARQL features in use](./examples/algebra-statistics.md)
