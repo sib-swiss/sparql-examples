@@ -1,0 +1,29 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:TEMPLATE_05b_GivenGlycanListCountEpitopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Template_05b Output list of substructures for use in UniLectin Query''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+PREFIX modl: <https://archive.org/services/purl/domain/modular_ontology_design_library/>
+
+SELECT DISTINCT (GROUP_CONCAT(DISTINCT CONCAT('"', ?glytoucanID, '"^^xsd:string');separator=" ") AS ?epitopeList)
+
+{
+   VALUES ?id {"1077" "1077" "1641" "965" "965"}
+   # Source: "Cummings" or "UniLectin"
+   VALUES ?source {"UniLectin"}
+   ?epitope a glystreem:Epitope .
+   ?epitope glystreem:epitopeSource ?source .
+   ?epitope glystreem:epitopeName ?name .
+   ?epitope glystreem:epitope_glytoucanID ?glytoucanID .
+   ?glycan a glystreem:Glycan ;
+           glystreem:id ?id ;
+           glystreem:hasEpitopeSet ?set .
+   ?epitope modl:bagitemOf ?set .
+} GROUP BY ?glytoucanID
+ORDER BY DESC(?count)''' .

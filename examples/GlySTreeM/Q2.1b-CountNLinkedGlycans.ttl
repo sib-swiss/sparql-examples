@@ -1,0 +1,18 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.1b-CountNLinkedGlycans a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Q2.1b GlycanTypes: Count N-Linked Glycans''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+
+SELECT (COUNT(DISTINCT ?glycan) AS ?countGlycans) WHERE
+{
+    ?glycan a glystreem:Glycan ;
+            glystreem:glycan_type ?glycan_type .
+    FILTER(?glycan_type in ("N-Linked"))
+}
+ORDER BY ASC(?glycan_type)''' .

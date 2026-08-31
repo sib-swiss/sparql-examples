@@ -1,0 +1,15 @@
+@prefix ex: <https://glyconnect.expasy.org/glystreem/.well-known/sparql-examples> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+ex:Q2.1a-GlycanTypes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  sh:prefixes _:sparql_examples_prefixes , _:glystreem_example_prefixes ;
+  rdfs:comment ''' Q2.1a GlycanTypes: Show Glycan Types''' ;
+  schema:target <https://glyconnect.expasy.org/glystreem/sparql> ;
+  sh:select '''
+PREFIX glystreem: <https://glyconnect.expasy.org/rdf/structures#>
+SELECT DISTINCT ?glycan_type (COUNT(DISTINCT ?glycan) AS ?count) WHERE
+{
+    ?glycan a glystreem:Glycan ;
+            glystreem:glycan_type ?glycan_type .
+} GROUP BY ?glycan_type''' .
