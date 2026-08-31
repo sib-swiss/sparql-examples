@@ -1,0 +1,18 @@
+@prefix ex: <https://test-sparql.cellosaurus.org/sparql/service/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:101_publi_cnt_by_type a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  rdfs:comment "Count of referenced publications by publication type"@en ;
+  sh:prefixes _:sparql_examples_prefixes ;
+  sh:select """
+# COMMON_PREFIXES
+select ?pub_type (count(?cl) as ?cnt) where { 
+  ?pub_type rdfs:subClassOf* cello:Publication .
+  optional {?cl rdf:type ?pub_type. }
+}
+group by ?pub_type
+order by desc(count(*))""" ;
+  schema:keywords "Publication" ;
+  schema:target <https://test-sparql.cellosaurus.org/sparql/service> .
