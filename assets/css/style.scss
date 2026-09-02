@@ -271,6 +271,50 @@ th {
   text-decoration: none;
 }
 
+/* Pagination for long "Examples" lists */
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 2rem;
+}
+
+.pagination button {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  background: var(--color-paper);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.pagination button.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-paper);
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.pagination__status {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-gray-500);
+}
+
 /* Footer */
 
 .site-footer {
