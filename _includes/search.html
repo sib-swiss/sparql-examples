@@ -1,0 +1,79 @@
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script>
+// Client-side search across all examples, backed by /search-index.json
+// (generated at build time from each resource's index.md) and Fuse.js
+// for fuzzy matching entirely in the browser.
+(function () {
+  var input = document.getElementById('site-search-input');
+  var results = document.getElementById('site-search-results');
+  if (!input || !results || typeof Fuse === 'undefined') {
+    return;
+  }
+
+  var fuse = null;
+
+  fetch('{{ "/search-index.json" | relative_url }}')
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      fuse = new Fuse(data, {
+        keys: ['title', 'resource'],
+        threshold: 0.35,
+        ignoreLocation: true,
+        minMatchCharLength: 2
+      });
+    })
+    .catch(function () {
+      // Search silently stays disabled if the index failed to load.
+    });
+
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function render(matches) {
+    results.innerHTML = '';
+    if (!matches.length) {
+      results.hidden = true;
+      return;
+    }
+    matches.slice(0, 20).forEach(function (match) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = match.item.url;
+      a.innerHTML =
+        '<span class="site-search__title">' + escapeHtml(match.item.title) + '</span>' +
+        '<span class="site-search__resource">' + escapeHtml(match.item.resource) + '</span>';
+      li.appendChild(a);
+      results.appendChild(li);
+    });
+    results.hidden = false;
+  }
+
+  input.addEventListener('input', function () {
+    var query = input.value.trim();
+    if (!fuse || query.length < 2) {
+      results.hidden = true;
+      results.innerHTML = '';
+      return;
+    }
+    render(fuse.search(query));
+  });
+
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      results.hidden = true;
+      input.blur();
+    }
+  });
+
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('.site-search')) {
+      results.hidden = true;
+    }
+  });
+})();
+</script>
