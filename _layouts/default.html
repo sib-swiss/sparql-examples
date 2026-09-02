@@ -18,6 +18,11 @@
           {% endif %}
           <span class="site-brand__title">{{ site.title | default: site.github.repository_name }}</span>
         </a>
+        <div class="site-search">
+          <input type="search" id="site-search-input" class="site-search__input" placeholder="Search examples…" autocomplete="off" aria-label="Search examples">
+          <ul id="site-search-results" class="site-search__results" hidden></ul>
+        </div>
+
         <nav class="site-nav">
           <a href="{{ "/" | absolute_url }}">Home</a>
           <a href="https://www.expasy.org">Expasy</a>
@@ -52,6 +57,7 @@
 
     {% include mermaid.html %}
     {% include paginate.html %}
+    {% include search.html %}
     {% include matamo.html %}
   </body>
 </html>
