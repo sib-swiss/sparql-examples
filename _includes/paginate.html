@@ -14,35 +14,44 @@
     }
 
     var pageCount = Math.ceil(items.length / PAGE_SIZE);
-
-    var nav = document.createElement('nav');
-    nav.className = 'pagination';
-    nav.setAttribute('aria-label', 'Examples pages');
-    list.insertAdjacentElement('afterend', nav);
-
-    var status = document.createElement('span');
-    status.className = 'pagination__status';
-
-    var prevBtn = makeButton('← Prev', function () {
-      showPage(Math.max(0, current - 1));
-    });
-    var nextBtn = makeButton('Next →', function () {
-      showPage(Math.min(pageCount - 1, current + 1));
-    });
-
-    var pageButtons = [];
-    for (var i = 0; i < pageCount; i++) {
-      pageButtons.push(makeButton(String(i + 1), showPageFactory(i), i));
-    }
-
-    nav.appendChild(prevBtn);
-    pageButtons.forEach(function (btn) {
-      nav.appendChild(btn);
-    });
-    nav.appendChild(nextBtn);
-    nav.appendChild(status);
-
     var current = 0;
+
+    // One pagination control above the list and one below it, kept in sync.
+    var navs = [
+      createNav('beforebegin'),
+      createNav('afterend')
+    ];
+
+    function createNav(position) {
+      var nav = document.createElement('nav');
+      nav.className = 'pagination';
+      nav.setAttribute('aria-label', 'Examples pages');
+      list.insertAdjacentElement(position, nav);
+
+      var status = document.createElement('span');
+      status.className = 'pagination__status';
+
+      var prevBtn = makeButton('← Prev', function () {
+        showPage(Math.max(0, current - 1));
+      });
+      var nextBtn = makeButton('Next →', function () {
+        showPage(Math.min(pageCount - 1, current + 1));
+      });
+
+      var pageButtons = [];
+      for (var i = 0; i < pageCount; i++) {
+        pageButtons.push(makeButton(String(i + 1), showPageFactory(i), i));
+      }
+
+      nav.appendChild(prevBtn);
+      pageButtons.forEach(function (btn) {
+        nav.appendChild(btn);
+      });
+      nav.appendChild(nextBtn);
+      nav.appendChild(status);
+
+      return { prevBtn: prevBtn, nextBtn: nextBtn, pageButtons: pageButtons, status: status };
+    }
 
     function makeButton(label, onClick, page) {
       var btn = document.createElement('button');
@@ -66,16 +75,18 @@
       items.forEach(function (li, index) {
         li.style.display = Math.floor(index / PAGE_SIZE) === page ? '' : 'none';
       });
-      pageButtons.forEach(function (btn, index) {
-        var isActive = index === page;
-        btn.classList.toggle('is-active', isActive);
-        btn.setAttribute('aria-current', isActive ? 'page' : 'false');
-      });
-      prevBtn.disabled = page === 0;
-      nextBtn.disabled = page === pageCount - 1;
       var first = page * PAGE_SIZE + 1;
       var last = Math.min((page + 1) * PAGE_SIZE, items.length);
-      status.textContent = 'Showing ' + first + '–' + last + ' of ' + items.length;
+      navs.forEach(function (nav) {
+        nav.pageButtons.forEach(function (btn, index) {
+          var isActive = index === page;
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-current', isActive ? 'page' : 'false');
+        });
+        nav.prevBtn.disabled = page === 0;
+        nav.nextBtn.disabled = page === pageCount - 1;
+        nav.status.textContent = 'Showing ' + first + '–' + last + ' of ' + items.length;
+      });
     }
 
     showPage(0);
