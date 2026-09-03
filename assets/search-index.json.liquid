@@ -18,7 +18,13 @@ permalink: /search-index.json
 {% assign link = parts[1] | remove: ")" | strip %}
 {% assign first_char = link | slice: 0 %}
 {% if first_char == "/" %}
-{% assign url = link | relative_url %}
+{% comment %}
+  jekyll-relative-links already rewrote this .md link into the final
+  deployable URL (baseurl included, e.g. /sparql-examples/examples/...
+  on a GitHub Pages project site) — use it as-is. Running it through
+  relative_url here would prepend site.baseurl a second time.
+{% endcomment %}
+{% assign url = link %}
 {% else %}
 {% assign url = link | remove: "./" | replace: ".md", ".html" | prepend: page.dir | relative_url %}
 {% endif %}
