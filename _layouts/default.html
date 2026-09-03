@@ -40,6 +40,16 @@
         <p class="breadcrumb"><a href="{{ "/" | absolute_url }}">&larr; All examples</a></p>
         {% endunless %}
 
+        {% if page.name == "index.md" and page.dir contains "/examples/" %}
+          {% assign resource_slug = page.dir | split: "/" | last %}
+          {% assign resource_entry = site.data.resources | where: "path", resource_slug | first %}
+          {% if resource_entry %}
+          <p class="category-badge category-{{ resource_entry.category }}">
+            {{ site.data.categories[resource_entry.category].label }}
+          </p>
+          {% endif %}
+        {% endif %}
+
         {{ content }}
       </div>
     </main>
