@@ -148,3 +148,15 @@ If you reuse any part of this work, please cite [the GigaScience paper](https://
     year = {2025}
 }
 ```
+
+## How to test github page rendering
+
+```sh
+docker build -t sparql-examples .
+docker run --rm  -v "$PWD":/srv/jekyll sparql-examples bundler exec jekyll build --watch &
+python3 -m http.server 8792 --directory _site
+```
+Build a local docker image that has the right Jekyll version and use that to build the webpages.
+Then serve that with the python3 inbuild basic http server.
+Open a browser locally at `http://localhost:8792/` to see the rendered HTML
+
