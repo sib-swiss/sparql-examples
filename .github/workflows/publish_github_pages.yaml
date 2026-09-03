@@ -40,6 +40,9 @@ jobs:
     - name: generate rq files
       run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -r
 
+    - name: concatenate all examples into one ttl file
+      run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -p all -f ttl > all.ttl
+
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v6
