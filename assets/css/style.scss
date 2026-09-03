@@ -339,9 +339,11 @@ table {
   margin: 1rem 0 1.5rem;
 }
 
+tr {
+  border-bottom: 1px solid var(--color-gray-200);
+}
 th, td {
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--color-gray-200);
   text-align: left;
 }
 
@@ -349,6 +351,57 @@ th {
   font-weight: 700;
   background: var(--color-gray-100);
   color: var(--color-ink);
+}
+
+/* Examples table (built client-side from the plain Examples list; see
+   _includes/examples-table.html) */
+
+.examples-table__keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.examples-table .keyword {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  font-size: 0.8rem;
+  color: var(--color-gray-700);
+  white-space: nowrap;
+}
+
+.examples-table .federated-yes {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.examples-table .federated-no {
+  color: var(--color-gray-500);
+}
+
+.examples-table__filter {
+  margin-top: 0.35rem;
+  max-width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  padding: 0.15rem 0.3rem;
+}
+
+.examples-table__view-link {
+  display: inline-block;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  font-size: 0.85rem;
 }
 
 /* Resource grid on the homepage */

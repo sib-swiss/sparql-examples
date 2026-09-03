@@ -1,0 +1,380 @@
+<script src="https://rdf.js.org/comunica-browser/versions/v5/engines/query-sparql/comunica-browser.js"></script>
+<script>
+// Turns each resource's plain "Examples" list into a filterable table, with
+// Keywords and Federated columns (and a "federated with whom" filter) read
+// live from the linked .ttl file's own RDF (schema:keywords,
+// spex:federatesWith) using Comunica as a real SPARQL engine over the
+// RDF/JS data model — no build-time plugin or generated data file needed,
+// and it stays correct as examples/*.ttl changes.
+//
+// Loaded from the rdfjs/comunica-browser prebuilt bundle (global `Comunica`)
+// rather than importing the npm package from a generic ESM CDN: Comunica
+// pulls in winston (via componentsjs) for its internal actor wiring, and
+// generic on-the-fly ESM bundlers (esm.sh, jsdelivr +esm) mis-transpile its
+// Node stream polyfills, crashing with "class constructors must be invoked
+// with 'new'" before any of our code runs. The prebuilt bundle is webpacked
+// specifically for the browser and doesn't have that problem.
+(function () {
+
+const PAGE_SIZE = 25;
+
+const META_QUERY = `
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+PREFIX spex: <https://purl.expasy.org/sparql-examples/ontology#>
+SELECT ?p ?o WHERE {
+  ?s ?p ?o .
+  FILTER(?p IN (rdfs:comment, schema:keywords, spex:federatesWith))
+}`;
+
+const engine = new Comunica.QueryEngine();
+
+async function fetchMetadata(ttlUrl) {
+  const bindingsStream = await engine.queryBindings(META_QUERY, { sources: [ttlUrl] });
+  const bindings = await bindingsStream.toArray();
+  const meta = { comment: null, keywords: [], federatesWith: [] };
+  bindings.forEach((b) => {
+    const p = b.get('p').value;
+    const o = b.get('o');
+    if (p === 'http://www.w3.org/2000/01/rdf-schema#comment') {
+      meta.comment = o.value;
+    } else if (p === 'https://schema.org/keywords') {
+      meta.keywords.push(o.value);
+    } else if (p === 'https://purl.expasy.org/sparql-examples/ontology#federatesWith') {
+      meta.federatesWith.push(o.value);
+    }
+  });
+  return meta;
+}
+
+function buildTable(list) {
+  const items = Array.prototype.filter.call(list.children, (el) => el.tagName === 'LI');
+  const entries = items
+    .map((li) => li.querySelector('a'))
+    .filter((a) => a && /\.html?$/.test(a.getAttribute('href') || ''));
+
+  // Only resource-index pages have an "Examples" list of links like this;
+  // skip anything else (homepage grid, keyword lists on example pages).
+  if (!entries.length || entries.length !== items.length) {
+    return null;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'examples-table';
+
+  const thead = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  const exampleTh = document.createElement('th');
+  exampleTh.textContent = 'Example';
+  const keywordsTh = document.createElement('th');
+  keywordsTh.textContent = 'Keywords';
+  const federatedTh = document.createElement('th');
+  federatedTh.textContent = 'Federated';
+  headRow.appendChild(exampleTh);
+  headRow.appendChild(keywordsTh);
+  headRow.appendChild(federatedTh);
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const keywordFilter = document.createElement('select');
+  keywordFilter.className = 'examples-table__filter';
+  keywordFilter.innerHTML = '<option value="">All keywords</option>';
+  keywordsTh.appendChild(document.createElement('br'));
+  keywordsTh.appendChild(keywordFilter);
+
+  const federatedFilter = document.createElement('select');
+  federatedFilter.className = 'examples-table__filter';
+  federatedFilter.innerHTML =
+    '<option value="">All</option>' +
+    '<option value="federated">Federated (any)</option>' +
+    '<option value="not-federated">Not federated</option>';
+  federatedTh.appendChild(document.createElement('br'));
+  federatedTh.appendChild(federatedFilter);
+
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+
+  const rows = entries.map((a) => {
+    const tr = document.createElement('tr');
+
+    const exampleTd = document.createElement('td');
+    const link = document.createElement('a');
+    link.href = a.getAttribute('href');
+    link.textContent = a.textContent;
+    exampleTd.appendChild(link);
+
+    const keywordsTd = document.createElement('td');
+    keywordsTd.className = 'examples-table__keywords';
+    keywordsTd.textContent = '…';
+
+    const federatedTd = document.createElement('td');
+    federatedTd.textContent = '…';
+
+    tr.appendChild(exampleTd);
+    tr.appendChild(keywordsTd);
+    tr.appendChild(federatedTd);
+    tbody.appendChild(tr);
+
+    return {
+      tr,
+      exampleLink: link,
+      keywordsTd,
+      federatedTd,
+      // Comunica's `sources` needs an absolute URL; it won't resolve a
+      // root-relative href against the page location the way fetch() does.
+      ttlUrl: new URL(a.getAttribute('href').replace(/\.html?$/, '.ttl'), document.baseURI).href,
+      keywords: [],
+      federatesWith: []
+    };
+  });
+
+  list.replaceWith(table);
+  return { table, rows, keywordFilter, federatedFilter };
+}
+
+function addOptionSorted(select, value, label, group, pinnedFirst) {
+  const parent = group || select;
+  const children = Array.from(parent.children);
+  if (children.some((o) => o.value === value)) {
+    return;
+  }
+  const option = document.createElement('option');
+  option.value = value;
+  option.textContent = label;
+  // Skip a pinned placeholder (e.g. "All keywords") so it always stays first.
+  const searchable = pinnedFirst ? children.slice(1) : children;
+  const next = searchable.find((o) => o.textContent.localeCompare(label) > 0);
+  parent.insertBefore(option, next || null);
+}
+
+function hostnameLabel(url) {
+  try {
+    return new URL(url).hostname;
+  } catch (e) {
+    return url;
+  }
+}
+
+// A handful of rdfs:comment values are typed ^^rdf:HTML and embed their own
+// <a> tags (e.g. linking out to a UniProt category page). row.exampleLink
+// itself is an <a> to this example's own page, and a real <a> can't be
+// nested inside another <a> — the browser would just close the outer one
+// early, breaking its click area. So: plain comments still fill the whole
+// link as before, but an HTML comment with a link of its own is shown as
+// rendered HTML text, with a separate small link through to the example.
+function setDescription(row, commentHtml) {
+  if (/<a[\s>]/i.test(commentHtml)) {
+    const exampleUrl = row.exampleLink.getAttribute('href');
+    const span = document.createElement('span');
+    span.innerHTML = commentHtml;
+    const viewLink = document.createElement('a');
+    viewLink.className = 'examples-table__view-link';
+    viewLink.href = exampleUrl;
+    viewLink.textContent = 'View example →';
+    row.exampleLink.replaceWith(span, viewLink);
+  } else {
+    row.exampleLink.innerHTML = commentHtml;
+  }
+}
+
+function populateRow(row, keywordFilter, federatedFilter, onUpdate) {
+  return fetchMetadata(row.ttlUrl)
+    .then((meta) => {
+      if (meta.comment) {
+        setDescription(row, meta.comment);
+      }
+      row.keywords = meta.keywords;
+      row.federatesWith = meta.federatesWith;
+
+      row.keywordsTd.textContent = '';
+      if (meta.keywords.length) {
+        meta.keywords.forEach((kw) => {
+          const span = document.createElement('span');
+          span.className = 'keyword';
+          span.textContent = kw;
+          row.keywordsTd.appendChild(span);
+          addOptionSorted(keywordFilter, kw, kw, null, true);
+        });
+      } else {
+        row.keywordsTd.textContent = '—';
+      }
+
+      const federated = meta.federatesWith.length > 0;
+      row.federatedTd.textContent = federated ? 'Yes' : 'No';
+      row.federatedTd.className = federated ? 'federated-yes' : 'federated-no';
+      if (federated) {
+        let group = federatedFilter.querySelector('optgroup');
+        if (!group) {
+          group = document.createElement('optgroup');
+          group.label = 'Federated with…';
+          federatedFilter.appendChild(group);
+        }
+        meta.federatesWith.forEach((target) => {
+          addOptionSorted(federatedFilter, target, hostnameLabel(target), group);
+        });
+      }
+    })
+    .catch(() => {
+      row.keywordsTd.textContent = '—';
+      row.federatedTd.textContent = '—';
+    })
+    .finally(onUpdate);
+}
+
+// Pagination + filtering for the examples table: filters (keyword,
+// federated) narrow which rows count towards pagination, and one
+// pagination control renders above the table and one below, kept in sync.
+function createTableController(table, rows) {
+  let filteredRows = rows.slice();
+  let currentPage = 0;
+  let matchesFilter = () => true;
+
+  const navTop = document.createElement('nav');
+  navTop.className = 'pagination';
+  navTop.setAttribute('aria-label', 'Examples pages');
+  table.insertAdjacentElement('beforebegin', navTop);
+
+  const navBottom = document.createElement('nav');
+  navBottom.className = 'pagination';
+  navBottom.setAttribute('aria-label', 'Examples pages');
+  table.insertAdjacentElement('afterend', navBottom);
+
+  function makeButton(label, onClick) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = label;
+    btn.addEventListener('click', onClick);
+    return btn;
+  }
+
+  function render() {
+    const pageCount = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+    currentPage = Math.min(currentPage, pageCount - 1);
+    const start = currentPage * PAGE_SIZE;
+    const visible = new Set(filteredRows.slice(start, start + PAGE_SIZE));
+
+    rows.forEach((r) => {
+      r.tr.style.display = visible.has(r) ? '' : 'none';
+    });
+
+    const showNav = filteredRows.length > PAGE_SIZE;
+    [navTop, navBottom].forEach((nav) => {
+      nav.hidden = !showNav;
+      nav.textContent = '';
+      if (!showNav) {
+        return;
+      }
+
+      const prevBtn = makeButton('← Prev', () => goToPage(currentPage - 1));
+      prevBtn.disabled = currentPage === 0;
+      nav.appendChild(prevBtn);
+
+      for (let i = 0; i < pageCount; i++) {
+        const btn = makeButton(String(i + 1), () => goToPage(i));
+        if (i === currentPage) {
+          btn.classList.add('is-active');
+          btn.setAttribute('aria-current', 'page');
+        }
+        nav.appendChild(btn);
+      }
+
+      const nextBtn = makeButton('Next →', () => goToPage(currentPage + 1));
+      nextBtn.disabled = currentPage === pageCount - 1;
+      nav.appendChild(nextBtn);
+
+      const status = document.createElement('span');
+      status.className = 'pagination__status';
+      const first = filteredRows.length ? start + 1 : 0;
+      const last = Math.min(start + PAGE_SIZE, filteredRows.length);
+      status.textContent = `Showing ${first}–${last} of ${filteredRows.length}`;
+      nav.appendChild(status);
+    });
+  }
+
+  function goToPage(page) {
+    currentPage = page;
+    render();
+  }
+
+  function applyFilter() {
+    filteredRows = rows.filter(matchesFilter);
+    currentPage = 0;
+    render();
+  }
+
+  function refreshFilter() {
+    // Same predicate, but the underlying data (row.keywords/federatesWith)
+    // may have changed since a row just finished loading.
+    filteredRows = rows.filter(matchesFilter);
+    render();
+  }
+
+  render();
+
+  return {
+    setFilter(predicate) {
+      matchesFilter = predicate;
+      applyFilter();
+    },
+    refresh: refreshFilter
+  };
+}
+
+function wireFilters(controller, keywordFilter, federatedFilter) {
+  function matches(row) {
+    const selectedKeyword = keywordFilter.value;
+    if (selectedKeyword && !row.keywords.includes(selectedKeyword)) {
+      return false;
+    }
+    const federation = federatedFilter.value;
+    if (federation === 'federated' && row.federatesWith.length === 0) {
+      return false;
+    }
+    if (federation === 'not-federated' && row.federatesWith.length > 0) {
+      return false;
+    }
+    if (federation && federation !== 'federated' && federation !== 'not-federated') {
+      if (!row.federatesWith.includes(federation)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  controller.setFilter(matches);
+  keywordFilter.addEventListener('change', () => controller.setFilter(matches));
+  federatedFilter.addEventListener('change', () => controller.setFilter(matches));
+  return () => controller.refresh();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lists = document.querySelectorAll('.site-main__inner > ul');
+  Array.prototype.forEach.call(lists, (list) => {
+    const built = buildTable(list);
+    if (!built) {
+      return;
+    }
+
+    const controller = createTableController(built.table, built.rows);
+    const notifyDataChanged = wireFilters(controller, built.keywordFilter, built.federatedFilter);
+
+    // Batch re-filtering: many rows resolve close together, so coalesce
+    // the resulting re-renders instead of doing one per row.
+    let refreshScheduled = false;
+    function scheduleRefresh() {
+      if (refreshScheduled) {
+        return;
+      }
+      refreshScheduled = true;
+      setTimeout(() => {
+        refreshScheduled = false;
+        notifyDataChanged();
+      }, 100);
+    }
+
+    built.rows.forEach((row) => populateRow(row, built.keywordFilter, built.federatedFilter, scheduleRefresh));
+  });
+});
+
+})();
+</script>
