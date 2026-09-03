@@ -229,7 +229,8 @@ body {
 }
 
 .category-badge {
-  margin: 0 0 0.5rem;
+  float: left;
+  margin: 0.6rem 0.75rem 0.5rem 0;
   color: var(--color-primary);
   font-weight: 700;
   font-size: 0.85rem;
@@ -252,6 +253,7 @@ h1 {
 }
 
 h2 {
+  clear: left;
   font-size: 1.4rem;
   margin: 2rem 0 1rem;
   padding-bottom: 0.4rem;
