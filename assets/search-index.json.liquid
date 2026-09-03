@@ -1,0 +1,32 @@
+---
+layout: null
+permalink: /search-index.json
+---
+{% capture newline %}
+{% endcapture %}
+[
+{% assign first_item = true %}
+{% for page in site.pages %}
+{% if page.name == "index.md" and page.dir contains "/examples/" %}
+{% assign resource = page.dir | split: "/" | last %}
+{% assign lines = page.content | split: newline %}
+{% for line in lines %}
+{% if line contains " - [" and line contains "](" %}
+{% assign rest = line | split: " - [" | last %}
+{% assign parts = rest | split: "](" %}
+{% assign label = parts[0] | strip | remove: "@en" %}
+{% assign link = parts[1] | remove: ")" | strip %}
+{% assign first_char = link | slice: 0 %}
+{% if first_char == "/" %}
+{% assign url = link | relative_url %}
+{% else %}
+{% assign url = link | remove: "./" | replace: ".md", ".html" | prepend: page.dir | relative_url %}
+{% endif %}
+{% unless first_item %},{% endunless %}
+{% assign first_item = false %}
+{"title":{{ label | jsonify }},"url":{{ url | jsonify }},"resource":{{ resource | jsonify }}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+]
