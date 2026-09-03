@@ -1,0 +1,41 @@
+# Category assignment follows how expasy.org/search/sparql groups each
+# SPARQL endpoint. GlyConnect and emi aren't listed there, so their category
+# is our best-fit guess (protein / evolution). neXtProt is `deprecated`:
+# its SPARQL endpoint/examples are no longer actively maintained, so it's
+# shown in its own grid on the homepage instead of the active resources.
+- name: Bgee
+  path: Bgee
+  category: gene
+- name: Cellosaurus
+  path: Cellosaurus
+  category: sys-biology
+- name: emi
+  path: emi
+  category: evolution
+- name: GlyConnect
+  path: GlyConnect
+  category: protein
+- name: HAMAP
+  path: HAMAP
+  category: protein
+- name: MetaNetX
+  path: MetaNetX
+  category: sys-biology
+- name: neXtProt
+  path: neXtProt
+  category: deprecated
+- name: OMA
+  path: OMA
+  category: evolution
+- name: OrthoDB
+  path: OrthoDB
+  category: evolution
+- name: Rhea
+  path: Rhea
+  category: sys-biology
+- name: SwissLipids
+  path: SwissLipids
+  category: protein
+- name: UniProt
+  path: UniProt
+  category: protein

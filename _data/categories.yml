@@ -1,0 +1,17 @@
+# Resource-category icons, keyed by the slug used as the `category-<slug>`
+# class in assets/css/style.scss (mask-image: assets/images/<slug>.svg).
+# gene/protein/evolution/sys-biology/stru-biology come from Expasy's own
+# taxonomy (https://www.expasy.org/search/sparql); `deprecated` is specific
+# to this site, for resources whose SPARQL endpoint is no longer maintained.
+gene:
+  label: Genes & Genomes
+protein:
+  label: Proteins & Proteomes
+evolution:
+  label: Evolution & Phylogeny
+sys-biology:
+  label: Systems Biology
+stru-biology:
+  label: Structural Biology
+deprecated:
+  label: Deprecated

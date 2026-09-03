@@ -5,9 +5,6 @@
  * Palette pulled from Expasy's production stylesheet (primary blue,
  * secondary red) plus the SIB Brand guidelines (2024) for accents.
  */
-
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
-
 :root {
   --color-primary: #009FE7;
   --color-primary-dark: #0072A8;
@@ -20,9 +17,8 @@
   --color-gray-100: #f3f4f6;
   --color-paper: #ffffff;
 
-  --font-sans: 'Source Sans 3', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
-
+  --font-sans: 'Source Sans Pro', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
   --max-width: 68rem;
 }
 
@@ -197,6 +193,50 @@ body {
   text-decoration: underline;
 }
 
+.category-gene a::before,
+.category-protein a::before,
+.category-evolution a::before,
+.category-sys-biology a::before,
+.category-deprecated a::before {
+  content: "";
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.4rem;
+  vertical-align: -0.2em;
+  background-color: inherit;
+  background-repeat: no-repeat;
+}
+
+.category-gene a::before {
+  background-image: url("{{ "/assets/images/gene.svg" | relative_url }}");
+}
+
+.category-protein a::before {
+  background-image: url("{{ "/assets/images/protein.svg" | relative_url }}");
+}
+
+.category-evolution a::before {
+  background-image: url("{{ "/assets/images/evolution.svg" | relative_url }}");
+}
+
+.category-sys-biology a::before {
+  background-image: url("{{ "/assets/images/sys-biology.svg" | relative_url }}");
+}
+
+.category-deprecated a::before {
+  background-image: url("{{ "/assets/images/deprecated.svg" | relative_url }}");
+}
+
+.category-badge {
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 /* Typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -323,11 +363,23 @@ th {
 }
 
 .resource-grid li {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary);
   margin: 0;
 }
 
+.resource-grid li.category-gene::before,
+.resource-grid li.category-protein::before,
+.resource-grid li.category-evolution::before,
+.resource-grid li.category-sys-biology::before {
+  width: 1.4em;
+  height: 1.4em;
+  margin-right: 0.6rem;
+}
+
 .resource-grid a {
-  display: block;
+  flex: 1 1 auto;
   height: 100%;
   padding: 1rem 1.1rem;
   border: 1px solid var(--color-gray-200);
@@ -336,6 +388,21 @@ th {
   font-weight: 700;
   text-decoration: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.resource-grid-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  color: var(--color-gray-500);
+  font-size: 0.85rem;
+}
+
+.resource-grid-legend__item {
+  margin: 0;
 }
 
 .resource-grid a:hover {
