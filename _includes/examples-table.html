@@ -53,12 +53,6 @@ function buildTable(list) {
     .map((li) => li.querySelector('a'))
     .filter((a) => a && /\.html?$/.test(a.getAttribute('href') || ''));
 
-  // Only resource-index pages have an "Examples" list of links like this;
-  // skip anything else (homepage grid, keyword lists on example pages).
-  if (!entries.length || entries.length !== items.length) {
-    return null;
-  }
-
   const table = document.createElement('table');
   table.className = 'examples-table';
 
@@ -348,7 +342,11 @@ function wireFilters(controller, keywordFilter, federatedFilter) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('#examples');
   const lists = document.querySelectorAll('.site-main__inner > ul');
+  if (header === undefined || header === null){
+    return;
+  }
   Array.prototype.forEach.call(lists, (list) => {
     const built = buildTable(list);
     if (!built) {
