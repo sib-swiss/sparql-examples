@@ -32,7 +32,7 @@ WHERE {
     up:organism taxon:9606 .
    # Link protein to catalytic activity, then to Rhea reaction
   ?protein up:annotation ?annotation .
-  ?annotation up:catalyticActivity ?catalytic_activity_obj .
+  ?annotation up:catalyticActivity ?catalytic_activity .
   ?catalytic_activity up:catalyzedReaction ?rhea .
 }""" ;
     schema:keywords "list" , "reaction", "rhea", "lipid" ;
