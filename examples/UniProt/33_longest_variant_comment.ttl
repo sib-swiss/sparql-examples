@@ -17,6 +17,6 @@ WHERE {
         rdfs:comment ?comment . 
 } 
 ORDER BY DESC(STRLEN(?comment))""" ;
-    schema:keywords "variant annotation" , "count" ;
+    schema:keywords "variant" , "count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
 
