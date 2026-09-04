@@ -6,7 +6,7 @@
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:135_plazi_proteome a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
-  rdfs:comment "Connect a taxonomic treatment collected by [Plazi](https://plazi.org/) in their [synospecies](https://synospecies.plazi.org/) system. We connect by what is called the dwc:id-ENA property which is encoded as a xsd:string which is the naked identifier of an NCBI taxon concept. Which in UniProt is encoded as an IRI starting with `http://purl.uniprot.org/taxonomy/'. After converting the taxon identifier we can query for Proteomes in UniProt for that taxon."^^rdf:HTML;
+  rdfs:comment """Connect a taxonomic treatment collected by <a href="https://plazi.org/">Plazi</a> in their <a href="https://synospecies.plazi.org/">synospecies</a> system. We connect by what is called the dwc:id-ENA property which is encoded as a xsd:string which is the naked identifier of an NCBI taxon concept. Which in UniProt is encoded as an IRI starting with `http://purl.uniprot.org/taxonomy/'. After converting the taxon identifier we can query for Proteomes in UniProt for that taxon."""^^rdf:HTML;
   sh:prefixes _:sparql_examples_prefixes;
   sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX trt:   <http://plazi.org/vocab/treatment#>
