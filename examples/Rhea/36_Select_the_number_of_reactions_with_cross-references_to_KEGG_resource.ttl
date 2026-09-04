@@ -17,6 +17,6 @@ WHERE {
     ?reaction rdfs:subClassOf rh:Reaction .
     ?reaction rh:bidirectionalReaction ?bidirectionalReaction .
     ?bidirectionalReaction rdfs:seeAlso ?xref .
-    FILTER (regex(?xref, str(kegg:)))
+    FILTER (regex(str(?xref), str(kegg:)))
 }""";
   schema:target <https://sparql.rhea-db.org/sparql> .
