@@ -7,7 +7,7 @@
 
 ex:128_distinct_rhea_in_different_taxons_grouped_by_eco a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
   rdfs:comment "Count of unique Rhea reactions/Evidence code pairs annotated in different taxa in Swiss-Prot"@en;
-  schema:keywords "Reaction", "Taxonomy", "Statistics" ;
+  schema:keywords "reaction", "taxonomy", "statistics", "Rhea" ;
   sh:select """
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX up: <http://purl.uniprot.org/core/>

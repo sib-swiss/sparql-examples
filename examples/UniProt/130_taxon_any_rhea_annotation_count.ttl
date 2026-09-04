@@ -21,5 +21,5 @@ WHERE {
     ?catalyticActivity up:catalyzedReaction ?rhea .
   }
 } GROUP BY ?taxon""";
-  schema:keywords "count", "enzyme", "taxon";
+  schema:keywords "count", "enzyme", "taxonomy";
   schema:target <https://sparql.uniprot.org/sparql> .
