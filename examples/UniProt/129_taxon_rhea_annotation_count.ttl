@@ -27,5 +27,5 @@ WHERE {
     ?attr up:evidence ECO:0000269 .
   }
 } GROUP BY ?taxon""";
-  schema:keywords "count", "enzyme", "taxon", "experimental";
+  schema:keywords "count", "enzyme", "taxonomy", "experimental", "Rhea";
   schema:target <https://sparql.uniprot.org/sparql> .
