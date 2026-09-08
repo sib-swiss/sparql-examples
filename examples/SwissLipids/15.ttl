@@ -21,7 +21,7 @@ SELECT
     ?isomericsubSwisslipid
     ?pubmed
 WHERE {
-    VALUES ?hmdb {'HMDB00269' 'MDB00032'}
+    VALUES ?lipidx {'HMDB00269' 'MDB00032'}
     BIND (IRI(CONCAT('http://identifiers.org/lipidx/', ?lipidx)) AS ?lipidxIRI)
     ?swisslipid rdfs:seeAlso ?lipidxIRI .
     ?swisslipid rdfs:subClassOf ?isomericsubSwisslipid .
