@@ -43,7 +43,7 @@ jobs:
     - name: Validate generated SPARQL query example
       id: validate
       if: success()
-      run: java -jar sparql-examples-utils.jar test -i ./examples -p tmp --also-run-slow-tests > error.log 2>&1
+      run: java -Xss16m -jar sparql-examples-utils.jar test -i ./examples -p tmp --also-run-slow-tests > error.log 2>&1
 
 
     - name: Clean up temporary files
