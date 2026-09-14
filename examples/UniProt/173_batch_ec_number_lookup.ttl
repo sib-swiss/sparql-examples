@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:173_batch_ec_number_lookup a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of Enzyme Commission (EC) numbers, list the reviewed UniProt entries classified with each one, in a single query"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX enzyme: <http://purl.uniprot.org/enzyme/>
+
+SELECT ?ec ?protein
+WHERE {
+  VALUES ?ec { enzyme:1.1.1.1 enzyme:3.5.1.5 }
+  ?protein up:enzyme ?ec ;
+    up:reviewed true .
+}""" ;
+    schema:keywords "enzyme" , "EC number" , "batch lookup" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
