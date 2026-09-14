@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:142_cross_linked_residues a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins with a cross-linked residue (e.g. a glycyl lysine isopeptide bond formed by ubiquitin or SUMO conjugation) and the residue position and nature of the cross-link"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?position ?crossLinkType
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Cross-link_Annotation ;
+    rdfs:comment ?crossLinkType ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?position .
+}""" ;
+    schema:keywords "PTM" , "cross-link" , "ubiquitination" , "post-translational modification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:141_lipidation_sites_and_lipid_type a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins with a covalently attached lipid (e.g. palmitoylation, farnesylation, GPI-anchor) and the residue position and kind of lipid attached"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?position ?lipidationType
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Lipidation_Annotation ;
+    rdfs:comment ?lipidationType ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?position .
+}""" ;
+    schema:keywords "PTM" , "lipidation" , "post-translational modification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

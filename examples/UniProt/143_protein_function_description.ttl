@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:143_protein_function_description a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve the free-text function description of human tumor suppressor TP53 (P04637), as distinct from its more specific catalytic-activity, disease, or subunit annotations"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?functionText
+WHERE {
+  uniprotkb:P04637 up:annotation ?annotation .
+  ?annotation a up:Function_Annotation ;
+    rdfs:comment ?functionText .
+}""" ;
+    schema:keywords "function" , "annotation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

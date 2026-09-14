@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:150_redox_potential_measurements a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find redox potential (E0) measurements reported for reviewed electron-transport proteins"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?redoxPotential
+WHERE {
+  ?protein a up:Protein ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Redox_Potential_Annotation ;
+    rdfs:comment ?redoxPotential .
+}""" ;
+    schema:keywords "redox potential" , "electron transport" , "biophysicochemical property" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

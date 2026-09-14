@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:156_compositionally_biased_regions a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find compositionally-biased (low-complexity) regions annotated on reviewed human proteins, with the kind of bias and its extent"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?bias ?begin ?end
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Compositional_Bias_Annotation ;
+    up:range ?range .
+  OPTIONAL { ?annotation rdfs:comment ?bias }
+  ?range faldo:begin/faldo:position ?begin ;
+    faldo:end/faldo:position ?end .
+}""" ;
+    schema:keywords "compositional bias" , "low complexity" , "region" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

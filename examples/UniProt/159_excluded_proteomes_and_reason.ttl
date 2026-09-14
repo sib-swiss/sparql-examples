@@ -1,0 +1,18 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:159_excluded_proteomes_and_reason a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find proteomes that have been excluded from UniProtKB and the reason they were excluded (e.g. contaminated, derived from metagenome, unverified source organism)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?proteome ?exclusionReason
+WHERE {
+  ?proteome a up:Excluded_Proteome ;
+    up:exclusionReason ?exclusionReason .
+}""" ;
+    schema:keywords "proteome" , "excluded" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

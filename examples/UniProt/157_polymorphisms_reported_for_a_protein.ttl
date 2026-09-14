@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:157_polymorphisms_reported_for_a_protein a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find polymorphisms reported for proteins, i.e. population sequence variation described as such rather than as a disease-causing natural variant"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?polymorphism
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?annotation .
+  ?annotation a up:Polymorphism_Annotation ;
+    rdfs:comment ?polymorphism .
+}""" ;
+    schema:keywords "polymorphism" , "variation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
