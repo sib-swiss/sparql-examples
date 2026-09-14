@@ -60,7 +60,12 @@
       results.innerHTML = '';
       return;
     }
-    render(fuse.search(query));
+    var matches = fuse.search(query);
+    // Keep Fuse's relevance order within each group, but rank every
+    // deprecated-resource match below every active-resource match.
+    var active = matches.filter(function (m) { return !m.item.deprecated; });
+    var deprecated = matches.filter(function (m) { return m.item.deprecated; });
+    render(active.concat(deprecated));
   });
 
   input.addEventListener('keydown', function (event) {
