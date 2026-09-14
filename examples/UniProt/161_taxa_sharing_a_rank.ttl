@@ -1,0 +1,18 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:161_taxa_sharing_a_rank a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List all taxa in UniProt's taxonomy that have the taxonomic rank \"genus\", using the up:Rank resource rather than matching on a rank name string"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?taxon ?scientificName
+WHERE {
+  ?taxon up:rank up:Taxonomic_Rank_Genus ;
+    up:scientificName ?scientificName .
+}""" ;
+    schema:keywords "taxonomy" , "rank" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

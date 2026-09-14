@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:162_common_taxon_of_a_uniref_cluster a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the common taxon (the lowest taxon shared by all members) of the UniRef100 cluster that human TP53 (P04637) belongs to, and how many sequences that cluster groups together. up:commonTaxon is precomputed per UniRef cluster from its actual members, not a general-purpose lowest-common-ancestor function over two arbitrary organisms"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniref: <http://purl.uniprot.org/uniref/>
+
+SELECT ?cluster (COUNT(?member) AS ?memberCount) (SAMPLE(?rawCommonTaxonName) AS ?commonTaxonName)
+WHERE {
+  BIND(uniref:UniRef100_P04637 AS ?cluster)
+  ?cluster up:member ?member ;
+    up:commonTaxon ?commonTaxon .
+  ?commonTaxon up:scientificName ?rawCommonTaxonName .
+}
+GROUP BY ?cluster""" ;
+    schema:keywords "taxonomy" , "UniRef" , "common ancestor" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
