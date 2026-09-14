@@ -1,0 +1,19 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:160_non_reference_proteomes_and_strain a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find non-reference proteomes and the organism and strain they were sequenced from"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?proteome ?organism ?strain
+WHERE {
+  ?proteome a up:Non_Reference_Proteome ;
+    up:organism ?organism .
+  OPTIONAL { ?proteome up:strain ?strain }
+}""" ;
+    schema:keywords "proteome" , "strain" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

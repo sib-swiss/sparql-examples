@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:147_enzymes_with_kinetic_parameters a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed enzymes with reported kinetic parameters (Michaelis-Menten constant Km and/or maximal velocity Vmax) and their reported values"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT ?protein ?km ?vmax
+WHERE {
+  ?protein a up:Protein ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Kinetics_Annotation .
+  OPTIONAL { ?annotation up:measuredAffinity ?km }
+  OPTIONAL { ?annotation up:measuredActivity ?vmax }
+}""" ;
+    schema:keywords "enzyme" , "kinetics" , "Km" , "Vmax" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

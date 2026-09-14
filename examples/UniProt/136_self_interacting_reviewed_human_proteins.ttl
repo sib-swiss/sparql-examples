@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:136_self_interacting_reviewed_human_proteins a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins that are annotated as self-interacting, i.e. known to form homodimers or homo-oligomers"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT DISTINCT ?protein
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:interaction ?interaction .
+  ?interaction a up:Self_Interaction .
+}""" ;
+    schema:keywords "interaction" , "self-interaction" , "homodimer" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

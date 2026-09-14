@@ -1,0 +1,32 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:144_mature_chain_after_signal_peptide_cleavage a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human secreted proteins where the mature chain begins immediately after the signal peptide is cleaved off"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?signalPeptideEnd ?chainName ?chainBegin ?chainEnd
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?signalPeptideAnnotation , ?chainAnnotation .
+  ?signalPeptideAnnotation a up:Signal_Peptide_Annotation ;
+    up:range ?signalPeptideRange .
+  ?signalPeptideRange faldo:end/faldo:position ?signalPeptideEnd .
+  ?chainAnnotation a up:Chain_Annotation ;
+    up:range ?chainRange .
+  OPTIONAL { ?chainAnnotation rdfs:comment ?chainName }
+  ?chainRange faldo:begin/faldo:position ?chainBegin ;
+    faldo:end/faldo:position ?chainEnd .
+  FILTER(?chainBegin = ?signalPeptideEnd + 1)
+}""" ;
+    schema:keywords "signal peptide" , "chain" , "molecule processing" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

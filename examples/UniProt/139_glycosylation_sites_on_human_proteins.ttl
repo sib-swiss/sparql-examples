@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:139_glycosylation_sites_on_human_proteins a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find glycosylation sites on reviewed human proteins, together with the modified residue position and the kind of glycosylation (e.g. N-linked, O-linked, C-linked)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?position ?glycosylationType
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Glycosylation_Annotation ;
+    rdfs:comment ?glycosylationType ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?position .
+}""" ;
+    schema:keywords "PTM" , "glycosylation" , "post-translational modification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:151_membrane_orientation_of_subcellular_location a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins with a known membrane orientation (e.g. cytoplasmic side vs. lumenal side) for one of their subcellular locations"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?protein ?subcellularLocation ?orientation
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Subcellular_Location_Annotation ;
+    up:locatedIn ?location .
+  ?location up:cellularComponent ?component ;
+    up:orientation ?orientationResource .
+  ?component skos:prefLabel ?subcellularLocation .
+  ?orientationResource skos:prefLabel ?orientation .
+}""" ;
+    schema:keywords "subcellular location" , "membrane" , "orientation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

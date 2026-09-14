@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:145_mitochondrial_transit_peptides a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins with a transit peptide targeting them to the mitochondrion, and the extent of that transit peptide"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?destination ?begin ?end
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Transit_Peptide_Annotation ;
+    rdfs:comment ?destination ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?begin ;
+    faldo:end/faldo:position ?end .
+  FILTER(CONTAINS(?destination, "Mitochondrion"))
+}""" ;
+    schema:keywords "transit peptide" , "mitochondrion" , "molecule processing" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

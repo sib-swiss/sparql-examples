@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:153_protein_domain_extents a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the extent (start and end position) of annotated protein domains on reviewed human proteins, using UniProt's own domain model rather than an InterPro/Pfam cross-reference"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?protein ?domainName ?begin ?end
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a up:Domain_Extent_Annotation ;
+    rdfs:comment ?domainName ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?begin ;
+    faldo:end/faldo:position ?end .
+}""" ;
+    schema:keywords "domain" , "region" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

@@ -1,0 +1,30 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:140_disulfide_bonds_and_interchain_links a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the disulfide bonds of human insulin (P01308), the pair of residue positions each one connects, and whether it links two different chains (e.g. the A and B chains of mature insulin) rather than two residues within the same chain"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?annotation (GROUP_CONCAT(STR(?position); separator="-") AS ?positions) (SAMPLE(?rawComment) AS ?interchainNote)
+WHERE {
+  uniprotkb:P01308 up:annotation ?annotation .
+  ?annotation a up:Disulfide_Bond_Annotation ;
+    up:range ?range .
+  # Each disulfide bond annotation has one up:range per residue it
+  # connects; a plain xsd:int position must be coerced with STR() before
+  # GROUP_CONCAT can aggregate it.
+  ?range faldo:begin/faldo:position ?position .
+  # Absence of a comment means the bond is intra-chain; a comment
+  # mentioning "Interchain" means it links two separate chains.
+  OPTIONAL { ?annotation rdfs:comment ?rawComment }
+}
+GROUP BY ?annotation""" ;
+    schema:keywords "PTM" , "disulfide bond" , "post-translational modification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

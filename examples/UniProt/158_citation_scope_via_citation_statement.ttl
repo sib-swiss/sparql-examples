@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:158_citation_scope_via_citation_statement a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the citations attached to human insulin (P01308) and, for each one, the scope of what it was cited for (e.g. which disease variant, which sequence region, or which experiment it documents). UniProt records the plain triple <protein> up:citation <citation> for direct traversal, and separately reifies that same triple as an up:Citation_Statement to attach the citation's scope to the specific citation relationship rather than to the citation itself, since one citation can support several different claims about the same protein"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?citation ?scope
+WHERE {
+  ?statement a up:Citation_Statement ;
+    rdf:subject uniprotkb:P01308 ;
+    rdf:predicate up:citation ;
+    rdf:object ?citation ;
+    up:scope ?scope .
+}""" ;
+    schema:keywords "citation" , "reification" , "evidence" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

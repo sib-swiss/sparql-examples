@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:137_interaction_partners_and_evidence_count a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the interaction partners of human tumor suppressor TP53 (P04637) and the number of experiments supporting each interaction"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT DISTINCT ?partnerProtein ?experiments
+WHERE {
+  uniprotkb:P04637 up:interaction ?interaction .
+  ?interaction a up:Non_Self_Interaction ;
+    up:participant ?partner ;
+    up:experiments ?experiments .
+  # up:participant identifies the interacting molecule by its IntAct
+  # identifier; owl:sameAs links that identifier back to the UniProt
+  # protein it corresponds to.
+  ?partner owl:sameAs ?partnerProtein .
+  FILTER(?partnerProtein != uniprotkb:P04637)
+}
+ORDER BY DESC(?experiments)""" ;
+    schema:keywords "interaction" , "protein-protein interaction" , "TP53" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
