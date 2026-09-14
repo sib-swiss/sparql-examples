@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:166_batch_annotate_gene_list a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch list of UniProt accessions, retrieve one row per entry with its recommended protein name, function description, and reviewed status in a single query. This is the classic 'annotate my differential-expression gene list' BioMart workflow (attributes=c(\\\"name\\\",\\\"description\\\",\\\"reviewed\\\") in one getBM() call)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+
+SELECT ?protein ?recommendedName ?function ?reviewed
+WHERE {
+  VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
+  ?protein up:reviewed ?reviewed ;
+    up:recommendedName [ up:fullName ?recommendedName ] .
+  OPTIONAL {
+    ?protein up:annotation ?functionAnnotation .
+    ?functionAnnotation a up:Function_Annotation ;
+      rdfs:comment ?function .
+  }
+}""" ;
+    schema:keywords "batch lookup" , "gene list" , "annotation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

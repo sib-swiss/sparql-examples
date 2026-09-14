@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:165_reviewed_proteins_for_a_go_term a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a GO term, find all reviewed human proteins annotated with it. This is the reverse direction of retrieving GO terms for a protein, matching the classic BioMart workflow of building an enrichment-analysis candidate or background gene set from a GO id filter"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+
+SELECT ?protein
+WHERE {
+  # GO:0006915 is "apoptotic process"
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:classifiedWith GO:0006915 .
+}""" ;
+    schema:keywords "gene ontology" , "enrichment analysis" , "batch lookup" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

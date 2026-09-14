@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:168_batch_ensembl_transcript_cross_references a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of UniProt accessions, map each to its cross-referenced Ensembl transcript(s) in one query. This relationship is one-to-many (a protein can have several Ensembl transcripts), which is a recurring biomaRt pain point since getBM() is reported to drop or omit rows for it -- with SPARQL, a one-to-many mapping simply produces more result rows"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+
+SELECT ?protein ?ensemblTranscript
+WHERE {
+  VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
+  ?protein rdfs:seeAlso ?ensemblTranscript .
+  ?ensemblTranscript up:database <http://purl.uniprot.org/database/Ensembl> .
+}""" ;
+    schema:keywords "batch lookup" , "Ensembl" , "cross-reference" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
