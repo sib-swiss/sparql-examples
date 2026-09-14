@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:171_batch_id_mapping_style_lookup a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of UniProt accessions, resolve each to its mnemonic entry name, recommended protein name, and organism in one query -- the SPARQL equivalent of the columns (EntryName, ProteinName, Organism) UniProt's own web-based ID mapping/retrieve service returns"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+
+SELECT ?protein ?mnemonic ?recommendedName ?organismName
+WHERE {
+  VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
+  ?protein up:mnemonic ?mnemonic ;
+    up:recommendedName [ up:fullName ?recommendedName ] ;
+    up:organism ?organism .
+  ?organism up:scientificName ?organismName .
+}""" ;
+    schema:keywords "batch lookup" , "id mapping" , "organism" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
