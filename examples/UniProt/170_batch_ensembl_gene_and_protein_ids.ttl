@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:170_batch_ensembl_gene_and_protein_ids a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of UniProt accessions, resolve each to its Ensembl gene ID and Ensembl protein ID in one query. UniProt's rdfs:seeAlso cross-reference to Ensembl only reaches the transcript level directly; the transcript resource itself links on to the gene it was transcribed from (up:transcribedFrom, an ENSG id) and the protein it was translated to (up:translatedTo, an ENSP id), so no federation with an external Ensembl endpoint is needed to reach gene-level identifiers"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+
+SELECT ?protein ?ensemblTranscript ?ensemblGene ?ensemblProtein
+WHERE {
+  VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
+  ?protein rdfs:seeAlso ?ensemblTranscript .
+  ?ensemblTranscript up:database <http://purl.uniprot.org/database/Ensembl> ;
+    up:transcribedFrom ?ensemblGene ;
+    up:translatedTo ?ensemblProtein .
+}""" ;
+    schema:keywords "batch lookup" , "Ensembl" , "cross-reference" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

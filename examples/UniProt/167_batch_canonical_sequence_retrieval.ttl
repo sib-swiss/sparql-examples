@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:167_batch_canonical_sequence_retrieval a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch list of UniProt accessions, retrieve the amino acid sequence for each in a single query, matching BioMart's classic bulk \"peptide\" attribute pull"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+
+SELECT ?protein ?sequence
+WHERE {
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
+    ?protein up:sequence ?seq .
+    ?seq a up:Simple_Sequence ;
+      rdf:value ?sequence .
+  }
+}""" ;
+    schema:keywords "batch lookup" , "sequence" , "fasta" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

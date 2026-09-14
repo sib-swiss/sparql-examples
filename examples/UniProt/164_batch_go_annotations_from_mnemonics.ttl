@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:164_batch_go_annotations_from_mnemonics a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of UniProt mnemonic identifiers (Entry Names, e.g. MTMR1_HUMAN) rather than accessions, resolve each to its protein and retrieve its GO annotations in one query. This is the classic biomaRt batch-lookup pattern where a SPARQL VALUES clause replaces getBM(), and unlike biomaRt it naturally returns one row per (protein, GO term) pair instead of dropping or truncating the one-to-many result"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+
+SELECT ?mnemonic ?protein ?goTerm ?goLabel
+WHERE {
+  VALUES ?mnemonic { "MTMR1_HUMAN" "P53_HUMAN" "INS_HUMAN" }
+  ?protein up:mnemonic ?mnemonic ;
+    up:classifiedWith ?goTerm .
+  ?goTerm rdfs:label ?goLabel .
+  FILTER(STRSTARTS(STR(?goTerm), STR(GO:)))
+}""" ;
+    schema:keywords "gene ontology" , "mnemonic" , "batch lookup" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
