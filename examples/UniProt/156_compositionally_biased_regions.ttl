@@ -12,7 +12,11 @@ PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?protein ?bias ?begin ?end
+SELECT
+  ?protein
+  ?bias
+  ?begin
+  ?end
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;

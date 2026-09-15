@@ -10,7 +10,9 @@ ex:136_self_interacting_reviewed_human_proteins a sh:SPARQLExecutable,
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 
-SELECT DISTINCT ?protein
+SELECT
+  DISTINCT
+    ?protein
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;

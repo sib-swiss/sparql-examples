@@ -9,7 +9,9 @@ ex:159_excluded_proteomes_and_reason a sh:SPARQLExecutable,
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT ?proteome ?exclusionReason
+SELECT
+  ?proteome
+  ?exclusionReason
 WHERE {
   ?proteome a up:Excluded_Proteome ;
     up:exclusionReason ?exclusionReason .

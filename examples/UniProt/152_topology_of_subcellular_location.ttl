@@ -11,7 +11,10 @@ ex:152_topology_of_subcellular_location a sh:SPARQLExecutable,
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?protein ?subcellularLocation ?topology
+SELECT
+  ?protein
+  ?subcellularLocation
+  ?topology
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;

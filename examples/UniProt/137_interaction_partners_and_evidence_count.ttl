@@ -11,7 +11,10 @@ ex:137_interaction_partners_and_evidence_count a sh:SPARQLExecutable,
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
-SELECT DISTINCT ?partnerProtein ?experiments
+SELECT
+  DISTINCT
+    ?partnerProtein
+    ?experiments
 WHERE {
   uniprotkb:P04637 up:interaction ?interaction .
   ?interaction a up:Non_Self_Interaction ;

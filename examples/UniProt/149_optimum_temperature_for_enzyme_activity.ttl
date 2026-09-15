@@ -11,7 +11,9 @@ ex:149_optimum_temperature_for_enzyme_activity a sh:SPARQLExecutable,
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?protein ?temperatureDependence
+SELECT
+  ?protein
+  ?temperatureDependence
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;

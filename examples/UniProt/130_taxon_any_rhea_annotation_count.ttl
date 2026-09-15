@@ -11,13 +11,13 @@ ex:130_taxon_any_rhea_annotation_count a sh:SPARQLExecutable, sh:SPARQLSelectExe
   sh:select """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX up: <http://purl.uniprot.org/core/>
 SELECT 
-	?taxon
-	(COUNT(?rhea) AS ?rheaAnnotated)
+  ?taxon
+  (COUNT(?rhea) AS ?rheaAnnotated)
 WHERE {
   GRAPH <http://sparql.uniprot.org/uniprot> {
     ?protein up:organism ?taxon ;
              up:annotation ?catalyticActivityAnnotation .
-	?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
+    ?catalyticActivityAnnotation up:catalyticActivity ?catalyticActivity .
     ?catalyticActivity up:catalyzedReaction ?rhea .
   }
 } GROUP BY ?taxon""";

@@ -11,7 +11,8 @@ ex:143_protein_function_description a sh:SPARQLExecutable,
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?functionText
+SELECT
+  ?functionText
 WHERE {
   uniprotkb:P04637 up:annotation ?annotation .
   ?annotation a up:Function_Annotation ;

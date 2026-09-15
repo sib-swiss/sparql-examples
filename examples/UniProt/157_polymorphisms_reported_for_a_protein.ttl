@@ -10,7 +10,9 @@ ex:157_polymorphisms_reported_for_a_protein a sh:SPARQLExecutable,
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?protein ?polymorphism
+SELECT
+  ?protein
+  ?polymorphism
 WHERE {
   ?protein a up:Protein ;
     up:annotation ?annotation .
