@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:176_taxon_names_not_unique a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find up:scientificName values that label more than one taxon. The same string can genuinely be reused for unrelated nodes in UniProt's taxonomy: \"environmental samples\" is a placeholder reused thousands of times under many different higher taxa for unclassified/metagenomic entries, and some higher-rank names are also reused at genus rank (e.g. Ctenophora, a phylum of comb jellies, is also a genus elsewhere in the tree)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?scientificName
+  (COUNT(?taxon) AS ?taxonCount)
+(GROUP_CONCAT(SUBSTR(STR(?taxon),34) ; separator=',') AS ?taxons)
+WHERE {
+  ?taxon up:scientificName ?scientificName .
+}
+GROUP BY ?scientificName
+HAVING (COUNT(?taxon) > 1)
+ORDER BY DESC(?taxonCount) DESC(?scientificName)"" ;
+    schema:keywords "taxonomy" , "scientificName" , "duplicate" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
