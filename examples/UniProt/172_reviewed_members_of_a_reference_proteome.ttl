@@ -5,18 +5,20 @@
 
 ex:172_reviewed_members_of_a_reference_proteome a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "For a given taxon (Escherichia coli K12), find its reference proteome and list the reviewed proteins that are members of it. This goes one step further than finding just the proteome resource: a protein's up:proteome value identifies a component (e.g. a chromosome) of a proteome, whose IRI is the proteome's own IRI with a '#' fragment appended, so membership in a specific proteome is tested by that IRI prefix"@en ;
+    rdfs:comment "For a given taxon (Escherichia coli K12), find its reference proteome and list the reviewed proteins that are members of it. This goes one step further than finding just the proteome resource: a protein's up:proteome value identifies a component (e.g. a chromosome) of a proteome, whose IRI is the proteome's own IRI with a '#' fragment appended. The relation between a component and a proteome is via skos:narrower"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?protein
+SELECT
+  ?protein
 WHERE {
   ?proteome a up:Reference_Proteome ;
     up:organism taxon:83333 .
   ?protein up:proteome ?component ;
     up:reviewed true .
-  FILTER(STRSTARTS(STR(?component), STR(?proteome)))
+  ?proteome skos:narrower ?component .
 }""" ;
     schema:keywords "proteome" , "batch lookup" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
