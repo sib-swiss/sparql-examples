@@ -12,7 +12,10 @@ PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?annotation (GROUP_CONCAT(STR(?position); separator="-") AS ?positions) (SAMPLE(?rawComment) AS ?interchainNote)
+SELECT
+  ?annotation
+  (GROUP_CONCAT(STR(?position); separator="-") AS ?positions)
+  (SAMPLE(?rawComment) AS ?interchainNote)
 WHERE {
   uniprotkb:P01308 up:annotation ?annotation .
   ?annotation a up:Disulfide_Bond_Annotation ;

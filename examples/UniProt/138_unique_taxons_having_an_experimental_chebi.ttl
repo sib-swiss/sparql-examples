@@ -1,0 +1,64 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:138_unique_taxons_having_an_experimental_chebi a sh:SPARQLExecutable, sh:SPARQLSelectExecutable;
+  rdfs:comment "Count distinct taxons linked to ChEBI in different ways via experimental annotations in UniProt"^^rdf:HTML;
+  sh:prefixes _:sparql_examples_prefixes;
+  sh:select """PREFIX ECO: <http://purl.obolibrary.org/obo/ECO_>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX up: <http://purl.uniprot.org/core/>
+SELECT 
+  (COUNT(DISTINCT ?taxon) AS ?taxonsLinkedToChebi)
+  (COUNT(DISTINCT ?ligandTaxon) AS ?taxonsLinkedToChebiViaLigand)
+  (COUNT(DISTINCT ?cofactorTaxon) AS ?taxonsLinkedToChebiViaCofactor)
+  (COUNT(DISTINCT ?catalyticTaxon) AS ?taxonsLinkedToChebiViaCatalytic)
+WHERE {
+  {
+    GRAPH <http://sparql.uniprot.org/uniprot> {
+      ?protein up:annotation ?ligandAnnotation .
+      ?ligandAnnotation up:ligand/rdfs:subClassOf ?chebi .
+      ?reif rdf:subject ?protein ; 
+            rdf:object ?ligandAnnotation .
+    }
+  } UNION {
+    GRAPH <http://sparql.uniprot.org/uniprot> {
+      ?protein up:annotation ?cofactorAnnotation .
+      ?cofactorAnnotation up:cofactor ?chebi .
+      ?reif rdf:subject ?cofactorAnnotation ; 
+            rdf:object ?chebi .
+    }
+  } UNION {
+    GRAPH <http://sparql.uniprot.org/uniprot> {
+      ?protein up:annotation ?catalyticActivityAnnotation .
+      ?catalyticActivityAnnotation a up:Catalytic_Activity_Annotation ;
+                                   up:catalyticActivity ?catalyticActivity .
+      ?catalyticActivity up:catalyzedReaction ?rhea .
+      ?reif rdf:subject ?catalyticActivityAnnotation ; 
+            rdf:object ?catalyticActivity .
+    }
+    GRAPH <https://sparql.rhea-db.org/rhea> {
+      ?rhea rh:side/rh:contains/rh:compound ?compound .
+      ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+    }     
+  }
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?reif up:attribution ?attr .
+    ?attr up:evidence ECO:0000269 .
+    ?protein up:organism ?taxon .
+    BIND(IF(BOUND(?ligandAnnotation),?taxon, ?_) AS ?ligandTaxon)
+    BIND(IF(BOUND(?cofactorAnnotation),?taxon, ?_) AS ?cofactorTaxon)
+    BIND(IF(BOUND(?catalyticActivityAnnotation),?taxon, ?_) AS ?catalyticTaxon)
+  }
+  GRAPH <http://sparql.uniprot.org/chebi> {
+    ?chebi a owl:Class .
+  }
+}""";
+  schema:keywords "ChEBI", "catalytic", "cofactor", "enzyme", "ligand";
+  schema:target <https://sparql.uniprot.org/sparql> .

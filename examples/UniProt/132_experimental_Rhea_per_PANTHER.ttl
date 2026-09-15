@@ -14,8 +14,8 @@ PREFIX up:  <http://purl.uniprot.org/core/>
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT
-?pantherFamily
-(COUNT(?rhea) AS ?experimentalRhea)
+  ?pantherFamily
+  (COUNT(?rhea) AS ?experimentalRhea)
 WHERE {
   # Protein has a catalytic activity annotation with a Rhea reaction
   ?protein up:annotation ?ann .
