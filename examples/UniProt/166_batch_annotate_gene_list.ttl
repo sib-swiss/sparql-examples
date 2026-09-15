@@ -11,7 +11,10 @@ ex:166_batch_annotate_gene_list a sh:SPARQLExecutable,
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 
-SELECT ?protein ?recommendedName ?function ?reviewed
+SELECT
+  ?protein
+  ?recommendedName
+  (GROUP_CONCAT(?function; separator='\n') AS ?functions) ?reviewed
 WHERE {
   VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
   ?protein up:reviewed ?reviewed .
@@ -28,6 +31,6 @@ WHERE {
     ?functionAnnotation a up:Function_Annotation ;
       rdfs:comment ?function .
   }
-}""" ;
+} GROUP BY ?protein ?recommendedName ?reviewed""" ;
     schema:keywords "batch lookup" , "gene list" , "annotation" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
