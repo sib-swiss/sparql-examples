@@ -1,0 +1,35 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:163_canonical_isoform_does_not_need_to_be_dash_1 a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed proteins whose canonical isoform does not end in -1, ordered by the highest isoform number used as the canonical sequence. UniProt's up:sequence points to whichever isoform was chosen as canonical, which is not always isoform -1"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT
+  ?protein
+  (?sequence AS ?canonicalIsoform)
+  ?isoformCount
+WHERE
+{
+  GRAPH <http://sparql.uniprot.org/uniprot> {
+    ?protein up:reviewed true .
+    ?protein up:sequence ?sequence .
+    ?sequence a up:Simple_Sequence .
+    OPTIONAL {
+      ?sequence a up:External_Sequence .
+      BIND(true AS ?isExternalSequence)
+      BIND(SUBSTR(STR(?protein), STRLEN(STR(uniprotkb:))) AS ?proteinAc)
+      FILTER(CONTAINS(STR(?sequence), ?proteinAc))
+    }
+    FILTER(?isExternalSequence || !BOUND(?isExternalSequence))
+  }
+  BIND(xsd:int(STRAFTER(STR(?sequence), "-")) AS ?isoformCount)
+} ORDER BY DESC(?isoformCount)""" ;
+    schema:keywords "isoform" , "canonical sequence" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
