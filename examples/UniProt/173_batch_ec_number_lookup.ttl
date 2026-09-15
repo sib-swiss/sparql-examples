@@ -5,16 +5,27 @@
 
 ex:173_batch_ec_number_lookup a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Given a batch of Enzyme Commission (EC) numbers, list the reviewed UniProt entries classified with each one, in a single query"@en ;
+    rdfs:comment "Given a batch of Enzyme Commission (EC) numbers, list the reviewed UniProt entries classified with each one, in a single query. A protein can be linked to an EC number three different ways: directly (up:enzyme), through a catalytic activity annotation's Rhea-linked enzyme classification (up:catalyticActivity/up:enzymeClass), or as a plain string in a structured protein name (up:ecName) -- the ?mappedVia column states which"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX enzyme: <http://purl.uniprot.org/enzyme/>
 
-SELECT ?ec ?protein
+SELECT ?ec ?protein ?mappedVia
 WHERE {
-  VALUES ?ec { enzyme:1.1.1.1 enzyme:3.5.1.5 }
-  ?protein up:enzyme ?ec ;
-    up:reviewed true .
+  VALUES ?ec { "1.1.1.1" "3.5.1.5" }
+  BIND(IRI(CONCAT(STR(enzyme:), ?ec)) AS ?ecIRI)
+  {
+    ?protein up:enzyme ?ecIRI .
+    BIND("direct enzyme classification (up:enzyme)" AS ?mappedVia)
+  } UNION {
+    ?protein up:annotation/up:catalyticActivity/up:enzymeClass ?ecIRI .
+    BIND("catalytic activity annotation (up:catalyticActivity/up:enzymeClass)" AS ?mappedVia)
+  } UNION {
+    ?protein up:recommendedName|up:alternativeName ?name .
+    ?name up:ecName ?ec .
+    BIND("structured name (up:ecName string)" AS ?mappedVia)
+  }
+  ?protein up:reviewed true .
 }""" ;
     schema:keywords "enzyme" , "EC number" , "batch lookup" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
