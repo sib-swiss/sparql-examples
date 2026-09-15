@@ -1,0 +1,41 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:175_uniprot_identity_of_a_pdb_entry_via_pdbj a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Starting from PDB entry pdb_00002bq0 (the extended, versioned wwPDB identifier for legacy entry 2BQ0), federate live with PDBj/RDF Portal's wwPDB RDF to retrieve the recommended or submitted protein name and organism of the UniProt entity it was solved from -- the reverse direction of resolving a protein to its PDB structures"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX pdbo: <http://rdf.wwpdb.org/schema/pdbx-with-vrptx-v50.owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+  ?protein
+  ?recommendedName
+  ?organismName
+WHERE {
+  SERVICE <https://rdfportal.org/pdb/sparql> {
+    # The extended, versioned wwPDB identifier is recorded as a
+    # skos:altLabel on the entry, alongside its legacy 4-character code.
+    ?pdbEntry skos:altLabel "pdb_00002bq0" .
+    ?pdbEntry pdbo:has_struct_refCategory/pdbo:has_struct_ref ?structRef .
+    ?structRef pdbo:link_to_uniprot ?protein .
+  }
+
+  ?protein up:organism ?organism .
+  ?organism up:scientificName ?organismName .
+  OPTIONAL {
+    ?protein up:recommendedName  ?name .
+  }
+  OPTIONAL {
+    FILTER(! BOUND(?name))
+    ?protein up:submittedName ?name .
+  }
+  ?name up:fullName ?recommendedName  ;
+}""" ;
+    schema:keywords "PDB" , "federated query" , "PDBj" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/pdb/sparql> .

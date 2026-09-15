@@ -1,0 +1,36 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:174_pdb_structures_via_pdbj_federation a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Starting from human tumor suppressor TP53 (P04637), federate live with PDBj/RDF Portal's wwPDB RDF to list the extended, versioned wwPDB identifier (e.g. pdb_00002bq0, not the legacy 4-character code) of every PDB entry that has been experimentally solved for it. This goes through PDBj's own pdbo:link_to_uniprot cross-reference rather than UniProt's local rdfs:seeAlso/database cross-reference, so it is a genuine two-endpoint federated query, not a locally-built PDB identifier"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+PREFIX pdbo: <http://rdf.wwpdb.org/schema/pdbx-with-vrptx-v50.owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+  ?extendedPdbId
+  #?pdb
+WHERE {
+  BIND(uniprotkb:P04637 AS ?protein)
+  # Compare with cross-reference stored in UniProtKB
+  #?protein rdfs:seeAlso ?pdb .
+  #?pdb up:database <http://purl.uniprot.org/database/wwPDB>
+  SERVICE <https://rdfportal.org/pdb/sparql> {
+    ?structRef pdbo:link_to_uniprot ?protein .
+    ?pdbEntry pdbo:has_struct_refCategory/pdbo:has_struct_ref ?structRef .
+    # Entries carry both their legacy 4-character code and the newer,
+    # extended/versioned wwPDB identifier as skos:altLabel; the extended
+    # one is the only one starting with "pdb_".
+    ?pdbEntry skos:altLabel ?extendedPdbId .
+    FILTER(STRSTARTS(?extendedPdbId, "pdb_"))
+  }
+}""" ;
+    schema:keywords "PDB" , "federated query" , "PDBj" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/pdb/sparql> .
