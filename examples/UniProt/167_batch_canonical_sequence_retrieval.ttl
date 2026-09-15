@@ -11,14 +11,15 @@ ex:167_batch_canonical_sequence_retrieval a sh:SPARQLExecutable,
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 
-SELECT ?protein ?sequence
+SELECT
+  ?protein
+  ?sequence
 WHERE {
-  GRAPH <http://sparql.uniprot.org/uniprot> {
+  GRAPH <http://sparql.uniprot.org/uniparc> {
     VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
-    ?protein up:sequence ?seq .
-    ?seq a up:Simple_Sequence ;
-      rdf:value ?sequence .
+    ?uniparc up:sequenceFor ?protein .
+    ?uniparc rdf:value ?sequence .
   }
 }""" ;
-    schema:keywords "batch lookup" , "sequence" , "fasta" ;
+    schema:keywords "batch lookup" , "sequence" , "fasta", "uniparc" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
