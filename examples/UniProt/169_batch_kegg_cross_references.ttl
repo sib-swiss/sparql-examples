@@ -5,13 +5,15 @@
 
 ex:169_batch_kegg_cross_references a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Given a batch of UniProt accessions, retrieve each one's KEGG gene cross-reference in a single query"@en ;
+    rdfs:comment "Given a batch of UniProt accessions, retrieve each one's KEGG gene cross-reference in a single query. Note: if building metabolic pathways we recommend looking at how Rhea is used in UniProt."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 
-SELECT ?protein ?keggGene
+SELECT
+  ?protein
+  ?keggGene
 WHERE {
   VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
   ?protein rdfs:seeAlso ?keggGene .
