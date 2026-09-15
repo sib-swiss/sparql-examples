@@ -14,8 +14,15 @@ PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 SELECT ?protein ?recommendedName ?function ?reviewed
 WHERE {
   VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
-  ?protein up:reviewed ?reviewed ;
-    up:recommendedName [ up:fullName ?recommendedName ] .
+  ?protein up:reviewed ?reviewed .
+  OPTIONAL {
+    ?protein up:recommendedName ?name .
+  }
+  OPTIONAL {
+    FILTER(!BOUND(?name))
+    ?protein up:submittedName ?name .
+  }
+  ?name up:fullName ?recommendedName .
   OPTIONAL {
     ?protein up:annotation ?functionAnnotation .
     ?functionAnnotation a up:Function_Annotation ;
