@@ -10,12 +10,24 @@ ex:171_batch_id_mapping_style_lookup a sh:SPARQLExecutable,
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 
-SELECT ?protein ?mnemonic ?recommendedName ?organismName
+SELECT
+  ?protein
+  ?mnemonic
+  ?recommendedName
+  ?organismName
 WHERE {
   VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
   ?protein up:mnemonic ?mnemonic ;
-    up:recommendedName [ up:fullName ?recommendedName ] ;
     up:organism ?organism .
+   ?protein up:reviewed ?reviewed .
+  OPTIONAL {
+    ?protein up:recommendedName ?name .
+  }
+  OPTIONAL {
+    FILTER(!BOUND(?name))
+    ?protein up:submittedName ?name .
+  }
+  ?name up:fullName ?recommendedName .
   ?organism up:scientificName ?organismName .
 }""" ;
     schema:keywords "batch lookup" , "id mapping" , "organism" ;
