@@ -14,7 +14,7 @@ PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 SELECT
   ?protein
   ?recommendedName
-  (GROUP_CONCAT(?function; separator='\n') AS ?functions) ?reviewed
+  (GROUP_CONCAT(?function; separator='\\n') AS ?functions) ?reviewed
 WHERE {
   VALUES ?protein { uniprotkb:P04637 uniprotkb:P01308 uniprotkb:Q13613 }
   ?protein up:reviewed ?reviewed .
