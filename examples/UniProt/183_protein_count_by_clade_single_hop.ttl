@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:183_protein_count_by_clade_single_hop a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Compare the number of reviewed proteins in two named taxonomic clades (Primates, Rodentia), using a single-hop ?organism rdfs:subClassOf ?clade rather than the transitive rdfs:subClassOf+ or rdfs:subClassOf* form. UniProt's taxonomy is pre-flattened: every taxon carries a direct rdfs:subClassOf edge to every one of its ancestors, not only its immediate parent (verified live: taxon 9606, Homo sapiens, has 30 direct rdfs:subClassOf triples, one per ancestor up to cellular organisms), so a single hop already reaches every member of a clade at any depth and is far cheaper than the transitive path"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?clade
+  ?cladeName
+  (COUNT(DISTINCT ?protein) AS ?proteinCount)
+WHERE {
+  VALUES ?clade { <http://purl.uniprot.org/taxonomy/9443> <http://purl.uniprot.org/taxonomy/9989> }
+  ?clade up:scientificName ?cladeName .
+  ?protein up:reviewed true ;
+    up:organism ?organism .
+  ?organism rdfs:subClassOf ?clade .
+}
+GROUP BY ?clade ?cladeName""" ;
+    schema:keywords "taxonomy" , "clade" , "aggregation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

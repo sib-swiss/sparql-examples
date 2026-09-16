@@ -1,0 +1,34 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:186_ensembl_gene_biotype_and_location a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a UniProt protein (human TP53, P04637), federate out to Ensembl's own RDF at RDF Portal to retrieve its gene's biotype and genomic location (begin/end via FALDO). UniProt only holds the Ensembl gene identifier locally (up:transcribedFrom); the gene's own attributes - biotype, genomic coordinates - only exist in Ensembl's RDF, not UniProt's. Note: up:transcribedFrom's object is a *versioned* Ensembl gene IRI (e.g. .../ENSG00000141510.20), but RDF Portal's Ensembl graph identifies the gene by its *unversioned* IRI, so a direct IRI join between the two silently returns nothing; matching via rdfs:seeAlso from the protein (as done here), filtered to the ensembl:EnsemblGene type to exclude transcripts, avoids that mismatch"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ensembl: <http://rdf.ebi.ac.uk/terms/ensembl/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+
+SELECT
+  ?gene
+  ?biotype
+  ?begin
+  ?end
+WHERE {
+  BIND(<http://purl.uniprot.org/uniprot/P04637> AS ?protein)
+  SERVICE <https://rdfportal.org/ebi/sparql> {
+    ?gene a ensembl:EnsemblGene ;
+      rdfs:seeAlso ?protein ;
+      ensembl:has_biotype ?biotype ;
+      faldo:location ?location .
+    ?location faldo:begin/faldo:position ?begin ;
+      faldo:end/faldo:position ?end .
+  }
+}""" ;
+    schema:keywords "Ensembl" , "federation" , "genomic location" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/ebi/sparql> .

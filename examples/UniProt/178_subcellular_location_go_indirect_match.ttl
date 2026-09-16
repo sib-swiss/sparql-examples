@@ -1,0 +1,36 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:178_subcellular_location_go_indirect_match a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find Gene Ontology terms that are a looser match to a UniProt subcellular-location term than the direct skos:exactMatch: GO terms reached from the directly-matched term via rdfs:subClassOf+ (is-a), or via a BFO_0000050 (part_of) owl:Restriction on top of it. GO's own part_of axioms are loaded in the UniProt endpoint as an owl:Restriction blank node (a rdfs:subClassOf [ a owl:Restriction ; owl:onProperty obo:BFO_0000050 ; owl:someValuesFrom b ] means a is part_of b), so combining a property path with that restriction pattern is what it takes to follow \"is-a-or-part-of\" one more step"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT
+  ?location
+  ?locationName
+  ?directGo
+  ?relatedGo
+WHERE {
+  ?location a up:Cellular_Component ;
+    skos:prefLabel ?locationName ;
+    skos:exactMatch ?directGo .
+  {
+    ?relatedGo rdfs:subClassOf+ ?directGo .
+  } UNION {
+    ?relatedGo rdfs:subClassOf [ a owl:Restriction ;
+                                   owl:onProperty
+                                  obo:BFO_0000050 ;
+                                  owl:someValuesFrom ?directGo
+    ] .
+  }
+}""" ;
+    schema:keywords "subcellular location" , "Gene Ontology" , "SKOS" , "OWL" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

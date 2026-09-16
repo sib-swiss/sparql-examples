@@ -1,0 +1,30 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:187_reactome_pathways_via_ensembl_gene a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a UniProt protein (human TP53, P04637), list the Reactome pathways it participates in, reached via its Ensembl gene's own rdfs:seeAlso links at RDF Portal. This is a federated alternative to any pathway cross-references UniProt exposes directly: the Ensembl gene resource carries rdfs:seeAlso triples both back to the UniProt protein and out to each Reactome pathway identifier, so matching on the shared gene resource joins the two"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ensembl: <http://rdf.ebi.ac.uk/terms/ensembl/>
+
+SELECT
+  ?gene
+  ?reactomePathway
+WHERE {
+  BIND(<http://purl.uniprot.org/uniprot/P04637> AS ?protein)
+  SERVICE <https://rdfportal.org/ebi/sparql> {
+    ?gene a ensembl:EnsemblGene ;
+      rdfs:seeAlso ?protein ;
+      rdfs:seeAlso ?reactomePathway .
+    FILTER(STRSTARTS(STR(?reactomePathway), "http://identifiers.org/reactome/"))
+  }
+}
+LIMIT 20""" ;
+    schema:keywords "Ensembl" , "Reactome" , "pathway" , "federation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/ebi/sparql> .

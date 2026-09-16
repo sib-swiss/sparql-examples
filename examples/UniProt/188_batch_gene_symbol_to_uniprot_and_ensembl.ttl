@@ -1,0 +1,36 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:188_batch_gene_symbol_to_uniprot_and_ensembl a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a batch of human gene symbols (TP53, BRCA1, EGFR), resolve each to its Ensembl gene ID and reviewed UniProt accession in one federated query - the closest direct analogue to biomaRt's getBM() across two live SPARQL endpoints instead of one local database. Gene symbols and the Ensembl gene resource itself only exist in Ensembl's own RDF, so the symbol-to-gene match happens inside the SERVICE clause; restricting to human (RO_0002162, in-taxon) avoids matching the same symbol used for orthologous genes in other species, and the up:reviewed true filter (evaluated locally, since ?protein is already bound to a UniProt IRI) keeps one canonical accession per gene rather than every isoform"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ensembl: <http://rdf.ebi.ac.uk/terms/ensembl/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+SELECT DISTINCT
+  ?symbol
+  ?ensemblGeneId
+  ?protein
+WHERE {
+  SERVICE <https://rdfportal.org/ebi/sparql> {
+    VALUES ?symbol { "TP53" "BRCA1" "EGFR" }
+    ?gene a ensembl:EnsemblGene ;
+      rdfs:label ?symbol ;
+      dcterms:identifier ?ensemblGeneId ;
+      obo:RO_0002162 <http://identifiers.org/taxonomy/9606> ;
+      rdfs:seeAlso ?protein .
+    FILTER(STRSTARTS(STR(?protein), "http://purl.uniprot.org/uniprot/"))
+  }
+  ?protein up:reviewed true .
+}
+ORDER BY ?symbol""" ;
+    schema:keywords "Ensembl" , "batch lookup" , "gene symbol" , "federation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/ebi/sparql> .

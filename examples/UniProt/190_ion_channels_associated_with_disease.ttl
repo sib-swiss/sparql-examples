@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:190_ion_channels_associated_with_disease a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed proteins classified with the Ion channel keyword that are also linked to a disease, and name the disease - combining a structural/functional classification with clinical relevance"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX keywords: <http://purl.uniprot.org/keywords/>
+
+SELECT
+  ?protein
+  ?diseaseName
+WHERE {
+  ?protein up:reviewed true ;
+    up:classifiedWith keywords:407 ;
+    up:annotation ?disease .
+  ?disease a up:Disease_Annotation ;
+    up:disease ?d .
+  ?d skos:prefLabel ?diseaseName .
+}""" ;
+    schema:keywords "ion channel" , "disease" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

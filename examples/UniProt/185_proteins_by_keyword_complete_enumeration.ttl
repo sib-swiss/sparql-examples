@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:185_proteins_by_keyword_complete_enumeration a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Count reviewed proteins classified with the controlled-vocabulary keyword Kinase (keywords:418) via up:classifiedWith. This is the complete route to \"every kinase\": a free-text search over protein names or comments for the word \"kinase\" would miss proteins named with the synonym \"Phosphotransferase\" (keywords:418's own skos:altLabel) instead, while curator-assigned keyword classification catches both consistently"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX keywords: <http://purl.uniprot.org/keywords/>
+
+SELECT
+  (COUNT(DISTINCT ?protein) AS ?count)
+WHERE {
+  ?protein up:reviewed true ;
+    up:classifiedWith keywords:418 .
+}""" ;
+    schema:keywords "keyword" , "classification" , "enzyme" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

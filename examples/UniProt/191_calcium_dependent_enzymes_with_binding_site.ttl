@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:191_calcium_dependent_enzymes_with_binding_site a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed enzymes that both require Ca(2+) as a cofactor and have an annotated calcium-binding site - two distinct annotation types (a stated cofactor requirement vs. an explicit structural binding-site position) corroborating each other for the same ion. Both sides are matched by the actual ChEBI identity of calcium(2+) (CHEBI:29108), not by name text: up:cofactor points directly at the ChEBI IRI, while a binding site's up:ligand is an instance further typed via rdfs:subClassOf to the ChEBI class"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT DISTINCT
+  ?protein
+WHERE {
+  BIND(CHEBI:29108 AS ?calcium)
+  ?protein up:reviewed true ;
+    up:enzyme ?ec ;
+    up:annotation ?cofactor ;
+    up:annotation ?binding .
+  ?cofactor a up:Cofactor_Annotation ;
+    up:cofactor ?calcium .
+  ?binding a up:Binding_Site_Annotation ;
+    up:ligand ?ligand .
+  ?ligand rdfs:subClassOf ?calcium .
+}""" ;
+    schema:keywords "calcium" , "cofactor" , "binding site" , "ChEBI" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
