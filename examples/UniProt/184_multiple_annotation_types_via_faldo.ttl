@@ -1,0 +1,32 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:184_multiple_annotation_types_via_faldo a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve several different kinds of positional annotation (modified residues, domains, binding sites) together in one query, each one's sequence range resolved through FALDO in the same WHERE clause, instead of writing one query per annotation type. The candidate types are listed with VALUES rather than bound to a variable and checked with FILTER(?annotType IN (...)): live against sparql.uniprot.org, the FILTER(IN) form was slow and unstable (anywhere from 14s to over a minute, sometimes timing out outright), while VALUES consistently answered in a few seconds"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+
+SELECT
+  ?protein
+  ?annotType
+  ?begin
+  ?end
+WHERE {
+  VALUES ?annotType { up:Modified_Residue_Annotation up:Domain_Annotation up:Binding_Site_Annotation }
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:annotation ?annotation .
+  ?annotation a ?annotType ;
+    up:range ?range .
+  ?range faldo:begin/faldo:position ?begin ;
+    faldo:end/faldo:position ?end .
+}
+LIMIT 20""" ;
+    schema:keywords "FALDO" , "annotation" , "sequence position" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

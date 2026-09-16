@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:177_subcellular_location_go_direct_match a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find UniProt's subcellular-location ontology terms (up:Cellular_Component, the http://purl.uniprot.org/locations/ terms behind section G's per-protein annotations) and the Gene Ontology cellular-component term each one exactly matches, via skos:exactMatch"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+  ?location
+  ?locationName
+  ?go
+WHERE {
+  ?location a up:Cellular_Component ;
+    skos:prefLabel ?locationName ;
+    skos:exactMatch ?go .
+}""" ;
+    schema:keywords "subcellular location" , "Gene Ontology" , "SKOS" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

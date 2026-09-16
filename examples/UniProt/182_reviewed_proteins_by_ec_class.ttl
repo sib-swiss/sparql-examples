@@ -1,0 +1,21 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:182_reviewed_proteins_by_ec_class a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Count reviewed proteins classified anywhere under EC class 2.7 (transferases that transfer phosphorus-containing groups, e.g. kinases), matched either directly via up:enzyme or through a catalytic-activity annotation's Rhea-linked enzyme classification. EC subclasses are materialized in UniProt's data, so this is done with a plain rdfs:subClassOf join against the whole 2.7.-.- subtree rather than an rdfs:subClassOf+ transitive path or a STRSTARTS string-prefix filter on the EC IRI"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  (COUNT(DISTINCT ?protein) AS ?count)
+WHERE {
+  ?protein up:reviewed true ;
+    up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?ecNumber .
+  ?ecNumber rdfs:subClassOf <http://purl.uniprot.org/enzyme/2.7.-.->
+}""" ;
+    schema:keywords "enzyme" , "EC number" , "classification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

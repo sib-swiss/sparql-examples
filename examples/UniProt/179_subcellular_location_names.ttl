@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:179_subcellular_location_names a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List every term in UniProt's subcellular-location ontology (up:Cellular_Component) with its preferred name and description"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?location
+  ?locationName
+  ?description
+WHERE {
+  ?location a up:Cellular_Component ;
+    skos:prefLabel ?locationName ;
+    rdfs:comment ?description .
+}""" ;
+    schema:keywords "subcellular location" , "SKOS" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

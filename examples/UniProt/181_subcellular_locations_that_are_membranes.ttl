@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:181_subcellular_locations_that_are_membranes a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find every subcellular location that is itself a kind of membrane, by reasoning back to locations:162 (\"Membrane\") over the same mixed rdfs:subClassOf/up:partOf hierarchy as #180. Nothing states directly that e.g. Endosome membrane \"is a membrane\" - it has to be derived by following the location hierarchy up to the Membrane term"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT
+  ?location
+  ?locationName
+WHERE {
+  GRAPH <http://sparql.uniprot.org/locations> {
+    ?location rdfs:subClassOf*/up:partOf+/rdfs:subClassOf* <http://purl.uniprot.org/locations/162> ;
+      skos:prefLabel ?locationName .
+  }
+}""" ;
+    schema:keywords "subcellular location" , "membrane" , "hierarchy" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

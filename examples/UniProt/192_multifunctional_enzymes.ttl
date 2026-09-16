@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:192_multifunctional_enzymes a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed multifunctional (multi-catalytic) enzymes: proteins annotated with more than one distinct EC number via up:enzyme or up:catalyticActivity - real biology (e.g. bifunctional enzymes in a biosynthetic pathway, or moonlighting enzymes), not just an EC-number-format curiosity."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  (COUNT(DISTINCT ?ec) AS ?ecCount)
+WHERE {
+  ?protein up:reviewed true ;
+    up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?ec .
+}
+GROUP BY ?protein
+HAVING (COUNT(DISTINCT ?ec) > 1)""" ;
+    schema:keywords "enzyme" , "EC number" , "multifunctional" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

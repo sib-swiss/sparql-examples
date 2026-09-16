@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:189_pseudokinases a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human pseudokinases: proteins with an annotated protein kinase domain but no annotated kinase (phosphotransferase) catalytic activity at all - a real, well-known biological category (catalytically-dead kinase domains repurposed for scaffolding/allosteric regulation, e.g. Tribbles homologs). The kinase domain itself is a up:Domain_Extent_Annotation whose rdfs:comment names it (\"Protein kinase\", sometimes qualified \"; inactive\" or \"; truncated\"); catalytic activity is a separate up:enzyme triple, absent here by design"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?protein
+  ?domainComment
+WHERE {
+  ?protein up:reviewed true ;
+    up:organism taxon:9606 ;
+    up:annotation ?domain .
+  ?domain a up:Domain_Extent_Annotation ;
+    rdfs:comment ?domainComment .
+  FILTER(CONTAINS(?domainComment, "Protein kinase"))
+  FILTER NOT EXISTS { ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?ec }
+}""" ;
+    schema:keywords "kinase" , "pseudoenzyme" , "domain" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .

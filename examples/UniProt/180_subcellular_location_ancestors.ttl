@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:180_subcellular_location_ancestors a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find every broader subcellular location reachable from a given one (here, Endosome membrane, locations:100). The location hierarchy mixes rdfs:subClassOf (is-a) and up:partOf (part-of) edges, so both have to be chained together - rdfs:subClassOf*/up:partOf+/rdfs:subClassOf* - to reach the full set of ancestors; using only one of the two misses e.g. Endosome (is-a) or Membrane (part-of, then is-a)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  DISTINCT
+    ?ancestor
+    ?ancestorName
+WHERE {
+  GRAPH <http://sparql.uniprot.org/locations> {
+    <http://purl.uniprot.org/locations/100> rdfs:subClassOf*/up:partOf+/rdfs:subClassOf* ?ancestor .
+    ?ancestor skos:prefLabel ?ancestorName .
+  }
+}""" ;
+    schema:keywords "subcellular location" , "hierarchy" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
