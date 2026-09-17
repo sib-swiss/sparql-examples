@@ -21,7 +21,9 @@ WHERE {
   ?domain a up:Domain_Extent_Annotation ;
     rdfs:comment ?domainComment .
   FILTER(CONTAINS(?domainComment, "Protein kinase"))
-  FILTER NOT EXISTS { ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?ec }
+  FILTER(NOT EXISTS { ?protein up:enzyme|up:annotation/up:catalyticActivity/up:enzymeClass ?ec .
+       ?ec rdfs:subClassOf <http://purl.uniprot.org/enzyme/2.7.-.->
+  })
 }""" ;
     schema:keywords "kinase" , "pseudoenzyme" , "domain" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
