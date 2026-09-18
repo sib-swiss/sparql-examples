@@ -16,6 +16,7 @@ SELECT
   ?resolution
 WHERE {
   ?protein a up:Protein ;
+    up:reviewed true ;
     rdfs:seeAlso ?structure .
   ?structure a up:Structure_Resource ;
     up:resolution ?resolution .
