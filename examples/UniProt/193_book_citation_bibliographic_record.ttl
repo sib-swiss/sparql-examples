@@ -1,0 +1,38 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:193_book_citation_bibliographic_record a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the full bibliographic record of a book chapter cited as evidence for a protein annotation: title, authors, editors, publisher, place and pages — distinct from the PubMed-ID-focused journal citation example (#19)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT
+  ?protein
+  ?citation
+  ?title
+  (GROUP_CONCAT(DISTINCT ?author; separator=", ") AS ?authors)
+  (GROUP_CONCAT(DISTINCT ?editor; separator=", ") AS ?editors)
+  (SAMPLE(?publisher) AS ?onePublisher)
+  (SAMPLE(?place) AS ?onePlace)
+  (SAMPLE(?pages) AS ?onePages)
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?annotation .
+  ?linkToEvidence rdf:object ?annotation ;
+    up:attribution ?attribution .
+  ?attribution up:source ?citation .
+  ?citation a up:Book_Citation ;
+    up:title ?title ;
+    up:author ?author ;
+    up:pages ?pages .
+  OPTIONAL { ?citation up:editor ?editor }
+  OPTIONAL { ?citation up:publisher ?publisher }
+  OPTIONAL { ?citation up:place ?place }
+}
+GROUP BY ?protein ?citation ?title""" ;
+    schema:keywords "citation" , "bibliographic record" , "evidence" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
