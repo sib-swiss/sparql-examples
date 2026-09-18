@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:200_protein_conflicting_external_sequence a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find a protein's conflicting sequence: an alternative translation from a nucleotide entry that another group submitted, which disagrees with UniProt's own reviewed sequence for the same protein"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?externalSequence
+  ?translatedFrom
+WHERE {
+  ?protein a up:Protein ;
+    up:conflictingSequence ?externalSequence .
+  ?externalSequence a up:External_Sequence ;
+    up:translatedFrom ?translatedFrom .
+}""" ;
+    schema:keywords "sequence" , "conflict" , "curation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
