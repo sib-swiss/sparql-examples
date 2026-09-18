@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:202_uniparc_sequence_cluster_membership a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find which UniRef clusters a specific sequence (identified by its UniParc entry) is a member of, using up:memberOf on the sequence itself. Distinct from the existing UniRef common-taxon example (#162), which starts from the cluster and asks for its up:member sequences — this starts from the sequence and asks which clusters it belongs to"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?uniparc
+  ?cluster
+WHERE {
+  ?uniparc up:sequenceFor <http://purl.uniprot.org/uniprot/P04637> ;
+    up:memberOf ?cluster .
+}""" ;
+    schema:keywords "UniParc" , "UniRef" , "cluster" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
