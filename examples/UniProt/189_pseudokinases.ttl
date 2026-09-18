@@ -5,7 +5,7 @@
 
 ex:189_pseudokinases a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find reviewed human pseudokinases: proteins with an annotated protein kinase domain but no annotated kinase (phosphotransferase) catalytic activity at all - a real, well-known biological category (catalytically-dead kinase domains repurposed for scaffolding/allosteric regulation, e.g. Tribbles homologs). The kinase domain itself is a up:Domain_Extent_Annotation whose rdfs:comment names it (\"Protein kinase\", sometimes qualified \"; inactive\" or \"; truncated\"); catalytic activity is a separate up:enzyme triple, absent here by design"@en ;
+    rdfs:comment "Find reviewed human pseudokinases: proteins with an annotated protein kinase domain but no annotated kinase (phosphotransferase) catalytic activity at all - a real, well-known biological category (catalytically-dead kinase domains repurposed for scaffolding/allosteric regulation, e.g. Tribbles homologs). The kinase domain itself is a up:Domain_Extent_Annotation whose rdfs:comment names it (\"Protein kinase\", sometimes qualified \"; inactive\" or \"; truncated\")"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
