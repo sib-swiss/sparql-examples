@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:205_taxon_abbreviated_lineage_flag a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For human (taxon 9606), list every ancestor taxon in its lineage and whether that taxon is shown in UniProt's abbreviated lineage view (up:partOfLineage), as opposed to the full, non-abbreviated set of ancestors. Pairs with #183: since UniProt's taxonomy is pre-flattened, a single-hop rdfs:subClassOf already reaches every ancestor at any depth"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT
+  ?ancestor
+  ?ancestorName
+  ?partOfLineage
+WHERE {
+  taxon:9606 rdfs:subClassOf ?ancestor .
+  ?ancestor up:scientificName ?ancestorName .
+  OPTIONAL { ?ancestor up:partOfLineage ?partOfLineage }
+}
+ORDER BY DESC(?partOfLineage)""" ;
+    schema:keywords "taxonomy" , "lineage" , "classification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
