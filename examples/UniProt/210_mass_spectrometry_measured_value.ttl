@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:210_mass_spectrometry_measured_value a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find a protein's mass spectrometry annotation with its measured mass (up:measuredValue) and, where recorded, the measurement's error margin (up:measuredError)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?annotation
+  ?measuredValue
+  ?measuredError
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?annotation .
+  ?annotation a up:Mass_Spectrometry_Annotation ;
+    up:measuredValue ?measuredValue .
+  OPTIONAL { ?annotation up:measuredError ?measuredError }
+}""" ;
+    schema:keywords "mass spectrometry" , "measurement" , "protein mass" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
