@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:196_proteome_related_by_similarity_score a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the most closely related proteomes and the similarity score behind that relation. The score is not attached directly to the up:relatedProteome triple but to its RDF reification (rdf:Statement with matching rdf:subject/rdf:predicate/rdf:object)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT
+  ?proteome
+  ?related
+  ?score
+WHERE {
+  ?proteome up:relatedProteome ?related .
+  ?statement a rdf:Statement ;
+    rdf:subject ?proteome ;
+    rdf:predicate up:relatedProteome ;
+    rdf:object ?related ;
+    up:relatedProteomeSimilarityScore ?score .
+}
+ORDER BY DESC(?score)""" ;
+    schema:keywords "proteome" , "similarity" , "reification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
