@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:199_cds_sequence_discrepancy_note a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find a protein's cross-referenced CDS/nucleotide entry that disagrees with the reviewed Swiss-Prot sequence, together with the curator's note on why (e.g. different initiation, sequence problems, frameshift) — real curation-quality content, distinct from modeling detail"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?protein
+  ?nucleotideEntry
+  ?note
+WHERE {
+  ?protein a up:Protein ;
+    rdfs:seeAlso ?nucleotideEntry .
+  ?nucleotideEntry a up:Nucleotide_Resource ;
+    up:sequenceDiscrepancy ?discrepancy .
+  ?discrepancy rdfs:comment ?note .
+}""" ;
+    schema:keywords "sequence" , "discrepancy" , "curation" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
