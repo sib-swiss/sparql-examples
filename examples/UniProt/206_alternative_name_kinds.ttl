@@ -1,0 +1,30 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:206_alternative_name_kinds a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find proteins with a name of a specific, distinct naming convention beyond the ordinary recommended/alternative name pair: an allergen name (with the allergen nomenclature this comes from), a CD antigen name (HCDM nomenclature, e.g. for cell-surface markers), or an INN (international nonproprietary name, the standard name for a pharmaceutical substance such as a therapeutic antibody)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?kind
+  ?name
+WHERE {
+  ?protein up:alternativeName ?altName .
+  {
+    ?altName up:allergenName ?name .
+    BIND("allergen" AS ?kind)
+  } UNION {
+    ?altName up:cdAntigenName ?name .
+    BIND("CD antigen" AS ?kind)
+  } UNION {
+    ?altName up:internationalNonproprietaryName ?name .
+    BIND("INN" AS ?kind)
+  }
+}""" ;
+    schema:keywords "protein name" , "allergen" , "CD antigen" , "INN" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
