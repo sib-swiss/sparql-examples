@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:211_structure_resolution a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the highest-resolution (lowest Angstrom value) experimentally determined structures cross-referenced from reviewed proteins, using up:resolution recorded on the PDB structure resource"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?protein
+  ?structure
+  ?resolution
+WHERE {
+  ?protein a up:Protein ;
+    rdfs:seeAlso ?structure .
+  ?structure a up:Structure_Resource ;
+    up:resolution ?resolution .
+}
+ORDER BY ?resolution""" ;
+    schema:keywords "structure" , "PDB" , "resolution" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
