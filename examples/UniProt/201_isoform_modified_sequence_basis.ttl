@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:201_isoform_modified_sequence_basis a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find a protein's modified (spliced) isoform sequence, the canonical sequence it is based on, and the alternative-splicing event annotation describing the difference between them"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT
+  ?protein
+  ?modifiedSequence
+  ?canonicalSequence
+  ?modification
+  ?description
+WHERE {
+  ?protein a up:Protein ;
+    up:sequence ?modifiedSequence .
+  ?modifiedSequence a up:Modified_Sequence ;
+    up:basedOn ?canonicalSequence ;
+    up:modification ?modification .
+  ?modification rdfs:comment ?description .
+}""" ;
+    schema:keywords "isoform" , "sequence" , "alternative splicing" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
