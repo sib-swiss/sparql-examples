@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:204_taxon_name_variants a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find taxa with recorded name variants beyond their primary scientific name: a taxonomic synonym (an earlier or alternative Latin name for the same taxon) and other recorded name forms such as author citations or authority strings"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?taxon
+  ?name
+  (GROUP_CONCAT(DISTINCT ?syn; separator="; ") AS ?synonyms)
+  (GROUP_CONCAT(DISTINCT ?other; separator="; ") AS ?otherNames)
+WHERE {
+  ?taxon up:scientificName ?name ;
+    up:synonym ?syn .
+  OPTIONAL { ?taxon up:otherName ?other }
+}
+GROUP BY ?taxon ?name""" ;
+    schema:keywords "taxonomy" , "synonym" , "nomenclature" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
