@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:209_xenologous_interaction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find protein-protein interactions flagged as xenologous (up:xeno), i.e. between molecules from different species, such as a host protein interacting with a pathogen protein — as opposed to an interaction between proteins of the same organism"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?interaction
+  ?xeno
+WHERE {
+  ?protein a up:Protein ;
+    up:interaction ?interaction .
+  ?interaction a up:Non_Self_Interaction ;
+    up:xeno ?xeno .
+}""" ;
+    schema:keywords "interaction" , "xenologous" , "host-pathogen" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
