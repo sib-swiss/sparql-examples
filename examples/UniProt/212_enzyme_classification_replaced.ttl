@@ -1,0 +1,22 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:212_enzyme_classification_replaced a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find EC (enzyme classification) numbers that have been replaced by a new EC number following reclassification, together with the new number's name. The old number itself no longer carries a name once replaced"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+  ?oldEc
+  ?newEc
+  ?newName
+WHERE {
+  ?oldEc up:replacedBy ?newEc .
+  ?newEc skos:prefLabel ?newName .
+}""" ;
+    schema:keywords "enzyme" , "EC number" , "reclassification" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
