@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:198_sequence_integrity_metadata a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For reviewed human proteins, get the mass and MD5 checksum recorded on the canonical sequence together with the sequence length recorded on the corresponding UniParc entry — the kind of 'does this sequence match what I have locally' check downstream tooling actually runs"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT
+  ?protein
+  ?mass
+  ?md5Checksum
+  ?length
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:sequence ?sequence .
+  ?sequence up:mass ?mass ;
+    up:md5Checksum ?md5Checksum .
+  ?uniparc up:sequenceFor ?protein ;
+    up:length ?length .
+}""" ;
+    schema:keywords "sequence" , "checksum" , "mass" , "UniParc" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
