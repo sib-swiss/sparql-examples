@@ -1,0 +1,34 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:214_proteins_starting_with_methionine a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Of reviewed human proteins, how many have a stored sequence starting with methionine (the universal translation start codon), and of those, how many have that initiator methionine later cleaved off post-translationally (up:Initiator_Methionine_Annotation with comment 'Removed') rather than retained in the mature protein"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  (COUNT(*) AS ?totalReviewedHumanProteins)
+  (SUM(IF(?startsWithMet, 1, 0)) AS ?startWithMethionine)
+  (SUM(IF(BOUND(?initiatorMetRemoved), 1, 0)) AS ?initiatorMethionineLaterRemoved)
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:sequence ?sequence .
+  ?sequence rdf:value ?seqValue .
+  BIND(STRSTARTS(?seqValue, "M") AS ?startsWithMet)
+  OPTIONAL {
+    ?protein up:annotation ?initiatorMet .
+    ?initiatorMet a up:Initiator_Methionine_Annotation ;
+      rdfs:comment "Removed" .
+    BIND(true AS ?initiatorMetRemoved)
+  }
+}""" ;
+    schema:keywords "methionine" , "translation" , "sequence" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
