@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:208_absorption_maximum_and_certainty a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find a protein's reported absorption maximum wavelength (up:maximum, in nm) together with up:certain, a qualifier flagging whether that reported value is certain or approximate"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?maxWavelength
+  ?certain
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?annotation .
+  ?annotation a up:Absorption_Annotation ;
+    up:maximum ?maxWavelength .
+  OPTIONAL { ?annotation up:certain ?certain }
+}""" ;
+    schema:keywords "absorption" , "spectral" , "qualifier" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
