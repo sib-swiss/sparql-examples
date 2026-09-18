@@ -1,0 +1,30 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:203_cross_reference_url_reconstruction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "For proteins cross-referenced to the AbasyAtlas database, reconstruct a working link to the external record by substituting the cross-reference's own identifier into that database's up:urlTemplate — exactly the kind of thing external tooling needs and currently has to hardcode per-database"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?protein
+  ?xref
+  ?identifier
+  ?urlTemplate
+  ?constructedUrl
+WHERE {
+  BIND(<http://purl.uniprot.org/database/AbasyAtlas> AS ?database)
+  ?database up:linkIsExplicit true ;
+    up:urlTemplate ?urlTemplate .
+  ?protein a up:Protein ;
+    rdfs:seeAlso ?xref .
+  ?xref up:database ?database .
+  BIND(REPLACE(STR(?xref), "^.*/", "") AS ?identifier)
+  BIND(IRI(REPLACE(?urlTemplate, "%u", ?identifier)) AS ?constructedUrl)
+}""" ;
+    schema:keywords "cross-reference" , "database" , "URL template" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
