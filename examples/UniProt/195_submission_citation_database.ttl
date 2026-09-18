@@ -1,0 +1,31 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:195_submission_citation_database a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find proteins backed by a direct-submission citation, and which database (e.g. EMBL/GenBank/DDBJ, PDB) that submission was made to"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT
+  ?protein
+  ?citation
+  ?title
+  ?database
+  ?date
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?annotation .
+  ?linkToEvidence rdf:object ?annotation ;
+    up:attribution ?attribution .
+  ?attribution up:source ?citation .
+  ?citation a up:Submission_Citation ;
+    up:title ?title ;
+    up:submittedTo ?database ;
+    up:date ?date .
+}""" ;
+    schema:keywords "citation" , "submission" , "database" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
