@@ -1,0 +1,29 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:213_protein_isolated_from_tissue a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the tissue a protein was originally found to be expressed in from (up:isolatedFrom), distinct from its usual organism/subcellular-location annotations — the object is either a shared Tissue resource or a locally-defined (entry specific) tissue label"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT
+  ?protein
+  ?tissue
+  ?tissueLabel
+WHERE {
+  ?protein a up:Protein ;
+    up:isolatedFrom ?tissue .
+  ?tissue a up:Tissue .
+  # A shared tissue resource carries a skos:prefLabel; a protein-local
+  # tissue fragment (minted when no shared resource exists) carries an
+  # rdfs:label instead.
+  OPTIONAL { ?tissue skos:prefLabel ?tissueLabel }
+  OPTIONAL { ?tissue rdfs:label ?tissueLabel }
+}""" ;
+    schema:keywords "tissue" , "isolation" , "protein source" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
