@@ -15,9 +15,10 @@ SELECT
   (GROUP_CONCAT(DISTINCT ?syn; separator="; ") AS ?synonyms)
   (GROUP_CONCAT(DISTINCT ?other; separator="; ") AS ?otherNames)
 WHERE {
-  ?taxon up:scientificName ?name ;
-    up:synonym ?syn .
+  ?taxon up:scientificName ?name .
+  OPTIONAL { ?taxon up:synonym ?syn }
   OPTIONAL { ?taxon up:otherName ?other }
+  FILTER(BOUND(?syn) || BOUND(?other))
 }
 GROUP BY ?taxon ?name""" ;
     schema:keywords "taxonomy" , "synonym" , "nomenclature" ;
