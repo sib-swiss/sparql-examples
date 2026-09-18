@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:215_human_proteins_with_solved_structure a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Count how many reviewed human proteins have at least one experimentally determined 3D structure cross-referenced from a PDB entry"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  (COUNT(DISTINCT ?protein) AS ?proteinsWithStructure)
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    rdfs:seeAlso ?structure .
+  ?structure a up:Structure_Resource .
+}""" ;
+    schema:keywords "structure" , "PDB" , "human proteome" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
