@@ -1,0 +1,28 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:217_proteins_in_a_cancer_pathway a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find reviewed human proteins that are part of a cancer-related Reactome pathway (matched by the pathway's own name), using the pathway cross-reference's rdfs:comment as the pathway's human-readable name"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT
+  ?protein
+  ?pathway
+  ?pathwayName
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    rdfs:seeAlso ?pathway .
+  ?pathway up:database <http://purl.uniprot.org/database/Reactome> ;
+    rdfs:comment ?pathwayName .
+  FILTER(CONTAINS(?pathwayName, "Cancer"))
+}""" ;
+    schema:keywords "pathway" , "Reactome" , "cancer" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
