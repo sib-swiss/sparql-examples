@@ -1,0 +1,23 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:207_catalytic_activity_physiological_reaction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Find the physiological reaction (the direction/reaction an enzyme actually performs in vivo) associated with a catalytic activity annotation, using up:catalyzedPhysiologicalReaction, distinct from the general reaction the enzyme is capable of catalyzing (up:catalyzedReaction)"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?protein
+  ?activity
+  ?physReaction
+WHERE {
+  ?protein a up:Protein ;
+    up:annotation ?activity .
+  ?activity a up:Catalytic_Activity_Annotation ;
+    up:catalyzedPhysiologicalReaction ?physReaction .
+}""" ;
+    schema:keywords "catalytic activity" , "reaction" , "Rhea" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
