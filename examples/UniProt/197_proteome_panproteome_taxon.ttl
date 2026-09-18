@@ -1,0 +1,24 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:197_proteome_panproteome_taxon a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a strain-level proteome, find the taxon of the pan-proteome (species/strain group) it belongs to. up:panproteomeTaxon points directly at the Taxon"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT
+  ?proteome
+  ?organismName
+  ?panproteomeTaxon
+  ?panproteomeTaxonName
+WHERE {
+  ?proteome up:organism ?organism ;
+    up:panproteomeTaxon ?panproteomeTaxon .
+  ?organism up:scientificName ?organismName .
+  ?panproteomeTaxon up:scientificName ?panproteomeTaxonName .
+}""" ;
+    schema:keywords "proteome" , "panproteome" , "taxon" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
