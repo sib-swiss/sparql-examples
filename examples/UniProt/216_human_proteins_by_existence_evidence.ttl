@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:216_human_proteins_by_existence_evidence a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Break down reviewed human proteins by their protein-existence evidence level (up:existence): how many are 'very well characterized' with direct evidence at the protein level, as opposed to only evidence at the transcript level, inferred from homology, predicted, or uncertain"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+
+SELECT
+  ?existence
+  (COUNT(*) AS ?proteinCount)
+WHERE {
+  ?protein a up:Protein ;
+    up:organism taxon:9606 ;
+    up:reviewed true ;
+    up:existence ?existence .
+}
+GROUP BY ?existence
+ORDER BY DESC(?proteinCount)""" ;
+    schema:keywords "protein existence" , "evidence" , "characterization" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
