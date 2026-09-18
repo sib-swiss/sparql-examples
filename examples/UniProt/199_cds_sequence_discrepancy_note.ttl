@@ -16,6 +16,7 @@ SELECT
   ?note
 WHERE {
   ?protein a up:Protein ;
+    up:reviewed true ;
     rdfs:seeAlso ?nucleotideEntry .
   ?nucleotideEntry a up:Nucleotide_Resource ;
     up:sequenceDiscrepancy ?discrepancy .
