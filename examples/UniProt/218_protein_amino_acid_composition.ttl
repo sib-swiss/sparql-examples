@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:218_protein_amino_acid_composition a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Count how many times each of the 20 standard amino acids occurs in human TP53's (P04637) canonical sequence, using STRLEN(sequence) minus STRLEN(sequence with that residue letter removed) as an amino-acid-counting trick rather than a per-position scan. Note: for performance over a larger set rewrite this as a huge union."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT
+  ?residue
+  ?count
+WHERE {
+  <http://purl.uniprot.org/uniprot/P04637> up:sequence ?sequence .
+  ?sequence a up:Simple_Sequence ;
+    rdf:value ?seq .
+  VALUES ?residue { "A" "R" "N" "D" "C" "Q" "E" "G" "H" "I" "L" "K" "M" "F" "P" "S" "T" "W" "Y" "V" }
+  BIND(STRLEN(?seq) - STRLEN(REPLACE(?seq, ?residue, "")) AS ?count)
+}
+ORDER BY DESC(?count)""" ;
+    schema:keywords "amino acid" , "sequence" , "composition" ;
+    schema:target <https://sparql.uniprot.org/sparql/> .
