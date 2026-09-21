@@ -7,20 +7,21 @@
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find zebrafish orthologs of disease-implicated (according to Nextprot SPARQL endpoint) human genes via Vertebrata-level orthogroup/s annotated with both IPR000719 (protein kinase domain) and GO:0048013 (ephrin receptor signaling pathway)"@en ;
+    rdfs:comment "Find zebrafish orthologs of disease-implicated (according to UniProt SPARQL endpoint) human genes via Vertebrata-level orthogroup/s annotated with both IPR000719 (protein kinase domain) and GO:0048013 (ephrin receptor signaling pathway)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
 PREFIX : <http://purl.orthodb.org/>
-PREFIX np: <http://nextprot.org/rdf#>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 
 SELECT ?gene_zf ?gene_zf_name ?gene ?gene_name ?description ?go ?disease
 WHERE {
-	SERVICE <https://sparql.nextprot.org/> {
-        select distinct ?entry ?disease WHERE {
-            ?entry np:isoform / np:disease / rdfs:comment ?disease
+    SERVICE <https://sparql.uniprot.org/sparql/> {
+        SELECT DISTINCT ?entry ?disease WHERE {
+            ?entry up:annotation/up:disease/ rdfs:comment ?disease ;
+                up:organism taxon:9606 .
         }
     }
     ?gene rdfs:seeAlso ?entry;
@@ -35,5 +36,5 @@ WHERE {
 } ORDER BY ?disease
 """ ;
     schema:target <https://sparql.orthodb.org/sparql/> ;
-    spex:federatesWith <https://sparql.nextprot.org/> .
+    spex:federatesWith <https://sparql.uniprot.org/sparql/> .
 
