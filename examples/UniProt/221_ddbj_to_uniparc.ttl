@@ -7,6 +7,7 @@
 ex:221_ddbj_to_uniparc a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
     rdfs:comment """Using a "genome" identifier in INDSC use the DDBJ sparql endpoint to find the CDS identifiers and link these to UniParc records"""@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
