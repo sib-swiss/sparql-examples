@@ -20,5 +20,6 @@ WHERE {
     rdfs:seeAlso ?structure .
   ?structure a up:Structure_Resource ;
     up:database <http://purl.uniprot.org/database/PDB> .
+}""";
     schema:keywords "structure" , "PDB" , "human proteome" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
