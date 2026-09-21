@@ -11,13 +11,14 @@ ex:219_human_gene_count_vs_isoform_count a sh:SPARQLExecutable,
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 
 SELECT
-  (COUNT(DISTINCT ?protein) AS ?reviewedCanonicalEntries)
+  (COUNT(DISTINCT ?gene) AS ?reviewedGenes)
   (COUNT(DISTINCT ?isoformSequence) AS ?distinctSequences)
 WHERE {
   ?protein a up:Protein ;
     up:organism taxon:9606 ;
     up:reviewed true ;
     up:sequence ?isoformSequence .
+  OPTIONAL { ?protein up:encodedBy ?gene }
 }""" ;
     schema:keywords "isoform" , "human genome" , "gene count" ;
     schema:target <https://sparql.uniprot.org/sparql/> .
