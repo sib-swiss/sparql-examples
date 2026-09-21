@@ -1,0 +1,40 @@
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:221_ddbj_to_uniparc a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment """Using a "genome" identifier in INDSC use the DDBJ sparql endpoint to find the CDS identifiers and link these to UniParc records"""@en ;
+    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+
+SELECT
+ ?ddbj
+ ?emblCds
+ ?uniparc
+WHERE {
+  SERVICE <https://rdfportal.org/ddbj/sparql> {
+    VALUES ?ddbj { <http://identifiers.org/insdc/OQ416313.1> }
+    GRAPH <http://rdfportal.org/dataset/ddbj>{
+      ?ddbj rdf:type insdc:Entry.
+      ?ddbj insdc:sequence ?sequence .
+      ?position faldo:reference ?sequence .
+      ?region faldo:begin ?position .
+      ?cds faldo:location ?region ;
+        a insdc:Coding_Sequence ;
+        rdfs:seeAlso ?potentialProtein .
+      BIND(STR(?potentialProtein) AS ?potentialProteinStr)
+      FILTER(STRSTARTS(?potentialProteinStr, 'http://identifiers.org/ncbiprotein/'))
+      BIND(IRI(CONCAT('http://purl.uniprot.org/embl-cds/', SUBSTR(?potentialProteinStr, 36))) AS ?emblCds)
+    }
+  }
+  ?uniparc up:sequenceFor ?emblCds .
+}""";
+    schema:keywords "DDBJ" , "INDSC" , "CDS", "NCBI Protein", "UniParc" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://rdfportal.org/ddbj/sparql> .
