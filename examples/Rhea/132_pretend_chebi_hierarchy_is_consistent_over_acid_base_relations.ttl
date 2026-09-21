@@ -11,9 +11,10 @@ ex:132_pretend_chebi_hierarchy_is_consistent_over_acid_base_relations
   sh:select """
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX chebislash: <http://purl.obolibrary.org/obo/chebi/>
+PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
   ?chebi
@@ -37,7 +38,7 @@ WHERE {
 
     # If the charge is zero then don't expand the hierarchy.
     OPTIONAL {
-      ?chebi chebislash:charge "0" .
+      ?chebi chemrof:charge "0"^^xsd:int .
       BIND(true AS ?chebiChargeZero)
     }
     FILTER(!BOUND(?chebiChargeZero))
