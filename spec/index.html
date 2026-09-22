@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SPARQL Examples Format Specification</title>
+<script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" async></script>
+<script class="remove">
+var respecConfig = {
+  specStatus: "unofficial",
+  shortName: "sparql-examples",
+  editors: [
+    {
+      name: "Jerven Bolleman",
+      company: "SIB Swiss Institute of Bioinformatics",
+      companyURL: "https://www.sib.swiss/",
+      orcid: "0000-0002-7449-1266"
+    },
+    {
+      name: "Vincent Emonet",
+      company: "SIB Swiss Institute of Bioinformatics",
+      companyURL: "https://www.sib.swiss/",
+      orcid:"0000-0002-1501-1082"
+    },
+    {
+      name: "Tarcisio Mendes de Farias ",
+      company: "SIB Swiss Institute of Bioinformatics",
+      companyURL: "https://www.sib.swiss/",
+      orcid: "0000-0002-3175-5372"
+    },
+    {
+      name: "Ana Claudia Sima",
+      company: "SIB Swiss Institute of Bioinformatics",
+      companyURL: "https://www.sib.swiss/",
+      orcid: "0000-0003-3213-4495"
+    }
+  ],
+  github: "sib-swiss/sparql-examples",
+  xref: false,
+  localBiblio: {
+    "SPARQL-EXAMPLES-GIGASCIENCE": {
+      title: "A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications",
+      href: "https://doi.org/10.1093/gigascience/giaf045",
+      authors: ["Jerven Bolleman", "Vincent Emonet", "Adrian Altenhoff", "et al."],
+      publisher: "GigaScience",
+      date: "2025"
+    },
+    "SPARQL-EXAMPLES-UTILS": {
+      title: "sparql-examples-utils: tooling to test, convert and publish SPARQL example collections",
+      href: "https://github.com/sib-swiss/sparql-examples-utils",
+      publisher: "SIB Swiss Institute of Bioinformatics"
+    },
+    "SPARQL-EXAMPLES-TEMPLATE": {
+      title: "sparql-examples-template: starter repository for a new example collection",
+      href: "https://github.com/sib-swiss/sparql-examples-template",
+      publisher: "SIB Swiss Institute of Bioinformatics"
+    },
+    "SHACL-AF": {
+      title: "Shapes Constraint Language (SHACL) Advanced Features",
+      href: "https://www.w3.org/TR/shacl-af/",
+      publisher: "W3C",
+      status: "W3C Note",
+      date: "2017"
+    },
+    "SPARQL" : {
+      title: "SPARQL 1.1 Query Language",
+      href: "https://www.w3.org/TR/sparql11-query/",
+      publisher: "W3C",
+      status: "W3C Recommendation",
+      date: "2013"
+    }
+  }
+};
+</script>
+</head>
+<body>
+
+<section id="abstract">
+<p>
+  <strong>SPARQL Examples</strong> is a standard to collect curated, runnable
+  "question&nbsp;→&nbsp;SPARQL query" pairs for [[SPARQL]] endpoints,
+  stored as RDF so that the examples themselves can be queried, tested, and
+  compiled into several downstream artifacts (raw <code>.rq</code> files,
+  JSON-LD, a graph loadable into an endpoint's own
+  <code>.well-known/sparql-examples</code>, and a documentation website).
+  This document specifies the RDF vocabulary, file and directory
+  conventions, and conformance checks that a collection following this
+  model is expected to satisfy. It reuses terms from the SHACL
+  SPARQL-based constraints vocabulary [[SHACL-AF]] together with a small
+  extension ontology, <a href="https://purl.expasy.org/sparql-examples/ontology"/><code>https://purl.expasy.org/sparql-examples/ontology#</code></a>,
+  and documents the checks that the [[SPARQL-EXAMPLES-UTILS]] tooling runs against a collection.
+</p>
+<p>
+  If building your own collection on github start with [[SPARQL-EXAMPLES-TEMPLATE]], that will setup actions and code that will help you maintain your collections.
+</p>
+</section>
+
+<section id="sotd">
+<p>
+  This is not a W3C document and has no standing in the W3C process. It is
+  an informal specification maintained by the
+  <a href="https://www.sib.swiss">SIB Swiss Institute of Bioinformatics</a>,
+  written to make explicit and reviewable the conventions that the
+  <a href="https://github.com/sib-swiss/sparql-examples-utils">sparql-examples-utils</a>
+  tooling already enforces against the
+  <a href="https://github.com/sib-swiss/sparql-examples">sib-swiss/sparql-examples</a>
+  repository and the collections created from the
+  [[SPARQL-EXAMPLES-TEMPLATE]]. It describes existing, deployed practice
+  rather than proposing new design. Please file issues or pull requests
+  against the GitHub repository if this document and the tooling
+  disagree &mdash; the tooling's SHACL shape (<a href="#the-validation-shape">§&nbsp;7.1</a>)
+  is the normative source of truth for the per-example constraints.
+</p>
+</section>
+
+<section>
+<h2>Introduction</h2>
+<p>
+  Public SPARQL endpoints in bioinformatics are numerous, each with its own
+  schema, and the [[SPARQL]] query language itself has a learning curve. SPARQL
+  Examples addresses this by collecting real question/query pairs
+  contributed by people who know a given endpoint well, one query per file,
+  as small RDF descriptions rather than as bare <code>.rq</code> text
+  files. Storing an example as RDF alongside its own metadata (a
+  human-readable explanation, the endpoint it targets, optional keywords)
+  makes the collection itself queryable, lets a single toolchain validate
+  every example the same way regardless of which project it belongs to,
+  and lets that toolchain compile the same source data into multiple
+  consumer-facing formats. See [[SPARQL-EXAMPLES-GIGASCIENCE]] for the
+  methodology and motivating use cases in more detail.
+</p>
+<p>
+  This document specifies:
+</p>
+<ul>
+  <li>the directory layout a collection uses (<a href="#repository-layout">§&nbsp;2</a>);</li>
+  <li>the RDF vocabulary used to describe one example (<a href="#the-example-vocabulary">§&nbsp;3</a>);</li>
+  <li>a complete worked example (<a href="#a-complete-example">§&nbsp;4</a>);</li>
+  <li>the convention for rich-text comments (<a href="#rich-text-comments">§&nbsp;5</a>);</li>
+  <li>prefix declarations shared across queries (<a href="#prefix-declarations">§&nbsp;6</a>);</li>
+  <li>the conformance checks a collection is validated against (<a href="#conformance-checks">§&nbsp;7</a>);</li>
+  <li>the artifacts the tooling compiles a collection into (<a href="#generated-artifacts">§&nbsp;8</a>).</li>
+</ul>
+<p>
+  It is deliberately not a tutorial for contributing an example (see the
+  <a href="https://github.com/sib-swiss/sparql-examples#readme">sparql-examples README</a>
+  and the [[SPARQL-EXAMPLES-TEMPLATE]] for that) and not a command-line
+  reference for [[SPARQL-EXAMPLES-UTILS]] (see that repository's own
+  documentation).
+</p>
+</section>
+
+<section id="repository-layout">
+<h2>Repository layout</h2>
+<p>
+  A conforming collection is a directory tree of the shape:
+</p>
+<pre class="example" title="Directory layout of a collection">
+examples/
+  prefixes.ttl              # prefixes shared by every project
+  &lt;Project&gt;/
+    prefixes.ttl             # OPTIONAL, project-specific prefixes
+    &lt;name&gt;.ttl               # one example
+    &lt;name&gt;.ttl
+    ...
+  &lt;Project&gt;/
+    ...
+</pre>
+<ul>
+  <li>
+    Each immediate subdirectory of <code>examples/</code> is a
+    <strong>project</strong>: a set of examples that target the
+    same SPARQL endpoint or closely related endpoints (for instance
+    <code>examples/UniProt/</code> or <code>examples/Rhea/</code>).
+  </li>
+  <li>
+    Every other <code>.ttl</code> file directly inside a project directory
+    is an <strong>example</strong>: one file describing one
+    <a>SPARQL executable</a> (<a href="#the-example-vocabulary">§&nbsp;3</a>).
+    The file's base name is not otherwise constrained by this
+    specification &mdash; short numeric names (<code>9.ttl</code>) and
+    short mnemonic names
+    (<code>125_CORDIS_EURIO_cited_project_results_in_uniprot.ttl</code>)
+    are both in use across the collection, and the base name is not
+    required to equal the example resource's IRI local name, although in
+    practice it usually does.
+  </li>
+  <li>
+    A file literally named <code>prefixes.ttl</code> is never treated as an
+    example, at either the <code>examples/</code> root (prefixes shared by
+    every project) or inside a project directory (prefixes specific to that
+    project, additive to the shared ones). A project directory is not
+    required to have its own <code>prefixes.ttl</code>.
+  </li>
+</ul>
+<p>
+  An example file <em class="rfc2119">MUST</em> describe exactly one
+  <a>SPARQL executable</a> resource. Nothing in the RDF data model itself
+  prevents more than one per file, but the tooling's per-file reporting
+  (test results, one generated documentation page per example, the file
+  name shown in the generated website) assumes a 1:1 mapping between file
+  and example, so collections <em class="rfc2119">SHOULD NOT</em> rely on
+  more than one executable per file being supported.
+</p>
+</section>
+
+<section id="the-example-vocabulary">
+<h2>The example vocabulary</h2>
+<p>
+  An example reuses classes and properties from the SPARQL-based
+  constraints part of SHACL [[SHACL-AF]] (namespace prefix <code>sh:</code>,
+  <code>http://www.w3.org/ns/shacl#</code>) &mdash; which already defines a
+  vocabulary for "a SPARQL query together with its own prefix
+  declarations" for the purposes of SHACL rules and constraints, and turns
+  out to be exactly the shape needed here too &mdash; together with a small
+  extension ontology, prefix <code>spex:</code>,
+  <code>https://purl.expasy.org/sparql-examples/ontology#</code>, that adds
+  what SHACL does not have: a <code>DESCRIBE</code>-query class and a
+  federation annotation.
+</p>
+
+<table class="def">
+<caption>Classes used to type an example resource</caption>
+<thead><tr><th>Term</th><th>Source</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>sh:SPARQLExecutable</code></td><td>SHACL-AF</td>
+    <td>The common superclass every <dfn>SPARQL executable</dfn> is typed with, in addition to exactly one of the classes below.</td></tr>
+<tr><td><code>sh:SPARQLSelectExecutable</code></td><td>SHACL-AF</td><td>A <code>SELECT</code> query, text held by <code>sh:select</code>.</td></tr>
+<tr><td><code>sh:SPARQLAskExecutable</code></td><td>SHACL-AF</td><td>An <code>ASK</code> query, text held by <code>sh:ask</code>.</td></tr>
+<tr><td><code>sh:SPARQLConstructExecutable</code></td><td>SHACL-AF</td><td>A <code>CONSTRUCT</code> query, text held by <code>sh:construct</code>.</td></tr>
+<tr><td><code>spex:SPARQLDescribeExecutable</code></td><td>spex</td><td>A <code>DESCRIBE</code> query, text held by <code>spex:describe</code>. SHACL has no equivalent, since SHACL never needed one.</td></tr>
+</tbody>
+</table>
+
+<table class="def">
+<caption>Properties used on an example resource</caption>
+<thead><tr><th>Term</th><th>Source</th><th>Cardinality</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>sh:select</code> / <code>sh:ask</code> / <code>sh:construct</code> / <code>spex:describe</code></td>
+    <td>SHACL-AF / spex</td><td>exactly one, matching the resource's type</td>
+    <td>The literal SPARQL query text, written as a plain string (usually a triple-quoted Turtle string so it can span multiple lines and contain its own <code>PREFIX</code> declarations).</td></tr>
+<tr><td><code>rdfs:comment</code></td><td>RDFS</td><td>one or more</td>
+    <td>A human-readable explanation of what the query does. See <a href="#rich-text-comments">§&nbsp;5</a> for the two literal forms this takes.</td></tr>
+<tr><td><code>schema:target</code></td><td>schema.org</td><td>one or more</td>
+    <td>The IRI of the SPARQL endpoint the query is written to run against.</td></tr>
+<tr><td><code>schema:keywords</code></td><td>schema.org</td><td>zero or more</td>
+    <td>Free-text tags used for search/faceting on the generated website. <em>Not</em> <code>schema:keyword</code> (singular) &mdash; see <a href="#conformance-checks">§&nbsp;7</a>.</td></tr>
+<tr><td><code>sh:prefixes</code></td><td>SHACL-AF</td><td>zero or one</td>
+    <td>Points at a blank node that groups the <code>sh:declare</code> prefix declarations a query relies on (<a href="#prefix-declarations">§&nbsp;6</a>). Only meaningful when the query text does not already declare every prefix it uses inline with its own <code>PREFIX</code> lines.</td></tr>
+<tr><td><code>spex:federatesWith</code></td><td>spex</td><td>zero or more</td>
+    <td>The IRI of a SPARQL endpoint the query reaches through a <code>SERVICE</code> clause, other than the endpoint already named by <code>schema:target</code>. One triple per federated endpoint.</td></tr>
+</tbody>
+</table>
+
+<p>
+  A small number of additional, optional metadata properties are
+  recognised by the generated documentation but are not required and are
+  rarely populated in practice: <code>dcterms:contributor</code> (who
+  contributed the example), <code>dcterms:license</code> (a license other
+  than the collection's default), <code>dcterms:isPartOf</code> (a page the
+  query was taken from), and <code>cito:usesMethodIn</code>
+  (<a href="http://purl.org/spar/cito/">CiTO</a>, a citation to a paper
+  describing the method the query implements).
+</p>
+
+<p>
+  Finally, when a collection is <em>compiled</em>
+  (<a href="#generated-artifacts">§&nbsp;8</a>) the tooling additionally
+  asserts, for each example resource, provenance triples that authors do
+  not and should not write by hand: <code>spex:file_name</code> and
+  <code>spex:file_path</code> (the source file), and
+  <code>spex:project</code> (the containing project's directory name); a
+  project's own resource additionally gets <code>spex:sub_project</code>
+  when one project nests another.
+</p>
+</section>
+
+<section id="a-complete-example">
+<h2>A complete example</h2>
+<p>
+  The following retrieves human enzymes that metabolize sphingolipids from
+  the UniProt SPARQL endpoint, federating with the Rhea endpoint for the
+  reaction chemistry:
+</p>
+<pre class="example" title="examples/UniProt/040.ttl">
+@prefix ex: &lt;https://sparql.uniprot.org/.well-known/sparql-examples/&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix schema: &lt;https://schema.org/&gt; .
+@prefix sh: &lt;http://www.w3.org/ns/shacl#&gt; .
+@prefix spex: &lt;https://purl.expasy.org/sparql-examples/ontology#&gt; .
+
+ex:040
+    a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve human enzymes that metabolize sphingolipids and are annotated in ChEMBL"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX CHEBI: &lt;http://purl.obolibrary.org/obo/CHEBI_&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX rh: &lt;http://rdf.rhea-db.org/&gt;
+PREFIX taxon: &lt;http://purl.uniprot.org/taxonomy/&gt;
+PREFIX up: &lt;http://purl.uniprot.org/core/&gt;
+
+SELECT DISTINCT ?protein ?chemblEntry WHERE {
+  SERVICE &lt;https://sparql.rhea-db.org/sparql&gt; {
+    ?rhea rdfs:subClassOf rh:Reaction ;
+      rh:side/rh:contains/rh:compound/rh:chebi/rdfs:subClassOf+ CHEBI:26739 .
+  }
+  ?protein up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea ;
+    up:organism taxon:9606 ;
+    rdfs:seeAlso ?chemblEntry .
+  ?chemblEntry up:database &lt;http://purl.uniprot.org/database/ChEMBL&gt; .
+}""" ;
+    schema:keywords "enzyme" ;
+    schema:target &lt;https://sparql.uniprot.org/sparql/&gt; ;
+    spex:federatesWith &lt;https://sparql.rhea-db.org/sparql&gt; .
+</pre>
+<p>
+  Note how <code>spex:federatesWith</code> names exactly the one endpoint
+  reached by the <code>SERVICE</code> clause inside <code>sh:select</code>,
+  while <code>schema:target</code> names the endpoint the query is actually
+  submitted to.
+</p>
+</section>
+
+<section id="rich-text-comments">
+<h2>Rich-text comments</h2>
+<p>
+  <code>rdfs:comment</code> <em class="rfc2119">MUST</em> take one of two
+  literal forms:
+</p>
+<ol>
+<li>
+  a plain, language-tagged string (RDF's <code>rdf:langString</code>), for
+  a comment that is ordinary text with no markup, e.g.
+  <code>"Select all Rhea reactions mapped to enzyme classification (EC numbers)"@en</code>; or
+</li>
+<li>
+  a string typed <code>rdf:HTML</code>, when the explanation needs inline
+  markup such as a link or emphasis, e.g.
+  <code>"Retrieve the MNXref metabolite with name &lt;em&gt;N,N-dimethyl-beta-alanine&lt;/em&gt;, together with molecular information."^^rdf:HTML</code>.
+</li>
+</ol>
+<p>
+  The value of an <code>rdf:HTML</code>-typed comment <em class="rfc2119">MUST</em>
+  be valid HTML markup, not raw Markdown syntax. In other words, a
+  contributor may draft the explanation in GitHub-flavored Markdown, but
+  the literal committed to the <code>.ttl</code> file is the
+  <em>rendered</em> HTML, not the Markdown source: <code>**bold**</code> or
+  <code>[text](url)</code> left unconverted inside an
+  <code>rdf:HTML</code> literal is a defect, not a stylistic choice, since
+  a consumer of the RDF has no reason to expect to have to run a Markdown
+  renderer over a literal already typed as HTML. [[SPARQL-EXAMPLES-UTILS]]'s
+  <code>markdown-html</code> check (<a href="#conformance-checks">§&nbsp;7.2</a>)
+  flags common unconverted Markdown patterns (bold, links, inline code,
+  fenced code blocks, headings, list items) found inside an
+  <code>rdf:HTML</code> literal's text content as a warning.
+</p>
+</section>
+
+<section id="prefix-declarations">
+<h2>Prefix declarations</h2>
+<p>
+  A query's own text is free to declare every prefix it uses with ordinary
+  <code>PREFIX</code> lines, as in <a href="#a-complete-example">§&nbsp;4</a>.
+  Separately, and orthogonally, a collection can maintain a set of
+  reusable prefix declarations using SHACL's own vocabulary for this
+  purpose, so that tooling which needs to resolve a project's prefixes
+  without parsing every query string can do so directly from the RDF:
+</p>
+<pre class="example" title="examples/&lt;Project&gt;/prefixes.ttl (excerpt)">
+prefix sh: &lt;http://www.w3.org/ns/shacl#&gt;
+prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+_:sparql_examples_prefixes sh:declare _:prefix_up .
+_:prefix_up
+  sh:prefix "up" ;
+  sh:namespace "http://purl.uniprot.org/core/"^^xsd:anyURI .
+</pre>
+<p>
+  <code>examples/prefixes.ttl</code> holds declarations shared by every
+  project; a project's own <code>prefixes.ttl</code>, when present, adds
+  declarations specific to that project's namespaces. An example's
+  <code>sh:prefixes</code> triple (<a href="#a-complete-example">§&nbsp;4</a>)
+  points at the same blank node identifier, <code>_:sparql_examples_prefixes</code>,
+  used across every <code>prefixes.ttl</code> in scope for it, so that when
+  a project's files are concattenated before being loaded as one file the declarations merge into one
+  set.
+  If the example files have to be fully standalone the prefix sets musts be identified by a stable IRI.
+</p>
+</section>
+
+<section id="conformance-checks">
+<h2>Conformance checks</h2>
+<p>
+  [[SPARQL-EXAMPLES-UTILS]]'s <code>test</code> command validates a
+  collection against two kinds of check: a SHACL shape that every example
+  resource is validated against directly, and a set of independent
+  <dfn>checkers</dfn> that each parse (and, optionally, execute) every
+  query and produce one result per example, classified as
+  <dfn>pass</dfn>, <dfn>warn</dfn>, or <dfn>fail</dfn>. A <a>fail</a>
+  from any checker fails the run; a <a>warn</a> never does &mdash; it is
+  instead surfaced for a human to look at without blocking automated
+  validation; every other result is a <a>pass</a>.
+  Every result records which checker, project, file, and (where
+  applicable) which query within the file produced it, and the command can
+  render the full set of results as a Markdown report grouping failed and
+  warned examples by project and file.
+</p>
+
+<section id="the-validation-shape">
+<h3>The SHACL shape</h3>
+<p>
+  Every resource in the target class <code>sh:SPARQLExecutable</code> is
+  validated, using RDF4j's SHACL engine, against the following shape. It
+  is the normative statement of the per-example structural constraints;
+  the prose in <a href="#the-example-vocabulary">§&nbsp;3</a> summarises
+  it but this shape is authoritative where the two differ.
+</p>
+<pre class="example" title="spex.shacl">
+PREFIX sh:&lt;http://www.w3.org/ns/shacl#&gt;
+PREFIX sd:&lt;http://www.w3.org/ns/sparql-service-description#&gt;
+PREFIX schema:&lt;https://schema.org/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX spex: &lt;https://purl.expasy.org/sparql-examples/ontology#&gt;
+[] sh:targetClass sh:SPARQLExecutable ;
+	sh:property [
+		sh:path [ sh:alternativePath ( sh:select sh:ask spex:describe sh:construct ) ] ;
+		sh:maxCount 1 ;
+		sh:minCount 1
+	] ,
+	[
+		sh:path rdfs:comment ;
+		sh:minCount 1 ;
+		sh:or ( [
+				sh:datatype rdf:langString ;
+			]
+			[
+				sh:datatype rdf:HTML ;
+			] )
+	], [
+	sh:path schema:target;
+		sh:minCount 1 ] , [
+	sh:path schema:keyword;  # Typo not allowed
+		sh:maxCount 0 ] , [
+	sh:path schema:keyowrds; # Typo not allowed
+		sh:maxCount 0 ] , [
+	sh:path schema:keywords; # Encouraged but not required.
+		sh:minCount 0 ;
+        # Ending with a whitespace is probably an typo
+		sh:pattern "^[^\s].*[^\s]$" ] , [
+    sh:path spex:federatesWith;
+        sh:minCount 0 ] .
+</pre>
+<p>
+  In prose, this requires that every example: has exactly one query
+  (across <code>sh:select</code>/<code>sh:ask</code>/<code>spex:describe</code>/<code>sh:construct</code>);
+  has at least one <code>rdfs:comment</code>, typed as either a
+  language-tagged string or <code>rdf:HTML</code>; has at least one
+  <code>schema:target</code>; never uses the property
+  <code>schema:keyword</code> (singular) or the misspelling
+  <code>schema:keyowrds</code>; and, if <code>schema:keywords</code> is
+  present, does not start or end with whitespace (almost always a typo).
+  <code>spex:federatesWith</code> is unconstrained by the shape itself
+  (<code>sh:minCount 0</code>) &mdash; its consistency with the query text
+  is instead checked dynamically, below.
+</p>
+</section>
+
+<section>
+<h3>Checkers</h3>
+<p>
+  The <a>checkers</a> currently implemented:
+</p>
+<table class="def">
+<caption>Checkers run by <code>sparql-examples-utils test</code></caption>
+<thead><tr><th>Checker</th><th>Runs by default</th><th>What it validates</th></tr></thead>
+<tbody>
+<tr><td><code>jena</code></td><td>yes</td><td>The query text parses with Apache Jena's ARQ parser.</td></tr>
+<tr><td><code>rdf4j</code></td><td>yes</td><td>The query text parses with RDF4j's SPARQL parser.</td></tr>
+<tr><td><code>bigdata</code></td><td>yes</td><td>The query text parses with Blazegraph's SPARQL parser.</td></tr>
+<tr><td><code>rdflib</code></td><td>yes</td><td>The query text parses with Python's RDFLib.</td></tr>
+<tr><td><code>rdf4j-federates-with</code></td><td>yes</td>
+    <td>Every SPARQL endpoint reached by a <code>SERVICE</code> clause in the query has a matching <code>spex:federatesWith</code> triple, and every <code>spex:federatesWith</code> triple corresponds to an endpoint actually reached by a <code>SERVICE</code> clause &mdash; missing and stale annotations are both flagged.</td></tr>
+<tr><td><code>cartesian-join</code></td><td>yes (warning only)</td>
+    <td>The query's algebra does not contain a group of triple patterns disconnected from the rest of a join scope, which would force the query engine to evaluate a cartesian product.</td></tr>
+<tr><td><code>markdown-html</code></td><td>yes (warning only)</td>
+    <td>No <code>rdf:HTML</code>-typed literal contains unconverted Markdown syntax (<a href="#rich-text-comments">§&nbsp;5</a>).</td></tr>
+<tr><td><code>prefixes</code></td><td>yes</td><td>Every <code>prefixes.ttl</code> found parses and is non-empty.</td></tr>
+<tr><td><code>rdf4j-void</code></td><td>opt-in, <code>--also-run-void-check</code></td>
+    <td>Every class and predicate used in the query (outside <code>SERVICE</code> blocks) is present in its target endpoint's published VoID description, when that endpoint publishes one.</td></tr>
+<tr><td><code>rdf4j-live-query</code></td><td>opt-in, <code>--also-run-slow-tests</code></td>
+    <td>The query actually runs against its <code>schema:target</code> endpoint (with an implicit <code>LIMIT 1</code> added if none is present) and returns at least one result.</td></tr>
+<tr><td><code>service-reachable</code></td><td>opt-in, <code>--also-run-slow-tests</code></td>
+    <td>Every distinct endpoint named by a <code>SERVICE</code> clause anywhere in the collection answers a trivial <code>ASK</code> query.</td></tr>
+</tbody>
+</table>
+</section>
+</section>
+
+<section id="generated-artifacts">
+<h2>Generated artifacts</h2>
+<p>
+  A collection following this specification is a build input, not the
+  final product consumers use. [[SPARQL-EXAMPLES-UTILS]]'s
+  <code>convert</code> command compiles it into:
+</p>
+<ul>
+  <li>
+    a single merged <a data-cite="TURTLE">Turtle</a> or
+    <a data-cite="JSON-LD11">JSON-LD</a> file per project (or for the whole
+    collection), including the provenance triples from
+    <a href="#the-example-vocabulary">§&nbsp;3</a>, suitable for loading
+    into the target endpoint itself, conventionally in a named graph at
+    <code>&lt;endpoint&gt;/.well-known/sparql-examples</code>;
+  </li>
+  <li>
+    one <code>.rq</code> file per example, following the naming
+    convention used by <a href="https://grlc.io/">grlc</a> so a collection
+    can be exposed as a set of Linked Data APIs without further
+    transformation;
+  </li>
+  <li>
+    one Markdown page per example plus an index, each with a Mermaid
+    diagram of the query's algebra, used to build the documentation
+    website this specification is itself published alongside; and
+  </li>
+  <li>
+    the test report described in <a href="#conformance-checks">§&nbsp;7</a>.
+  </li>
+</ul>
+<p>
+  Because every example carries its own <code>schema:target</code>, the
+  merged graph can also be queried directly to answer questions about the
+  collection itself, for instance to find every example that targets more
+  than one distinct endpoint:
+</p>
+<pre class="example" title="A query about the examples, run over the examples">
+PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX spex: &lt;https://purl.expasy.org/sparql-examples/ontology#&gt;
+
+SELECT DISTINCT ?sq ?comment ?query
+WHERE {
+    ?sq a sh:SPARQLExecutable ;
+        rdfs:comment ?comment ;
+        sh:select|sh:ask|sh:construct|spex:describe ?query .
+} ORDER BY ?sq
+</pre>
+</section>
+
+<section id="conformance"></section>
+
+<section class="appendix">
+<h2>Acknowledgements</h2>
+<p>
+  This document describes conventions and tooling implemented by the SIB
+  Swiss Institute of Bioinformatics and contributors to
+  <a href="https://github.com/sib-swiss/sparql-examples">sib-swiss/sparql-examples</a>
+  and <a href="https://github.com/sib-swiss/sparql-examples-utils">sib-swiss/sparql-examples-utils</a>.
+  See [[SPARQL-EXAMPLES-GIGASCIENCE]] for the full list of contributors and
+  the methodology behind the collection.
+</p>
+</section>
+
+</body>
+</html>
