@@ -1,0 +1,19 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:44_classification_rank_hierarchy a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List SwissLipids' own classification ranks (Category, Class, Species, Molecular/Structural/Isomeric Subspecies) in their defined hierarchical order, from the most general to the most specific."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?rank ?label ?rankPreference
+WHERE {
+  ?rank SWISSLIPID:rankPreference ?rankPreference ;
+    rdfs:label ?label .
+}
+ORDER BY ?rankPreference""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .

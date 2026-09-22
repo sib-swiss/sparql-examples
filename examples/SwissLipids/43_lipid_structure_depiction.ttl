@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:43_lipid_structure_depiction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a SwissLipids entry, retrieve its 2D structure depiction. The image is a base64-encoded PNG embedded directly as the object of foaf:depiction, not a link to fetch separately."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?lipid ?label ?depiction
+WHERE {
+  VALUES ?lipid { SWISSLIPID:000000035 }
+  ?lipid rdfs:label ?label ;
+    foaf:depiction ?depiction .
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .

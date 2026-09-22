@@ -1,0 +1,26 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:45_federated_name_comparison_with_lipidmaps a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a SwissLipids entry cross-referenced to LIPID MAPS, federate live to the LIPID MAPS SPARQL endpoint to compare how each database names the same molecule. The cross-reference IRI is itself the LIPID MAPS entry's own IRI, so the join is a direct identity match, not a lookup by an external identifier string."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?swisslipid ?swissLipidsName ?lipidMapsEntry ?lipidMapsName
+WHERE {
+  VALUES ?swisslipid { SWISSLIPID:000000035 }
+  ?swisslipid rdfs:label ?swissLipidsName ;
+    oboInOwl:hasDbXref ?lipidMapsEntry .
+  FILTER(STRSTARTS(STR(?lipidMapsEntry), "https://www.lipidmaps.org/rdf/"))
+  SERVICE <https://lipidmaps.org/sparql> {
+    ?lipidMapsEntry rdfs:label ?lipidMapsName .
+  }
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> ;
+    spex:federatesWith <https://lipidmaps.org/sparql> .

@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:41_lipid_cross_references a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a SwissLipids entry, list its cross-references to external databases such as LIPID MAPS, HMDB and MetaNetX."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX oboInOwl: <http://www.geneontology.org/formats/oboInOwl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?lipid ?label ?xref
+WHERE {
+  VALUES ?lipid { SWISSLIPID:000000035 }
+  ?lipid rdfs:label ?label ;
+    oboInOwl:hasDbXref ?xref .
+}""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
