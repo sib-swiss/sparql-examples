@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:135_conjugate_acid_base_pair a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """Given a ChEBI compound, find the acid it is the conjugate base of (e.g. ammonia, CHEBI:16134, is the conjugate base of ammonium), using the direct chemrof:conjugate_base_of predicate rather than the OWL-restriction pattern used elsewhere in this project for the same underlying relationship."""@en ;
+  sh:select """
+PREFIX chemrof: <https://w3id.org/chemrof/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  ?base
+  ?baseLabel
+  ?acid
+  ?acidLabel
+WHERE {
+  BIND (CHEBI:16134 AS ?base)
+  ?base chemrof:conjugate_base_of ?acid ;
+    rdfs:label ?baseLabel .
+  ?acid rdfs:label ?acidLabel .
+}""";
+  schema:target <https://sparql.rhea-db.org/sparql> .

@@ -1,0 +1,25 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:133_major_microspecies_at_physiological_pH a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """Find the dominant protonation state (microspecies) of a ChEBI compound at physiological pH (7.3), e.g. valeric acid's major microspecies at pH 7.3 is its deprotonated form, valerate."""@en ;
+  sh:select """
+PREFIX chemrof: <https://w3id.org/chemrof/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+
+SELECT
+  ?compound
+  ?label
+  ?microspecies
+  ?microspeciesLabel
+WHERE {
+  BIND (CHEBI:17418 AS ?compound)
+  ?compound rdfs:label ?label ;
+    chemrof:has_major_microspecies_at_pH7_3 ?microspecies .
+  ?microspecies rdfs:label ?microspeciesLabel .
+}""";
+  schema:target <https://sparql.rhea-db.org/sparql> .
