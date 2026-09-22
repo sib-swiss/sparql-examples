@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:134_transport_reaction_compartment_location a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """For a transport reaction (a sulfate/ATP antiporter, RHEA:10192), show which side of the membrane (In or Out) each participant compound is located on, using rh:location on the reaction-participant resource - this is what distinguishes a transport reaction's two occurrences of the same compound (e.g. sulfate(out) vs sulfate(in))."""@en ;
+  sh:select """
+PREFIX rh: <http://rdf.rhea-db.org/>
+
+SELECT
+  ?reaction
+  ?equation
+  ?compound
+  ?compoundName
+  ?location
+WHERE {
+  BIND (rh:10192 AS ?reaction)
+  ?reaction rh:equation ?equation ;
+    rh:side ?side .
+  ?side rh:contains ?participant .
+  ?participant rh:location ?location ;
+    rh:compound ?compound .
+  ?compound rh:name ?compoundName .
+}""";
+  schema:target <https://sparql.rhea-db.org/sparql> .
