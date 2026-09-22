@@ -1,0 +1,27 @@
+@prefix ex: <https://sparql.rhea-db.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:136_chebi_compounds_unique_to_one_reaction a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+  rdfs:comment """Count all ChEBI compounds that occur as a participant in exactly one Rhea reaction quad - i.e. compounds specific to a single chemical transformation, as opposed to widely-reused ones like water or ATP. Counting is done over BidirectionalReactions reactions, one per quad, selected via rdfs:subClassOf rh:BidirectionalReaction, so the same quad's LR/RL/BI directional variants aren't counted as separate reactions."""@en ;
+  sh:select """
+SELECT
+(COUNT(DISTINCT ?chebi) AS ?chebisInOnlyOneReaction)
+WHERE {
+{
+SELECT
+?chebi (COUNT(DISTINCT ?r) AS ?reactions)
+WHERE {
+  ?r rdfs:subClassOf rh:BidirectionalReaction ;
+     rh:status rh:Approved ;
+     rh:substratesOrProducts ?side .
+  ?side rh:contains ?participant .
+  ?participant rh:compound ?compound .
+  ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
+}
+GROUP BY ?chebi
+HAVING (COUNT(DISTINCT ?r) = 1)
+}}""";
+  schema:target <https://sparql.rhea-db.org/sparql> .
