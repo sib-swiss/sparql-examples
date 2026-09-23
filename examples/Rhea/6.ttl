@@ -39,5 +39,6 @@ WHERE {
     BIND(?bidirectionalReaction as ?rheaDir  )
   }
 }""" ;
+    schema:keywords "Cross-Reference" ;
     schema:target <https://sparql.rhea-db.org/sparql> .
 

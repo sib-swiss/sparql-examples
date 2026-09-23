@@ -33,4 +33,5 @@ SELECT ?protein ?ecNumber ?reaction where {
   ?reaction rh:ec ?ecNumber .
 }""";
   <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.uniprot.org/sparql>;
+  schema:keywords "Enzyme" , "EC" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

@@ -19,4 +19,5 @@ WHERE {
     ?bidirectionalReaction rdfs:seeAlso ?xref .
     FILTER (regex(str(?xref), str(kegg:)))
 }""";
+  schema:keywords "Cross-Reference" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

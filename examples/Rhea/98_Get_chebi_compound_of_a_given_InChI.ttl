@@ -17,4 +17,5 @@ WHERE {
   BIND("InChI=1S/C5H9NO4/c6-3(5(9)10)1-2-4(7)8/h3H,1-2,6H2,(H,7,8)(H,9,10)/t3-/m0/s1" AS ?inchi)
   ?chebi chemrof:inchi_string ?inchi .
 }""";
+ schema:keywords "ChEBI" , "InChI" , "Metabolite" ;
  schema:target <https://sparql.rhea-db.org/sparql> .

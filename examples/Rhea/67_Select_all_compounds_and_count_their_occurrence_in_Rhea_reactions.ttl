@@ -30,4 +30,5 @@ WHERE {
 }
 GROUP BY ?reactionParticipantAc ?chebi ?reactionParticipantName
 ORDER BY DESC(?reactionCount)""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

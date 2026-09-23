@@ -33,4 +33,5 @@ WHERE {
 """;
   <https://purl.expasy.org/sparql-examples/ontology#federatesWith> <https://sparql.orthodb.org/sparql/>,
     <https://sparql.uniprot.org/sparql>;
+  schema:keywords "Metabolite" , "Enzyme" , "Cross-Reference" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

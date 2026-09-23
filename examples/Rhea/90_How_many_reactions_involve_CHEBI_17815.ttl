@@ -22,4 +22,5 @@ WHERE {
   ?participant rh:compound ?compound .
   ?compound rh:chebi CHEBI:17815 .
 }""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

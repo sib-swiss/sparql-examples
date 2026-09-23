@@ -38,4 +38,5 @@ WHERE {
 GROUP BY ?reaction ?enzyme
 ORDER BY ?reaction""";
   spex:federatesWith <https://sparql.uniprot.org/sparql> ;
+  schema:keywords "ChEBI" , "Metabolite" , "Enzyme" , "EC" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

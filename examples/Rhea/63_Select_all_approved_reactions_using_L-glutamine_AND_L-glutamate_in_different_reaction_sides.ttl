@@ -30,4 +30,5 @@ WHERE {
   ?reactionSide1 rh:transformableTo ?reactionSide2
 }
 """;
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

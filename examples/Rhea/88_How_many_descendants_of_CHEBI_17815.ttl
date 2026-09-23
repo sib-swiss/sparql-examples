@@ -15,4 +15,5 @@ SELECT (count(?chebiDescendant) as ?countChild) WHERE {
   ?chebiDescendant rdfs:subClassOf+ CHEBI:17815 .
   ?chebiDescendant rdfs:label ?label .
 }""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

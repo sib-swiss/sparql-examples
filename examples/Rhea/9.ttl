@@ -27,5 +27,6 @@ WHERE {
   ?rhea rh:isTransport ?isTransport .
   ?rhea rh:equation ?equation .
 }""" ;
+    schema:keywords "Enzyme" , "EC" ;
     schema:target <https://sparql.rhea-db.org/sparql/> .
 

@@ -23,5 +23,6 @@ WHERE {
   ?rheaDir rdfs:seeAlso ?kegg .
   FILTER (regex(str(?kegg),'kegg'))
 }""" ;
+    schema:keywords "Cross-Reference" ;
     schema:target <https://sparql.rhea-db.org/sparql> .
 

@@ -20,4 +20,5 @@ SELECT (count(distinct ?reaction) as ?distinctReactionCount) WHERE {
   FILTER (BOUND(?xref))
 }
 """ ;
+    schema:keywords "Cross-Reference" ;
     schema:target <https://sparql.rhea-db.org/sparql/> .

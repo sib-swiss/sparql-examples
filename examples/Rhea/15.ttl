@@ -28,5 +28,6 @@ WHERE {
 }
 GROUP BY ?chebi ?name
 ORDER BY DESC(?countRhea)""" ;
+    schema:keywords "ChEBI" , "Metabolite" ;
     schema:target <https://sparql.rhea-db.org/sparql> .
 

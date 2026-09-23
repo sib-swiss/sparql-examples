@@ -22,6 +22,7 @@ SERVICE <https://data.allie.dbcls.jp/sparql>{
   BIND(STR(?englishLabel) AS ?englishLabelStr)
   ?chebi rdfs:label|oboInOwl:hasSynonym ?englishLabelStr .
 }""" ;
+    schema:keywords "ChEBI" , "Metabolite" ;
     schema:target <https://sparql.rhea-db.org/sparql/> ;
     spex:federatesWith <https://data.allie.dbcls.jp/sparql> .
 

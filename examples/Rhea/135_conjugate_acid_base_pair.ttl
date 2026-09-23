@@ -22,4 +22,5 @@ WHERE {
     rdfs:label ?baseLabel .
   ?acid rdfs:label ?acidLabel .
 }""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

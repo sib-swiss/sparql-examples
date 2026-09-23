@@ -28,5 +28,6 @@ WHERE {
   ?compound (rh:chebi|(rh:reactivePart/rh:chebi)|rh:underlyingChebi) ?chebi .
   VALUES (?chebi) { (CHEBI:29985) }
 }""" ;
+    schema:keywords "ChEBI" , "Metabolite" ;
     schema:target <https://sparql.rhea-db.org/sparql> .
 

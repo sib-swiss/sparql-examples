@@ -24,6 +24,7 @@ WHERE {
   }
   ?rhea rh:side/rh:contains/rh:compound/rdfs:subClassOf ?chebi .
 }""" ;
+    schema:keywords "ChEBI" , "IDSM" , "Sachem" , "Metabolite" ;
     schema:target <https://sparql.rhea-db.org/sparql> ;
     spex:federatesWith <https://idsm.elixir-czech.cz/sparql/endpoint/chebi> .
 

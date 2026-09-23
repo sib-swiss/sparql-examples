@@ -22,4 +22,5 @@ WHERE {
   ?reaction rh:bidirectionalReaction ?bidirectionalReaction .
   OPTIONAL { ?bidirectionalReaction rdfs:seeAlso ?xref . }
 }""";
+  schema:keywords "Cross-Reference" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

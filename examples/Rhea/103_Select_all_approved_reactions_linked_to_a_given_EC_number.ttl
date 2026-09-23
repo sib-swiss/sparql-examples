@@ -23,4 +23,5 @@ WHERE {
   ?reaction rh:ec ?ecNumber
 }
 ORDER BY ?reaction""";
+  schema:keywords "Enzyme" , "EC" ;
   schema:target <https://sparql.rhea-db.org/sparql> .
