@@ -6,8 +6,7 @@
 ex:135_conjugate_acid_base_pair a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
   rdfs:comment """Given a ChEBI compound, find the acid it is the conjugate base of (e.g. ammonia, CHEBI:16134, is the conjugate base of ammonium), using the direct chemrof:conjugate_base_of predicate rather than the OWL-restriction pattern used elsewhere in this project for the same underlying relationship."""@en ;
-  sh:select """
-PREFIX chemrof: <https://w3id.org/chemrof/>
+  sh:select """PREFIX chemrof: <https://w3id.org/chemrof/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 
