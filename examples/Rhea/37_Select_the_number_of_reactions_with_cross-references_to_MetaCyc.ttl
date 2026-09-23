@@ -39,5 +39,5 @@ WHERE {
     FILTER regex(str(?xref), \"METACYC\") .
   }
 }""";
-  schema:keywords "ChEBI" , "Metabolite" , "Cross-Reference" ;
+  schema:keywords "Cross-Reference" ;
   schema:target <https://sparql.rhea-db.org/sparql> .
