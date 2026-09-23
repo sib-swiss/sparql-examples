@@ -17,7 +17,7 @@ SELECT
   ?location
 WHERE {
   BIND (rh:10192 AS ?reaction)
-  ?reaction rh:transport true ;
+  ?reaction rh:isTransport true ;
     rh:equation ?equation ;
     rh:side ?side .
   ?side rh:contains ?participant .
