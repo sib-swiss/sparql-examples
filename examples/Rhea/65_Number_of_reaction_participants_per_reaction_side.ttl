@@ -7,29 +7,26 @@
 
 ex:65_Number_of_reaction_participants_per_reaction_side a sh:SPARQLExecutable,
     sh:SPARQLSelectExecutable;
-  rdfs:comment "Distribution: number of reaction participants per reaction Side"@en ;
+  rdfs:comment "Histogram of reaction sides by their number of participants - across all approved Rhea reactions, how many sides have exactly 1, 2, 3... participants (e.g. is a side with 11 distinct participants an outlier)"@en ;
   sh:select """PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh:<http://rdf.rhea-db.org/>
 
 SELECT
-  ?reaction
-  ?reactionSide1
-  (count(distinct ?participant1) as ?side1ParticipantCount)
-  ?reactionSide2
-  (count(distinct ?participant2) as ?side2ParticipantCount)
+  ?participantCount
+  (COUNT(*) AS ?sideCount)
 WHERE {
-  ?reaction rdfs:subClassOf rh:Reaction .
-  ?reaction rh:status rh:Approved .
-
-  ?reaction rh:side ?reactionSide1 .
-  ?reactionSide1 rh:contains ?participant1 .
-
-  ?reaction rh:side ?reactionSide2 .
-  ?reactionSide2 rh:contains ?participant2 .
-
-  ?reactionSide1 rh:transformableTo ?reactionSide2
+  {
+    SELECT ?side (COUNT(DISTINCT ?participant) AS ?participantCount)
+    WHERE {
+      ?reaction rdfs:subClassOf rh:Reaction ;
+        rh:status rh:Approved ;
+        rh:side ?side .
+      ?side rh:contains ?participant .
+    }
+    GROUP BY ?side
+  }
 }
-GROUP BY ?reaction ?reactionSide1 ?reactionSide2
-ORDER BY ?reaction
+GROUP BY ?participantCount
+ORDER BY ?participantCount
 """;
   schema:target <https://sparql.rhea-db.org/sparql> .
