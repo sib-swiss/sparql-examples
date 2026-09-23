@@ -12,7 +12,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?prostaglandin ?label
 WHERE {
-  ?prostaglandin rdfs:subClassOf SWISSLIPID:000501315 ;
+  ?prostaglandin rdfs:subClassOf+ SWISSLIPID:000501315 ;
     rdfs:label ?label .
 }
 ORDER BY ?label""" ;
