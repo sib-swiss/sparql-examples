@@ -22,4 +22,5 @@ WHERE
 }
 GROUP BY ?genericSubClass ?labelGenericSubClass
 """;
+  schema:keywords "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

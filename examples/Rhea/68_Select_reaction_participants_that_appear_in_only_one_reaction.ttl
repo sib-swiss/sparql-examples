@@ -27,4 +27,5 @@ WHERE {
 GROUP BY ?compound ?compoundName ?compoundAc
 HAVING (count(distinct ?reaction) = 1)
 ORDER BY ?compoundAc""";
+  schema:keywords "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

@@ -21,4 +21,5 @@ WHERE {
   ?smallMolecule rdfs:subClassOf+ CHEBI:29985
 }
 """;
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

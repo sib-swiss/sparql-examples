@@ -22,4 +22,5 @@ WHERE {
     chemrof:has_major_microspecies_at_pH7_3 ?microspecies .
   ?microspecies rdfs:label ?microspeciesLabel .
 }""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

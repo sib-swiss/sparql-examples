@@ -29,4 +29,5 @@ WHERE {
 # FILTER (?reactionSide1 != ?reactionSide2)
 #It is better to use rh:transformableTo predicate.
 """;
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

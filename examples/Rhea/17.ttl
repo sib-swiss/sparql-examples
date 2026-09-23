@@ -44,5 +44,6 @@ WHERE {
   }
   ?chebi up:name ?name .
 }""" ;
+    schema:keywords "ChEBI" , "Metabolite" ;
     schema:target <https://sparql.rhea-db.org/sparql> .
 

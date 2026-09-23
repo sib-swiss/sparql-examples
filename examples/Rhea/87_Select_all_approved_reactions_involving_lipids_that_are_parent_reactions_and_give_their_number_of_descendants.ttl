@@ -30,4 +30,5 @@ SELECT distinct ?reaction (count(distinct ?reactionDescendant) as ?reactionDesce
 }
 group by ?reaction ?reactionEquation
 ORDER BY ?reaction""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

@@ -27,4 +27,5 @@ WHERE {
   ?chebi rdfs:subClassOf* CHEBI:17815 .
 }
 ORDER BY ?reaction""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

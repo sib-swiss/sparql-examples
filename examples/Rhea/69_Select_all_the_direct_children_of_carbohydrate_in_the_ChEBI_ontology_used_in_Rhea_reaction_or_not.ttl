@@ -20,4 +20,5 @@ WHERE {
   ?chebiChildCarbohydrate rdfs:label ?chebiLabel .
 }
 ORDER BY ?chebiChildCarbohydrate""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

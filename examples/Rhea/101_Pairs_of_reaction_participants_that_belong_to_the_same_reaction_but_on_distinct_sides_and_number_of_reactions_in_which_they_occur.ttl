@@ -43,4 +43,5 @@ WHERE {
 GROUP BY ?chebi1 ?chebi2 ?compound1Name ?compound2Name
 ORDER BY DESC (?reactionCount)
 LIMIT 100""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

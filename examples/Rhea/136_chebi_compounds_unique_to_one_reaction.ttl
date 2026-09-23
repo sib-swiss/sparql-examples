@@ -7,6 +7,8 @@ ex:136_chebi_compounds_unique_to_one_reaction a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
   rdfs:comment """Count all ChEBI compounds that occur as a participant in exactly one Rhea reaction quad - i.e. compounds specific to a single chemical transformation, as opposed to widely-reused ones like water or ATP. Counting is done over BidirectionalReactions reactions, one per quad, selected via rdfs:subClassOf rh:BidirectionalReaction, so the same quad's LR/RL/BI directional variants aren't counted as separate reactions."""@en ;
   sh:select """
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT
 (COUNT(DISTINCT ?chebi) AS ?chebisInOnlyOneReaction)
 WHERE {
@@ -24,4 +26,5 @@ WHERE {
 GROUP BY ?chebi
 HAVING (COUNT(DISTINCT ?r) = 1)
 }}""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

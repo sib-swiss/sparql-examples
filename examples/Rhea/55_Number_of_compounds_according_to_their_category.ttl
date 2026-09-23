@@ -21,4 +21,5 @@ WHERE
 }
 ORDER BY ?genericCategory DESC(?compound)
 """;
+  schema:keywords "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

@@ -20,4 +20,5 @@ WHERE {
 GROUP BY ?reaction
 HAVING (count(?ecNumber) > 1)
 ORDER BY DESC(?ecCount)""";
+  schema:keywords "EC" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

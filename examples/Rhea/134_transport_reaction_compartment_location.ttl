@@ -24,4 +24,5 @@ WHERE {
     rh:compound ?compound .
   ?compound rh:name ?compoundName .
 }""";
+  schema:keywords "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

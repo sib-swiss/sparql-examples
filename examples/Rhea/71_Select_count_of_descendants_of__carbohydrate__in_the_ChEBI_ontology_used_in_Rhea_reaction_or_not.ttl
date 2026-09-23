@@ -17,4 +17,5 @@ WHERE {
   ?chebiDescendantCarbohydrate rdfs:subClassOf+ CHEBI:16646 .
   ?chebiDescendantCarbohydrate rdfs:label ?label .
 }""";
+  schema:keywords "ChEBI" , "Metabolite" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

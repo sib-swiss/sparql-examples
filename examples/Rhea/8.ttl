@@ -24,5 +24,6 @@ WHERE {
   FILTER CONTAINS(str(?go), "GO_")   
   ?rhea rh:equation ?equation .
 }""" ;
+    schema:keywords "Cross-Reference" ;
     schema:target <https://sparql.rhea-db.org/sparql/> .
 

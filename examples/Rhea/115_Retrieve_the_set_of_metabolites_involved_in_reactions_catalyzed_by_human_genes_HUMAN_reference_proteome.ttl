@@ -50,4 +50,5 @@ WHERE {
   ?compound rh:chebi ?chebi . # only considering small molecules participants
 }""";
  spex:federatesWith <https://sparql.uniprot.org/sparql> ;
+ schema:keywords "ChEBI" , "Metabolite" , "Enzyme" , "EC" , "Cross-Reference" ;
  schema:target <https://sparql.rhea-db.org/sparql> .

@@ -16,4 +16,5 @@ WHERE {
   ?reaction rdfs:subClassOf rh:Reaction .
   ?reaction rh:ec ?ecNumber
 }""";
+  schema:keywords "EC" ;
   schema:target <https://sparql.rhea-db.org/sparql> .

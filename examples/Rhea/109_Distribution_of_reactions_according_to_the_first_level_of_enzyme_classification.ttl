@@ -30,4 +30,5 @@ WHERE
 GROUP BY ?ecClass ?ecName
 """;
  spex:federatesWith <http://sparql.uniprot.org/sparql> ;
+ schema:keywords "Enzyme" , "EC" ;
  schema:target <https://sparql.rhea-db.org/sparql> .

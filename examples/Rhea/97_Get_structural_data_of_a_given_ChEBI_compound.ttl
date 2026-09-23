@@ -29,4 +29,5 @@ WHERE {
     chemrof:charge ?charge ;
     chemrof:inchi_key_string ?inchikey .
 }""";
+ schema:keywords "ChEBI" , "InChI" , "Metabolite" ;
  schema:target <https://sparql.rhea-db.org/sparql> .
