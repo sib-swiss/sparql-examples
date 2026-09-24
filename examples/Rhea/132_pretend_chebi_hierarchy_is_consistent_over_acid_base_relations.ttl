@@ -12,9 +12,10 @@ ex:132_pretend_chebi_hierarchy_is_consistent_over_acid_base_relations
 PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 PREFIX CHEBI:<http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX chemrof: <https://w3id.org/chemrof/>
-PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX is_conjugate_acid_of: <http://purl.obolibrary.org/obo/RO_0018034>
+PREFIX is_conjugate_base_of: <http://purl.obolibrary.org/obo/RO_0018033>
 
 SELECT
   ?chebi
@@ -25,9 +26,9 @@ WHERE {
     ?chebi rdfs:subClassOf+ ?chebiRestriction .
     ?chebiRestriction a owl:Restriction .
     {
-      ?chebiRestriction owl:onProperty chebihash:is_conjugate_acid_of .
+      ?chebiRestriction owl:onProperty is_conjugate_acid_of: .
     } UNION {
-      ?chebiRestriction owl:onProperty chebihash:is_conjugate_base_of .
+      ?chebiRestriction owl:onProperty is_conjugate_base_of: .
     }
     ?chebiRestriction owl:someValuesFrom ?chebiRelationTarget .
     ?chebiRelationTarget rdfs:subClassOf+ ?chebiClass .
