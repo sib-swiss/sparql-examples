@@ -23,7 +23,7 @@ SELECT
   ?inchi
 WHERE {
   BIND (CHEBI:29985 AS ?chebi)
-  ?chebi chebirof:inchi ?inchi ;
+  ?chebi chemrof:inchi ?inchi ;
     chemrof:smiles_string ?smiles ;
     chemrof:generalized_empirical_formula ?formula ;
     chemrof:mass ?mass ;
