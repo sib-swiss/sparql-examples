@@ -1,0 +1,20 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:42_lipid_preferred_name_and_synonyms a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "Given a SwissLipids entry, retrieve its preferred name (skos:prefLabel) separately from any shorthand synonyms (skos:altLabel, e.g. the abbreviated lipid notation)."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?lipid ?prefLabel (GROUP_CONCAT(DISTINCT ?altLabel; separator=", ") AS ?altLabels)
+WHERE {
+  VALUES ?lipid { SWISSLIPID:000000002 }
+  ?lipid skos:prefLabel ?prefLabel .
+  OPTIONAL { ?lipid skos:altLabel ?altLabel }
+}
+GROUP BY ?lipid ?prefLabel""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .

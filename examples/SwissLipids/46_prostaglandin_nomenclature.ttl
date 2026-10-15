@@ -1,0 +1,19 @@
+@prefix ex: <https://sparql.swisslipids.org/.well-known/sparql-examples/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:46_prostaglandin_nomenclature a sh:SPARQLExecutable,
+        sh:SPARQLSelectExecutable ;
+    rdfs:comment "List every SwissLipids entry classified under Prostaglandins, illustrating the diversity of prostaglandin nomenclature: numbered series (E1/E2/F2alpha/...), positional/structural modifiers (13,14-dihydro-15-oxo-, 2-glyceryl-, 20-hydroxy-), and conjugates (glutathione, ethanolamide/ethanolamine)."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """PREFIX SWISSLIPID: <https://swisslipids.org/rdf/SLM_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?prostaglandin ?label
+WHERE {
+  ?prostaglandin rdfs:subClassOf+ SWISSLIPID:000501315 ;
+    rdfs:label ?label .
+}
+ORDER BY ?label""" ;
+    schema:target <https://sparql.swisslipids.org/sparql/> .
