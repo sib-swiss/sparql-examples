@@ -46,7 +46,7 @@ WHERE
       ?chebi2   rdfs:subClassOf     ?chebiRestriction .
       ?chebiRestriction
 		a           owl:Restriction ;
-		owl:onProperty      chebihash:has_major_microspecies_at_pH_7_3 ;
+		owl:onProperty      chemrof:has_major_microspecies_at_pH_7_3 ;
 		owl:someValuesFrom  ?chebi .
       ?chebi2 (rdfs:subClassOf)+ CHEBI:15889
     }

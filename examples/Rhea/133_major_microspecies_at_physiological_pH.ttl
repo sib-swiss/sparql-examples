@@ -19,7 +19,7 @@ SELECT
 WHERE {
   BIND (CHEBI:17418 AS ?compound)
   ?compound rdfs:label ?label ;
-    chemrof:has_major_microspecies_at_pH7_3 ?microspecies .
+    chemrof:has_major_microspecies_at_pH_7_3 ?microspecies .
   ?microspecies rdfs:label ?microspeciesLabel .
 }""";
   schema:keywords "ChEBI" , "Metabolite" ;
