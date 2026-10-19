@@ -53,11 +53,25 @@ function buildTable(list) {
     .map((li) => li.querySelector('a'))
     .filter((a) => a && /\.html?$/.test(a.getAttribute('href') || ''));
 
+  // Example ids like "42_some_query" carry a number; the generator already
+  // sorted the list by it, so when every example has one show it as a column.
+  const numberOf = (a) => {
+    const fileName = (a.getAttribute('href') || '').split('/').pop();
+    const m = /^(\d+)_/.exec(fileName);
+    return m ? m[1] : null;
+  };
+  const numbered = entries.length > 0 && entries.every((a) => numberOf(a) !== null);
+
   const table = document.createElement('table');
   table.className = 'examples-table';
 
   const thead = document.createElement('thead');
   const headRow = document.createElement('tr');
+  if (numbered) {
+    const numberTh = document.createElement('th');
+    numberTh.textContent = '#';
+    headRow.appendChild(numberTh);
+  }
   const exampleTh = document.createElement('th');
   exampleTh.textContent = 'Example';
   const keywordsTh = document.createElement('th');
@@ -90,6 +104,13 @@ function buildTable(list) {
 
   const rows = entries.map((a) => {
     const tr = document.createElement('tr');
+
+    if (numbered) {
+      const numberTd = document.createElement('td');
+      numberTd.className = 'examples-table__number';
+      numberTd.textContent = numberOf(a);
+      tr.appendChild(numberTd);
+    }
 
     const exampleTd = document.createElement('td');
     const link = document.createElement('a');
