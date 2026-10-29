@@ -1,25 +1,23 @@
 @prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ex:13 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "List all xrefs attached to the groups annotated with at least three Interpro domains (IPR011990, IPR013083 and IPR001841)"@en ;
+    rdfs:comment "List all xrefs attached to the groups built at any level and annotated with at least three Interpro domains (<a href=\"https://www.ebi.ac.uk/interpro/entry/IPR011990\" target=\"interpro\">IPR011990</a>, <a href=\"https://www.ebi.ac.uk/interpro/entry/IPR013083\" target=\"interpro\">IPR013083</a> and <a href=\"https://www.ebi.ac.uk/interpro/entry/IPR001841\" target=\"interpro\">IPR001841</a>)"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
 
-SELECT ?og ?og_description (group_concat(distinct ?xref; SEPARATOR="; ") as ?xrefs)
-WHERE {
-    ?og a :OrthoGroup; :name ?og_description.
-    ?og :xref [a :Xref; :xrefResource ?xref].
-    ?og :xref [a :Xref; :xrefResource interpro:IPR011990].
-    ?og :xref [a :Xref; :xrefResource interpro:IPR013083].
-    ?og :xref [a :Xref; :xrefResource interpro:IPR001841].
-} GROUP BY ?og ?og_description
-ORDER BY ?og_description
-""" ;
+select ?og ?og_description (group_concat(distinct ?xref; separator="; ") as ?xrefs)
+where {
+?og a :OrthoGroup; :name ?og_description.
+?og :xref [a :Xref; :xrefResource ?xref].
+?og :xref [a :Xref; :xrefResource interpro:IPR011990].
+?og :xref [a :Xref; :xrefResource interpro:IPR013083].
+?og :xref [a :Xref; :xrefResource interpro:IPR001841].
+} group by ?og ?og_description 
+order by ?og_description""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

@@ -1,22 +1,27 @@
 @prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 ex:15 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find orthologous group/s at any level containing protein with Uniprot id P12345"@en;
+    rdfs:comment "Find phyletic profile at all levels of orthology of orthologous group/s containing protein with Uniprot id <a href=\"https://purl.uniprot.org/uniprot/P12345\" target=\"uniprot\">P12345</a>, ordered by distance to the taxonomic tree root"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
+    sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX : <http://purl.orthodb.org/>
+PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
+PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT *
+SELECT
+*
 WHERE {
     ?og a :OrthoGroup ;
-        :ogBuiltAt ?level;
-        :hasMember/rdfs:seeAlso uniprotkb:P12345 .
-}""" ;
+    :name ?og_name ;
+    :ogBuiltAt [ up:scientificName ?level ;
+    :taxTreeDistance ?distance2top ] ;
+    :ogPercentSingleCopy ?percent_single_copy ;
+    :hasMember/rdfs:seeAlso uniprot:P12345 .
+}
+ORDER BY ?distance2top""" ;
     schema:target <https://sparql.orthodb.org/sparql/> .
 

@@ -1,39 +1,45 @@
 @prefix ex: <https://sparql.orthodb.org/.well-known/sparql-examples/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
 
 ex:18 a sh:SPARQLExecutable,
         sh:SPARQLSelectExecutable ;
-    rdfs:comment "Find zebrafish orthologs of disease-implicated (according to Nextprot SPARQL endpoint) human genes via Vertebrata-level orthogroup/s annotated with both IPR000719 (protein kinase domain) and GO:0048013 (ephrin receptor signaling pathway)"@en ;
+    rdfs:comment "Find orthologs in three distant species of the diabetes-implicated (according to <a href=\"https://sparql.uniprot.org/sparql\">UniProt SPARQL endpoint</a>) human genes via Vertebrata-level orthology"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX up: <http://purl.uniprot.org/core/>
+    sh:select """PREFIX : <http://purl.orthodb.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
-PREFIX : <http://purl.orthodb.org/>
-PREFIX np: <http://nextprot.org/rdf#>
-PREFIX interpro: <http://www.ebi.ac.uk/interpro/entry/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT ?gene_zf ?gene_zf_name ?gene ?gene_name ?description ?go ?disease
+SELECT
+?human_diabetes_related_gene ?upfullname ?organism ?orthogene ?ortholog_fullname
 WHERE {
-	SERVICE <https://sparql.nextprot.org/> {
-        select distinct ?entry ?disease WHERE {
-            ?entry np:isoform / np:disease / rdfs:comment ?disease
+
+    SERVICE <https://sparql.uniprot.org/sparql> {
+
+        SELECT
+        ?human_diabetes_related_gene ?upfullname
+        WHERE {
+            ?human_diabetes_related_gene a up:Protein ;
+            up:organism taxon:9606 ;
+            up:annotation ?annotation ;
+            up:recommendedName/up:fullName ?upfullname .
+            ?annotation rdfs:comment ?annotation_text .
+            ?annotation a up:Disease_Annotation .
+            FILTER CONTAINS (?annotation_text, "diabetes")
         }
-    }
-    ?gene rdfs:seeAlso ?entry;
-        :name ?gene_name ;
-        :description ?description.
+    } ?gene :xref/:xrefResource ?human_diabetes_related_gene .
+    ?human_diabetes_related_gene a :Uniprot .
+    ?gene a :Gene ;
+    up:organism/:genomeID 'GCF_009914755.1' .
     ?gene :memberOf ?og .
-    ?og :xref/:xrefResource interpro:IPR000719 , GO:0048013.
-    ?og :ogBuiltAt/up:scientificName "Vertebrata";
-        :hasMember ?gene_zf.
-    ?gene_zf :name ?gene_zf_name;
-        up:organism/a [up:scientificName "Danio rerio"].
-} ORDER BY ?disease
-""" ;
-    schema:target <https://sparql.orthodb.org/sparql/> ;
-    spex:federatesWith <https://sparql.nextprot.org/> .
+    ?og :ogBuiltAt/up:scientificName "Vertebrata" ;
+    :hasMember ?orthogene .
+    ?orthogene :description ?ortholog_fullname ;
+    up:organism/up:scientificName ?organism .
+    FILTER (?organism in ('Danio rerio', 'Anolis carolinensis', 'Gallus gallus') )
+}
+ORDER BY ?human_diabetes_related_gene ?organism""" ;
+    schema:target <https://sparql.orthodb.org/sparql/> .
 
