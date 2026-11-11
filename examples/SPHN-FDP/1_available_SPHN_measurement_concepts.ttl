@@ -3,28 +3,21 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:1_available_SPHN_measurement_concepts a sh:SPARQLExecutable,
-        sh:SPARQLSelectExecutable ;
-    rdfs:comment "Which 'SPHN measurements concepts' are available in the FedData?"@en ;
+ex:1_available_SPHN_measurement_concepts a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    rdfs:comment "Which types of measurements are available in the SPHN Federated Clinical Routine Dataset (FedData)?"@en ;
     sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX dcterms:<http://purl.org/dc/terms/>
-PREFIX dcat: <http://www.w3.org/ns/dcat#>
-PREFIX sphn-catalog:<http://fdp.dcc.sib.swiss/catalog/>
-PREFIX void:<http://rdfs.org/ns/void#>
-PREFIX sphn:<https://biomedit.ch/rdf/sphn-schema/sphn>
-PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#>
+    sh:select """PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sphn: <https://biomedit.ch/rdf/sphn-schema/sphn#>
+PREFIX sphn-metacat: <https://biomedit.ch/rdf/sphn-metacat/sphn/>
+PREFIX void: <http://rdfs.org/ns/void#>
 
-SELECT
-  DISTINCT
-    ?class
+SELECT DISTINCT ?class
 WHERE {
-  ?distribution dcterms:isPartOf sphn-catalog:58cd4839-5821-5dee-a859-72e4462c3659 .
-
-  ?concepts dcterms:isPartOf ?distribution .
-  ?concepts a void:Dataset .
-  ?concepts void:classPartition/void:class ?class .
-
+  <http://fdp.dcc.sib.swiss/dataset/58cd4839-5821-5dee-a859-72e4462c3659> dcat:distribution ?distribution .
+  ?distribution sphn-metacat:hasConceptAvailability ?concept_availability .
+  ?concept_availability void:classPartition/void:class ?class .
   ?class rdfs:subClassOf sphn:Measurement .
 }""" ;
  schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
-

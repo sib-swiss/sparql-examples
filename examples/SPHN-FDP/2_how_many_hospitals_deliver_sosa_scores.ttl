@@ -3,30 +3,24 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-ex:2_how_many_hospitals_deliver_sosa_score a sh:SPARQLExecutable,
-        sh:SPARQLSelectExecutable ;
-    rdfs:comment "How many hospitals deliver the SOFA scores?"@en ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """PREFIX dcterms:<http://purl.org/dc/terms/>
+ex:2_how_many_hospitals_deliver_sosa_score a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+  rdfs:comment "How many hospitals deliver the SOFA scores in the SPHN Federated Clinical Routine Dataset (FedData)?"@en ;
+  sh:prefixes _:sparql_examples_prefixes ;
+  sh:select """PREFIX dcterms:<http://purl.org/dc/terms/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
-PREFIX sphn-catalog:<http://fdp.dcc.sib.swiss/catalog/>
 PREFIX void:<http://rdfs.org/ns/void#>
-PREFIX sphn:<https://biomedit.ch/rdf/sphn-schema/sphn>
 PREFIX sphn-metacat:<https://biomedit.ch/rdf/sphn-metacat/sphn/>
 PREFIX snomed:<http://snomed.info/id/>
 
-SELECT
-  ?class
-  (COUNT(DISTINCT ?hosp) AS ?count_hospital)
+SELECT ?class (COUNT(DISTINCT ?hospital) AS ?count_hospital)
 WHERE {
-  BIND (snomed:459231000124102 AS ?class)
-
-  ?code_frequency a sphn-metacat:DetailedCodeFrequency ;
-    void:classPartition ?classSet .
-
-  ?classSet void:class ?class ;
-    sphn-metacat:hasHospital ?hosp ;
-    void:entities ?instance .
-} GROUP BY ?class""" ;
- schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
-
+  <http://fdp.dcc.sib.swiss/dataset/58cd4839-5821-5dee-a859-72e4462c3659> dcat:distribution ?distribution .
+  ?dcf a sphn-metacat:DetailedCodeFrequency ;
+    dcterms:isPartOf ?distribution .
+  ?dcf void:classPartition ?classPartition .
+  ?classPartition void:class ?class ;
+                  sphn-metacat:hasHospital ?hospital .
+      VALUES ?class { snomed:459231000124102 }
+}
+GROUP BY ?class""" ;
+  schema:target <https://fdp.dcc.sib.swiss/store/fdp/sparql> .
