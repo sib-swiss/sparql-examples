@@ -39,3 +39,6 @@
 - name: UniProt
   path: UniProt
   category: protein
+- name: SPHN-FDP
+  path: SPHN-FDP
+  category: sys-biology
