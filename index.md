@@ -6,6 +6,10 @@ have a public SPARQL endpoint.
 
 In this github pages we have a HTML rendering for all them.
 
+See the [SPARQL Examples format specification](./spec/) for the RDF
+vocabulary, file conventions, and conformance checks a collection like
+this one is validated against.
+
 {% assign active_resources = site.data.resources | where_exp: "r", "r.category != 'deprecated'" -%}
 <ul class="resource-grid">
 {%- for r in active_resources %}
