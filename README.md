@@ -151,12 +151,12 @@ If you reuse any part of this work, please cite [the GigaScience paper](https://
 
 ## How to test github page rendering
 
-```sh
-docker build -t sparql-examples .
-docker run --rm  -v "$PWD":/srv/jekyll sparql-examples bundler exec jekyll build --watch &
-python3 -m http.server 8792 --directory _site
-```
-Build a local docker image that has the right Jekyll version and use that to build the webpages.
-Then serve that with the python3 inbuild basic http server.
-Open a browser locally at `http://localhost:8792/` to see the rendered HTML
+The site is built with Node.js (22 or newer) by `site/build.mjs`, into `_site/`.
+The Markdown pages under `examples/` are generated from the turtle files by the
+SPARQL examples utils (see above), so run those `convert` steps first.
 
+```sh
+npm ci
+npm run build    # builds the site into _site/
+npm run serve    # serves _site/ locally, open http://localhost:3000/
+```

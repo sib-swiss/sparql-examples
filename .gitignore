@@ -3,6 +3,7 @@
 /examples/**/*.rq
 /examples/**/*.md
 /_site/
+node_modules/
 
 .project
 .classpath

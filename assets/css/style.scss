@@ -1,5 +1,3 @@
----
----
 /*
  * SIB SPARQL examples — visual style modelled on www.expasy.org.
  * Palette pulled from Expasy's production stylesheet (primary blue,
@@ -208,23 +206,23 @@ body {
 }
 
 .category-gene a::before {
-  background-image: url("{{ "/assets/images/gene.svg" | relative_url }}");
+  background-image: url("/assets/images/gene.svg");
 }
 
 .category-protein a::before {
-  background-image: url("{{ "/assets/images/protein.svg" | relative_url }}");
+  background-image: url("/assets/images/protein.svg");
 }
 
 .category-evolution a::before {
-  background-image: url("{{ "/assets/images/evolution.svg" | relative_url }}");
+  background-image: url("/assets/images/evolution.svg");
 }
 
 .category-sys-biology a::before {
-  background-image: url("{{ "/assets/images/sys-biology.svg" | relative_url }}");
+  background-image: url("/assets/images/sys-biology.svg");
 }
 
 .category-deprecated a::before {
-  background-image: url("{{ "/assets/images/deprecated.svg" | relative_url }}");
+  background-image: url("/assets/images/deprecated.svg");
 }
 
 .category-badge {
