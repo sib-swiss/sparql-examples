@@ -355,6 +355,12 @@ th {
 /* Examples table (built client-side from the plain Examples list; see
    _includes/examples-table.html) */
 
+.examples-table__number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .examples-table__keywords {
   display: flex;
   flex-wrap: wrap;
