@@ -1,0 +1,16 @@
+{
+  "name": "sparql-examples",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SIB SPARQL examples, published as a static site on GitHub Pages.",
+  "type": "module",
+  "scripts": {
+    "build": "node site/build.mjs",
+    "serve": "npx --yes serve _site"
+  },
+  "devDependencies": {
+    "js-yaml": "4.3.2",
+    "markdown-it": "15.0.3",
+    "sass": "1.108.1"
+  }
+}

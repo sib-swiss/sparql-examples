@@ -12,7 +12,7 @@
 
   var fuse = null;
 
-  fetch('{{ "/search-index.json" | relative_url }}')
+  fetch('/search-index.json')
     .then(function (response) {
       return response.json();
     })

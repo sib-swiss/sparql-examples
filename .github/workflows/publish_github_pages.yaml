@@ -43,18 +43,24 @@ jobs:
     - name: concatenate all examples into one ttl file
       run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -p all -f ttl > all.ttl
 
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+
+    - run: npm ci
+
+    - name: Build the site
+      run: npm run build
+
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v6
 
-    - name: Build with Jekyll
-      uses: actions/jekyll-build-pages@v1
-      with:
-        source: ./
-        destination: ./_site
-       
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v4
+      with:
+        path: _site
 
   # Deployment job
   deploy:
