@@ -23,6 +23,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '_site');
 const TEMPLATES = path.join(ROOT, 'site', 'templates');
 
+// Where the site is served from, for example "/sparql-examples" on a GitHub
+// Pages project site, or empty when served from the root. Every root-relative
+// URL in the output starts with it. The workflow sets it from configure-pages.
+const BASE = (process.env.SITE_BASE_PATH ?? '').trim().replace(/\/+$/, '');
+if (BASE && !BASE.startsWith('/')) throw new Error(`SITE_BASE_PATH must start with "/": ${BASE}`);
+
 const SITE = {
   title: 'SIB SPARQL examples',
   description: 'A collection of SPARQL examples for SIB Swiss Institute of Bioinformatics resources',
@@ -169,8 +175,8 @@ function searchIndex(sources) {
       const title = item[1].replaceAll('@en', '').trim();
       const link = item[2].trim();
       const url = link.startsWith('/')
-        ? link
-        : `/examples/${resource}/${link.replaceAll('./', '').replaceAll('.md', '.html')}`;
+        ? `${BASE}${link}`
+        : `${BASE}/examples/${resource}/${link.replaceAll('./', '').replaceAll('.md', '.html')}`;
       entries.push({ title, url, resource, deprecated });
     }
   }
@@ -226,12 +232,13 @@ function main() {
       : '';
 
     const html = renderLayout(layout, {
+      base: BASE,
       title: escapeHtml(title),
       description: escapeHtml(SITE.description),
       siteTitle: escapeHtml(SITE.title),
       repositoryUrl: SITE.repositoryUrl,
       repositoryName: SITE.repositoryName,
-      breadcrumb: isHome ? '' : '<p class="breadcrumb"><a href="/">&larr; All examples</a></p>',
+      breadcrumb: isHome ? '' : `<p class="breadcrumb"><a href="${BASE}/">&larr; All examples</a></p>`,
       badge,
       content: md.render(body),
     });
@@ -249,7 +256,9 @@ function main() {
     cpSync(path.join(ROOT, rel), outFile);
   }
 
-  const css = sass.compile(path.join(ROOT, 'assets', 'css', 'style.scss'), { style: 'compressed' }).css;
+  // The stylesheet's background images are root-relative too.
+  const css = sass.compile(path.join(ROOT, 'assets', 'css', 'style.scss'), { style: 'compressed' })
+    .css.replace(/url\((["']?)\/assets\//g, `url($1${BASE}/assets/`);
   mkdirSync(path.join(OUT, 'assets', 'css'), { recursive: true });
   writeFileSync(path.join(OUT, 'assets', 'css', 'style.css'), css);
 
