@@ -1,0 +1,3 @@
+# Repositories that use the sparql-examples template but that GitHub does not link to it
+# (not a fork, no "Use this template" link). One owner/name per line.
+JervenBolleman/wikibase-sparql-examples

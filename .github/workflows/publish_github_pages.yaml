@@ -50,6 +50,11 @@ jobs:
 
     - run: npm ci
 
+    - name: List the repositories made from the template
+      run: node site/template-users.mjs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build the site
       run: npm run build
 
