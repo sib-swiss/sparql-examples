@@ -55,12 +55,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build the site
-      run: npm run build
-
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v6
+
+    - name: Build the site
+      run: npm run build
+      env:
+        # The project site is served from /sparql-examples, so links need that prefix.
+        SITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v4

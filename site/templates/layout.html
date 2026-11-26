@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
     <meta name="description" content="{{description}}">
-    <link rel="icon" type="image/svg+xml" href="/assets/images/sib-logo.svg">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="{{base}}/assets/images/sib-logo.svg">
+    <link rel="stylesheet" href="{{base}}/assets/css/style.css">
   </head>
   <body>
     <header class="site-header">
       <div class="site-header__inner">
-        <a class="site-brand" href="/">
-          <img class="site-brand__logo" src="/assets/images/sib-logo.svg" alt="{{siteTitle}} logo" />
+        <a class="site-brand" href="{{base}}/">
+          <img class="site-brand__logo" src="{{base}}/assets/images/sib-logo.svg" alt="{{siteTitle}} logo" />
           <span class="site-brand__title">{{siteTitle}}</span>
         </a>
         <div class="site-search">
@@ -22,7 +22,7 @@
         </div>
 
         <nav class="site-nav">
-          <a href="/">Home</a>
+          <a href="{{base}}/">Home</a>
           <a href="https://www.expasy.org">Expasy</a>
           <a href="https://www.sib.swiss">SIB</a>
           <a href="{{repositoryUrl}}">GitHub</a>
